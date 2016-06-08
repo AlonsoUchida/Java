@@ -2576,3 +2576,11 @@ CREATE TABLE `usuario_autoridad` (
 -- ----------------------------
 -- Records of usuarios
 -- ----------------------------
+CREATE TABLE TOKEN(
+  id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    authToken VARCHAR(500),
+    issuedOn TIMESTAMP,
+    expiresOn TIMESTAMP,
+    userId INT,
+    CONSTRAINT FK_TOKENXUSUARIO FOREIGN KEY (userId) REFERENCES USUARIO(id)
+);
