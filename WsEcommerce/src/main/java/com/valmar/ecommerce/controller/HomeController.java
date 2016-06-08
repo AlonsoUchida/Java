@@ -1,4 +1,4 @@
-package com.valmar.ecommerce;
+package com.valmar.ecommerce.controller;
 
 import java.text.DateFormat;
 import java.util.Date;
