@@ -26,9 +26,9 @@ public class DireccionDaoImpl extends AbstractDao<Integer, Direccion> implements
 	}
 
 	@Override
-	public void agregar(Direccion nota) {
+	public void agregar(Direccion direccion) {
 		try {
-			persist(nota);
+			persist(direccion);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

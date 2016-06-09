@@ -13,7 +13,7 @@ import javax.validation.constraints.Size;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
-@Table(name = "DIRECCION")
+@Table(name = "direccion")
 public class Direccion {
 
 	@Id

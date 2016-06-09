@@ -4,41 +4,38 @@ import java.util.List;
 
 import org.hibernate.Criteria;
 import org.hibernate.Query;
-import org.hibernate.criterion.Disjunction;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import com.valmar.ecommerce.dao.AbstractDao;
-import com.valmar.ecommerce.dao.ClienteDao;
-import com.valmar.ecommerce.model.Cliente;
+import com.valmar.ecommerce.dao.UsuarioDao;
+import com.valmar.ecommerce.model.Usuario;
 
-
-@Repository("clienteDao")
+@Repository("usuarioDao")
 @EnableTransactionManagement
-public class ClienteDaoImpl extends AbstractDao<Integer, Cliente> implements ClienteDao {
+public class UsuarioDaoImpl extends AbstractDao<Integer, Usuario> implements UsuarioDao {
 
 	@Override
-	public Cliente obtenerPorId(int id) {
+	public Usuario obtenerPorId(int id) {
 		Criteria criteria = createEntityCriteria();
 		criteria.add(Restrictions.eq("id", id));
-		return (Cliente) criteria.uniqueResult();
+		return (Usuario) criteria.uniqueResult();
 	}
 
 	@Override
-	public void agregar(Cliente cliente) {
+	public void agregar(Usuario usuario) {
 		try {
-			persist(cliente);
+			persist(usuario);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-
 	}
 
 	@Override
 	public void eliminar(int id) {
 		try {
-			Query query = getSession().createSQLQuery("delete from CLIENTE where id = :id");
+			Query query = getSession().createSQLQuery("delete from USUARIO where id = :id");
 			query.setInteger("id", id);
 			query.executeUpdate();
 		} catch (Exception e) {
@@ -46,14 +43,13 @@ public class ClienteDaoImpl extends AbstractDao<Integer, Cliente> implements Cli
 		}
 	}
 
-	@SuppressWarnings("unchecked")
 	@Override
-	public List<Cliente> listarClientes() {
+	public List<Usuario> listarUsuarios() {
 		try {
 			Criteria criteria = createEntityCriteria();
 			criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
-			List<Cliente> clientes = (List<Cliente>) criteria.list();
-			return clientes;
+			List<Usuario> usuarios = (List<Usuario>) criteria.list();
+			return usuarios;
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

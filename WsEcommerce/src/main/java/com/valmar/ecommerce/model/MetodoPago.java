@@ -2,39 +2,35 @@ package com.valmar.ecommerce.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
-@Table(name = "provincia")
-public class Provincia {
+@Table(name = "metodo_pago")
+public class MetodoPago {
 
 	@Id
 	@Column(name = "ID")
-	private Long id;
+	private int id;
 
 	@Column(name = "NOMBRE", length = 200, unique = true)
 	@NotNull
 	@Size(min = 4, max = 200)
 	private String nombre;
 	
-	@OneToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name="ID_DEPARTAMENTO")
-	@JsonManagedReference
-	private Departamento departamento;
+	@Column(name = "VALOR", length = 100)
+	@NotNull
+	@Size(min = 4, max = 200)
+	private String valor;
 
-	public Long getId() {
+	public int getId() {
 		return id;
 	}
 
-	public void setId(Long id) {
+	public void setId(int id) {
 		this.id = id;
 	}
 
@@ -46,11 +42,13 @@ public class Provincia {
 		this.nombre = nombre;
 	}
 
-	public Departamento getDepartamento() {
-		return departamento;
+	public String getValor() {
+		return valor;
 	}
 
-	public void setDepartamento(Departamento departamento) {
-		this.departamento = departamento;
+	public void setValor(String valor) {
+		this.valor = valor;
 	}
+	
+	
 }

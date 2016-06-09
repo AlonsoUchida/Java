@@ -4,41 +4,39 @@ import java.util.List;
 
 import org.hibernate.Criteria;
 import org.hibernate.Query;
-import org.hibernate.criterion.Disjunction;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import com.valmar.ecommerce.dao.AbstractDao;
-import com.valmar.ecommerce.dao.ClienteDao;
-import com.valmar.ecommerce.model.Cliente;
+import com.valmar.ecommerce.dao.ProductoDao;
+import com.valmar.ecommerce.model.Producto;
+import com.valmar.ecommerce.model.Tienda;
 
-
-@Repository("clienteDao")
+@Repository("productoDao")
 @EnableTransactionManagement
-public class ClienteDaoImpl extends AbstractDao<Integer, Cliente> implements ClienteDao {
+public class ProductoDaoImpl extends AbstractDao<Integer, Producto> implements ProductoDao{
 
 	@Override
-	public Cliente obtenerPorId(int id) {
+	public Producto obtenerPorId(int id) {
 		Criteria criteria = createEntityCriteria();
 		criteria.add(Restrictions.eq("id", id));
-		return (Cliente) criteria.uniqueResult();
+		return (Producto) criteria.uniqueResult();
 	}
 
 	@Override
-	public void agregar(Cliente cliente) {
+	public void agregar(Producto producto) {
 		try {
-			persist(cliente);
+			persist(producto);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-
 	}
 
 	@Override
 	public void eliminar(int id) {
 		try {
-			Query query = getSession().createSQLQuery("delete from CLIENTE where id = :id");
+			Query query = getSession().createSQLQuery("delete from PRODUCTO where id = :id");
 			query.setInteger("id", id);
 			query.executeUpdate();
 		} catch (Exception e) {
@@ -46,14 +44,13 @@ public class ClienteDaoImpl extends AbstractDao<Integer, Cliente> implements Cli
 		}
 	}
 
-	@SuppressWarnings("unchecked")
 	@Override
-	public List<Cliente> listarClientes() {
+	public List<Producto> listarProductos() {
 		try {
 			Criteria criteria = createEntityCriteria();
 			criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
-			List<Cliente> clientes = (List<Cliente>) criteria.list();
-			return clientes;
+			List<Producto> productos = (List<Producto>) criteria.list();
+			return productos;
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

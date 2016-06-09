@@ -15,56 +15,56 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import com.valmar.ecommerce.model.Cliente;
-import com.valmar.ecommerce.services.ClienteService;
+import com.valmar.ecommerce.model.Producto;
+import com.valmar.ecommerce.services.ProductoService;
 
 @CrossOrigin
 @RestController
-@RequestMapping("/cliente")
-public class ClienteRestController {
-
+@RequestMapping("/producto")
+public class ProductoRestController {
+	
 	@Autowired
-    ClienteService service;
+    ProductoService service;
     /*
      * This method will list all existing audios.
      */
     @RequestMapping(value = { "/listar" }, method = RequestMethod.GET)
-    public ResponseEntity<List<Cliente>> listarClientes() {
-        List<Cliente> clientes = service.listarClientes();
-        if(clientes.isEmpty()){
-            return new ResponseEntity<List<Cliente>>(HttpStatus.NO_CONTENT);//You many decide to return HttpStatus.NOT_FOUND
+    public ResponseEntity<List<Producto>> listarProductos() {
+        List<Producto> productos = service.listarProductos();
+        if(productos.isEmpty()){
+            return new ResponseEntity<List<Producto>>(HttpStatus.NO_CONTENT);//You many decide to return HttpStatus.NOT_FOUND
         }
-        return new ResponseEntity<List<Cliente>>(clientes, HttpStatus.OK);
+        return new ResponseEntity<List<Producto>>(productos, HttpStatus.OK);
     }
     
     @RequestMapping(value = "/obtenerPorId/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Cliente> obtenerPorId(@PathVariable("id") int id) {
-    	Cliente cliente = service.obtenerPorId(id);
-        if (cliente == null) {
-            return new ResponseEntity<Cliente>(HttpStatus.NOT_FOUND);
+    public ResponseEntity<Producto> obtenerPorId(@PathVariable("id") int id) {
+    	Producto producto = service.obtenerPorId(id);
+        if (producto == null) {
+            return new ResponseEntity<Producto>(HttpStatus.NOT_FOUND);
         }
-        return new ResponseEntity<Cliente>(cliente, HttpStatus.OK);
+        return new ResponseEntity<Producto>(producto, HttpStatus.OK);
     }
  
     @RequestMapping(value = "/agregar/", method = RequestMethod.POST)
-    public ResponseEntity<Void> agregar(@RequestBody Cliente cliente,  UriComponentsBuilder ucBuilder) {
-        if (service.obtenerPorId(cliente.getId())!=null) {
+    public ResponseEntity<Void> agregar(@RequestBody Producto producto,  UriComponentsBuilder ucBuilder) {
+        if (service.obtenerPorId(producto.getId())!=null) {
             return new ResponseEntity<Void>(HttpStatus.CONFLICT);
         } 
-        service.agregar(cliente); 
+        service.agregar(producto); 
         HttpHeaders headers = new HttpHeaders();
-        headers.setLocation(ucBuilder.path("/cliente/{id}").buildAndExpand(cliente.getId()).toUri());
+        headers.setLocation(ucBuilder.path("/producto/{id}").buildAndExpand(producto.getId()).toUri());
         return new ResponseEntity<Void>(headers, HttpStatus.CREATED);
     }
-
+    
     @RequestMapping(value = "/eliminar/{id}", method = RequestMethod.DELETE)
-    public ResponseEntity<Cliente> eliminar(@PathVariable("id") int id) {
-    	Cliente cliente = service.obtenerPorId(id);
-        if (cliente == null) {
-            return new ResponseEntity<Cliente>(HttpStatus.NOT_FOUND);
+    public ResponseEntity<Producto> eliminar(@PathVariable("id") int id) {
+    	Producto producto = service.obtenerPorId(id);
+        if (producto == null) {
+            return new ResponseEntity<Producto>(HttpStatus.NOT_FOUND);
         } 
         service.eliminar(id);
-        return new ResponseEntity<Cliente>(HttpStatus.NO_CONTENT);
+        return new ResponseEntity<Producto>(HttpStatus.NO_CONTENT);
     }
 
 }

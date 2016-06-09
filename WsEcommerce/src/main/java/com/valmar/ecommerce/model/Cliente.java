@@ -8,43 +8,40 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 @Entity
-@Table(name = "CLIENTE")
+@Table(name = "cliente")
 public class Cliente {
 
 	@Id
 	@Column(name = "ID")
-	private Long id;
+	private int id;
 
-	@Column(name = "NOMBRES", length = 200, unique = true)
+	@Column(name = "NOMBRES", length = 150)
 	@NotNull
-	@Size(min = 4, max = 200)
 	private String nombres;
 	
-	@Column(name = "APELLIDOS", length = 100, unique = true)
+	@Column(name = "APELLIDOS", length = 150)
 	@NotNull
-	@Size(min = 4, max = 100)
 	private String apellidos;
 	
-	@Column(name = "CORREO", length = 100, unique = true)
+	@Column(name = "CORREO", length = 150)
 	@NotNull
-	@Size(min = 4, max = 100)
 	private String correo;	
 	
-	@Column(name = "PASSWORD", length = 100, unique = true)
+	@Column(name = "PASSWORD", length = 250)
 	@NotNull
 	@Size(min = 4, max = 100)
 	private String password;	
 	
-	@Column(name = "ESTADO", length = 100, unique = true)
+	@Column(name = "ESTADO", length = 2)
 	@NotNull
-	@Size(min = 1, max = 1)
 	private int estado;
 
-	public Long getId() {
+
+	public int getId() {
 		return id;
 	}
 
-	public void setId(Long id) {
+	public void setId(int id) {
 		this.id = id;
 	}
 

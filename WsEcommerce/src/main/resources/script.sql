@@ -42,8 +42,8 @@ INSERT INTO `categoria` VALUES ('5', 'Arak (bebida)');
 INSERT INTO `categoria` VALUES ('6', 'Baileys Irish Cream');
 INSERT INTO `categoria` VALUES ('7', 'Brandy Luis Felipe');
 INSERT INTO `categoria` VALUES ('8', 'Brugal');
-INSERT INTO `categoria` VALUES ('9', 'Bénédictine');
-INSERT INTO `categoria` VALUES ('10', 'Cinzano (vermú)');
+INSERT INTO `categoria` VALUES ('9', 'BÃ©nÃ©dictine');
+INSERT INTO `categoria` VALUES ('10', 'Cinzano (vermÃº)');
 
 -- ----------------------------
 -- Table structure for clientes
@@ -91,7 +91,7 @@ CREATE TABLE `departamento` (
   `id` int(3) NOT NULL AUTO_INCREMENT,
   `nombre` varchar(100) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='tabla de datos departamentos de perú';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='tabla de datos departamentos de perÃº';
 
 INSERT INTO `departamento` VALUES(1, 'AMAZONAS'),
 (2, 'ANCASH'),
@@ -179,7 +179,7 @@ CREATE TABLE `distrito` (
   PRIMARY KEY (`id`),
   KEY `id_provincia` (`id_provincia`),
   CONSTRAINT `distrito_ibfk_1` FOREIGN KEY (`id_provincia`) REFERENCES `provincia` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='tabla de datos distritos de perú';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='tabla de datos distritos de perÃº';
 
 
 -- ----------------------------
@@ -2117,7 +2117,7 @@ INSERT INTO `marca` VALUES (12, 'CAPTAIN MORGAN', 1);
 INSERT INTO `marca` VALUES (13, 'HAVANA CLUB', 1);
 INSERT INTO `marca` VALUES (14, 'BRUGAL', 1);
 INSERT INTO `marca` VALUES (15, 'CACIQUE ', 1);
-INSERT INTO `marca` VALUES (16, 'JÄGERMEISTER', 1);
+INSERT INTO `marca` VALUES (16, 'JÃ„GERMEISTER', 1);
 INSERT INTO `marca` VALUES (17, 'BAILEYS', 1);
 INSERT INTO `marca` VALUES (18, 'FERNET-BRANCA ', 1);
 INSERT INTO `marca` VALUES (19, 'RICARD', 1);
@@ -2237,7 +2237,7 @@ CREATE TABLE `provincia` (
   PRIMARY KEY (`id`),
   KEY `id_departamento` (`id_departamento`),
   CONSTRAINT `provincia_ibfk_1` FOREIGN KEY (`id_departamento`) REFERENCES `departamento` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='tabla de datos provincias de perú';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='tabla de datos provincias de perÃº';
 
 -- ----------------------------
 -- Records of provincia
@@ -2576,7 +2576,7 @@ CREATE TABLE `usuario_autoridad` (
 -- ----------------------------
 -- Records of usuarios
 -- ----------------------------
-CREATE TABLE TOKEN(
+CREATE TABLE `token`(
   id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
     authToken VARCHAR(500),
     issuedOn TIMESTAMP,

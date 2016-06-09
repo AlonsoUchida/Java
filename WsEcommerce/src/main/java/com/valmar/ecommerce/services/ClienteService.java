@@ -6,7 +6,7 @@ import com.valmar.ecommerce.model.Cliente;
 
 public interface ClienteService {	
 
-	Cliente obtenerPorId(int id);	 
+	Cliente obtenerPorId(int i);	 
     void agregar(Cliente nota);     
     void eliminar(int id);    
     List<Cliente> listarClientes();
