@@ -35,7 +35,7 @@ public class TiendaDaoImpl extends AbstractDao<Integer, Tienda> implements Tiend
 	@Override
 	public void eliminar(int id) {
 		try {
-			Query query = getSession().createSQLQuery("delete from TIENDA where id = :id");
+			Query query = getSession().createSQLQuery("delete from tienda where id = :id");
 			query.setInteger("id", id);
 			query.executeUpdate();
 		} catch (Exception e) {

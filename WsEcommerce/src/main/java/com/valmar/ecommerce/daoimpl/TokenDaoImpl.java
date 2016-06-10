@@ -52,7 +52,7 @@ public class TokenDaoImpl extends AbstractDao<Integer, Token> implements TokenDa
 		token.setExpiresOn(new Timestamp(calendar.getTimeInMillis()));
 		token.setUser(user);
 
-		Query query = getSession().createSQLQuery("INSERT INTO TOKEN " + "(authToken, issuedOn, expiresOn, userId ) "
+		Query query = getSession().createSQLQuery("INSERT INTO token " + "(authToken, issuedOn, expiresOn, userId ) "
 				+ "VALUES (:authToken, :issuedOn, :expiresOn, :userId )");
 		query.setParameter("authToken", token.getAuthToken());
 		query.setParameter("issuedOn", token.getIssuedOn());
@@ -66,7 +66,7 @@ public class TokenDaoImpl extends AbstractDao<Integer, Token> implements TokenDa
 	public boolean validateToken(String tokenId) {
 		try {
 			Query query = getSession().createSQLQuery(
-					"SELECT * FROM Token t " + "WHERE t.AuthToken = :authToken " + "AND t.ExpiresOn > :currentDate");
+					"SELECT * FROM token t " + "WHERE t.AuthToken = :authToken " + "AND t.ExpiresOn > :currentDate");
 			query.setString("authToken", tokenId);
 			query.setTimestamp("currentDate", new Timestamp(new Date().getTime()));
 			@SuppressWarnings("unchecked")
@@ -85,7 +85,7 @@ public class TokenDaoImpl extends AbstractDao<Integer, Token> implements TokenDa
 				token.setExpiresOn(new Timestamp(calendar.getTimeInMillis()));
 
 				Query queryToUpdate = getSession().createSQLQuery(
-						"UPDATE Token t " + "SET t.ExpiresOn = :expiresOn " + "WHERE t.authToken = :authToken");
+						"UPDATE token t " + "SET t.ExpiresOn = :expiresOn " + "WHERE t.authToken = :authToken");
 				queryToUpdate.setParameter("expiresOn", token.getExpiresOn());
 				queryToUpdate.setParameter("authToken", token.getAuthToken());
 				queryToUpdate.executeUpdate();
@@ -100,8 +100,8 @@ public class TokenDaoImpl extends AbstractDao<Integer, Token> implements TokenDa
 	public String getUsernameFromToken(String token) {
 		String userName = "";
 		try {
-			Query query = getSession().createSQLQuery("SELECT " + USERNAME + " FROM USUARIO u "
-					+ "INNER JOIN Token t ON u.id = t.userId " + "WHERE t.authToken = :authToken");
+			Query query = getSession().createSQLQuery("SELECT " + USERNAME + " FROM usuario u "
+					+ "INNER JOIN token t ON u.id = t.userId " + "WHERE t.authToken = :authToken");
 			query.setString("authToken", token);
 			@SuppressWarnings("unchecked")
 			List<Object[]> results = query.list();

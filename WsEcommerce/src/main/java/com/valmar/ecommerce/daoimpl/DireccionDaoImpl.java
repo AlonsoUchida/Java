@@ -38,7 +38,7 @@ public class DireccionDaoImpl extends AbstractDao<Integer, Direccion> implements
 	@Override
 	public void eliminar(int id) {
 		try {
-			Query query = getSession().createSQLQuery("delete from DIRECCION where id = :id");
+			Query query = getSession().createSQLQuery("delete from direccion where id = :id");
 			query.setInteger("id", id);
 			query.executeUpdate();
 		} catch (Exception e) {

@@ -38,7 +38,7 @@ public class ClienteDaoImpl extends AbstractDao<Integer, Cliente> implements Cli
 	@Override
 	public void eliminar(int id) {
 		try {
-			Query query = getSession().createSQLQuery("delete from CLIENTE where id = :id");
+			Query query = getSession().createSQLQuery("delete from cliente where id = :id");
 			query.setInteger("id", id);
 			query.executeUpdate();
 		} catch (Exception e) {

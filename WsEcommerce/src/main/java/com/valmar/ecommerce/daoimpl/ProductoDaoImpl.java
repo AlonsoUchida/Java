@@ -36,7 +36,7 @@ public class ProductoDaoImpl extends AbstractDao<Integer, Producto> implements P
 	@Override
 	public void eliminar(int id) {
 		try {
-			Query query = getSession().createSQLQuery("delete from PRODUCTO where id = :id");
+			Query query = getSession().createSQLQuery("delete from producto where id = :id");
 			query.setInteger("id", id);
 			query.executeUpdate();
 		} catch (Exception e) {

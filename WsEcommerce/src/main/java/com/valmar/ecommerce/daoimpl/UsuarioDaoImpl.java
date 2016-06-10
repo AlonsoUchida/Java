@@ -35,7 +35,7 @@ public class UsuarioDaoImpl extends AbstractDao<Integer, Usuario> implements Usu
 	@Override
 	public void eliminar(int id) {
 		try {
-			Query query = getSession().createSQLQuery("delete from USUARIO where id = :id");
+			Query query = getSession().createSQLQuery("delete from usuario where id = :id");
 			query.setInteger("id", id);
 			query.executeUpdate();
 		} catch (Exception e) {

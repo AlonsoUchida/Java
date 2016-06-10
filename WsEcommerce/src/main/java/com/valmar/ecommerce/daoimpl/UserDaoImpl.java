@@ -17,7 +17,7 @@ import com.valmar.ecommerce.model.Usuario;
 @EnableTransactionManagement
 public class UserDaoImpl extends AbstractDao<Integer, Usuario> implements UserDao{
 	
-	private final static String TB_USER = "USUARIO";
+	private final static String TB_USER = "usuario";
 
 	public int validateUser(String username, String password){
 		int userId = 0;
