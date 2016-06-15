@@ -11,19 +11,19 @@
         http://www.springframework.org/schema/security/spring-security-4.0.xsd">
              
 	<security:http pattern="/authenticate" security="none" />
-	<security:http pattern="/**" security="none" />
+	<!--  <security:http pattern="/**" security="none" /> -->
 	
 	<mvc:cors>
 		<mvc:mapping path="/**"/>
 	</mvc:cors>
 
-	<!--  
+	
 	<security:http realm="Protected API" use-expressions="true"
 		auto-config="false" create-session="always" entry-point-ref="JwtAuthenticationEntryPoint">
 		<security:custom-filter ref="jwtAuthenticationTokenFilter" position="PRE_AUTH_FILTER" />
 		  <security:intercept-url pattern="/**" access="isAuthenticated()" /> 
 	</security:http> 
-	-->
+	
 
 	<bean id="JwtAuthenticationEntryPoint"
 		class="com.valmar.ecommerce.security.JwtAuthenticationEntryPoint" />
