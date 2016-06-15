@@ -8,7 +8,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
-import com.valmar.ecommerce.services.UserService;
+import com.valmar.ecommerce.services.UsuarioService;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
@@ -23,7 +23,7 @@ public class JwtAuthenticationTokenFilter extends UsernamePasswordAuthentication
 	private UserDetailsService userDetailsService;
 	
 	@Autowired
-	private UserService userService;
+	private UsuarioService usuarioService;
 
 	@Override
 	@Autowired
@@ -39,11 +39,11 @@ public class JwtAuthenticationTokenFilter extends UsernamePasswordAuthentication
 
 		String authToken = httpRequest.getHeader("Token");
 		if (authToken != null) {
-			String username = userService.getUsernameFromToken(authToken);
+			String username = usuarioService.getUsernameFromToken(authToken);
 
 			if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
 				UserDetails userDetails = this.userDetailsService.loadUserByUsername(username);
-				if (userService.validateToken(authToken)) {
+				if (usuarioService.validateToken(authToken)) {
 					UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(
 							userDetails, null, userDetails.getAuthorities());
 					authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(httpRequest));

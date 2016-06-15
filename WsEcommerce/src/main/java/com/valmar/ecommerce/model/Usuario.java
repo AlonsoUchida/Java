@@ -56,9 +56,9 @@ public class Usuario {
 	@JsonIgnore
 	@ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
-            name = "USER_AUTHORITY",
-            joinColumns = {@JoinColumn(name = "USER_ID", referencedColumnName = "ID")},
-            inverseJoinColumns = {@JoinColumn(name = "AUTHORITY_ID", referencedColumnName = "ID")})
+            name = "usuario_autoridad",
+            joinColumns = {@JoinColumn(name = "USUARIO_ID", referencedColumnName = "ID")},
+            inverseJoinColumns = {@JoinColumn(name = "AUTORIDAD_ID", referencedColumnName = "ID")})
     private List<Authority> authorities;
 	
 	public Long getId() {

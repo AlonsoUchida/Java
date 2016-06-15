@@ -56,4 +56,28 @@ public class UsuarioDaoImpl extends AbstractDao<Integer, Usuario> implements Usu
 		return null;
 	}
 
+	public int validateUser(String username, String password){
+		Criteria criteria = createEntityCriteria();
+		criteria.add(Restrictions.eq("login", username));
+		criteria.add(Restrictions.eq("password", password));
+		Usuario usuario = (Usuario) criteria.uniqueResult();
+		return usuario.getId().intValue();
+	}
+
+	@Override
+	public Usuario getUserById(int userId) {
+		Criteria criteria = createEntityCriteria();
+		criteria.add(Restrictions.like("id",(long)userId)); 
+		Usuario usuario = (Usuario)criteria.uniqueResult();
+		return usuario;
+	}
+	
+	public Usuario findByUsername(String username) {
+		Criteria criteria = createEntityCriteria();
+		criteria.add(Restrictions.like("login", username)); 
+		Usuario usuario = (Usuario)criteria.uniqueResult();
+		return usuario;
+	}
+
+
 }

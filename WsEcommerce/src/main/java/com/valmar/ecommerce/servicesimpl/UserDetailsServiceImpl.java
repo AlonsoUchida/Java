@@ -7,7 +7,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.valmar.ecommerce.dao.UserDao;
+import com.valmar.ecommerce.dao.UsuarioDao;
 import com.valmar.ecommerce.model.JwtUserFactory;
 import com.valmar.ecommerce.model.Usuario;
 
@@ -16,11 +16,11 @@ import com.valmar.ecommerce.model.Usuario;
 public class UserDetailsServiceImpl implements UserDetailsService{
 
 	@Autowired
-	private UserDao userDao;
+	private UsuarioDao usuarioDao;
 	
 	@Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-       Usuario user = userDao.findByUsername(username);
+       Usuario user = usuarioDao.findByUsername(username);
         if (user == null) {
             throw new UsernameNotFoundException(String.format("No user found with username '%s'.", username));
         } else {

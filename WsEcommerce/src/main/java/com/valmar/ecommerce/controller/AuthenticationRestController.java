@@ -17,7 +17,9 @@ import org.springframework.web.bind.annotation.RestController;
 import com.valmar.ecommerce.security.JwtTokenUtil;
 import com.valmar.ecommerce.model.AuthenticationRequest;
 import com.valmar.ecommerce.model.AuthenticationResponse;
-import com.valmar.ecommerce.services.UserService;
+import com.valmar.ecommerce.model.Usuario;
+import com.valmar.ecommerce.services.UsuarioService;
+import com.valmar.ecommerce.viewmodel.AuthenticationVM;
 
 @CrossOrigin
 @RestController
@@ -30,30 +32,33 @@ public class AuthenticationRestController {
     private JwtTokenUtil jwtTokenUtil;
     
     @Autowired
-    private UserService userService;
+    private UsuarioService usuarioService;
 
     @CrossOrigin
     @RequestMapping(value = "/authenticate", method = RequestMethod.POST)
     public ResponseEntity<?> createAuthenticationToken(@RequestHeader("Authorization") String authorization) throws AuthenticationException {
 
     	AuthenticationRequest authenticationRequest = jwtTokenUtil.getAuthenticationRequest(authorization);
-    	int userId = userService.validateUser(authenticationRequest.getUsername(), authenticationRequest.getPassword());
-    	if(userId!=0){
-    		UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(
-                    authenticationRequest.getUsername(),
-                    authenticationRequest.getPassword()
-            );
-    		
-	        final Authentication authentication = authenticationManager.authenticate(usernamePasswordAuthenticationToken);
-	        SecurityContextHolder.getContext().setAuthentication(authentication);
-	        String token = userService.generateToken(userId);
-	        
-	        // Return the token
-	    	return new ResponseEntity<AuthenticationResponse>(new AuthenticationResponse(token), HttpStatus.OK);
-        }
-    	else{
-    		return new ResponseEntity<String>("Wrong Crendentials", HttpStatus.UNAUTHORIZED);
-    	}    
+		Usuario usuario = usuarioService.loadUserByUsername(authenticationRequest.getUsername());
+		if (usuario == null)
+			return new ResponseEntity<String>("Usuario no existe", HttpStatus.NOT_FOUND);
+		int userId = usuarioService.validateUser(authenticationRequest.getUsername(), authenticationRequest.getPassword());
+		if (userId == 0)
+			return new ResponseEntity<String>("Crendeciales incorrectas", HttpStatus.UNAUTHORIZED);
+		
+		UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(
+				authenticationRequest.getUsername(), authenticationRequest.getPassword());
+
+		final Authentication authentication = authenticationManager.authenticate(usernamePasswordAuthenticationToken);
+		SecurityContextHolder.getContext().setAuthentication(authentication);
+
+		AuthenticationVM authVM = new AuthenticationVM();
+		String token = usuarioService.generateToken(userId);
+		authVM.setIdUsuario(usuario.getId().intValue());
+		authVM.setPassword(usuario.getPassword());
+		authVM.setToken(token);
+		// Return the token
+		return new ResponseEntity<AuthenticationVM>(authVM, HttpStatus.OK);
     	
     }
 
