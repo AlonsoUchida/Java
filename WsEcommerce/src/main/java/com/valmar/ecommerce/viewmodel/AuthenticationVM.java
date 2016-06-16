@@ -1,9 +1,12 @@
 package com.valmar.ecommerce.viewmodel;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 public class AuthenticationVM {
 
 	private String token;
 	private int idUsuario;
+	@JsonIgnore
 	private String password;
 	
 	public String getToken() {

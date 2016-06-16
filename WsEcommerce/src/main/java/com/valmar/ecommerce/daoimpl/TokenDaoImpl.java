@@ -22,7 +22,7 @@ import com.valmar.ecommerce.model.Usuario;
 public class TokenDaoImpl extends AbstractDao<Integer, Token> implements TokenDao {
 
 	private static final int expireTimeInSeconds = 900;
-	private static final String USERNAME = "u.correo";
+	private static final String USERNAME = "u.login";
 
 	@Override
 	public String generateToken(Usuario user) {

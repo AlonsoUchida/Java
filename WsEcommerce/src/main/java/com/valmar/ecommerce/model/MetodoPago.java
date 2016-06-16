@@ -1,11 +1,17 @@
 package com.valmar.ecommerce.model;
 
+import java.util.Set;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 
 @Entity
@@ -25,6 +31,10 @@ public class MetodoPago {
 	@NotNull
 	@Size(min = 4, max = 200)
 	private String valor;
+	
+	@ManyToMany(fetch = FetchType.LAZY, mappedBy="metodoPagos")
+	@JsonBackReference
+	private Set<Tienda> tiendas;
 
 	public int getId() {
 		return id;

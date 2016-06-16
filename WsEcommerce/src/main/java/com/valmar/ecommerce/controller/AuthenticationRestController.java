@@ -55,7 +55,7 @@ public class AuthenticationRestController {
 		AuthenticationVM authVM = new AuthenticationVM();
 		String token = usuarioService.generateToken(userId);
 		authVM.setIdUsuario(usuario.getId().intValue());
-		authVM.setPassword(usuario.getPassword());
+		//authVM.setPassword(usuario.getPassword());
 		authVM.setToken(token);
 		// Return the token
 		return new ResponseEntity<AuthenticationVM>(authVM, HttpStatus.OK);

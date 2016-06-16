@@ -11,6 +11,7 @@
         http://www.springframework.org/schema/security/spring-security-4.0.xsd">
              
 	<security:http pattern="/authenticate" security="none" />
+	<security:http pattern="/" security="none" />
 	<!--  <security:http pattern="/**" security="none" /> -->
 	
 	<mvc:cors>

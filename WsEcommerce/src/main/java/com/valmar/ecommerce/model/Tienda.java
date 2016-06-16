@@ -1,15 +1,22 @@
 package com.valmar.ecommerce.model;
 
+import java.util.Set;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
@@ -50,12 +57,24 @@ public class Tienda {
 	
 	@OneToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name="ID_METODO_PAGO")
+	
+	
+	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL )
+	  @JoinTable(
+	      name="TIENDA_METODO_PAGO",
+	      joinColumns=@JoinColumn(name="ID_TIENDA", referencedColumnName="ID"),
+	      inverseJoinColumns=@JoinColumn(name="ID_METODO_PAGO", referencedColumnName="ID"))
 	@JsonManagedReference
-	private MetodoPago metodoPago;
+	private Set<MetodoPago> metodoPagos;
 	
 	@Column(name = "ESTADO", length=2)
 	@NotNull
 	private int estado;
+	
+	@ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name="ID_USUARIO")
+	@JsonIgnore
+    private Usuario usuario;
 
 	public int getId() {
 		return id;
@@ -112,13 +131,13 @@ public class Tienda {
 	public void setAfiliacion_valor(int afiliacion_valor) {
 		this.afiliacion_valor = afiliacion_valor;
 	}
-
-	public MetodoPago getMetodoPago() {
-		return metodoPago;
+	
+	public Set<MetodoPago> getMetodoPagos() {
+		return metodoPagos;
 	}
 
-	public void setMetodoPago(MetodoPago metodoPago) {
-		this.metodoPago = metodoPago;
+	public void setMetodoPagos(Set<MetodoPago> metodoPagos) {
+		this.metodoPagos = metodoPagos;
 	}
 
 	public int getEstado() {
@@ -127,6 +146,14 @@ public class Tienda {
 
 	public void setEstado(int estado) {
 		this.estado = estado;
+	}
+
+	public Usuario getUsuario() {
+		return usuario;
+	}
+
+	public void setUsuario(Usuario usuario) {
+		this.usuario = usuario;
 	}
 	
 	

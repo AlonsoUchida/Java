@@ -31,19 +31,6 @@ CREATE TABLE `categoria` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
--- ----------------------------
--- Records of categorias
--- ----------------------------
-INSERT INTO `categoria` VALUES ('1', 'Advocaat');
-INSERT INTO `categoria` VALUES ('2', 'Alcopop');
-INSERT INTO `categoria` VALUES ('3', 'Anisado');
-INSERT INTO `categoria` VALUES ('4', 'Aqua vitae');
-INSERT INTO `categoria` VALUES ('5', 'Arak (bebida)');
-INSERT INTO `categoria` VALUES ('6', 'Baileys Irish Cream');
-INSERT INTO `categoria` VALUES ('7', 'Brandy Luis Felipe');
-INSERT INTO `categoria` VALUES ('8', 'Brugal');
-INSERT INTO `categoria` VALUES ('9', 'Bénédictine');
-INSERT INTO `categoria` VALUES ('10', 'Cinzano (vermú)');
 
 -- ----------------------------
 -- Table structure for clientes
@@ -59,10 +46,6 @@ CREATE TABLE `cliente` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-
--- ----------------------------
--- Records of clientes
--- ----------------------------
 
 -- ----------------------------
 -- Table structure for clientes_direcciones
@@ -93,35 +76,7 @@ CREATE TABLE `departamento` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='tabla de datos departamentos de perú';
 
-INSERT INTO `departamento` VALUES(1, 'AMAZONAS'),
-(2, 'ANCASH'),
-(3, 'APURIMAC'),
-(4, 'AREQUIPA'),
-(5, 'AYACUCHO'),
-(6, 'CAJAMARCA'),
-(7, 'CALLAO'),
-(8, 'CUSCO'),
-(9, 'HUANCAVELICA'),
-(10, 'HUANUCO'),
-(11, 'ICA'),
-(12, 'JUNIN'),
-(13, 'LA LIBERTAD'),
-(14, 'LAMBAYEQUE'),
-(15, 'LIMA'),
-(16, 'LORETO'),
-(17, 'MADRE DE DIOS'),
-(18, 'MOQUEGUA'),
-(19, 'PASCO'),
-(20, 'PIURA'),
-(21, 'PUNO'),
-(22, 'SAN MARTIN'),
-(23, 'TACNA'),
-(24, 'TUMBES'),
-(25, 'UCAYALI');
 
-
--- Records of departamento
--- ----------------------------
 
 -- ----------------------------
 -- Table structure for direcciones
@@ -180,6 +135,387 @@ CREATE TABLE `distrito` (
   KEY `id_provincia` (`id_provincia`),
   CONSTRAINT `distrito_ibfk_1` FOREIGN KEY (`id_provincia`) REFERENCES `provincia` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='tabla de datos distritos de perú';
+
+
+-- ----------------------------
+-- Table structure for envio
+-- ----------------------------
+DROP TABLE IF EXISTS `envio`;
+CREATE TABLE `envio` (
+  `id` int(3) NOT NULL AUTO_INCREMENT,
+  `nombre` varchar(200) NOT NULL,
+  `valor` varchar(100) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of envio
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for imagenes
+-- ----------------------------
+DROP TABLE IF EXISTS `imagen`;
+CREATE TABLE `imagen` (
+  `id` int(5) NOT NULL AUTO_INCREMENT,
+  `id_producto` int(5) DEFAULT NULL,
+  `nombre` varchar(100) DEFAULT NULL,
+  `imagen` blob DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `id_producto` (`id_producto`),
+  CONSTRAINT `imagenes_ibfk_1` FOREIGN KEY (`id_producto`) REFERENCES `producto` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of imagenes
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for informacion_cliente
+-- ----------------------------
+DROP TABLE IF EXISTS `informacion_cliente`;
+CREATE TABLE `informacion_cliente` (
+  `id` int(5) NOT NULL AUTO_INCREMENT,
+  `nombres` varchar(150) DEFAULT NULL,
+  `apellidos` varchar(150) DEFAULT NULL,
+  `correo` varchar(150) DEFAULT NULL,
+  `telefono_local` varchar(10) DEFAULT NULL,
+  `telefono_movil` varchar(10) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of informacion_cliente
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for informacion_productos
+-- ----------------------------
+DROP TABLE IF EXISTS `informacion_producto`;
+CREATE TABLE `informacion_producto` (
+  `id` int(5) NOT NULL AUTO_INCREMENT,
+  `nombre` varchar(200) DEFAULT NULL,
+  `precio` varchar(15) DEFAULT NULL,
+  `cantidad` int(5) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of informacion_productos
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for marca
+-- ----------------------------
+DROP TABLE IF EXISTS `marca`;
+CREATE TABLE `marca` (
+  `id` int(3) NOT NULL AUTO_INCREMENT,
+  `nombre` varchar(200) NOT NULL,
+  `estado` int(2) NOT NULL COMMENT 'estatus para indicar si la tienda esta activa o no, dentro d',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+-- ----------------------------
+-- Table structure for metodo_pago
+-- ----------------------------
+DROP TABLE IF EXISTS `metodo_pago`;
+CREATE TABLE `metodo_pago` (
+  `id` int(3) NOT NULL AUTO_INCREMENT,
+  `nombre` varchar(200) NOT NULL,
+  `valor` varchar(100) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of metodo_pago
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for ordenes
+-- ----------------------------
+DROP TABLE IF EXISTS `orden`;
+CREATE TABLE `orden` (
+  `id` int(6) NOT NULL AUTO_INCREMENT,
+  `id_direccion_envio` int(11) DEFAULT NULL,
+  `id_informacion_cliente` int(5) DEFAULT NULL,
+  `id_informacion_producto` int(5) DEFAULT NULL,
+  `estado_orden` varchar(20) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `id_direccion_envio` (`id_direccion_envio`),
+  KEY `id_informacion_cliente` (`id_informacion_cliente`),
+  KEY `id_informacion_producto` (`id_informacion_producto`),
+  CONSTRAINT `ordenes_ibfk_1` FOREIGN KEY (`id_direccion_envio`) REFERENCES `direccion_envio` (`id`),
+  CONSTRAINT `ordenes_ibfk_2` FOREIGN KEY (`id_informacion_cliente`) REFERENCES `informacion_cliente` (`id`),
+  CONSTRAINT `ordenes_ibfk_3` FOREIGN KEY (`id_informacion_producto`) REFERENCES `informacion_productos` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of ordenes
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for productos
+-- ----------------------------
+DROP TABLE IF EXISTS `producto`;
+CREATE TABLE `producto` (
+  `id` int(5) NOT NULL AUTO_INCREMENT,
+  `nombre` varchar(200) NOT NULL,
+  `descripcion` mediumtext,
+  `caracteristicas` mediumtext,
+  `precio` varchar(15) DEFAULT NULL,
+  `inventario` int(5) DEFAULT NULL,
+  `id_tienda` int(5) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `id_tienda` (`id_tienda`),
+  CONSTRAINT `productos_ibfk_1` FOREIGN KEY (`id_tienda`) REFERENCES `tienda` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of productos
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for productos_categorias
+-- ----------------------------
+DROP TABLE IF EXISTS `producto_categoria`;
+CREATE TABLE `producto_categoria` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id_producto` int(5) NOT NULL,
+  `id_categoria` int(5) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `id_producto` (`id_producto`),
+  KEY `id_categoria` (`id_categoria`),
+  CONSTRAINT `productos_categorias_ibfk_1` FOREIGN KEY (`id_producto`) REFERENCES `producto` (`id`),
+  CONSTRAINT `productos_categorias_ibfk_2` FOREIGN KEY (`id_categoria`) REFERENCES `categoria` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of productos_categorias
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for productos_marca
+-- ----------------------------
+DROP TABLE IF EXISTS `producto_marca`;
+CREATE TABLE `producto_marca` (
+  `id` int(3) NOT NULL AUTO_INCREMENT,
+  `id_producto` int(5) DEFAULT NULL,
+  `id_marca` int(3) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `id_producto` (`id_producto`),
+  KEY `id_marca` (`id_marca`),
+  CONSTRAINT `productos_marca_ibfk_1` FOREIGN KEY (`id_producto`) REFERENCES `producto` (`id`),
+  CONSTRAINT `productos_marca_ibfk_2` FOREIGN KEY (`id_marca`) REFERENCES `marca` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of productos_marca
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for provincia
+-- ----------------------------
+DROP TABLE IF EXISTS `provincia`;
+CREATE TABLE `provincia` (
+  `id` int(3) NOT NULL AUTO_INCREMENT,
+  `nombre` varchar(100) NOT NULL,
+  `id_departamento` int(3) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `id_departamento` (`id_departamento`),
+  CONSTRAINT `provincia_ibfk_1` FOREIGN KEY (`id_departamento`) REFERENCES `departamento` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='tabla de datos provincias de perú';
+
+
+-- ----------------------------
+-- Table structure for usuarios
+-- ----------------------------
+DROP TABLE IF EXISTS `usuario`;
+CREATE TABLE `usuario` (
+  `id` int(5) NOT NULL AUTO_INCREMENT,
+  `nombre` varchar(100) DEFAULT NULL,
+  `apellido` varchar(200) DEFAULT NULL,
+  `correo` varchar(200) NOT NULL,
+  `login` varchar(200) NOT NULL,
+  `password` varchar(250) NOT NULL,
+  `estado` int(2) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+-- ----------------------------
+-- Table structure for authority
+-- ----------------------------
+DROP TABLE IF EXISTS `autoridad`;
+CREATE TABLE `autoridad` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `nombre` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+);
+
+-- ----------------------------
+-- Table structure for user_authority
+-- ----------------------------
+DROP TABLE IF EXISTS `usuario_autoridad`;
+CREATE TABLE `usuario_autoridad` (
+  `usuario_id` int(11) NOT NULL,
+  `autoridad_id` int(11) NOT NULL,
+  KEY `usuario_id` (`usuario_id`),
+  KEY `autoridad_id` (`autoridad_id`),
+  FOREIGN KEY (`usuario_id`) REFERENCES `usuario` (`ID`),
+  FOREIGN KEY (`autoridad_id`) REFERENCES `autoridad` (`ID`)
+);
+
+-- ----------------------------
+-- Records of usuarios
+-- ----------------------------
+DROP TABLE IF EXISTS `token`;
+CREATE TABLE `token`(
+  id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    authToken VARCHAR(500),
+    issuedOn TIMESTAMP,
+    expiresOn TIMESTAMP,
+    userId INT,
+    CONSTRAINT FK_TOKENXUSUARIO FOREIGN KEY (userId) REFERENCES `usuario` (`ID`)
+);
+
+
+-- ----------------------------
+-- Table structure for tiendas
+-- ----------------------------
+DROP TABLE IF EXISTS `tienda`;
+CREATE TABLE `tienda` (
+  `id` int(5) NOT NULL AUTO_INCREMENT,
+  `nombre` varchar(250) NOT NULL,
+  `ruc` varchar(30) NOT NULL,
+  `telefono_local` varchar(10) NOT NULL,
+  `telefono_movil` varchar(10) DEFAULT NULL,
+  `afiliacion` int(2) NOT NULL,
+  `afiliacion_valor` int(11) NOT NULL,
+  `id_metodo_pago` int(11) NOT NULL,
+  `estado` int(2) NOT NULL COMMENT 'estatus para indicar si la tienda esta activa o no, dentro d',
+  `id_usuario` int(5) NOT NULL,
+  PRIMARY KEY (`id`),
+  CONSTRAINT `tienda_usuario_ibfk_1` FOREIGN KEY (`id_usuario`) REFERENCES `usuario` (id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of tiendas
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for tiendas_direcciones
+-- ----------------------------
+DROP TABLE IF EXISTS `tienda_direccion`;
+CREATE TABLE `tienda_direccion` (
+  `id` int(5) NOT NULL AUTO_INCREMENT,
+  `id_direccion` int(5) DEFAULT NULL,
+  `id_tienda` int(5) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `id_direccion` (`id_direccion`),
+  KEY `id_tienda` (`id_tienda`),
+  CONSTRAINT `tiendas_direcciones_ibfk_1` FOREIGN KEY (`id_direccion`) REFERENCES `direccion` (`id`),
+  CONSTRAINT `tiendas_direcciones_ibfk_2` FOREIGN KEY (`id_tienda`) REFERENCES `tienda` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of tiendas_direcciones
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for tiendas_envio
+-- ----------------------------
+DROP TABLE IF EXISTS `tienda_envio`;
+CREATE TABLE `tienda_envio` (
+  `id` int(5) NOT NULL AUTO_INCREMENT,
+  `id_tienda` int(5) DEFAULT NULL,
+  `id_envio` int(3) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `id_tienda` (`id_tienda`),
+  KEY `id_envio` (`id_envio`),
+  CONSTRAINT `tiendas_envio_ibfk_1` FOREIGN KEY (`id_tienda`) REFERENCES `tienda` (`id`),
+  CONSTRAINT `tiendas_envio_ibfk_2` FOREIGN KEY (`id_envio`) REFERENCES `envio` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of tiendas_envio
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for tiendas_metodo_pago
+-- ----------------------------
+DROP TABLE IF EXISTS `tienda_metodo_pago`;
+CREATE TABLE `tienda_metodo_pago` (
+  `id` int(5) NOT NULL AUTO_INCREMENT,
+  `id_tienda` int(5) NOT NULL,
+  `id_metodo_pago` int(3) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `id_tienda` (`id_tienda`),
+  KEY `id_metodo_pago` (`id_metodo_pago`),
+  CONSTRAINT `tiendas_metodo_pago_ibfk_1` FOREIGN KEY (`id_tienda`) REFERENCES `tienda` (`id`),
+  CONSTRAINT `tiendas_metodo_pago_ibfk_2` FOREIGN KEY (`id_metodo_pago`) REFERENCES `metodo_pago` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of tiendas_metodo_pago
+-- ----------------------------
+
+
+-- ******************************************************************************************************************************************************************
+-- Records of all tables*********************************************************************************************************************************************
+-- ******************************************************************************************************************************************************************
+
+
+-- ----------------------------
+-- Records of departamento
+-- ----------------------------
+
+INSERT INTO `departamento` VALUES(1, 'AMAZONAS'),
+(2, 'ANCASH'),
+(3, 'APURIMAC'),
+(4, 'AREQUIPA'),
+(5, 'AYACUCHO'),
+(6, 'CAJAMARCA'),
+(7, 'CALLAO'),
+(8, 'CUSCO'),
+(9, 'HUANCAVELICA'),
+(10, 'HUANUCO'),
+(11, 'ICA'),
+(12, 'JUNIN'),
+(13, 'LA LIBERTAD'),
+(14, 'LAMBAYEQUE'),
+(15, 'LIMA'),
+(16, 'LORETO'),
+(17, 'MADRE DE DIOS'),
+(18, 'MOQUEGUA'),
+(19, 'PASCO'),
+(20, 'PIURA'),
+(21, 'PUNO'),
+(22, 'SAN MARTIN'),
+(23, 'TACNA'),
+(24, 'TUMBES'),
+(25, 'UCAYALI');
+
+
+-- ----------------------------
+-- Records of categorias
+-- ----------------------------
+INSERT INTO `categoria` VALUES ('1', 'Advocaat');
+INSERT INTO `categoria` VALUES ('2', 'Alcopop');
+INSERT INTO `categoria` VALUES ('3', 'Anisado');
+INSERT INTO `categoria` VALUES ('4', 'Aqua vitae');
+INSERT INTO `categoria` VALUES ('5', 'Arak (bebida)');
+INSERT INTO `categoria` VALUES ('6', 'Baileys Irish Cream');
+INSERT INTO `categoria` VALUES ('7', 'Brandy Luis Felipe');
+INSERT INTO `categoria` VALUES ('8', 'Brugal');
+INSERT INTO `categoria` VALUES ('9', 'Bénédictine');
+INSERT INTO `categoria` VALUES ('10', 'Cinzano (vermú)');
+
+-- ----------------------------
+-- Records of clientes
+-- ----------------------------
+
+INSERT INTO `cliente` VALUES ('1', 'Alonso', 'Uchida Nakasone', 'javier.uchida@gmail.com', '12345', 1);
 
 
 -- ----------------------------
@@ -2021,84 +2357,6 @@ INSERT INTO `distrito` VALUES
 
 
 -- ----------------------------
--- Table structure for envio
--- ----------------------------
-DROP TABLE IF EXISTS `envio`;
-CREATE TABLE `envio` (
-  `id` int(3) NOT NULL AUTO_INCREMENT,
-  `nombre` varchar(200) NOT NULL,
-  `valor` varchar(100) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- ----------------------------
--- Records of envio
--- ----------------------------
-
--- ----------------------------
--- Table structure for imagenes
--- ----------------------------
-DROP TABLE IF EXISTS `imagen`;
-CREATE TABLE `imagen` (
-  `id` int(5) NOT NULL AUTO_INCREMENT,
-  `id_producto` int(5) DEFAULT NULL,
-  `nombre` varchar(100) DEFAULT NULL,
-  `imagen` blob DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `id_producto` (`id_producto`),
-  CONSTRAINT `imagenes_ibfk_1` FOREIGN KEY (`id_producto`) REFERENCES `producto` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- ----------------------------
--- Records of imagenes
--- ----------------------------
-
--- ----------------------------
--- Table structure for informacion_cliente
--- ----------------------------
-DROP TABLE IF EXISTS `informacion_cliente`;
-CREATE TABLE `informacion_cliente` (
-  `id` int(5) NOT NULL AUTO_INCREMENT,
-  `nombres` varchar(150) DEFAULT NULL,
-  `apellidos` varchar(150) DEFAULT NULL,
-  `correo` varchar(150) DEFAULT NULL,
-  `telefono_local` varchar(10) DEFAULT NULL,
-  `telefono_movil` varchar(10) DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- ----------------------------
--- Records of informacion_cliente
--- ----------------------------
-
--- ----------------------------
--- Table structure for informacion_productos
--- ----------------------------
-DROP TABLE IF EXISTS `informacion_producto`;
-CREATE TABLE `informacion_producto` (
-  `id` int(5) NOT NULL AUTO_INCREMENT,
-  `nombre` varchar(200) DEFAULT NULL,
-  `precio` varchar(15) DEFAULT NULL,
-  `cantidad` int(5) DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- ----------------------------
--- Records of informacion_productos
--- ----------------------------
-
--- ----------------------------
--- Table structure for marca
--- ----------------------------
-DROP TABLE IF EXISTS `marca`;
-CREATE TABLE `marca` (
-  `id` int(3) NOT NULL AUTO_INCREMENT,
-  `nombre` varchar(200) NOT NULL,
-  `estado` int(2) NOT NULL COMMENT 'estatus para indicar si la tienda esta activa o no, dentro d',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- ----------------------------
 -- Records of marca
 -- ----------------------------
 
@@ -2127,117 +2385,6 @@ INSERT INTO `marca` VALUES (22, 'BAREFOOT WINE', 1);
 INSERT INTO `marca` VALUES (23, 'GALLO', 1);
 INSERT INTO `marca` VALUES (24, 'ROBERT MONDAVI', 1);
 INSERT INTO `marca` VALUES (25, 'YELLOWTAIL', 1);
-
-
--- ----------------------------
--- Table structure for metodo_pago
--- ----------------------------
-DROP TABLE IF EXISTS `metodo_pago`;
-CREATE TABLE `metodo_pago` (
-  `id` int(3) NOT NULL AUTO_INCREMENT,
-  `nombre` varchar(200) NOT NULL,
-  `valor` varchar(100) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- ----------------------------
--- Records of metodo_pago
--- ----------------------------
-
--- ----------------------------
--- Table structure for ordenes
--- ----------------------------
-DROP TABLE IF EXISTS `orden`;
-CREATE TABLE `orden` (
-  `id` int(6) NOT NULL AUTO_INCREMENT,
-  `id_direccion_envio` int(11) DEFAULT NULL,
-  `id_informacion_cliente` int(5) DEFAULT NULL,
-  `id_informacion_producto` int(5) DEFAULT NULL,
-  `estado_orden` varchar(20) DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `id_direccion_envio` (`id_direccion_envio`),
-  KEY `id_informacion_cliente` (`id_informacion_cliente`),
-  KEY `id_informacion_producto` (`id_informacion_producto`),
-  CONSTRAINT `ordenes_ibfk_1` FOREIGN KEY (`id_direccion_envio`) REFERENCES `direccion_envio` (`id`),
-  CONSTRAINT `ordenes_ibfk_2` FOREIGN KEY (`id_informacion_cliente`) REFERENCES `informacion_cliente` (`id`),
-  CONSTRAINT `ordenes_ibfk_3` FOREIGN KEY (`id_informacion_producto`) REFERENCES `informacion_productos` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- ----------------------------
--- Records of ordenes
--- ----------------------------
-
--- ----------------------------
--- Table structure for productos
--- ----------------------------
-DROP TABLE IF EXISTS `producto`;
-CREATE TABLE `producto` (
-  `id` int(5) NOT NULL AUTO_INCREMENT,
-  `nombre` varchar(200) NOT NULL,
-  `descripcion` mediumtext,
-  `caracteristicas` mediumtext,
-  `precio` varchar(15) DEFAULT NULL,
-  `inventario` int(5) DEFAULT NULL,
-  `id_tienda` int(5) DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `id_tienda` (`id_tienda`),
-  CONSTRAINT `productos_ibfk_1` FOREIGN KEY (`id_tienda`) REFERENCES `tienda` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- ----------------------------
--- Records of productos
--- ----------------------------
-
--- ----------------------------
--- Table structure for productos_categorias
--- ----------------------------
-DROP TABLE IF EXISTS `producto_categoria`;
-CREATE TABLE `producto_categoria` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `id_producto` int(5) NOT NULL,
-  `id_categoria` int(5) DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `id_producto` (`id_producto`),
-  KEY `id_categoria` (`id_categoria`),
-  CONSTRAINT `productos_categorias_ibfk_1` FOREIGN KEY (`id_producto`) REFERENCES `producto` (`id`),
-  CONSTRAINT `productos_categorias_ibfk_2` FOREIGN KEY (`id_categoria`) REFERENCES `categoria` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- ----------------------------
--- Records of productos_categorias
--- ----------------------------
-
--- ----------------------------
--- Table structure for productos_marca
--- ----------------------------
-DROP TABLE IF EXISTS `producto_marca`;
-CREATE TABLE `producto_marca` (
-  `id` int(3) NOT NULL AUTO_INCREMENT,
-  `id_producto` int(5) DEFAULT NULL,
-  `id_marca` int(3) DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `id_producto` (`id_producto`),
-  KEY `id_marca` (`id_marca`),
-  CONSTRAINT `productos_marca_ibfk_1` FOREIGN KEY (`id_producto`) REFERENCES `producto` (`id`),
-  CONSTRAINT `productos_marca_ibfk_2` FOREIGN KEY (`id_marca`) REFERENCES `marca` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- ----------------------------
--- Records of productos_marca
--- ----------------------------
-
--- ----------------------------
--- Table structure for provincia
--- ----------------------------
-DROP TABLE IF EXISTS `provincia`;
-CREATE TABLE `provincia` (
-  `id` int(3) NOT NULL AUTO_INCREMENT,
-  `nombre` varchar(100) NOT NULL,
-  `id_departamento` int(3) NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `id_departamento` (`id_departamento`),
-  CONSTRAINT `provincia_ibfk_1` FOREIGN KEY (`id_departamento`) REFERENCES `departamento` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='tabla de datos provincias de perú';
 
 -- ----------------------------
 -- Records of provincia
@@ -2439,101 +2586,6 @@ INSERT INTO `provincia` VALUES
 (193, 'PURUS', 25);
 
 
--- Records of roles
--- ----------------------------
-
--- ----------------------------
--- Table structure for tiendas
--- ----------------------------
-DROP TABLE IF EXISTS `tienda`;
-CREATE TABLE `tienda` (
-  `id` int(5) NOT NULL AUTO_INCREMENT,
-  `nombre` varchar(250) NOT NULL,
-  `ruc` varchar(30) NOT NULL,
-  `telefono_local` varchar(10) NOT NULL,
-  `telefono_movil` varchar(10) DEFAULT NULL,
-  `afiliacion` int(2) NOT NULL,
-  `afiliacion_valor` int(11) NOT NULL,
-  `id_metodo_pago` int(11) NOT NULL,
-  `estado` int(2) NOT NULL COMMENT 'estatus para indicar si la tienda esta activa o no, dentro d',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- ----------------------------
--- Records of tiendas
--- ----------------------------
-
--- ----------------------------
--- Table structure for tiendas_direcciones
--- ----------------------------
-DROP TABLE IF EXISTS `tienda_direccion`;
-CREATE TABLE `tienda_direccion` (
-  `id` int(5) NOT NULL AUTO_INCREMENT,
-  `id_direccion` int(5) DEFAULT NULL,
-  `id_tienda` int(5) DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `id_direccion` (`id_direccion`),
-  KEY `id_tienda` (`id_tienda`),
-  CONSTRAINT `tiendas_direcciones_ibfk_1` FOREIGN KEY (`id_direccion`) REFERENCES `direccion` (`id`),
-  CONSTRAINT `tiendas_direcciones_ibfk_2` FOREIGN KEY (`id_tienda`) REFERENCES `tienda` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- ----------------------------
--- Records of tiendas_direcciones
--- ----------------------------
-
--- ----------------------------
--- Table structure for tiendas_envio
--- ----------------------------
-DROP TABLE IF EXISTS `tienda_envio`;
-CREATE TABLE `tienda_envio` (
-  `id` int(5) NOT NULL AUTO_INCREMENT,
-  `id_tienda` int(5) DEFAULT NULL,
-  `id_envio` int(3) DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `id_tienda` (`id_tienda`),
-  KEY `id_envio` (`id_envio`),
-  CONSTRAINT `tiendas_envio_ibfk_1` FOREIGN KEY (`id_tienda`) REFERENCES `tienda` (`id`),
-  CONSTRAINT `tiendas_envio_ibfk_2` FOREIGN KEY (`id_envio`) REFERENCES `envio` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- ----------------------------
--- Records of tiendas_envio
--- ----------------------------
-
--- ----------------------------
--- Table structure for tiendas_metodo_pago
--- ----------------------------
-DROP TABLE IF EXISTS `tienda_metodo_pago`;
-CREATE TABLE `tienda_metodo_pago` (
-  `id` int(5) NOT NULL AUTO_INCREMENT,
-  `id_tienda` int(5) NOT NULL,
-  `id_metodo_pago` int(3) NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `id_tienda` (`id_tienda`),
-  KEY `id_metodo_pago` (`id_metodo_pago`),
-  CONSTRAINT `tiendas_metodo_pago_ibfk_1` FOREIGN KEY (`id_tienda`) REFERENCES `tienda` (`id`),
-  CONSTRAINT `tiendas_metodo_pago_ibfk_2` FOREIGN KEY (`id_metodo_pago`) REFERENCES `metodo_pago` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- ----------------------------
--- Records of tiendas_metodo_pago
--- ----------------------------
-
--- ----------------------------
--- Table structure for usuarios
--- ----------------------------
-DROP TABLE IF EXISTS `usuario`;
-CREATE TABLE `usuario` (
-  `id` int(5) NOT NULL AUTO_INCREMENT,
-  `nombre` varchar(100) DEFAULT NULL,
-  `apellido` varchar(200) DEFAULT NULL,
-  `correo` varchar(200) NOT NULL,
-  `login` varchar(200) NOT NULL,
-  `password` varchar(250) NOT NULL,
-  `estado` int(2) DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of usuarios
@@ -2546,41 +2598,9 @@ INSERT INTO `usuario` VALUES (4, 'JOHN', 'ORREGO', 'john.orrego@valmar.com.pe', 
 INSERT INTO `usuario` VALUES (5, 'RENZO', 'OSSIO', 'renzo.ossio@valmar.com.pe', 'renzo.ossio', '12345', 1);
 
 -- ----------------------------
--- Table structure for authority
--- ----------------------------
-CREATE TABLE `autoridad` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `nombre` varchar(255) DEFAULT NULL,
-  PRIMARY KEY (`id`)
-);
-
--- ----------------------------
 -- Records of autoridad
 -- ----------------------------
 
 INSERT INTO `autoridad` VALUES (1, 'ROLE_ADMIN');
 INSERT INTO `autoridad` VALUES (2, 'ROLE_USER');
 
--- ----------------------------
--- Table structure for user_authority
--- ----------------------------
-CREATE TABLE `usuario_autoridad` (
-  `usuario_id` int(11) NOT NULL,
-  `autoridad_id` int(11) NOT NULL,
-  KEY `usuario_id` (`usuario_id`),
-  KEY `autoridad_id` (`autoridad_id`),
-  FOREIGN KEY (`usuario_id`) REFERENCES `usuario` (`ID`),
-  FOREIGN KEY (`autoridad_id`) REFERENCES `autoridad` (`ID`)
-);
-
--- ----------------------------
--- Records of usuarios
--- ----------------------------
-CREATE TABLE `token`(
-  id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
-    authToken VARCHAR(500),
-    issuedOn TIMESTAMP,
-    expiresOn TIMESTAMP,
-    userId INT,
-    CONSTRAINT FK_TOKENXUSUARIO FOREIGN KEY (userId) REFERENCES `usuario` (`ID`)
-);
