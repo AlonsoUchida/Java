@@ -482,6 +482,66 @@ ENGINE = InnoDB
 DEFAULT CHARACTER SET = latin1;
 
 
+-- -----------------------------------------------------
+-- Table `CMS_VALMAR_DB`.`estado_cuenta`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `CMS_VALMAR_DB`.`estado_cuenta` (
+  `id` INT(5) NOT NULL,
+  `id_tienda` INT(5) NOT NULL,
+  `saldo_acumulado` DECIMAL NULL,
+  `fecha_limite_pago` TIMESTAMP NULL,
+  `fecha_ultimo_pago` TIMESTAMP NULL,
+  PRIMARY KEY (`id`),
+  INDEX `id_tienda_idx` (`id_tienda` ASC),
+  CONSTRAINT `fkid_estado_cuenta_tienda`
+    FOREIGN KEY (`id_tienda`)
+    REFERENCES `CMS_VALMAR_DB`.`tienda` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `CMS_VALMAR_DB`.`estado_cuenta_orden`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `CMS_VALMAR_DB`.`estado_cuenta_orden` (
+  `id_estado_cuenta` INT(5) NOT NULL,
+  `id_orden` INT(5) NOT NULL,
+  INDEX `fkid_estado_cuenta_orden1_idx` (`id_estado_cuenta` ASC),
+  INDEX `fkid_estado_cuenta_orden2_idx` (`id_orden` ASC),
+  CONSTRAINT `fkid_estado_cuenta_orden1`
+    FOREIGN KEY (`id_estado_cuenta`)
+    REFERENCES `CMS_VALMAR_DB`.`estado_cuenta` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fkid_estado_cuenta_orden2`
+    FOREIGN KEY (`id_orden`)
+    REFERENCES `CMS_VALMAR_DB`.`orden` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `CMS_VALMAR_DB`.`pagos_por_cuenta`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `CMS_VALMAR_DB`.`pagos_por_cuenta` (
+  `id` INT(5) NOT NULL,
+  `id_cuenta` INT(5) NOT NULL,
+  `saldo_pagado` DECIMAL NULL,
+  `fecha_pago` TIMESTAMP NULL,
+  `cuenta_banco` VARCHAR(100) NULL,
+  `ordenes` TEXT NULL,
+  PRIMARY KEY (`id`),
+  INDEX `fkid_pagos_por_cuenta_idx` (`id_cuenta` ASC),
+  CONSTRAINT `fkid_pagos_por_cuenta`
+    FOREIGN KEY (`id_cuenta`)
+    REFERENCES `CMS_VALMAR_DB`.`estado_cuenta` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
