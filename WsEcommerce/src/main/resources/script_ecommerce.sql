@@ -412,6 +412,8 @@ CREATE TABLE IF NOT EXISTS `CMS_VALMAR_DB`.`tienda_direccion` (
   `id` INT(5) NOT NULL AUTO_INCREMENT,
   `id_direccion` INT(5) NULL DEFAULT NULL,
   `id_tienda` INT(5) NULL DEFAULT NULL,
+  `latitud` VARCHAR(200) NULL DEFAULT NULL,
+  `longitud` VARCHAR(200) NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
   INDEX `id_direccion` (`id_direccion` ASC),
   INDEX `id_tienda` (`id_tienda` ASC),
