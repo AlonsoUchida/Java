@@ -42,12 +42,15 @@ DEFAULT CHARACTER SET = utf8;
 -- Table `CMS_VALMAR_DB`.`cliente`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `CMS_VALMAR_DB`.`cliente` (
-  `id` INT(5) NOT NULL AUTO_INCREMENT,
+  `id` INT(5) NOT NULL,
   `nombres` VARCHAR(150) NULL DEFAULT NULL,
   `apellidos` VARCHAR(150) NULL DEFAULT NULL,
   `correo` VARCHAR(150) NULL DEFAULT NULL,
   `password` VARCHAR(250) NULL DEFAULT NULL,
+  `genero` CHAR(1) NULL DEFAULT NULL,
   `estado` INT(2) NULL DEFAULT NULL,
+  `fecha_registro` DATETIME NULL DEFAULT NULL,
+  `fecha_modificacion` DATETIME NULL DEFAULT NULL,
   PRIMARY KEY (`id`))
 ENGINE = InnoDB
 AUTO_INCREMENT = 2
@@ -138,6 +141,8 @@ CREATE TABLE IF NOT EXISTS `CMS_VALMAR_DB`.`cliente_direccion` (
   `id` INT(5) NOT NULL AUTO_INCREMENT,
   `id_direccion` INT(5) NOT NULL,
   `id_cliente` INT(5) NOT NULL,
+  `latitud` VARCHAR(200) NULL,
+  `longitud` VARCHAR(200) NULL,
   PRIMARY KEY (`id`),
   INDEX `id_direccion` (`id_direccion` ASC),
   INDEX `id_cliente` (`id_cliente` ASC),
@@ -191,6 +196,8 @@ CREATE TABLE IF NOT EXISTS `CMS_VALMAR_DB`.`usuario` (
   `login` VARCHAR(200) NOT NULL,
   `password` VARCHAR(250) NOT NULL,
   `estado` INT(2) NULL DEFAULT NULL,
+  `fecha_registro` DATETIME NULL DEFAULT NULL,
+  `fecha_modifiacion` DATETIME NULL DEFAULT NULL,
   PRIMARY KEY (`id`))
 ENGINE = InnoDB
 AUTO_INCREMENT = 6
@@ -210,7 +217,10 @@ CREATE TABLE IF NOT EXISTS `CMS_VALMAR_DB`.`tienda` (
   `afiliacion_valor` INT(11) NOT NULL,
   `id_metodo_pago` INT(11) NOT NULL,
   `estado` INT(2) NOT NULL COMMENT 'estatus para indicar si la tienda esta activa o no, dentro d',
+  `costo_minimo` DECIMAL NULL,
   `id_usuario` INT(5) NOT NULL,
+  `fecha_registro` DATETIME NULL,
+  `fecha_modificacion` DATETIME NULL,
   PRIMARY KEY (`id`),
   INDEX `tienda_usuario_ibfk_1` (`id_usuario` ASC),
   CONSTRAINT `tienda_usuario_ibfk_1`
@@ -224,13 +234,17 @@ DEFAULT CHARACTER SET = utf8;
 -- Table `CMS_VALMAR_DB`.`producto`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `CMS_VALMAR_DB`.`producto` (
-  `id` INT(5) NOT NULL AUTO_INCREMENT,
+  `id` INT(5) NOT NULL,
   `nombre` VARCHAR(200) NOT NULL,
   `descripcion` MEDIUMTEXT NULL DEFAULT NULL,
   `caracteristicas` MEDIUMTEXT NULL DEFAULT NULL,
   `precio` VARCHAR(15) NULL DEFAULT NULL,
   `inventario` INT(5) NULL DEFAULT NULL,
+  `presentacion` VARCHAR(45) NULL,
+  `descuento` DECIMAL NULL,
   `id_tienda` INT(5) NULL DEFAULT NULL,
+  `fecha_registro` DATETIME NULL DEFAULT NULL,
+  `fecha_modificacion` DATETIME NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
   INDEX `id_tienda` (`id_tienda` ASC),
   CONSTRAINT `productos_ibfk_1`
@@ -244,10 +258,13 @@ DEFAULT CHARACTER SET = utf8;
 -- Table `CMS_VALMAR_DB`.`imagen`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `CMS_VALMAR_DB`.`imagen` (
-  `id` INT(5) NOT NULL AUTO_INCREMENT,
+  `id` INT(5) NOT NULL,
   `id_producto` INT(5) NULL DEFAULT NULL,
   `nombre` VARCHAR(100) NULL DEFAULT NULL,
   `imagen` BLOB NULL DEFAULT NULL,
+  `defecto` INT(1) NULL,
+  `latitud` VARCHAR(200) NULL,
+  `longitud` VARCHAR(200) NULL,
   PRIMARY KEY (`id`),
   INDEX `id_producto` (`id_producto` ASC),
   CONSTRAINT `imagenes_ibfk_1`
@@ -329,6 +346,8 @@ CREATE TABLE IF NOT EXISTS `CMS_VALMAR_DB`.`orden` (
   `id_informacion_cliente` INT(5) NULL DEFAULT NULL,
   `id_informacion_producto` INT(5) NULL DEFAULT NULL,
   `estado_orden` VARCHAR(20) NULL DEFAULT NULL,
+  `costo_total` DECIMAL NULL DEFAULT NULL,
+  `fecha_envio` DATETIME NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
   INDEX `id_direccion_envio` (`id_direccion_envio` ASC),
   INDEX `id_informacion_cliente` (`id_informacion_cliente` ASC),
