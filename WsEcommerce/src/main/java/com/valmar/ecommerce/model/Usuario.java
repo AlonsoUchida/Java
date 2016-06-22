@@ -13,7 +13,6 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
@@ -27,34 +26,22 @@ public class Usuario {
 	@Column(name = "ID")
 	private Long id;
 
-	@Column(name = "NOMBRE", length = 200, unique = true)
-	@NotNull
-	@Size(min = 4, max = 200)
+	@Column(name = "NOMBRE")
 	private String nombre;
 	
-	@Column(name = "APELLIDO", length = 100, unique = true)
-	@NotNull
-	@Size(min = 4, max = 100)
+	@Column(name = "APELLIDO")
 	private String apellido;
 	
-	@Column(name = "CORREO", length = 100, unique = true)
-	@NotNull
-	@Size(min = 4, max = 100)
+	@Column(name = "CORREO")
 	private String correo;
 	
-	@Column(name = "LOGIN", length = 100, unique = true)
-	@NotNull
-	@Size(min = 4, max = 100)
+	@Column(name = "LOGIN")
 	private String login;
 	
-	@Column(name = "PASSWORD", length = 100, unique = true)
-	@NotNull
-	@Size(min = 4, max = 100)
+	@Column(name = "PASSWORD")
 	private String password;
 	
-	@Column(name = "ESTADO", length = 100, unique = true)
-	@NotNull
-	@Size(min = 1, max = 1)
+	@Column(name = "ESTADO")
 	private int estado;
 	
 	@JsonIgnore
@@ -65,7 +52,7 @@ public class Usuario {
             inverseJoinColumns = {@JoinColumn(name = "AUTORIDAD_ID", referencedColumnName = "ID")})
     private List<Authority> authorities;
 	
-	@OneToMany(fetch = FetchType.EAGER, mappedBy = "usuario", cascade = CascadeType.ALL)
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "usuario", cascade = CascadeType.ALL)
 	@JsonBackReference
 	private Set<Tienda> tiendas;
 	

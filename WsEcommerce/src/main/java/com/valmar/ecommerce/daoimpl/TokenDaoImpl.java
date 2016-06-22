@@ -64,6 +64,7 @@ public class TokenDaoImpl extends AbstractDao<Integer, Token> implements TokenDa
 
 	@Override
 	public boolean validateToken(String tokenId) {
+		boolean isValidated = false; 
 		try {
 			Query query = getSession().createSQLQuery(
 					"SELECT * FROM token t " + "WHERE t.AuthToken = :authToken " + "AND t.ExpiresOn > :currentDate");
@@ -71,7 +72,7 @@ public class TokenDaoImpl extends AbstractDao<Integer, Token> implements TokenDa
 			query.setTimestamp("currentDate", new Timestamp(new Date().getTime()));
 			@SuppressWarnings("unchecked")
 			List<Object[]> results = query.list();
-			if (results != null) {
+			if ((results != null) && (!results.isEmpty())) {
 				Token token = new Token();
 				for (Object[] row : results) {
 					token.setId(Long.parseLong(row[0].toString()));
@@ -89,11 +90,12 @@ public class TokenDaoImpl extends AbstractDao<Integer, Token> implements TokenDa
 				queryToUpdate.setParameter("expiresOn", token.getExpiresOn());
 				queryToUpdate.setParameter("authToken", token.getAuthToken());
 				queryToUpdate.executeUpdate();
+				isValidated = true;
 			}
 		} catch (Exception ex) {
-			return false;
+			return isValidated;
 		}
-		return true;
+		return isValidated;
 	}
 
 	@Override

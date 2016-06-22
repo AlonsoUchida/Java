@@ -11,7 +11,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -27,39 +26,26 @@ public class Tienda {
 	@Column(name = "ID")
 	private int id;
 
-	@Column(name = "NOMBRE", length = 200)
-	@NotNull
-	@Size(min = 4, max = 250)
+	@Column(name = "NOMBRE")
 	private String nombre;
 	
-	@Column(name = "RUC", length = 100, unique = true)
-	@NotNull
+	@Column(name = "RUC")
 	@Size(min = 4, max = 30)
 	private String ruc;
 	
 	@Column(name = "TELEFONO_LOCAL")
-	@NotNull
-	@Size(min = 1, max = 10)
 	private String telefono_local;
 	
 	@Column(name = "TELEFONO_MOVIL")
-	@NotNull
-	@Size(min = 1, max = 10)
 	private String telefono_movil;
 	
 	@Column(name = "AFILIACION")
-	@NotNull
 	private int afiliacion;
 	
 	@Column(name = "AFILIACION_VALOR")
-	@NotNull
 	private int afiliacion_valor;
 	
-	@OneToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name="ID_METODO_PAGO")
-	
-	
-	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL )
+	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	  @JoinTable(
 	      name="TIENDA_METODO_PAGO",
 	      joinColumns=@JoinColumn(name="ID_TIENDA", referencedColumnName="ID"),
@@ -67,13 +53,11 @@ public class Tienda {
 	@JsonManagedReference
 	private Set<MetodoPago> metodoPagos;
 	
-	@Column(name = "ESTADO", length=2)
-	@NotNull
+	@Column(name = "ESTADO")
 	private int estado;
 	
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne
     @JoinColumn(name="ID_USUARIO")
-	@JsonIgnore
     private Usuario usuario;
 
 	public int getId() {

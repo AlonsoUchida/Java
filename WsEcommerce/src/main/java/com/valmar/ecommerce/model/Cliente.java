@@ -4,7 +4,6 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 @Entity
@@ -15,27 +14,21 @@ public class Cliente {
 	@Column(name = "ID")
 	private int id;
 
-	@Column(name = "NOMBRES", length = 150)
-	@NotNull
+	@Column(name = "NOMBRES")
 	private String nombres;
 	
-	@Column(name = "APELLIDOS", length = 150)
-	@NotNull
+	@Column(name = "APELLIDOS")
 	private String apellidos;
 	
-	@Column(name = "CORREO", length = 150)
-	@NotNull
+	@Column(name = "CORREO")
 	private String correo;	
 	
-	@Column(name = "PASSWORD", length = 250)
-	@NotNull
+	@Column(name = "PASSWORD")
 	@Size(min = 4, max = 100)
 	private String password;	
 	
-	@Column(name = "ESTADO", length = 2)
-	@NotNull
+	@Column(name = "ESTADO")
 	private int estado;
-
 
 	public int getId() {
 		return id;
@@ -84,8 +77,5 @@ public class Cliente {
 	public void setEstado(int estado) {
 		this.estado = estado;
 	}
-	
-	
-	
 	
 }

@@ -32,8 +32,13 @@
 				<value>com.valmar.ecommerce.model.Provincia</value>
 				<value>com.valmar.ecommerce.model.Distrito</value>
 				<value>com.valmar.ecommerce.model.Direccion</value>
+				<value>com.valmar.ecommerce.model.Tienda</value>
+				<value>com.valmar.ecommerce.model.Producto</value>
+				<value>com.valmar.ecommerce.model.MetodoPago</value>
+				
+				<value>com.valmar.ecommerce.model.Token</value>
                 <value>com.valmar.ecommerce.model.Usuario</value>
-                <value>com.valmar.ecommerce.model.Authority</value>
+                <value>com.valmar.ecommerce.model.Authority</value>                
             </list>
         </property>
         <property name="hibernateProperties">

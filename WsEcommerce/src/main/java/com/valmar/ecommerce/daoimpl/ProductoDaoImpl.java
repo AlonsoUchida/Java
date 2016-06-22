@@ -11,7 +11,6 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 import com.valmar.ecommerce.dao.AbstractDao;
 import com.valmar.ecommerce.dao.ProductoDao;
 import com.valmar.ecommerce.model.Producto;
-import com.valmar.ecommerce.model.Tienda;
 
 @Repository("productoDao")
 @EnableTransactionManagement
