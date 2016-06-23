@@ -247,8 +247,6 @@ CREATE TABLE IF NOT EXISTS `CMS_VALMAR_DB`.`imagen` (
   `nombre` VARCHAR(100) NULL DEFAULT NULL,
   `imagen` BLOB NULL DEFAULT NULL,
   `defecto` INT(1) NULL,
-  `latitud` VARCHAR(200) NULL,
-  `longitud` VARCHAR(200) NULL,
   PRIMARY KEY (`id`),
   INDEX `id_producto` (`id_producto` ASC),
   CONSTRAINT `imagenes_ibfk_1`
