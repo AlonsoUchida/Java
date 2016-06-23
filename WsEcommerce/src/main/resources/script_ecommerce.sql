@@ -12,7 +12,7 @@ SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='TRADITIONAL,ALLOW_INVALID_DATES';
 -- Schema CMS_VALMAR_DB
 -- -----------------------------------------------------
 CREATE SCHEMA IF NOT EXISTS `CMS_VALMAR_DB` DEFAULT CHARACTER SET latin1 ;
-USE `CMS_VALMAR_DB`;
+USE `CMS_VALMAR_DB` ;
 
 -- -----------------------------------------------------
 -- Table `CMS_VALMAR_DB`.`autoridad`
@@ -193,7 +193,6 @@ CREATE TABLE IF NOT EXISTS `CMS_VALMAR_DB`.`usuario` (
   `nombre` VARCHAR(100) NULL DEFAULT NULL,
   `apellido` VARCHAR(200) NULL DEFAULT NULL,
   `correo` VARCHAR(200) NOT NULL,
-  `login` VARCHAR(200) NOT NULL,
   `password` VARCHAR(250) NOT NULL,
   `estado` INT(2) NULL DEFAULT NULL,
   `fecha_registro` DATETIME NULL DEFAULT NULL,

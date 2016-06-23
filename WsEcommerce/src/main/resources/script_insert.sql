@@ -2125,11 +2125,11 @@ INSERT INTO `marca` VALUES (25, 'YELLOWTAIL', 1);
 -- Records of usuarios
 -- ----------------------------
 
-INSERT INTO `usuario` VALUES (1, 'JOSUE', 'MOSQUERA', 'josue.mosquera@valmar.com.pe', 'josue.mosquera', '12345', 1, NOW(), NOW());
-INSERT INTO `usuario` VALUES (2, 'ALONSO', 'UCHIDA', 'javier.uchida@valmar.com.pe', 'alonso.uchida', '12345', 1,  NOW(), NOW());
-INSERT INTO `usuario` VALUES (3, 'VICTOR', 'MALAVER', 'victor.malaver@valmar.com.pe', 'victor.malaver', '12345', 1,  NOW(), NOW());
-INSERT INTO `usuario` VALUES (4, 'JOHN', 'ORREGO', 'john.orrego@valmar.com.pe', 'john.orrego', '12345', 1,  NOW(), NOW());
-INSERT INTO `usuario` VALUES (5, 'RENZO', 'OSSIO', 'renzo.ossio@valmar.com.pe', 'renzo.ossio', '12345', 1,  NOW(), NOW());
+INSERT INTO `usuario` VALUES (1, 'JOSUE', 'MOSQUERA', 'josue.mosquera@valmar.com.pe', '12345', 1, NOW(), NOW());
+INSERT INTO `usuario` VALUES (2, 'ALONSO', 'UCHIDA', 'javier.uchida@valmar.com.pe', '12345', 1,  NOW(), NOW());
+INSERT INTO `usuario` VALUES (3, 'VICTOR', 'MALAVER', 'victor.malaver@valmar.com.pe', '12345', 1,  NOW(), NOW());
+INSERT INTO `usuario` VALUES (4, 'JOHN', 'ORREGO', 'john.orrego@valmar.com.pe', '12345', 1,  NOW(), NOW());
+INSERT INTO `usuario` VALUES (5, 'RENZO', 'OSSIO', 'renzo.ossio@valmar.com.pe', '12345', 1,  NOW(), NOW());
 
 -- ----------------------------
 -- Records of autoridad
