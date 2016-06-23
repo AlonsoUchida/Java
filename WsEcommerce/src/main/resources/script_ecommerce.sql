@@ -196,7 +196,7 @@ CREATE TABLE IF NOT EXISTS `CMS_VALMAR_DB`.`usuario` (
   `password` VARCHAR(250) NOT NULL,
   `estado` INT(2) NULL DEFAULT NULL,
   `fecha_registro` DATETIME NULL DEFAULT NULL,
-  `fecha_modifiacion` DATETIME NULL DEFAULT NULL,
+  `fecha_modificacion` DATETIME NULL DEFAULT NULL,
   PRIMARY KEY (`id`))
 ENGINE = InnoDB
 AUTO_INCREMENT = 6
