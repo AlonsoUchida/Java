@@ -39,25 +39,6 @@ DEFAULT CHARACTER SET = utf8;
 
 
 -- -----------------------------------------------------
--- Table `CMS_VALMAR_DB`.`cliente`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `CMS_VALMAR_DB`.`cliente` (
-  `id` INT(5) NOT NULL,
-  `nombres` VARCHAR(150) NULL DEFAULT NULL,
-  `apellidos` VARCHAR(150) NULL DEFAULT NULL,
-  `correo` VARCHAR(150) NULL DEFAULT NULL,
-  `password` VARCHAR(250) NULL DEFAULT NULL,
-  `genero` CHAR(1) NULL DEFAULT NULL,
-  `estado` INT(2) NULL DEFAULT NULL,
-  `fecha_registro` DATETIME NULL DEFAULT NULL,
-  `fecha_modificacion` DATETIME NULL DEFAULT NULL,
-  PRIMARY KEY (`id`))
-ENGINE = InnoDB
-AUTO_INCREMENT = 2
-DEFAULT CHARACTER SET = utf8;
-
-
--- -----------------------------------------------------
 -- Table `CMS_VALMAR_DB`.`departamento`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `CMS_VALMAR_DB`.`departamento` (
@@ -135,6 +116,26 @@ DEFAULT CHARACTER SET = utf8;
 
 
 -- -----------------------------------------------------
+-- Table `CMS_VALMAR_DB`.`usuario`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `CMS_VALMAR_DB`.`usuario` (
+  `id` INT(5) NOT NULL AUTO_INCREMENT,
+  `nombre` VARCHAR(100) NULL DEFAULT NULL,
+  `apellido` VARCHAR(200) NULL DEFAULT NULL,
+  `correo` VARCHAR(200) NOT NULL,
+  `password` VARCHAR(250) NOT NULL,
+  `genero` CHAR(1) NULL,
+  `tipo` INT(1) NULL,
+  `estado` INT(2) NULL DEFAULT NULL,
+  `fecha_registro` DATETIME NULL DEFAULT NULL,
+  `fecha_modificacion` DATETIME NULL DEFAULT NULL,
+  PRIMARY KEY (`id`))
+ENGINE = InnoDB
+AUTO_INCREMENT = 6
+DEFAULT CHARACTER SET = utf8;
+
+
+-- -----------------------------------------------------
 -- Table `CMS_VALMAR_DB`.`cliente_direccion`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `CMS_VALMAR_DB`.`cliente_direccion` (
@@ -145,13 +146,15 @@ CREATE TABLE IF NOT EXISTS `CMS_VALMAR_DB`.`cliente_direccion` (
   `longitud` VARCHAR(200) NULL,
   PRIMARY KEY (`id`),
   INDEX `id_direccion` (`id_direccion` ASC),
-  INDEX `id_cliente` (`id_cliente` ASC),
+  INDEX `cliiente_usuario_ibfk_2_idx` (`id_cliente` ASC),
   CONSTRAINT `clientes_direcciones_ibfk_1`
     FOREIGN KEY (`id_direccion`)
     REFERENCES `CMS_VALMAR_DB`.`direccion` (`id`),
-  CONSTRAINT `clientes_direcciones_ibfk_2`
+  CONSTRAINT `cliiente_usuario_ibfk_2`
     FOREIGN KEY (`id_cliente`)
-    REFERENCES `CMS_VALMAR_DB`.`cliente` (`id`))
+    REFERENCES `CMS_VALMAR_DB`.`usuario` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
 
@@ -182,24 +185,6 @@ CREATE TABLE IF NOT EXISTS `CMS_VALMAR_DB`.`envio` (
   `valor` VARCHAR(100) NOT NULL,
   PRIMARY KEY (`id`))
 ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8;
-
-
--- -----------------------------------------------------
--- Table `CMS_VALMAR_DB`.`usuario`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `CMS_VALMAR_DB`.`usuario` (
-  `id` INT(5) NOT NULL AUTO_INCREMENT,
-  `nombre` VARCHAR(100) NULL DEFAULT NULL,
-  `apellido` VARCHAR(200) NULL DEFAULT NULL,
-  `correo` VARCHAR(200) NOT NULL,
-  `password` VARCHAR(250) NOT NULL,
-  `estado` INT(2) NULL DEFAULT NULL,
-  `fecha_registro` DATETIME NULL DEFAULT NULL,
-  `fecha_modificacion` DATETIME NULL DEFAULT NULL,
-  PRIMARY KEY (`id`))
-ENGINE = InnoDB
-AUTO_INCREMENT = 6
 DEFAULT CHARACTER SET = utf8;
 
 
@@ -285,10 +270,12 @@ CREATE TABLE IF NOT EXISTS `CMS_VALMAR_DB`.`informacion_cliente` (
   `telefono_movil` VARCHAR(10) NULL DEFAULT NULL,
   `id_cliente` INT(5) NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
-  INDEX `id_cliente` (`id_cliente` ASC),
-  CONSTRAINT `informacion_cliente_ibfk_1`
+  INDEX `id_usuario_idx` (`id_cliente` ASC),
+  CONSTRAINT `id_usuario`
     FOREIGN KEY (`id_cliente`)
-    REFERENCES `CMS_VALMAR_DB`.`cliente` (`id`))
+    REFERENCES `CMS_VALMAR_DB`.`usuario` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
 
