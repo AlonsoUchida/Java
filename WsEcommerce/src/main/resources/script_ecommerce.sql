@@ -32,7 +32,14 @@ DEFAULT CHARACTER SET = latin1;
 CREATE TABLE IF NOT EXISTS `CMS_VALMAR_DB`.`categoria` (
   `id` INT(5) NOT NULL AUTO_INCREMENT,
   `nombre` VARCHAR(200) NOT NULL,
-  PRIMARY KEY (`id`))
+  `id_categoria` INT(5) NULL,
+  PRIMARY KEY (`id`),
+  INDEX `foreginkey_ibk_idx` (`id_categoria` ASC),
+  CONSTRAINT `foreginkey_ibk`
+    FOREIGN KEY (`id_categoria`)
+    REFERENCES `CMS_VALMAR_DB`.`categoria` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
 ENGINE = InnoDB
 AUTO_INCREMENT = 11
 DEFAULT CHARACTER SET = utf8;
@@ -144,6 +151,7 @@ CREATE TABLE IF NOT EXISTS `CMS_VALMAR_DB`.`cliente_direccion` (
   `id_cliente` INT(5) NOT NULL,
   `latitud` VARCHAR(200) NULL,
   `longitud` VARCHAR(200) NULL,
+  `activo` INT(1) NULL,
   PRIMARY KEY (`id`),
   INDEX `id_direccion` (`id_direccion` ASC),
   INDEX `cliiente_usuario_ibfk_2_idx` (`id_cliente` ASC),
@@ -201,8 +209,10 @@ CREATE TABLE IF NOT EXISTS `CMS_VALMAR_DB`.`tienda` (
   `afiliacion_valor` INT(11) NOT NULL,
   `id_metodo_pago` INT(11) NOT NULL,
   `costo_minimo` DECIMAL NULL,
+  `estado_abierto` INT(1) NULL,
+  `imagen` BLOB NULL,
   `id_usuario` INT(5) NOT NULL,
-  `estado` INT(2) NOT NULL COMMENT 'estatus para indicar si la tienda esta activa o no, dentro d',
+  `estado` INT(1) NOT NULL COMMENT 'estatus para indicar si la tienda esta activa o no, dentro d',
   `fecha_registro` DATETIME NULL,
   `fecha_modificacion` DATETIME NULL,
   PRIMARY KEY (`id`),
@@ -215,6 +225,19 @@ DEFAULT CHARACTER SET = utf8;
 
 
 -- -----------------------------------------------------
+-- Table `CMS_VALMAR_DB`.`marca`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `CMS_VALMAR_DB`.`marca` (
+  `id` INT(3) NOT NULL AUTO_INCREMENT,
+  `nombre` VARCHAR(200) NOT NULL,
+  `estado` INT(2) NOT NULL COMMENT 'estatus para indicar si la tienda esta activa o no, dentro d',
+  PRIMARY KEY (`id`))
+ENGINE = InnoDB
+AUTO_INCREMENT = 26
+DEFAULT CHARACTER SET = utf8;
+
+
+-- -----------------------------------------------------
 -- Table `CMS_VALMAR_DB`.`producto`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `CMS_VALMAR_DB`.`producto` (
@@ -223,7 +246,7 @@ CREATE TABLE IF NOT EXISTS `CMS_VALMAR_DB`.`producto` (
   `descripcion` MEDIUMTEXT NULL DEFAULT NULL,
   `caracteristicas` MEDIUMTEXT NULL DEFAULT NULL,
   `precio` VARCHAR(15) NULL DEFAULT NULL,
-  `inventario` INT(5) NULL DEFAULT NULL,
+  `id_marca` INT(5) NOT NULL,
   `presentacion` VARCHAR(45) NULL DEFAULT NULL,
   `descuento` DECIMAL NULL DEFAULT NULL,
   `id_tienda` INT(5) NULL DEFAULT NULL,
@@ -232,17 +255,23 @@ CREATE TABLE IF NOT EXISTS `CMS_VALMAR_DB`.`producto` (
   `fecha_modificacion` DATETIME NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
   INDEX `id_tienda` (`id_tienda` ASC),
+  INDEX `producto_marca_idx` (`id_marca` ASC),
   CONSTRAINT `productos_ibfk_1`
     FOREIGN KEY (`id_tienda`)
-    REFERENCES `CMS_VALMAR_DB`.`tienda` (`id`))
+    REFERENCES `CMS_VALMAR_DB`.`tienda` (`id`),
+  CONSTRAINT `producto_marca`
+    FOREIGN KEY (`id_marca`)
+    REFERENCES `CMS_VALMAR_DB`.`marca` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
 
 
 -- -----------------------------------------------------
--- Table `CMS_VALMAR_DB`.`imagen`
+-- Table `CMS_VALMAR_DB`.`imagen_producto`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `CMS_VALMAR_DB`.`imagen` (
+CREATE TABLE IF NOT EXISTS `CMS_VALMAR_DB`.`imagen_producto` (
   `id` INT(5) NOT NULL,
   `id_producto` INT(5) NULL DEFAULT NULL,
   `nombre` VARCHAR(100) NULL DEFAULT NULL,
@@ -298,19 +327,6 @@ DEFAULT CHARACTER SET = utf8;
 
 
 -- -----------------------------------------------------
--- Table `CMS_VALMAR_DB`.`marca`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `CMS_VALMAR_DB`.`marca` (
-  `id` INT(3) NOT NULL AUTO_INCREMENT,
-  `nombre` VARCHAR(200) NOT NULL,
-  `estado` INT(2) NOT NULL COMMENT 'estatus para indicar si la tienda esta activa o no, dentro d',
-  PRIMARY KEY (`id`))
-ENGINE = InnoDB
-AUTO_INCREMENT = 26
-DEFAULT CHARACTER SET = utf8;
-
-
--- -----------------------------------------------------
 -- Table `CMS_VALMAR_DB`.`metodo_pago`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `CMS_VALMAR_DB`.`metodo_pago` (
@@ -331,12 +347,14 @@ CREATE TABLE IF NOT EXISTS `CMS_VALMAR_DB`.`orden` (
   `id_informacion_cliente` INT(5) NULL DEFAULT NULL,
   `id_informacion_producto` INT(5) NULL DEFAULT NULL,
   `estado_orden` VARCHAR(20) NULL DEFAULT NULL,
+  `costo_envio` DECIMAL NULL DEFAULT NULL,
   `costo_total` DECIMAL NULL DEFAULT NULL,
   `fecha_envio` DATETIME NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
   INDEX `id_direccion_envio` (`id_direccion_envio` ASC),
   INDEX `id_informacion_cliente` (`id_informacion_cliente` ASC),
   INDEX `id_informacion_producto` (`id_informacion_producto` ASC),
+  UNIQUE INDEX `costo_envio_UNIQUE` (`costo_envio` ASC),
   CONSTRAINT `ordenes_ibfk_1`
     FOREIGN KEY (`id_direccion_envio`)
     REFERENCES `CMS_VALMAR_DB`.`direccion_envio` (`id`),
@@ -366,26 +384,6 @@ CREATE TABLE IF NOT EXISTS `CMS_VALMAR_DB`.`producto_categoria` (
   CONSTRAINT `productos_categorias_ibfk_2`
     FOREIGN KEY (`id_categoria`)
     REFERENCES `CMS_VALMAR_DB`.`categoria` (`id`))
-ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8;
-
-
--- -----------------------------------------------------
--- Table `CMS_VALMAR_DB`.`producto_marca`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `CMS_VALMAR_DB`.`producto_marca` (
-  `id` INT(3) NOT NULL AUTO_INCREMENT,
-  `id_producto` INT(5) NULL DEFAULT NULL,
-  `id_marca` INT(3) NULL DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  INDEX `id_producto` (`id_producto` ASC),
-  INDEX `id_marca` (`id_marca` ASC),
-  CONSTRAINT `productos_marca_ibfk_1`
-    FOREIGN KEY (`id_producto`)
-    REFERENCES `CMS_VALMAR_DB`.`producto` (`id`),
-  CONSTRAINT `productos_marca_ibfk_2`
-    FOREIGN KEY (`id_marca`)
-    REFERENCES `CMS_VALMAR_DB`.`marca` (`id`))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
 
