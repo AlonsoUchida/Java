@@ -1,5 +1,6 @@
 package com.valmar.ecommerce.model;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
@@ -7,12 +8,16 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.validation.constraints.Size;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
@@ -24,7 +29,8 @@ public class Usuario {
 
 	@Id
 	@Column(name = "ID")
-	private Long id;
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private int id;
 
 	@Column(name = "NOMBRE")
 	private String nombre;
@@ -32,17 +38,35 @@ public class Usuario {
 	@Column(name = "APELLIDO")
 	private String apellido;
 	
-	@Column(name = "CORREO")
+	@Column(name = "CORREO", unique=true)
 	private String correo;
-	
-	@Column(name = "LOGIN")
-	private String login;
 	
 	@Column(name = "PASSWORD")
 	private String password;
 	
+	@Column(name = "GENERO")
+	private String genero;
+	
+	@Column(name = "TIPO")
+	private int tipo;
+	
 	@Column(name = "ESTADO")
 	private int estado;
+	
+	@Column(name = "FECHA_REGISTRO", updatable=false)
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date fechaRegistro;
+	
+	@Column(name = "FECHA_MODIFICACION")
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date fechaModificacion;
+	
+	@ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(
+            name = "cliente_direccion",
+            joinColumns = {@JoinColumn(name = "ID_CLIENTE", referencedColumnName = "ID")},
+            inverseJoinColumns = {@JoinColumn(name = "ID_DIRECCION", referencedColumnName = "ID")})
+    private List<Direccion> direcciones;
 	
 	@JsonIgnore
 	@ManyToMany(fetch = FetchType.LAZY)
@@ -52,15 +76,16 @@ public class Usuario {
             inverseJoinColumns = {@JoinColumn(name = "AUTORIDAD_ID", referencedColumnName = "ID")})
     private List<Authority> authorities;
 	
+	@JsonIgnore
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "usuario", cascade = CascadeType.ALL)
 	@JsonBackReference
 	private Set<Tienda> tiendas;
 	
-	public Long getId() {
+	public int getId() {
 		return id;
 	}
 
-	public void setId(Long id) {
+	public void setId(int id) {
 		this.id = id;
 	}
 
@@ -97,14 +122,6 @@ public class Usuario {
 		this.apellido = apellido;
 	}
 
-	public String getLogin() {
-		return login;
-	}
-
-	public void setLogin(String login) {
-		this.login = login;
-	}
-
 	public String getPassword() {
 		return password;
 	}
@@ -127,6 +144,38 @@ public class Usuario {
 
 	public void setTiendas(Set<Tienda> tiendas) {
 		this.tiendas = tiendas;
+	}
+
+	public Date getFechaRegistro() {
+		return fechaRegistro;
+	}
+
+	public void setFechaRegistro(Date fechaRegistro) {
+		this.fechaRegistro = fechaRegistro;
+	}
+
+	public Date getFechaModificacion() {
+		return fechaModificacion;
+	}
+
+	public void setFechaModificacion(Date fechaModificacion) {
+		this.fechaModificacion = fechaModificacion;
+	}
+
+	public String getGenero() {
+		return genero;
+	}
+
+	public void setGenero(String genero) {
+		this.genero = genero;
+	}
+
+	public int getTipo() {
+		return tipo;
+	}
+
+	public void setTipo(int tipo) {
+		this.tipo = tipo;
 	}
 	
 	

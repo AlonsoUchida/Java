@@ -5,8 +5,17 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import com.valmar.ecommerce.dao.DepartamentoDao;
 import com.valmar.ecommerce.dao.DireccionDao;
+import com.valmar.ecommerce.dao.DistritoDao;
+import com.valmar.ecommerce.dao.ProvinciaDao;
+import com.valmar.ecommerce.dao.UsuarioDao;
+import com.valmar.ecommerce.model.Departamento;
 import com.valmar.ecommerce.model.Direccion;
+import com.valmar.ecommerce.model.Distrito;
+import com.valmar.ecommerce.model.Provincia;
+import com.valmar.ecommerce.model.Usuario;
 import com.valmar.ecommerce.services.DireccionService;
 
 
@@ -16,6 +25,14 @@ public class DireccionServiceImpl implements DireccionService{
 
 	@Autowired
 	private DireccionDao direccionDao;
+	@Autowired
+	private ProvinciaDao provinciaDao;
+	@Autowired
+	private DepartamentoDao departamentoDao;
+	@Autowired
+	private DistritoDao distritoDao;
+	@Autowired
+	private UsuarioDao usuarioDao;
 	
 	@Override
 	public Direccion obtenerPorId(int id) {
@@ -23,8 +40,14 @@ public class DireccionServiceImpl implements DireccionService{
 	}
 
 	@Override
-	public void agregar(Direccion cliente) {
-		direccionDao.agregar(cliente);		
+	public void agregar(Direccion direccion) {
+		direccionDao.agregar(direccion);		
+	}
+	
+	@Override
+	public void actualizar(Direccion direccion) {
+		direccionDao.actualizar(direccion);
+		
 	}
 
 	@Override
@@ -36,6 +59,26 @@ public class DireccionServiceImpl implements DireccionService{
 	@Override
 	public List<Direccion> listarDirecciones() {
 		return direccionDao.listarDirecciones();
+	}
+
+	@Override
+	public Provincia obtenerProvinciaPorId(int id) {
+		return provinciaDao.obtenerPorId(id);
+	}
+
+	@Override
+	public Departamento obtenerDepartamentoPorId(int id) {
+		return departamentoDao.obtenerPorId(id);
+	}
+
+	@Override
+	public Distrito obtenerDistritoPorId(int id) {
+		return distritoDao.obtenerPorId(id);
+	}
+
+	@Override
+	public Usuario obtenerUsuarioPorId(int id) {
+		return usuarioDao.obtenerPorId(id);
 	}
 
 

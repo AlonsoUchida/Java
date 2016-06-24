@@ -31,6 +31,15 @@ public class UsuarioDaoImpl extends AbstractDao<Integer, Usuario> implements Usu
 			e.printStackTrace();
 		}
 	}
+	
+	@Override
+	public void actualizar(Usuario usuario) {
+		try {
+			merge(usuario);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 
 	@Override
 	public void eliminar(int id) {
@@ -58,23 +67,23 @@ public class UsuarioDaoImpl extends AbstractDao<Integer, Usuario> implements Usu
 
 	public int validateUser(String username, String password){
 		Criteria criteria = createEntityCriteria();
-		criteria.add(Restrictions.eq("login", username));
+		criteria.add(Restrictions.eq("correo", username));
 		criteria.add(Restrictions.eq("password", password));
 		Usuario usuario = (Usuario) criteria.uniqueResult();
-		return usuario.getId().intValue();
+		return usuario.getId();
 	}
 
 	@Override
 	public Usuario getUserById(int userId) {
 		Criteria criteria = createEntityCriteria();
-		criteria.add(Restrictions.like("id",(long)userId)); 
+		criteria.add(Restrictions.like("id",userId)); 
 		Usuario usuario = (Usuario)criteria.uniqueResult();
 		return usuario;
 	}
 	
 	public Usuario findByUsername(String username) {
 		Criteria criteria = createEntityCriteria();
-		criteria.add(Restrictions.like("login", username)); 
+		criteria.add(Restrictions.like("correo", username)); 
 		Usuario usuario = (Usuario)criteria.uniqueResult();
 		return usuario;
 	}

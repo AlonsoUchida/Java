@@ -27,7 +27,6 @@
         <property name="dataSource" ref="dataSourceProd" />
         <property name="annotatedClasses">
             <list>
-                <value>com.valmar.ecommerce.model.Cliente</value>
 				<value>com.valmar.ecommerce.model.Departamento</value>
 				<value>com.valmar.ecommerce.model.Provincia</value>
 				<value>com.valmar.ecommerce.model.Distrito</value>

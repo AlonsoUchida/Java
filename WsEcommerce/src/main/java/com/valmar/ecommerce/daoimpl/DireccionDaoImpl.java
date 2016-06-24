@@ -31,7 +31,15 @@ public class DireccionDaoImpl extends AbstractDao<Integer, Direccion> implements
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-
+	}
+	
+	@Override
+	public void actualizar(Direccion direccion) {
+		try {
+			merge(direccion);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 	@Override

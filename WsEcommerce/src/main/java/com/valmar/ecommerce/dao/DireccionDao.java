@@ -6,7 +6,8 @@ import com.valmar.ecommerce.model.Direccion;
 
 public interface DireccionDao {
 	Direccion obtenerPorId(int id);	 
-    void agregar(Direccion direccion);     
+    void agregar(Direccion direccion);
+    void actualizar(Direccion direccion);
     void eliminar(int id);    
     List<Direccion> listarDirecciones();
 }

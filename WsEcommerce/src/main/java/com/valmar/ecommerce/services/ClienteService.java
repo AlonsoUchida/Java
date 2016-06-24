@@ -2,13 +2,14 @@ package com.valmar.ecommerce.services;
 
 import java.util.List;
 
-import com.valmar.ecommerce.model.Cliente;
+import com.valmar.ecommerce.model.Usuario;
 
 public interface ClienteService {	
 
-	Cliente obtenerPorId(int i);	 
-    void agregar(Cliente nota);     
+	Usuario obtenerPorId(long id);	 
+    void agregar(Usuario cliente); 
+    void actualizar(Usuario cliente);
     void eliminar(int id);    
-    List<Cliente> listarClientes();
-    
+    List<Usuario> listarClientes();
+    Usuario obtenerPorCorreo(String username);  
 }

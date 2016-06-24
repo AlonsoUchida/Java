@@ -16,14 +16,12 @@ public class JwtUserFactory {
                 user.getId(),
                 user.getNombre(),
                 user.getApellido(),
-                user.getLogin(),
                 user.getCorreo(),
                 user.getPassword(),
                 user.getEstado(),
                 mapToGrantedAuthorities(user.getAuthorities())
         );
     }
-
     private static List<GrantedAuthority> mapToGrantedAuthorities(List<Authority> authorities) {
         return authorities.stream()
                 .map(authority -> new SimpleGrantedAuthority(authority.getName().name()))

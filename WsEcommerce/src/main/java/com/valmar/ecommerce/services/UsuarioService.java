@@ -8,7 +8,8 @@ import com.valmar.ecommerce.model.Usuario;
 
 public interface UsuarioService {
 	Usuario obtenerPorId(int id);	 
-    void agregar(Usuario usuario);     
+    void agregar(Usuario usuario);  
+    void actualizar(Usuario usuario);
     void eliminar(int id);    
     List<Usuario> listarUsuarios();
     

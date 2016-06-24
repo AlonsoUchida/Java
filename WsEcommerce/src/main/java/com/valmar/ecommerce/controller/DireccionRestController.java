@@ -1,5 +1,6 @@
 package com.valmar.ecommerce.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,11 +13,18 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import com.valmar.ecommerce.enums.DireccionActiva;
+import com.valmar.ecommerce.model.Departamento;
 import com.valmar.ecommerce.model.Direccion;
+import com.valmar.ecommerce.model.Distrito;
+import com.valmar.ecommerce.model.Provincia;
+import com.valmar.ecommerce.model.Usuario;
 import com.valmar.ecommerce.services.DireccionService;
+import com.valmar.ecommerce.viewmodel.DireccionVM;
 
 @CrossOrigin
 @RestController
@@ -25,9 +33,7 @@ public class DireccionRestController {
 
 	@Autowired
     DireccionService service;
-    /*
-     * This method will list all existing audios.
-     */
+
     @RequestMapping(value = { "/listar" }, method = RequestMethod.GET)
     public ResponseEntity<List<Direccion>> listarDirecciones() {
         List<Direccion> direcciones = service.listarDirecciones();
@@ -37,8 +43,9 @@ public class DireccionRestController {
         return new ResponseEntity<List<Direccion>>(direcciones, HttpStatus.OK);
     }
     
-    @RequestMapping(value = "/obtenerPorId/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Direccion> obtenerPorId(@PathVariable("id") int id) {
+    @RequestMapping(value = "/obtenerPorId", params= {"id"}, 
+    		method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Direccion> obtenerPorId(@RequestParam("id") Integer id) {
     	Direccion direccion = service.obtenerPorId(id);
         if (direccion == null) {
             return new ResponseEntity<Direccion>(HttpStatus.NOT_FOUND);
@@ -46,19 +53,39 @@ public class DireccionRestController {
         return new ResponseEntity<Direccion>(direccion, HttpStatus.OK);
     }
  
-    @RequestMapping(value = "/agregar/", method = RequestMethod.POST)
-    public ResponseEntity<Void> agregar(@RequestBody Direccion direccion,  UriComponentsBuilder ucBuilder) {
-    	int id = Integer.parseInt(direccion.getId().toString());
-        if (service.obtenerPorId(id)!=null) {
-            return new ResponseEntity<Void>(HttpStatus.CONFLICT);
-        } 
-        service.agregar(direccion); 
-        HttpHeaders headers = new HttpHeaders();
-        headers.setLocation(ucBuilder.path("/direccion/{id}").buildAndExpand(direccion.getId()).toUri());
-        return new ResponseEntity<Void>(headers, HttpStatus.CREATED);
+    @RequestMapping(value = "/agregar", method = RequestMethod.POST)
+    public ResponseEntity<Void> agregar(@RequestBody DireccionVM direccion,  UriComponentsBuilder ucBuilder) {
+    	
+    	Direccion direccionBean = new Direccion();
+    	Departamento departamento = service.obtenerDepartamentoPorId(direccion.getId_departamento());
+    	Provincia provincia = service.obtenerProvinciaPorId(direccion.getId_provincia());
+    	Distrito distrito = service.obtenerDistritoPorId(direccion.getId_distrito());
+    	Usuario usuario = service.obtenerUsuarioPorId(direccion.getId_usuario());
+    	
+    	if((departamento==null) && (provincia==null) && (distrito==null) && (usuario==null)){
+    		return new ResponseEntity<Void>(HttpStatus.NOT_FOUND);
+    	}
+    	
+    	List<Usuario> usuarios = new ArrayList<>();
+    	usuarios.add(usuario);
+    	
+    	direccionBean.setUsuarios(usuarios);
+    	direccionBean.setDepartamento(departamento);
+    	direccionBean.setProvincia(provincia);
+    	direccionBean.setDistrito(distrito);
+    	direccionBean.setReferencia(direccion.getReferencia());
+    	direccionBean.setDomicilio(direccion.getDomicilio());
+    	direccionBean.setNumero(direccion.getNumero());
+    	direccionBean.setLatitud(direccion.getLatitud());
+    	direccionBean.setLongitud(direccion.getLongitud());
+    	direccionBean.setActivo(DireccionActiva.NO_ACTIVA.getValue());
+    	
+        service.agregar(direccionBean); 
+        
+        return new ResponseEntity<Void>(HttpStatus.CREATED);
     }
     
-    @RequestMapping(value = "/eliminar/{id}", method = RequestMethod.DELETE)
+    @RequestMapping(value = "/eliminar", method = RequestMethod.DELETE)
     public ResponseEntity<Direccion> eliminar(@PathVariable("id") int id) {
     	Direccion direccion = service.obtenerPorId(id);
         if (direccion == null) {

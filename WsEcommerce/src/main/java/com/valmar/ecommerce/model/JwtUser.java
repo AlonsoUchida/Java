@@ -10,23 +10,21 @@ public class JwtUser implements UserDetails {
 	private static final long serialVersionUID = 1L;
 	
 
-	private Long id;
+	private int id;
 	private String nombre;
 	private String apellido;
 	private String correo;
-	private String login;
 	private String password;
 	private int estado;
 
     private final Collection<? extends GrantedAuthority> authorities;
 
-    public JwtUser(Long id, String nombre, String apellido, String correo, String login,
+    public JwtUser(int id, String nombre, String apellido, String correo, 
     		String password, int estado, Collection<? extends GrantedAuthority> authorities) {
         this.id = id;
         this.nombre = nombre;
         this.apellido = apellido;
         this.correo = correo;
-        this.login = login;
         this.password = password;
         this.estado = estado;
         this.authorities = authorities;
@@ -47,7 +45,7 @@ public class JwtUser implements UserDetails {
 	@Override
 	public String getUsername() {
 		// TODO Auto-generated method stub
-		return login;
+		return correo;
 	}
 
 	@Override

@@ -16,8 +16,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.valmar.ecommerce.security.JwtTokenUtil;
 import com.valmar.ecommerce.model.AuthenticationRequest;
-import com.valmar.ecommerce.model.AuthenticationResponse;
 import com.valmar.ecommerce.model.Usuario;
+import com.valmar.ecommerce.services.ClienteService;
 import com.valmar.ecommerce.services.UsuarioService;
 import com.valmar.ecommerce.viewmodel.AuthenticationVM;
 
@@ -34,7 +34,6 @@ public class AuthenticationRestController {
     @Autowired
     private UsuarioService usuarioService;
 
-    @CrossOrigin
     @RequestMapping(value = "/authenticate", method = RequestMethod.POST)
     public ResponseEntity<?> createAuthenticationToken(@RequestHeader("Authorization") String authorization) throws AuthenticationException {
 
@@ -54,7 +53,7 @@ public class AuthenticationRestController {
 
 		AuthenticationVM authVM = new AuthenticationVM();
 		String token = usuarioService.generateToken(userId);
-		authVM.setIdUsuario(usuario.getId().intValue());
+		authVM.setIdUsuario(usuario.getId());
 		//authVM.setPassword(usuario.getPassword());
 		authVM.setToken(token);
 		// Return the token

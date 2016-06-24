@@ -18,7 +18,7 @@ public class Distrito {
 
 	@Id
 	@Column(name = "ID")
-	private Long id;
+	private int id;
 
 	@Column(name = "NOMBRE", length = 200, unique = true)
 	@NotNull
@@ -30,11 +30,11 @@ public class Distrito {
 	@JsonManagedReference
 	private Provincia provincia;
 
-	public Long getId() {
+	public int getId() {
 		return id;
 	}
 
-	public void setId(Long id) {
+	public void setId(int id) {
 		this.id = id;
 	}
 

@@ -1,5 +1,6 @@
 package com.valmar.ecommerce.controller;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,15 +9,18 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import com.valmar.ecommerce.model.Cliente;
+import com.valmar.ecommerce.enums.TipoEstado;
+import com.valmar.ecommerce.enums.TipoUsuario;
+import com.valmar.ecommerce.model.Usuario;
 import com.valmar.ecommerce.services.ClienteService;
+import com.valmar.ecommerce.viewmodel.ClienteVM;
 
 @CrossOrigin
 @RestController
@@ -29,42 +33,79 @@ public class ClienteRestController {
      * This method will list all existing audios.
      */
     @RequestMapping(value = { "/listar" }, method = RequestMethod.GET)
-    public ResponseEntity<List<Cliente>> listarClientes() {
-        List<Cliente> clientes = service.listarClientes();
+    public ResponseEntity<List<Usuario>> listarClientes() {
+        List<Usuario> clientes = service.listarClientes();
         if(clientes.isEmpty()){
-            return new ResponseEntity<List<Cliente>>(HttpStatus.NO_CONTENT);//You many decide to return HttpStatus.NOT_FOUND
+            return new ResponseEntity<List<Usuario>>(HttpStatus.NO_CONTENT);//You many decide to return HttpStatus.NOT_FOUND
         }
-        return new ResponseEntity<List<Cliente>>(clientes, HttpStatus.OK);
+        return new ResponseEntity<List<Usuario>>(clientes, HttpStatus.OK);
     }
     
-    @RequestMapping(value = "/obtenerPorId/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Cliente> obtenerPorId(@PathVariable("id") int id) {
-    	Cliente cliente = service.obtenerPorId(id);
+    @RequestMapping(value = "/obtenerPorId", params= {"id"}, 
+    		method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Usuario> obtenerPorId(@RequestParam("id") Integer id) {
+    	Usuario cliente = service.obtenerPorId(id);
         if (cliente == null) {
-            return new ResponseEntity<Cliente>(HttpStatus.NOT_FOUND);
+            return new ResponseEntity<Usuario>(HttpStatus.NOT_FOUND);
         }
-        return new ResponseEntity<Cliente>(cliente, HttpStatus.OK);
+        return new ResponseEntity<Usuario>(cliente, HttpStatus.OK);
     }
  
-    @RequestMapping(value = "/agregar/", method = RequestMethod.POST)
-    public ResponseEntity<Void> agregar(@RequestBody Cliente cliente,  UriComponentsBuilder ucBuilder) {
-        if (service.obtenerPorId(cliente.getId())!=null) {
+    @RequestMapping(value = "/agregar", method = RequestMethod.POST)
+    public ResponseEntity<Void> agregar(@RequestBody ClienteVM cliente,  UriComponentsBuilder ucBuilder) {
+        if (service.obtenerPorCorreo(cliente.getCorreo())!=null) {
             return new ResponseEntity<Void>(HttpStatus.CONFLICT);
         } 
-        service.agregar(cliente); 
+        Usuario clienteBean = new Usuario();
+        clienteBean.setNombre(cliente.getNombre());
+        clienteBean.setApellido(cliente.getApellido());
+        clienteBean.setCorreo(cliente.getCorreo());
+        clienteBean.setPassword(cliente.getPassword());
+        clienteBean.setGenero(cliente.getGenero());
+        clienteBean.setTipo(TipoUsuario.CLIENTE.getValue());
+        clienteBean.setEstado(1);
+        clienteBean.setFechaRegistro(new Date());
+        clienteBean.setFechaModificacion(new Date());
+        
+        service.agregar(clienteBean); 
+        
         HttpHeaders headers = new HttpHeaders();
-        headers.setLocation(ucBuilder.path("/cliente/{id}").buildAndExpand(cliente.getId()).toUri());
+        headers.setLocation(ucBuilder.path("/cliente/{correo}").buildAndExpand(cliente.getCorreo()).toUri());
         return new ResponseEntity<Void>(headers, HttpStatus.CREATED);
     }
+    
 
-    @RequestMapping(value = "/eliminar/{id}", method = RequestMethod.DELETE)
-    public ResponseEntity<Cliente> eliminar(@PathVariable("id") int id) {
-    	Cliente cliente = service.obtenerPorId(id);
+    @RequestMapping(value = "/actualizar", method = RequestMethod.PUT)
+    public ResponseEntity<Void> actualizar(@RequestBody ClienteVM cliente,  UriComponentsBuilder ucBuilder) {
+        if (service.obtenerPorId(cliente.getId())==null) {
+            return new ResponseEntity<Void>(HttpStatus.NOT_FOUND);
+        } 
+        Usuario clienteBean = new Usuario();
+        clienteBean.setId(cliente.getId());
+        clienteBean.setNombre(cliente.getNombre());
+        clienteBean.setApellido(cliente.getApellido());
+        clienteBean.setCorreo(cliente.getCorreo());
+        clienteBean.setPassword(cliente.getPassword());
+        clienteBean.setGenero(cliente.getGenero());
+        clienteBean.setTipo(TipoUsuario.CLIENTE.getValue());
+        clienteBean.setEstado(TipoEstado.HABILITADO.getValue());
+        clienteBean.setFechaModificacion(new Date());
+        
+        service.actualizar(clienteBean); 
+        
+        HttpHeaders headers = new HttpHeaders();
+        headers.setLocation(ucBuilder.path("/cliente/{correo}").buildAndExpand(cliente.getCorreo()).toUri());
+        return new ResponseEntity<Void>(headers, HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/eliminar",  params= {"id"}, method = RequestMethod.DELETE)
+    public ResponseEntity<Usuario> eliminar(@RequestParam("id")int id) {
+    	Usuario cliente = service.obtenerPorId(id);
         if (cliente == null) {
-            return new ResponseEntity<Cliente>(HttpStatus.NOT_FOUND);
+            return new ResponseEntity<Usuario>(HttpStatus.NOT_FOUND);
         } 
         service.eliminar(id);
-        return new ResponseEntity<Cliente>(HttpStatus.NO_CONTENT);
+        return new ResponseEntity<Usuario>(HttpStatus.NO_CONTENT);
     }
 
 }

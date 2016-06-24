@@ -50,7 +50,7 @@ public class UsuarioRestController {
  
     @RequestMapping(value = "/agregar/", method = RequestMethod.POST)
     public ResponseEntity<Void> agregar(@RequestBody Usuario usuario,  UriComponentsBuilder ucBuilder) {
-        if (service.obtenerPorId(Integer.parseInt(usuario.getId().toString()))!=null) {
+        if (service.obtenerPorId(usuario.getId())!=null) {
             return new ResponseEntity<Void>(HttpStatus.CONFLICT);
         } 
         service.agregar(usuario); 

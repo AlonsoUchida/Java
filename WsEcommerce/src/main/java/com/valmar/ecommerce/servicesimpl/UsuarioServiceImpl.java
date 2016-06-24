@@ -33,6 +33,11 @@ public class UsuarioServiceImpl implements UsuarioService{
 		usuarioDao.agregar(usuario);
 		
 	}
+	
+	@Override
+	public void actualizar(Usuario usuario) {
+		usuarioDao.actualizar(usuario);
+	}
 
 	@Override
 	public void eliminar(int id) {
@@ -73,5 +78,4 @@ public class UsuarioServiceImpl implements UsuarioService{
             return usuario;
         }
     }
-
 }

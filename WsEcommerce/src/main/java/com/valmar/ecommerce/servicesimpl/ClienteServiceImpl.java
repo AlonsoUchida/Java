@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.valmar.ecommerce.dao.ClienteDao;
-import com.valmar.ecommerce.model.Cliente;
+import com.valmar.ecommerce.model.Usuario;
 import com.valmar.ecommerce.services.ClienteService;
 
 
@@ -19,12 +19,12 @@ public class ClienteServiceImpl implements ClienteService{
 	private ClienteDao clienteDao;
 	
 	@Override
-	public Cliente obtenerPorId(int id) {
+	public Usuario obtenerPorId(long id) {
 		return clienteDao.obtenerPorId(id);
 	}
 
 	@Override
-	public void agregar(Cliente cliente) {
+	public void agregar(Usuario cliente) {
 		clienteDao.agregar(cliente);		
 	}
 
@@ -35,8 +35,18 @@ public class ClienteServiceImpl implements ClienteService{
 	}
 
 	@Override
-	public List<Cliente> listarClientes() {
+	public List<Usuario> listarClientes() {
 		return clienteDao.listarClientes();
+	}
+
+	@Override
+	public Usuario obtenerPorCorreo(String username) {
+		return clienteDao.obtenerPorCorreo(username);
+	}
+
+	@Override
+	public void actualizar(Usuario cliente) {
+		clienteDao.actualizar(cliente);		
 	}
 
 

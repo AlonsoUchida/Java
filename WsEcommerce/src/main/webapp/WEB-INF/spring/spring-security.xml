@@ -23,6 +23,7 @@
 		auto-config="false" create-session="always" entry-point-ref="JwtAuthenticationEntryPoint">
 		<security:custom-filter ref="jwtAuthenticationTokenFilter" position="PRE_AUTH_FILTER" />
 		  <security:intercept-url pattern="/**" access="isAuthenticated()" /> 
+		  <security:csrf disabled="true"/>
 	</security:http> 
 	
 

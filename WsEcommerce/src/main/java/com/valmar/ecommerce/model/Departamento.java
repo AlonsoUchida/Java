@@ -13,18 +13,17 @@ public class Departamento {
 
 	@Id
 	@Column(name = "ID")
-	private Long id;
+	private int id;
 
-	@Column(name = "NOMBRE", length = 200, unique = true)
+	@Column(name = "NOMBRE")
 	@NotNull
-	@Size(min = 4, max = 200)
 	private String nombre;
 
-	public Long getId() {
+	public int getId() {
 		return id;
 	}
 
-	public void setId(Long id) {
+	public void setId(int id) {
 		this.id = id;
 	}
 
