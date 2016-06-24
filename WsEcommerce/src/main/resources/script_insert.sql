@@ -235,16 +235,16 @@ INSERT INTO `provincia` VALUES
 -- ----------------------------
 -- Records of categorias
 -- ----------------------------
-INSERT INTO `categoria` VALUES ('1', 'Advocaat');
-INSERT INTO `categoria` VALUES ('2', 'Alcopop');
-INSERT INTO `categoria` VALUES ('3', 'Anisado');
-INSERT INTO `categoria` VALUES ('4', 'Aqua vitae');
-INSERT INTO `categoria` VALUES ('5', 'Arak (bebida)');
-INSERT INTO `categoria` VALUES ('6', 'Baileys Irish Cream');
-INSERT INTO `categoria` VALUES ('7', 'Brandy Luis Felipe');
-INSERT INTO `categoria` VALUES ('8', 'Brugal');
-INSERT INTO `categoria` VALUES ('9', 'Bénédictine');
-INSERT INTO `categoria` VALUES ('10', 'Cinzano (vermú)');
+INSERT INTO `categoria` VALUES ('1', 'Advocaat', NULL);
+INSERT INTO `categoria` VALUES ('2', 'Alcopop', NULL);
+INSERT INTO `categoria` VALUES ('3', 'Anisado', NULL);
+INSERT INTO `categoria` VALUES ('4', 'Aqua vitae', NULL);
+INSERT INTO `categoria` VALUES ('5', 'Arak (bebida)', NULL);
+INSERT INTO `categoria` VALUES ('6', 'Baileys Irish Cream', NULL);
+INSERT INTO `categoria` VALUES ('7', 'Brandy Luis Felipe', NULL);
+INSERT INTO `categoria` VALUES ('8', 'Brugal', NULL);
+INSERT INTO `categoria` VALUES ('9', 'Bénédictine', NULL);
+INSERT INTO `categoria` VALUES ('10', 'Cinzano (vermú)', NULL);
 
 -- ----------------------------
 -- Records of distrito
@@ -2124,11 +2124,11 @@ INSERT INTO `usuario` VALUES (3, 'VICTOR', 'MALAVER', 'victor.malaver@valmar.com
 INSERT INTO `usuario` VALUES (4, 'JOHN', 'ORREGO', 'john.orrego@valmar.com.pe', '12345', 'M', 1, 1,  NOW(), NOW());
 INSERT INTO `usuario` VALUES (5, 'RENZO', 'OSSIO', 'renzo.ossio@valmar.com.pe', '12345', 'M', 1, 1,  NOW(), NOW());
 
-INSERT INTO `usuario` VALUES (1, 'JOSUE', 'MOSQUERA', 'josue.mosquera@valmar.com.pe', '12345', 'M', 2, 1, NOW(), NOW());
-INSERT INTO `usuario` VALUES (2, 'ALONSO', 'UCHIDA', 'javier.uchida@valmar.com.pe', '12345', 'M', 2, 1,  NOW(), NOW());
-INSERT INTO `usuario` VALUES (3, 'VICTOR', 'MALAVER', 'victor.malaver@valmar.com.pe', '12345', 'M', 2, 1,  NOW(), NOW());
-INSERT INTO `usuario` VALUES (4, 'JOHN', 'ORREGO', 'john.orrego@valmar.com.pe', '12345', 'M', 2, 1,  NOW(), NOW());
-INSERT INTO `usuario` VALUES (5, 'RENZO', 'OSSIO', 'renzo.ossio@valmar.com.pe', '12345', 'M', 2, 1,  NOW(), NOW());
+INSERT INTO `usuario` VALUES (6, 'JOSUE', 'MOSQUERA', 'josue.mosquera.cliente@valmar.com.pe', '12345', 'M', 2, 1, NOW(), NOW());
+INSERT INTO `usuario` VALUES (7, 'ALONSO', 'UCHIDA', 'javier.uchida.cliente@valmar.com.pe', '12345', 'M', 2, 1,  NOW(), NOW());
+INSERT INTO `usuario` VALUES (8, 'VICTOR', 'MALAVER', 'victor.malaver.cliente@valmar.com.pe', '12345', 'M', 2, 1,  NOW(), NOW());
+INSERT INTO `usuario` VALUES (9, 'JOHN', 'ORREGO', 'john.orrego.cliente@valmar.com.pe', '12345', 'M', 2, 1,  NOW(), NOW());
+INSERT INTO `usuario` VALUES (10, 'RENZO', 'OSSIO', 'renzo.ossio.cliente@valmar.com.pe', '12345', 'M', 2, 1,  NOW(), NOW());
 
 -- ----------------------------
 -- Records of autoridad
@@ -2136,4 +2136,6 @@ INSERT INTO `usuario` VALUES (5, 'RENZO', 'OSSIO', 'renzo.ossio@valmar.com.pe', 
 
 INSERT INTO `autoridad` VALUES (1, 'ROLE_ADMIN');
 INSERT INTO `autoridad` VALUES (2, 'ROLE_USER');
+
+
 
