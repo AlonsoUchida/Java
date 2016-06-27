@@ -6,7 +6,7 @@ import com.valmar.ecommerce.model.Usuario;
 
 public interface ClienteService {	
 
-	Usuario obtenerPorId(long id);	 
+	Usuario obtenerPorId(int id);	 
     void agregar(Usuario cliente); 
     void actualizar(Usuario cliente);
     void eliminar(int id);    

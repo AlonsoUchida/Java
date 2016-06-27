@@ -85,8 +85,41 @@ public class DireccionRestController {
         return new ResponseEntity<Void>(HttpStatus.CREATED);
     }
     
-    @RequestMapping(value = "/eliminar", method = RequestMethod.DELETE)
-    public ResponseEntity<Direccion> eliminar(@PathVariable("id") int id) {
+    @RequestMapping(value = "/actualizar", method = RequestMethod.PUT)
+    public ResponseEntity<Void> actualizar(@RequestBody DireccionVM direccion,  UriComponentsBuilder ucBuilder) {
+    	
+    	Direccion direccionBean = new Direccion();
+    	Departamento departamento = service.obtenerDepartamentoPorId(direccion.getId_departamento());
+    	Provincia provincia = service.obtenerProvinciaPorId(direccion.getId_provincia());
+    	Distrito distrito = service.obtenerDistritoPorId(direccion.getId_distrito());
+    	Usuario usuario = service.obtenerUsuarioPorId(direccion.getId_usuario());
+    	
+    	if((departamento==null) && (provincia==null) && (distrito==null) && (usuario==null)){
+    		return new ResponseEntity<Void>(HttpStatus.NOT_FOUND);
+    	}
+    	
+    	List<Usuario> usuarios = new ArrayList<>();
+    	usuarios.add(usuario);
+    	
+    	direccionBean.setId(direccion.getId());
+    	direccionBean.setUsuarios(usuarios);
+    	direccionBean.setDepartamento(departamento);
+    	direccionBean.setProvincia(provincia);
+    	direccionBean.setDistrito(distrito);
+    	direccionBean.setReferencia(direccion.getReferencia());
+    	direccionBean.setDomicilio(direccion.getDomicilio());
+    	direccionBean.setNumero(direccion.getNumero());
+    	direccionBean.setLatitud(direccion.getLatitud());
+    	direccionBean.setLongitud(direccion.getLongitud());
+    	direccionBean.setActivo(DireccionActiva.NO_ACTIVA.getValue());
+    	
+        service.actualizar(direccionBean); 
+        
+        return new ResponseEntity<Void>(HttpStatus.CREATED);
+    }
+    
+    @RequestMapping(value = "/eliminar", params= {"id"}, method = RequestMethod.DELETE)
+    public ResponseEntity<Direccion> eliminar(@RequestParam("id") int id) {
     	Direccion direccion = service.obtenerPorId(id);
         if (direccion == null) {
             return new ResponseEntity<Direccion>(HttpStatus.NOT_FOUND);

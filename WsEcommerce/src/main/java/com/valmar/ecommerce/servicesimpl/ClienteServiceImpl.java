@@ -19,7 +19,7 @@ public class ClienteServiceImpl implements ClienteService{
 	private ClienteDao clienteDao;
 	
 	@Override
-	public Usuario obtenerPorId(long id) {
+	public Usuario obtenerPorId(int id) {
 		return clienteDao.obtenerPorId(id);
 	}
 

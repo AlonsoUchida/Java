@@ -20,7 +20,7 @@ import com.valmar.ecommerce.model.Usuario;
 public class ClienteDaoImpl extends AbstractDao<Integer, Usuario> implements ClienteDao {
 
 	@Override
-	public Usuario obtenerPorId(long id) {
+	public Usuario obtenerPorId(int id) {
 		Criteria criteria = createEntityCriteria();
 		criteria.add(Restrictions.eq("id", id));
 		criteria.add(Restrictions.eq("tipo", TipoUsuario.CLIENTE.getValue()));
