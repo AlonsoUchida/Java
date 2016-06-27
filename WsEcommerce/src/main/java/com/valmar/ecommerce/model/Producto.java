@@ -20,29 +20,19 @@ public class Producto {
 	@Column(name = "ID")
 	private int id;
 
-	@Column(name = "NOMBRE", length = 200)
-	@NotNull
-	@Size(min = 4, max = 200)
+	@Column(name = "NOMBRE")
 	private String nombre;
 	
-	@Column(name = "DESCRIPCION", length = 200)
-	@NotNull
-	@Size(min = 4, max = 200)
+	@Column(name = "DESCRIPCION")
 	private String descripcion;
 	
-	@Column(name = "CARACTERISTICAS", length = 200)
-	@NotNull
-	@Size(min = 4, max = 200)
+	@Column(name = "CARACTERISTICAS")
 	private String caracteristicas;
 	
-	@Column(name = "PRECIO", length = 15)
-	@NotNull
-	@Size(min = 4, max = 15)
+	@Column(name = "PRECIO")
 	private String precio;
 	
-	@Column(name = "INVENTARIO", length = 5)
-	@NotNull
-	@Size(min = 4, max = 5)
+	@Column(name = "INVENTARIO")
 	private int inventario;
 	
 	@OneToOne(fetch = FetchType.EAGER)
