@@ -62,7 +62,7 @@ public class DireccionRestController {
     	Distrito distrito = service.obtenerDistritoPorId(direccion.getId_distrito());
     	Usuario usuario = service.obtenerUsuarioPorId(direccion.getId_usuario());
     	
-    	if((departamento==null) && (provincia==null) && (distrito==null) && (usuario==null)){
+    	if((departamento==null) || (provincia==null) || (distrito==null) || (usuario==null)){
     		return new ResponseEntity<Void>(HttpStatus.NOT_FOUND);
     	}
     	
@@ -94,7 +94,7 @@ public class DireccionRestController {
     	Distrito distrito = service.obtenerDistritoPorId(direccion.getId_distrito());
     	Usuario usuario = service.obtenerUsuarioPorId(direccion.getId_usuario());
     	
-    	if((departamento==null) && (provincia==null) && (distrito==null) && (usuario==null)){
+    	if((departamento==null) || (provincia==null) || (distrito==null) || (usuario==null)){
     		return new ResponseEntity<Void>(HttpStatus.NOT_FOUND);
     	}
     	

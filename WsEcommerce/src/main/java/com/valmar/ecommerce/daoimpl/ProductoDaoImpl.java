@@ -33,11 +33,26 @@ public class ProductoDaoImpl extends AbstractDao<Integer, Producto> implements P
 	}
 
 	@Override
+	public void actualizar(Producto producto) {
+		try {
+			merge(producto);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	@Override
 	public void eliminar(int id) {
 		try {
-			Query query = getSession().createSQLQuery("delete from producto where id = :id");
-			query.setInteger("id", id);
-			query.executeUpdate();
+			
+			Query query1 = getSession().createSQLQuery("delete from producto_categoria where id_producto = :id");
+			query1.setInteger("id", id);
+			query1.executeUpdate();
+			
+			
+			Query query2 = getSession().createSQLQuery("delete from producto where id = :id");
+			query2.setInteger("id", id);
+			query2.executeUpdate();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -54,6 +69,13 @@ public class ProductoDaoImpl extends AbstractDao<Integer, Producto> implements P
 			e.printStackTrace();
 		}
 		return null;
+	}
+
+	@Override
+	public Producto obtenerPorNombre(String nombre) {
+		Criteria criteria = createEntityCriteria();
+		criteria.add(Restrictions.eq("nombre", nombre));
+		return (Producto) criteria.uniqueResult();
 	}
 
 }

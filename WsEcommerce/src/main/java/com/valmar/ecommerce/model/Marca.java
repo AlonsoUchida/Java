@@ -2,21 +2,23 @@ package com.valmar.ecommerce.model;
 
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
-@Table(name = "metodo_pago")
-public class MetodoPago {
+@Table(name = "marca")
+public class Marca {
 
 	@Id
 	@Column(name = "ID")
@@ -25,14 +27,11 @@ public class MetodoPago {
 	@Column(name = "NOMBRE")
 	@NotNull
 	private String nombre;
-	
-	@Column(name = "VALOR")
-	@NotNull
-	private String valor;
-	
-	@ManyToMany(fetch = FetchType.LAZY, mappedBy="metodoPagos")
+		
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "marca", cascade = CascadeType.ALL)
 	@JsonBackReference
-	private Set<Tienda> tiendas;
+	@JsonIgnore
+	private Set<Producto> productos;
 
 	public int getId() {
 		return id;
@@ -50,13 +49,13 @@ public class MetodoPago {
 		this.nombre = nombre;
 	}
 
-	public String getValor() {
-		return valor;
+	public Set<Producto> getProductos() {
+		return productos;
 	}
 
-	public void setValor(String valor) {
-		this.valor = valor;
+	public void setProductos(Set<Producto> productos) {
+		this.productos = productos;
 	}
-	
+
 	
 }

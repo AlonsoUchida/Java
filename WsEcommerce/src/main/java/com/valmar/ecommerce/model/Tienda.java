@@ -47,7 +47,7 @@ public class Tienda {
 	
 	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	  @JoinTable(
-	      name="TIENDA_METODO_PAGO",
+	      name="tienda_metodo_pago",
 	      joinColumns=@JoinColumn(name="ID_TIENDA", referencedColumnName="ID"),
 	      inverseJoinColumns=@JoinColumn(name="ID_METODO_PAGO", referencedColumnName="ID"))
 	@JsonManagedReference
