@@ -66,6 +66,7 @@ public class ProductoDaoImpl extends AbstractDao<Integer, Producto> implements P
 		try {
 			Criteria criteria = createEntityCriteria();
 			criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
+			@SuppressWarnings("unchecked")
 			List<Producto> productos = (List<Producto>) criteria.list();
 			return productos;
 		} catch (Exception e) {
@@ -79,6 +80,21 @@ public class ProductoDaoImpl extends AbstractDao<Integer, Producto> implements P
 		Criteria criteria = createEntityCriteria();
 		criteria.add(Restrictions.eq("nombre", nombre));
 		return (Producto) criteria.uniqueResult();
+	}
+
+	@Override
+	public List<Producto> obtenerProductosPorTienda(int id) {
+		try {
+			Criteria criteria = createEntityCriteria();
+			criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
+			criteria.add(Restrictions.eq("tienda.id", id));
+			@SuppressWarnings("unchecked")
+			List<Producto> productos = (List<Producto>) criteria.list();
+			return productos;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
 	}
 
 }

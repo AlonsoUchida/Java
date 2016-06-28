@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import com.valmar.ecommerce.dao.AbstractDao;
 import com.valmar.ecommerce.dao.ImagenProductoDao;
+import com.valmar.ecommerce.enums.TipoImagen;
 import com.valmar.ecommerce.model.ImagenProducto;
 
 @Repository("imagenProductoDao")
@@ -63,6 +64,14 @@ public class ImagenProductoDaoImpl extends AbstractDao<Integer, ImagenProducto> 
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
+
+	@Override
+	public ImagenProducto obtenerImagenPorDefecto(int id) {
+		Criteria criteria = createEntityCriteria();
+		criteria.add(Restrictions.eq("producto.id", id));
+		criteria.add(Restrictions.eq("id", TipoImagen.DEFECTO.getValue()));
+		return (ImagenProducto) criteria.uniqueResult();
 	}
 
 }

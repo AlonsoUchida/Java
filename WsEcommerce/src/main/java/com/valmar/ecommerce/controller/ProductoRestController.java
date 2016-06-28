@@ -28,6 +28,7 @@ import com.valmar.ecommerce.model.Tienda;
 import com.valmar.ecommerce.services.ImagenProductoService;
 import com.valmar.ecommerce.services.ProductoService;
 import com.valmar.ecommerce.viewmodel.ImagenProductoVM;
+import com.valmar.ecommerce.viewmodel.ProductoPorTiendaVM;
 import com.valmar.ecommerce.viewmodel.ProductoVM;
 
 @CrossOrigin
@@ -210,4 +211,39 @@ public class ProductoRestController {
         return new ResponseEntity<ImagenProducto>(HttpStatus.NO_CONTENT);
     }
 
+    /************************************************************************************************/
+    /******************************    Filtros por Tienda y por Radio de Cobertura ******************/
+    /************************************************************************************************/
+    @RequestMapping(value = "/obtenerPorTienda", params = {"id"}, method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<List<ProductoPorTiendaVM>> obtenerPorTienda(@RequestParam("id") int id) {
+    	Tienda tienda = service.obtenerTiendaPorId(id);
+    	if (tienda==null){
+    		return new ResponseEntity<List<ProductoPorTiendaVM>>(HttpStatus.NOT_FOUND);
+    	}
+    	List<Producto> productos = service.obtenerProductosPorTienda(id);
+        if (productos.isEmpty()) {
+            return new ResponseEntity<List<ProductoPorTiendaVM>>(HttpStatus.NO_CONTENT);
+        }
+       
+        
+        List<ProductoPorTiendaVM> _productos = new ArrayList<>();
+        for(Producto item : productos){
+        	ProductoPorTiendaVM _producto = new ProductoPorTiendaVM();
+        	 ImagenProducto imagen = service.obtenerImagenPorDefecto(item.getId());
+        	 if(imagen!=null){
+        		 _producto.setImagen(imagen.getImagen());
+        	 }
+        	_producto.setId(item.getId());
+        	_producto.setNombre(item.getNombre());
+        	_producto.setCaracteristicas(item.getCaracteristicas());
+        	_producto.setPresentacion(item.getPresentacion());
+        	_producto.setPrecio(item.getPrecio());
+        	_producto.setCostoMinimo(tienda.getCostoMnimo());
+        	_producto.setId_tienda(tienda.getId());
+        	_producto.setDescuento(item.getDescuento());       	
+        	
+        	_productos.add(_producto);
+        }
+        return new ResponseEntity<List<ProductoPorTiendaVM>>(_productos, HttpStatus.OK);
+    }
 }

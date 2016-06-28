@@ -2142,3 +2142,9 @@ INSERT INTO `autoridad` VALUES (2, 'ROLE_USER');
 -- ----------------------------
 
 INSERT INTO `tienda` VALUES (1, 'Mi Tienda', '1045645665464', '4236542', '954645546',  1, 20, 1, 10.0, 1, null, 1, 1, NOW(), NOW());
+
+-- ----------------------------
+-- Records of producto
+-- ----------------------------
+
+INSERT INTO `producto` VALUES (1, 'producto 1', 'producto 1', 'producto 1', '20', '1', '500ml', '10', '1', '1', NOW(), NOW());

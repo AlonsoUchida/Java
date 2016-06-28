@@ -63,7 +63,7 @@ public class Producto {
 	@Digits(integer=7, fraction=2)
 	private BigDecimal descuento;
 		
-	@OneToOne(fetch = FetchType.EAGER)
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="ID_TIENDA")
 	@JsonManagedReference
 	private Tienda tienda;
@@ -88,7 +88,7 @@ public class Producto {
 	
 	@OneToMany(fetch = FetchType.EAGER, mappedBy = "producto", cascade = CascadeType.ALL)
 	@JsonBackReference
-	private Set<ImagenProducto> imagenes;
+	private Set<ImagenProducto> imagenes;	
 
 	public int getId() {
 		return id;

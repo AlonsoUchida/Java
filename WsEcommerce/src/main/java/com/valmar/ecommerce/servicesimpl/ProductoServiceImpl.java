@@ -30,7 +30,8 @@ public class ProductoServiceImpl implements ProductoService{
 	private TiendaDao tiendaDao;
 	@Autowired
 	private CategoriaDao categoriaDao;
-	
+	@Autowired
+	private ImagenProductoDao imagenDao;
 	
 	@Override
 	public Producto obtenerPorId(int id) {
@@ -75,6 +76,16 @@ public class ProductoServiceImpl implements ProductoService{
 	@Override
 	public Categoria obtenerCategoriaPorId(int id) {
 		return categoriaDao.obtenerPorId(id);
+	}
+
+	@Override
+	public List<Producto> obtenerProductosPorTienda(int id) {
+		return productoDao.obtenerProductosPorTienda(id);
+	}
+
+	@Override
+	public ImagenProducto obtenerImagenPorDefecto(int id) {
+		return imagenDao.obtenerImagenPorDefecto(id);
 	}
 	
 }

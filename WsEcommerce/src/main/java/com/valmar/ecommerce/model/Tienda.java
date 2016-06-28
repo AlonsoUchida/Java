@@ -1,5 +1,7 @@
 package com.valmar.ecommerce.model;
 
+import java.math.BigDecimal;
+import java.util.Date;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -11,10 +13,14 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
@@ -53,13 +59,34 @@ public class Tienda {
 	@JsonManagedReference
 	private Set<MetodoPago> metodoPagos;
 	
-	@Column(name = "ESTADO")
-	private int estado;
+	@Column(name = "COSTO_MINIMO")
+	private BigDecimal costoMnimo;
+	
+	@Column(name = "ESTADO_ABIERTO")
+	private int estadoAbierto;
+	
+	@Column(name = "IMAGEN")
+	private byte[] imagen;
 	
 	@ManyToOne
     @JoinColumn(name="ID_USUARIO")
     private Usuario usuario;
-
+	
+	@Column(name = "ESTADO")
+	private int estado;
+	
+	@Column(name = "FECHA_REGISTRO", updatable=false)
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date fechaRegistro;
+	
+	@Column(name = "FECHA_MODIFICACION")
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date fechaModificacion;
+	
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "tienda", cascade = CascadeType.ALL)
+	@JsonIgnore
+	private Set<Producto> productos;
+		
 	public int getId() {
 		return id;
 	}
@@ -138,6 +165,46 @@ public class Tienda {
 
 	public void setUsuario(Usuario usuario) {
 		this.usuario = usuario;
+	}
+
+	public BigDecimal getCostoMnimo() {
+		return costoMnimo;
+	}
+
+	public void setCostoMnimo(BigDecimal costoMnimo) {
+		this.costoMnimo = costoMnimo;
+	}
+
+	public int getEstadoAbierto() {
+		return estadoAbierto;
+	}
+
+	public void setEstadoAbierto(int estadoAbierto) {
+		this.estadoAbierto = estadoAbierto;
+	}
+
+	public byte[] getImagen() {
+		return imagen;
+	}
+
+	public void setImagen(byte[] imagen) {
+		this.imagen = imagen;
+	}
+
+	public Date getFechaRegistro() {
+		return fechaRegistro;
+	}
+
+	public void setFechaRegistro(Date fechaRegistro) {
+		this.fechaRegistro = fechaRegistro;
+	}
+
+	public Date getFechaModificacion() {
+		return fechaModificacion;
+	}
+
+	public void setFechaModificacion(Date fechaModificacion) {
+		this.fechaModificacion = fechaModificacion;
 	}
 	
 	

@@ -18,5 +18,7 @@ public interface ProductoService {
        
     Marca obtenerMarcaPorId(int id);    
     Tienda obtenerTiendaPorId(int id);  
-    Categoria obtenerCategoriaPorId(int id);   
+    Categoria obtenerCategoriaPorId(int id);
+	List<Producto> obtenerProductosPorTienda(int id);
+	ImagenProducto obtenerImagenPorDefecto(int id);   
 }
