@@ -99,8 +99,6 @@ COMMENT = 'tabla de datos distritos de perú';
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `CMS_VALMAR_DB`.`direccion` (
   `id` INT(5) NOT NULL AUTO_INCREMENT,
-  `id_departamento` INT(3) NOT NULL,
-  `id_provincia` INT(3) NOT NULL,
   `id_distrito` INT(3) NOT NULL,
   `referencia` VARCHAR(250) NOT NULL,
   `domicilio` VARCHAR(250) NOT NULL,
@@ -109,15 +107,7 @@ CREATE TABLE IF NOT EXISTS `CMS_VALMAR_DB`.`direccion` (
   `longitud` VARCHAR(500) NULL,
   `activo` INT(1) NULL,
   PRIMARY KEY (`id`),
-  INDEX `id_departamento` (`id_departamento` ASC),
-  INDEX `id_provincia` (`id_provincia` ASC),
   INDEX `id_distrito` (`id_distrito` ASC),
-  CONSTRAINT `direcciones_ibfk_1`
-    FOREIGN KEY (`id_departamento`)
-    REFERENCES `CMS_VALMAR_DB`.`departamento` (`id`),
-  CONSTRAINT `direcciones_ibfk_2`
-    FOREIGN KEY (`id_provincia`)
-    REFERENCES `CMS_VALMAR_DB`.`provincia` (`id`),
   CONSTRAINT `direcciones_ibfk_3`
     FOREIGN KEY (`id_distrito`)
     REFERENCES `CMS_VALMAR_DB`.`distrito` (`id`))
