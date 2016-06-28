@@ -57,12 +57,10 @@ public class DireccionRestController {
     public ResponseEntity<Void> agregar(@RequestBody DireccionVM direccion,  UriComponentsBuilder ucBuilder) {
     	
     	Direccion direccionBean = new Direccion();
-    	Departamento departamento = service.obtenerDepartamentoPorId(direccion.getId_departamento());
-    	Provincia provincia = service.obtenerProvinciaPorId(direccion.getId_provincia());
     	Distrito distrito = service.obtenerDistritoPorId(direccion.getId_distrito());
     	Usuario usuario = service.obtenerUsuarioPorId(direccion.getId_usuario());
     	
-    	if((departamento==null) || (provincia==null) || (distrito==null) || (usuario==null)){
+    	if((distrito==null) || (usuario==null)){
     		return new ResponseEntity<Void>(HttpStatus.NOT_FOUND);
     	}
     	
@@ -70,8 +68,6 @@ public class DireccionRestController {
     	usuarios.add(usuario);
     	
     	direccionBean.setUsuarios(usuarios);
-    	direccionBean.setDepartamento(departamento);
-    	direccionBean.setProvincia(provincia);
     	direccionBean.setDistrito(distrito);
     	direccionBean.setReferencia(direccion.getReferencia());
     	direccionBean.setDomicilio(direccion.getDomicilio());
@@ -89,12 +85,10 @@ public class DireccionRestController {
     public ResponseEntity<Void> actualizar(@RequestBody DireccionVM direccion,  UriComponentsBuilder ucBuilder) {
     	
     	Direccion direccionBean = new Direccion();
-    	Departamento departamento = service.obtenerDepartamentoPorId(direccion.getId_departamento());
-    	Provincia provincia = service.obtenerProvinciaPorId(direccion.getId_provincia());
     	Distrito distrito = service.obtenerDistritoPorId(direccion.getId_distrito());
     	Usuario usuario = service.obtenerUsuarioPorId(direccion.getId_usuario());
     	
-    	if((departamento==null) || (provincia==null) || (distrito==null) || (usuario==null)){
+    	if((distrito==null) || (usuario==null)){
     		return new ResponseEntity<Void>(HttpStatus.NOT_FOUND);
     	}
     	
@@ -103,8 +97,6 @@ public class DireccionRestController {
     	
     	direccionBean.setId(direccion.getId());
     	direccionBean.setUsuarios(usuarios);
-    	direccionBean.setDepartamento(departamento);
-    	direccionBean.setProvincia(provincia);
     	direccionBean.setDistrito(distrito);
     	direccionBean.setReferencia(direccion.getReferencia());
     	direccionBean.setDomicilio(direccion.getDomicilio());

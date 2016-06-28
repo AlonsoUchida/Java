@@ -47,16 +47,6 @@ public class Direccion {
 	private int activo;
 	
 	@OneToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name="ID_PROVINCIA")
-	@JsonManagedReference
-	private Provincia provincia;
-	
-	@OneToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name="ID_DEPARTAMENTO")
-	@JsonManagedReference
-	private Departamento departamento;
-	
-	@OneToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name="ID_DISTRITO")
 	@JsonManagedReference
 	private Distrito distrito;
@@ -95,22 +85,6 @@ public class Direccion {
 
 	public void setNumero(String numero) {
 		this.numero = numero;
-	}
-
-	public Provincia getProvincia() {
-		return provincia;
-	}
-
-	public void setProvincia(Provincia provincia) {
-		this.provincia = provincia;
-	}
-
-	public Departamento getDepartamento() {
-		return departamento;
-	}
-
-	public void setDepartamento(Departamento departamento) {
-		this.departamento = departamento;
 	}
 
 	public Distrito getDistrito() {

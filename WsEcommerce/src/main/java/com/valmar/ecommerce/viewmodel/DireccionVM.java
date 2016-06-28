@@ -9,8 +9,6 @@ public class DireccionVM {
 	private String domicilio;
 	private String numero;
 	private int activo;
-	private int id_departamento;
-	private int id_provincia;
 	private int id_distrito;
 	private String latitud;
 	private String longitud;
@@ -44,18 +42,6 @@ public class DireccionVM {
 	}
 	public void setNumero(String numero) {
 		this.numero = numero;
-	}
-	public int getId_departamento() {
-		return id_departamento;
-	}
-	public void setId_departamento(int id_departamento) {
-		this.id_departamento = id_departamento;
-	}
-	public int getId_provincia() {
-		return id_provincia;
-	}
-	public void setId_provincia(int id_provincia) {
-		this.id_provincia = id_provincia;
 	}
 	public int getId_distrito() {
 		return id_distrito;
