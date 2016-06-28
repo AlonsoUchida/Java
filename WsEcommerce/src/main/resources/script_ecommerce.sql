@@ -241,7 +241,7 @@ DEFAULT CHARACTER SET = utf8;
 -- Table `CMS_VALMAR_DB`.`producto`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `CMS_VALMAR_DB`.`producto` (
-  `id` INT(5) NOT NULL,
+  `id` INT(5) NOT NULL AUTO_INCREMENT,
   `nombre` VARCHAR(200) NULL DEFAULT NULL,
   `descripcion` MEDIUMTEXT NULL DEFAULT NULL,
   `caracteristicas` MEDIUMTEXT NULL DEFAULT NULL,
@@ -272,7 +272,7 @@ DEFAULT CHARACTER SET = utf8;
 -- Table `CMS_VALMAR_DB`.`imagen_producto`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `CMS_VALMAR_DB`.`imagen_producto` (
-  `id` INT(5) NOT NULL,
+  `id` INT(5) NOT NULL AUTO_INCREMENT,
   `id_producto` INT(5) NULL DEFAULT NULL,
   `nombre` VARCHAR(100) NULL DEFAULT NULL,
   `imagen` BLOB NULL DEFAULT NULL,
@@ -488,7 +488,7 @@ DEFAULT CHARACTER SET = latin1;
 -- Table `CMS_VALMAR_DB`.`estado_cuenta`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `CMS_VALMAR_DB`.`estado_cuenta` (
-  `id` INT(5) NOT NULL,
+  `id` INT(5) NOT NULL AUTO_INCREMENT,
   `id_tienda` INT(5) NOT NULL,
   `saldo_acumulado` DECIMAL NULL,
   `fecha_limite_pago` TIMESTAMP NULL,
@@ -528,7 +528,7 @@ ENGINE = InnoDB;
 -- Table `CMS_VALMAR_DB`.`pagos_por_cuenta`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `CMS_VALMAR_DB`.`pagos_por_cuenta` (
-  `id` INT(5) NOT NULL,
+  `id` INT(5) NOT NULL AUTO_INCREMENT,
   `id_cuenta` INT(5) NOT NULL,
   `saldo_pagado` DECIMAL NULL,
   `fecha_pago` TIMESTAMP NULL,
