@@ -1,5 +1,7 @@
 package com.valmar.ecommerce.daoimpl;
 
+import java.util.List;
+
 import org.hibernate.Criteria;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
@@ -20,4 +22,11 @@ public class MarcaDaoImpl extends AbstractDao<Integer, Marca> implements MarcaDa
 		return (Marca) criteria.uniqueResult();
 	}
 
+	@Override
+	public List<Marca> listarMarcas() {
+		Criteria criteria = createEntityCriteria();
+		criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
+		List<Marca> marcas = (List<Marca>) criteria.list();
+		return marcas;
+	}
 }

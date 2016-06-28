@@ -10,5 +10,5 @@ public interface ProductoDao {
     void agregar(Producto producto);    
     void actualizar(Producto producto); 
     void eliminar(int id);    
-    List<Producto> listarProductos();
+    List<Producto> listarProductos();     
 }

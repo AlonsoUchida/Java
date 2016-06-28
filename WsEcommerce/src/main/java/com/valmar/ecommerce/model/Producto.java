@@ -3,6 +3,7 @@ package com.valmar.ecommerce.model;
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -84,6 +85,10 @@ public class Producto {
 	@Column(name = "FECHA_MODIFICACION")
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date fechaModificacion;	
+	
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "producto", cascade = CascadeType.ALL)
+	@JsonBackReference
+	private Set<ImagenProducto> imagenes;
 
 	public int getId() {
 		return id;
@@ -188,6 +193,13 @@ public class Producto {
 	public void setFechaModificacion(Date fechaModificacion) {
 		this.fechaModificacion = fechaModificacion;
 	}
-	
+
+	public Set<ImagenProducto> getImagenes() {
+		return imagenes;
+	}
+
+	public void setImagenes(Set<ImagenProducto> imagenes) {
+		this.imagenes = imagenes;
+	}
 	
 }

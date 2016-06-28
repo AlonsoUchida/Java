@@ -38,10 +38,10 @@ public class AuthenticationRestController {
     public ResponseEntity<?> createAuthenticationToken(@RequestHeader("Authorization") String authorization) throws AuthenticationException {
 
     	AuthenticationRequest authenticationRequest = jwtTokenUtil.getAuthenticationRequest(authorization);
-		Usuario usuario = usuarioService.loadUserByUsername(authenticationRequest.getUsername());
+		Usuario usuario = usuarioService.obtenerPorCorreo(authenticationRequest.getUsername());
 		if (usuario == null)
 			return new ResponseEntity<String>("Usuario no existe", HttpStatus.NOT_FOUND);
-		int userId = usuarioService.validateUser(authenticationRequest.getUsername(), authenticationRequest.getPassword());
+		int userId = usuarioService.validarUsuario(authenticationRequest.getUsername(), authenticationRequest.getPassword());
 		if (userId == 0)
 			return new ResponseEntity<String>("Crendeciales incorrectas", HttpStatus.UNAUTHORIZED);
 		
@@ -52,9 +52,8 @@ public class AuthenticationRestController {
 		SecurityContextHolder.getContext().setAuthentication(authentication);
 
 		AuthenticationVM authVM = new AuthenticationVM();
-		String token = usuarioService.generateToken(userId);
+		String token = usuarioService.generarToken(userId);
 		authVM.setIdUsuario(usuario.getId());
-		//authVM.setPassword(usuario.getPassword());
 		authVM.setToken(token);
 		// Return the token
 		return new ResponseEntity<AuthenticationVM>(authVM, HttpStatus.OK);

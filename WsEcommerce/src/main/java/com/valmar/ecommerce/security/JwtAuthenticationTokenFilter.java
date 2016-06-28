@@ -39,12 +39,12 @@ public class JwtAuthenticationTokenFilter extends UsernamePasswordAuthentication
 
 		String authToken = httpRequest.getHeader("Token");
 		if (authToken != null) {
-			String username = usuarioService.getUsernameFromToken(authToken);
+			String username = usuarioService.obtenerUsuarioPorToken(authToken);
 
 			if (username != null && !username.isEmpty() 
 					&& SecurityContextHolder.getContext().getAuthentication() == null) {
 				UserDetails userDetails = this.userDetailsService.loadUserByUsername(username);
-				if (usuarioService.validateToken(authToken)) {
+				if (usuarioService.validarToken(authToken)) {
 					UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(
 							userDetails, null, userDetails.getAuthorities());
 					authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(httpRequest));

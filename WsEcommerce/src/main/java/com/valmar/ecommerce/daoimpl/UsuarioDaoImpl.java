@@ -10,6 +10,8 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import com.valmar.ecommerce.dao.AbstractDao;
 import com.valmar.ecommerce.dao.UsuarioDao;
+import com.valmar.ecommerce.enums.TipoEstado;
+import com.valmar.ecommerce.enums.TipoUsuario;
 import com.valmar.ecommerce.model.Usuario;
 
 @Repository("usuarioDao")
@@ -57,7 +59,7 @@ public class UsuarioDaoImpl extends AbstractDao<Integer, Usuario> implements Usu
 		try {
 			Criteria criteria = createEntityCriteria();
 			criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
-			List<Usuario> usuarios = (List<Usuario>) criteria.list();
+			List<Usuario> usuarios = (List<Usuario>) criteria.list();			
 			return usuarios;
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -65,27 +67,34 @@ public class UsuarioDaoImpl extends AbstractDao<Integer, Usuario> implements Usu
 		return null;
 	}
 
-	public int validateUser(String username, String password){
+	public int validarUsuario(String username, String password){
 		Criteria criteria = createEntityCriteria();
 		criteria.add(Restrictions.eq("correo", username));
 		criteria.add(Restrictions.eq("password", password));
 		Usuario usuario = (Usuario) criteria.uniqueResult();
 		return usuario.getId();
 	}
-
-	@Override
-	public Usuario getUserById(int userId) {
-		Criteria criteria = createEntityCriteria();
-		criteria.add(Restrictions.like("id",userId)); 
-		Usuario usuario = (Usuario)criteria.uniqueResult();
-		return usuario;
-	}
 	
-	public Usuario findByUsername(String username) {
+	public Usuario obtenerPorCorreo(String username) {
 		Criteria criteria = createEntityCriteria();
 		criteria.add(Restrictions.like("correo", username)); 
 		Usuario usuario = (Usuario)criteria.uniqueResult();
 		return usuario;
+	}
+
+	@Override
+	public List<Usuario> listarBodegueros() {
+		try {
+			Criteria criteria = createEntityCriteria();
+			criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
+			List<Usuario> usuarios = (List<Usuario>) criteria.list();
+			criteria.add(Restrictions.eq("tipo", TipoUsuario.BODEGUERO.getValue()));
+			criteria.add(Restrictions.eq("estado", TipoEstado.HABILITADO.getValue()));
+			return usuarios;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
 	}
 
 

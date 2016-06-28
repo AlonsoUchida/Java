@@ -49,33 +49,33 @@ public class UsuarioServiceImpl implements UsuarioService{
 		return usuarioDao.listarUsuarios();
 	}
 
-	public int validateUser(String username, String password) {
-		return usuarioDao.validateUser(username, password);
+	@Override
+	public int validarUsuario(String username, String password) {
+		return usuarioDao.validarUsuario(username, password);
 	}
 
-	public String generateToken(int userId) {
-		Usuario user = usuarioDao.getUserById(userId);
+	@Override
+	public String generarToken(int userId) {
+		Usuario user = usuarioDao.obtenerPorId(userId);
 		if(user!=null)
-			return tokenDao.generateToken(user);
+			return tokenDao.generarToken(user);
 		else 
 			return null;
 	}
 	
-	public boolean validateToken(String token){
-		return tokenDao.validateToken(token);
-	}
-	
-	public String getUsernameFromToken(String token){
-		return tokenDao.getUsernameFromToken(token);
+	@Override
+	public boolean validarToken(String token){
+		return tokenDao.validarToken(token);
 	}
 	
 	@Override
-    public Usuario loadUserByUsername(String username) throws UsernameNotFoundException {
-       Usuario usuario = usuarioDao.findByUsername(username);
-        if (usuario == null) {
-            return null;
-        } else {
-            return usuario;
-        }
+	public String obtenerUsuarioPorToken(String token){
+		return tokenDao.obtenerUsuarioPorToken(token);
+	}
+	
+	@Override
+    public Usuario obtenerPorCorreo(String username) {
+       return usuarioDao.obtenerPorCorreo(username);
     }
+
 }

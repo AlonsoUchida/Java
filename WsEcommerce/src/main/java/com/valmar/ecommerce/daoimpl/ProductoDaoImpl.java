@@ -49,10 +49,13 @@ public class ProductoDaoImpl extends AbstractDao<Integer, Producto> implements P
 			query1.setInteger("id", id);
 			query1.executeUpdate();
 			
-			
-			Query query2 = getSession().createSQLQuery("delete from producto where id = :id");
+			Query query2 = getSession().createSQLQuery("delete from imagen_producto where id_producto = :id");
 			query2.setInteger("id", id);
 			query2.executeUpdate();
+		
+			Query query3 = getSession().createSQLQuery("delete from producto where id = :id");
+			query3.setInteger("id", id);
+			query3.executeUpdate();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

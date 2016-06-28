@@ -11,8 +11,8 @@ public interface UsuarioDao {
     void actualizar(Usuario usuario);
     void eliminar(int id);    
     List<Usuario> listarUsuarios();
+    List<Usuario> listarBodegueros();
     
-    int validateUser(String username, String password);	
-	Usuario getUserById(int userId);
-	Usuario findByUsername(String username);
+    int validarUsuario(String username, String password);	
+	Usuario obtenerPorCorreo(String username);
 }

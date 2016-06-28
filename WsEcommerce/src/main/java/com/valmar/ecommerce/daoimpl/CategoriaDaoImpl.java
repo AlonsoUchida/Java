@@ -1,5 +1,7 @@
 package com.valmar.ecommerce.daoimpl;
 
+import java.util.List;
+
 import org.hibernate.Criteria;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
@@ -18,6 +20,14 @@ public class CategoriaDaoImpl extends AbstractDao<Integer, Categoria> implements
 		Criteria criteria = createEntityCriteria();
 		criteria.add(Restrictions.eq("id", id));
 		return (Categoria) criteria.uniqueResult();
+	}
+
+	@Override
+	public List<Categoria> listarCategorias() {
+		Criteria criteria = createEntityCriteria();
+		criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
+		List<Categoria> categorias = (List<Categoria>) criteria.list();
+		return categorias;
 	}
 
 }

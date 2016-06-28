@@ -27,6 +27,7 @@
         <property name="dataSource" ref="dataSourceProd" />
         <property name="annotatedClasses">
             <list>
+            	<value>com.valmar.ecommerce.model.ImagenProducto</value>
             	<value>com.valmar.ecommerce.model.Categoria</value>
             	<value>com.valmar.ecommerce.model.Marca</value>
 				<value>com.valmar.ecommerce.model.Departamento</value>

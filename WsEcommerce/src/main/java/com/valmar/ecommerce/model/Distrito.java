@@ -20,9 +20,8 @@ public class Distrito {
 	@Column(name = "ID")
 	private int id;
 
-	@Column(name = "NOMBRE", length = 200, unique = true)
+	@Column(name = "NOMBRE")
 	@NotNull
-	@Size(min = 4, max = 200)
 	private String nombre;
 	
 	@OneToOne(fetch = FetchType.EAGER)

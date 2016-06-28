@@ -7,10 +7,12 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.valmar.ecommerce.dao.CategoriaDao;
+import com.valmar.ecommerce.dao.ImagenProductoDao;
 import com.valmar.ecommerce.dao.MarcaDao;
 import com.valmar.ecommerce.dao.ProductoDao;
 import com.valmar.ecommerce.dao.TiendaDao;
 import com.valmar.ecommerce.model.Categoria;
+import com.valmar.ecommerce.model.ImagenProducto;
 import com.valmar.ecommerce.model.Marca;
 import com.valmar.ecommerce.model.Producto;
 import com.valmar.ecommerce.model.Tienda;
@@ -28,6 +30,7 @@ public class ProductoServiceImpl implements ProductoService{
 	private TiendaDao tiendaDao;
 	@Autowired
 	private CategoriaDao categoriaDao;
+	
 	
 	@Override
 	public Producto obtenerPorId(int id) {
@@ -73,4 +76,5 @@ public class ProductoServiceImpl implements ProductoService{
 	public Categoria obtenerCategoriaPorId(int id) {
 		return categoriaDao.obtenerPorId(id);
 	}
+	
 }

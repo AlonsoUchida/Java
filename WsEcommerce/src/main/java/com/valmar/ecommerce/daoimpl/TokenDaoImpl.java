@@ -21,11 +21,11 @@ import com.valmar.ecommerce.model.Usuario;
 @EnableTransactionManagement
 public class TokenDaoImpl extends AbstractDao<Integer, Token> implements TokenDao {
 
-	private static final int expireTimeInSeconds = 900;
+	private static final int expireTimeInSeconds = 1200;
 	private static final String USERNAME = "u.correo";
 
 	@Override
-	public String generateToken(Usuario user) {
+	public String generarToken(Usuario usuario) {
 		Token token = new Token();
 		/*
 		 * This works by choosing 130 bits from a cryptographically secure
@@ -50,7 +50,7 @@ public class TokenDaoImpl extends AbstractDao<Integer, Token> implements TokenDa
 		Calendar calendar = Calendar.getInstance();
 		calendar.add(Calendar.SECOND, expireTimeInSeconds);
 		token.setExpiresOn(new Timestamp(calendar.getTimeInMillis()));
-		token.setUser(user);
+		token.setUser(usuario);
 
 		Query query = getSession().createSQLQuery("INSERT INTO token " + "(authToken, issuedOn, expiresOn, userId ) "
 				+ "VALUES (:authToken, :issuedOn, :expiresOn, :userId )");
@@ -63,7 +63,7 @@ public class TokenDaoImpl extends AbstractDao<Integer, Token> implements TokenDa
 	}
 
 	@Override
-	public boolean validateToken(String tokenId) {
+	public boolean validarToken(String tokenId) {
 		boolean isValidated = false; 
 		try {
 			Query query = getSession().createSQLQuery(
@@ -99,7 +99,7 @@ public class TokenDaoImpl extends AbstractDao<Integer, Token> implements TokenDa
 	}
 
 	@Override
-	public String getUsernameFromToken(String token) {
+	public String obtenerUsuarioPorToken(String token) {
 		String userName = "";
 		try {
 			Query query = getSession().createSQLQuery("SELECT " + USERNAME + " FROM usuario u "

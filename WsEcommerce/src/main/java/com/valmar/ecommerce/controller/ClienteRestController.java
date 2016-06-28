@@ -63,7 +63,7 @@ public class ClienteRestController {
         clienteBean.setPassword(cliente.getPassword());
         clienteBean.setGenero(cliente.getGenero());
         clienteBean.setTipo(TipoUsuario.CLIENTE.getValue());
-        clienteBean.setEstado(1);
+        clienteBean.setEstado(TipoEstado.HABILITADO.getValue());
         clienteBean.setFechaRegistro(new Date());
         clienteBean.setFechaModificacion(new Date());
         

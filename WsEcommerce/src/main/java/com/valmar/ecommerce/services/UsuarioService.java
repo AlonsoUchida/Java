@@ -13,9 +13,9 @@ public interface UsuarioService {
     void eliminar(int id);    
     List<Usuario> listarUsuarios();
     
-    public int validateUser(String username, String password);
-	public String generateToken(int userId);
-	public boolean validateToken(String token);
-	public String getUsernameFromToken(String token);
-	Usuario loadUserByUsername(String username) throws UsernameNotFoundException;
+    public int validarUsuario(String username, String password);
+	public String generarToken(int userId);
+	public boolean validarToken(String token);
+	public String obtenerUsuarioPorToken(String token);
+	Usuario obtenerPorCorreo(String username);
 }
