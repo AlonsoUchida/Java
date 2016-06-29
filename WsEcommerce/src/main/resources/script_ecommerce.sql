@@ -7,6 +7,7 @@ SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='TRADITIONAL,ALLOW_INVALID_DATES';
 -- -----------------------------------------------------
 -- Schema CMS_VALMAR_DB
 -- -----------------------------------------------------
+DROP SCHEMA IF EXISTS `CMS_VALMAR_DB` ;
 
 -- -----------------------------------------------------
 -- Schema CMS_VALMAR_DB
@@ -17,6 +18,8 @@ USE `CMS_VALMAR_DB` ;
 -- -----------------------------------------------------
 -- Table `CMS_VALMAR_DB`.`autoridad`
 -- -----------------------------------------------------
+DROP TABLE IF EXISTS `CMS_VALMAR_DB`.`autoridad` ;
+
 CREATE TABLE IF NOT EXISTS `CMS_VALMAR_DB`.`autoridad` (
   `id` INT(11) NOT NULL AUTO_INCREMENT,
   `nombre` VARCHAR(255) NULL DEFAULT NULL,
@@ -29,6 +32,8 @@ DEFAULT CHARACTER SET = latin1;
 -- -----------------------------------------------------
 -- Table `CMS_VALMAR_DB`.`categoria`
 -- -----------------------------------------------------
+DROP TABLE IF EXISTS `CMS_VALMAR_DB`.`categoria` ;
+
 CREATE TABLE IF NOT EXISTS `CMS_VALMAR_DB`.`categoria` (
   `id` INT(5) NOT NULL AUTO_INCREMENT,
   `nombre` VARCHAR(200) NOT NULL,
@@ -48,6 +53,8 @@ DEFAULT CHARACTER SET = utf8;
 -- -----------------------------------------------------
 -- Table `CMS_VALMAR_DB`.`departamento`
 -- -----------------------------------------------------
+DROP TABLE IF EXISTS `CMS_VALMAR_DB`.`departamento` ;
+
 CREATE TABLE IF NOT EXISTS `CMS_VALMAR_DB`.`departamento` (
   `id` INT(3) NOT NULL AUTO_INCREMENT,
   `nombre` VARCHAR(100) NOT NULL,
@@ -61,6 +68,8 @@ COMMENT = 'tabla de datos departamentos de perú';
 -- -----------------------------------------------------
 -- Table `CMS_VALMAR_DB`.`provincia`
 -- -----------------------------------------------------
+DROP TABLE IF EXISTS `CMS_VALMAR_DB`.`provincia` ;
+
 CREATE TABLE IF NOT EXISTS `CMS_VALMAR_DB`.`provincia` (
   `id` INT(3) NOT NULL AUTO_INCREMENT,
   `nombre` VARCHAR(100) NOT NULL,
@@ -79,6 +88,8 @@ COMMENT = 'tabla de datos provincias de perú';
 -- -----------------------------------------------------
 -- Table `CMS_VALMAR_DB`.`distrito`
 -- -----------------------------------------------------
+DROP TABLE IF EXISTS `CMS_VALMAR_DB`.`distrito` ;
+
 CREATE TABLE IF NOT EXISTS `CMS_VALMAR_DB`.`distrito` (
   `id` INT(3) NOT NULL AUTO_INCREMENT,
   `nombre` VARCHAR(100) NOT NULL,
@@ -97,6 +108,8 @@ COMMENT = 'tabla de datos distritos de perú';
 -- -----------------------------------------------------
 -- Table `CMS_VALMAR_DB`.`direccion`
 -- -----------------------------------------------------
+DROP TABLE IF EXISTS `CMS_VALMAR_DB`.`direccion` ;
+
 CREATE TABLE IF NOT EXISTS `CMS_VALMAR_DB`.`direccion` (
   `id` INT(5) NOT NULL AUTO_INCREMENT,
   `id_distrito` INT(3) NOT NULL,
@@ -118,6 +131,8 @@ DEFAULT CHARACTER SET = utf8;
 -- -----------------------------------------------------
 -- Table `CMS_VALMAR_DB`.`usuario`
 -- -----------------------------------------------------
+DROP TABLE IF EXISTS `CMS_VALMAR_DB`.`usuario` ;
+
 CREATE TABLE IF NOT EXISTS `CMS_VALMAR_DB`.`usuario` (
   `id` INT(5) NOT NULL AUTO_INCREMENT,
   `nombre` VARCHAR(100) NULL DEFAULT NULL,
@@ -138,6 +153,8 @@ DEFAULT CHARACTER SET = utf8;
 -- -----------------------------------------------------
 -- Table `CMS_VALMAR_DB`.`cliente_direccion`
 -- -----------------------------------------------------
+DROP TABLE IF EXISTS `CMS_VALMAR_DB`.`cliente_direccion` ;
+
 CREATE TABLE IF NOT EXISTS `CMS_VALMAR_DB`.`cliente_direccion` (
   `id` INT(5) NOT NULL AUTO_INCREMENT,
   `id_direccion` INT(5) NOT NULL,
@@ -160,6 +177,8 @@ DEFAULT CHARACTER SET = utf8;
 -- -----------------------------------------------------
 -- Table `CMS_VALMAR_DB`.`direccion_envio`
 -- -----------------------------------------------------
+DROP TABLE IF EXISTS `CMS_VALMAR_DB`.`direccion_envio` ;
+
 CREATE TABLE IF NOT EXISTS `CMS_VALMAR_DB`.`direccion_envio` (
   `id` INT(11) NOT NULL AUTO_INCREMENT,
   `distrito` VARCHAR(150) NULL DEFAULT NULL,
@@ -177,6 +196,8 @@ DEFAULT CHARACTER SET = utf8;
 -- -----------------------------------------------------
 -- Table `CMS_VALMAR_DB`.`envio`
 -- -----------------------------------------------------
+DROP TABLE IF EXISTS `CMS_VALMAR_DB`.`envio` ;
+
 CREATE TABLE IF NOT EXISTS `CMS_VALMAR_DB`.`envio` (
   `id` INT(3) NOT NULL AUTO_INCREMENT,
   `nombre` VARCHAR(200) NOT NULL,
@@ -189,6 +210,8 @@ DEFAULT CHARACTER SET = utf8;
 -- -----------------------------------------------------
 -- Table `CMS_VALMAR_DB`.`tienda`
 -- -----------------------------------------------------
+DROP TABLE IF EXISTS `CMS_VALMAR_DB`.`tienda` ;
+
 CREATE TABLE IF NOT EXISTS `CMS_VALMAR_DB`.`tienda` (
   `id` INT(5) NOT NULL AUTO_INCREMENT,
   `nombre` VARCHAR(250) NOT NULL,
@@ -197,7 +220,6 @@ CREATE TABLE IF NOT EXISTS `CMS_VALMAR_DB`.`tienda` (
   `telefono_movil` VARCHAR(10) NULL DEFAULT NULL,
   `afiliacion` INT(2) NOT NULL,
   `afiliacion_valor` INT(11) NOT NULL,
-  `id_metodo_pago` INT(11) NOT NULL,
   `costo_minimo` DECIMAL NULL,
   `estado_abierto` INT(1) NULL,
   `imagen` BLOB NULL,
@@ -217,6 +239,8 @@ DEFAULT CHARACTER SET = utf8;
 -- -----------------------------------------------------
 -- Table `CMS_VALMAR_DB`.`marca`
 -- -----------------------------------------------------
+DROP TABLE IF EXISTS `CMS_VALMAR_DB`.`marca` ;
+
 CREATE TABLE IF NOT EXISTS `CMS_VALMAR_DB`.`marca` (
   `id` INT(3) NOT NULL AUTO_INCREMENT,
   `nombre` VARCHAR(200) NOT NULL,
@@ -230,16 +254,18 @@ DEFAULT CHARACTER SET = utf8;
 -- -----------------------------------------------------
 -- Table `CMS_VALMAR_DB`.`producto`
 -- -----------------------------------------------------
+DROP TABLE IF EXISTS `CMS_VALMAR_DB`.`producto` ;
+
 CREATE TABLE IF NOT EXISTS `CMS_VALMAR_DB`.`producto` (
   `id` INT(5) NOT NULL AUTO_INCREMENT,
   `nombre` VARCHAR(200) NULL DEFAULT NULL,
   `descripcion` MEDIUMTEXT NULL DEFAULT NULL,
   `caracteristicas` MEDIUMTEXT NULL DEFAULT NULL,
   `precio` DECIMAL NULL DEFAULT NULL,
-  `id_marca` INT(5) NOT NULL,
   `presentacion` VARCHAR(45) NULL DEFAULT NULL,
   `descuento` DECIMAL NULL DEFAULT NULL,
-  `id_tienda` INT(5) NULL DEFAULT NULL,
+  `id_marca` INT(5) NOT NULL,
+  `id_tienda` INT(5) NOT NULL,
   `estado` INT(1) NULL DEFAULT NULL,
   `fecha_registro` DATETIME NULL DEFAULT NULL,
   `fecha_modificacion` DATETIME NULL DEFAULT NULL,
@@ -261,9 +287,11 @@ DEFAULT CHARACTER SET = utf8;
 -- -----------------------------------------------------
 -- Table `CMS_VALMAR_DB`.`imagen_producto`
 -- -----------------------------------------------------
+DROP TABLE IF EXISTS `CMS_VALMAR_DB`.`imagen_producto` ;
+
 CREATE TABLE IF NOT EXISTS `CMS_VALMAR_DB`.`imagen_producto` (
   `id` INT(5) NOT NULL AUTO_INCREMENT,
-  `id_producto` INT(5) NULL DEFAULT NULL,
+  `id_producto` INT(5) NOT NULL,
   `nombre` VARCHAR(100) NULL DEFAULT NULL,
   `imagen` BLOB NULL DEFAULT NULL,
   `defecto` INT(1) NULL,
@@ -279,6 +307,8 @@ DEFAULT CHARACTER SET = utf8;
 -- -----------------------------------------------------
 -- Table `CMS_VALMAR_DB`.`informacion_cliente`
 -- -----------------------------------------------------
+DROP TABLE IF EXISTS `CMS_VALMAR_DB`.`informacion_cliente` ;
+
 CREATE TABLE IF NOT EXISTS `CMS_VALMAR_DB`.`informacion_cliente` (
   `id` INT(5) NOT NULL AUTO_INCREMENT,
   `nombres` VARCHAR(150) NULL DEFAULT NULL,
@@ -286,7 +316,7 @@ CREATE TABLE IF NOT EXISTS `CMS_VALMAR_DB`.`informacion_cliente` (
   `correo` VARCHAR(150) NULL DEFAULT NULL,
   `telefono_local` VARCHAR(10) NULL DEFAULT NULL,
   `telefono_movil` VARCHAR(10) NULL DEFAULT NULL,
-  `id_cliente` INT(5) NULL DEFAULT NULL,
+  `id_cliente` INT(5) NOT NULL,
   PRIMARY KEY (`id`),
   INDEX `id_usuario_idx` (`id_cliente` ASC),
   CONSTRAINT `id_usuario`
@@ -301,12 +331,14 @@ DEFAULT CHARACTER SET = utf8;
 -- -----------------------------------------------------
 -- Table `CMS_VALMAR_DB`.`informacion_producto`
 -- -----------------------------------------------------
+DROP TABLE IF EXISTS `CMS_VALMAR_DB`.`informacion_producto` ;
+
 CREATE TABLE IF NOT EXISTS `CMS_VALMAR_DB`.`informacion_producto` (
   `id` INT(5) NOT NULL AUTO_INCREMENT,
   `nombre` VARCHAR(200) NULL DEFAULT NULL,
   `precio` DECIMAL NULL DEFAULT NULL,
   `cantidad` INT(5) NULL DEFAULT NULL,
-  `id_producto` INT(5) NULL DEFAULT NULL,
+  `id_producto` INT(5) NOT NULL,
   PRIMARY KEY (`id`),
   INDEX `id_producto` (`id_producto` ASC),
   CONSTRAINT `informacion_producto_ibfk_1`
@@ -319,6 +351,8 @@ DEFAULT CHARACTER SET = utf8;
 -- -----------------------------------------------------
 -- Table `CMS_VALMAR_DB`.`metodo_pago`
 -- -----------------------------------------------------
+DROP TABLE IF EXISTS `CMS_VALMAR_DB`.`metodo_pago` ;
+
 CREATE TABLE IF NOT EXISTS `CMS_VALMAR_DB`.`metodo_pago` (
   `id` INT(3) NOT NULL AUTO_INCREMENT,
   `nombre` VARCHAR(200) NOT NULL,
@@ -331,11 +365,13 @@ DEFAULT CHARACTER SET = utf8;
 -- -----------------------------------------------------
 -- Table `CMS_VALMAR_DB`.`orden`
 -- -----------------------------------------------------
+DROP TABLE IF EXISTS `CMS_VALMAR_DB`.`orden` ;
+
 CREATE TABLE IF NOT EXISTS `CMS_VALMAR_DB`.`orden` (
   `id` INT(6) NOT NULL AUTO_INCREMENT,
-  `id_direccion_envio` INT(11) NULL DEFAULT NULL,
-  `id_informacion_cliente` INT(5) NULL DEFAULT NULL,
-  `id_informacion_producto` INT(5) NULL DEFAULT NULL,
+  `id_direccion_envio` INT(11) NOT NULL,
+  `id_informacion_cliente` INT(5) NOT NULL,
+  `id_informacion_producto` INT(5) NOT NULL,
   `estado_orden` VARCHAR(20) NULL DEFAULT NULL,
   `costo_envio` DECIMAL NULL DEFAULT NULL,
   `costo_total` DECIMAL NULL DEFAULT NULL,
@@ -361,10 +397,12 @@ DEFAULT CHARACTER SET = utf8;
 -- -----------------------------------------------------
 -- Table `CMS_VALMAR_DB`.`producto_categoria`
 -- -----------------------------------------------------
+DROP TABLE IF EXISTS `CMS_VALMAR_DB`.`producto_categoria` ;
+
 CREATE TABLE IF NOT EXISTS `CMS_VALMAR_DB`.`producto_categoria` (
   `id` INT(11) NOT NULL AUTO_INCREMENT,
   `id_producto` INT(5) NOT NULL,
-  `id_categoria` INT(5) NULL DEFAULT NULL,
+  `id_categoria` INT(5) NOT NULL,
   PRIMARY KEY (`id`),
   INDEX `id_producto` (`id_producto` ASC),
   INDEX `id_categoria` (`id_categoria` ASC),
@@ -381,10 +419,12 @@ DEFAULT CHARACTER SET = utf8;
 -- -----------------------------------------------------
 -- Table `CMS_VALMAR_DB`.`tienda_direccion`
 -- -----------------------------------------------------
+DROP TABLE IF EXISTS `CMS_VALMAR_DB`.`tienda_direccion` ;
+
 CREATE TABLE IF NOT EXISTS `CMS_VALMAR_DB`.`tienda_direccion` (
   `id` INT(5) NOT NULL AUTO_INCREMENT,
-  `id_direccion` INT(5) NULL DEFAULT NULL,
-  `id_tienda` INT(5) NULL DEFAULT NULL,
+  `id_direccion` INT(5) NOT NULL,
+  `id_tienda` INT(5) NOT NULL,
   PRIMARY KEY (`id`),
   INDEX `id_direccion` (`id_direccion` ASC),
   INDEX `id_tienda` (`id_tienda` ASC),
@@ -401,10 +441,12 @@ DEFAULT CHARACTER SET = utf8;
 -- -----------------------------------------------------
 -- Table `CMS_VALMAR_DB`.`tienda_envio`
 -- -----------------------------------------------------
+DROP TABLE IF EXISTS `CMS_VALMAR_DB`.`tienda_envio` ;
+
 CREATE TABLE IF NOT EXISTS `CMS_VALMAR_DB`.`tienda_envio` (
   `id` INT(5) NOT NULL AUTO_INCREMENT,
-  `id_tienda` INT(5) NULL DEFAULT NULL,
-  `id_envio` INT(3) NULL DEFAULT NULL,
+  `id_tienda` INT(5) NOT NULL,
+  `id_envio` INT(3) NOT NULL,
   PRIMARY KEY (`id`),
   INDEX `id_tienda` (`id_tienda` ASC),
   INDEX `id_envio` (`id_envio` ASC),
@@ -421,6 +463,8 @@ DEFAULT CHARACTER SET = utf8;
 -- -----------------------------------------------------
 -- Table `CMS_VALMAR_DB`.`tienda_metodo_pago`
 -- -----------------------------------------------------
+DROP TABLE IF EXISTS `CMS_VALMAR_DB`.`tienda_metodo_pago` ;
+
 CREATE TABLE IF NOT EXISTS `CMS_VALMAR_DB`.`tienda_metodo_pago` (
   `id` INT(5) NOT NULL AUTO_INCREMENT,
   `id_tienda` INT(5) NOT NULL,
@@ -441,12 +485,14 @@ DEFAULT CHARACTER SET = utf8;
 -- -----------------------------------------------------
 -- Table `CMS_VALMAR_DB`.`token`
 -- -----------------------------------------------------
+DROP TABLE IF EXISTS `CMS_VALMAR_DB`.`token` ;
+
 CREATE TABLE IF NOT EXISTS `CMS_VALMAR_DB`.`token` (
   `id` INT(11) NOT NULL AUTO_INCREMENT,
   `authToken` VARCHAR(500) NULL DEFAULT NULL,
-  `issuedOn` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `issuedOn` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `expiresOn` TIMESTAMP NULL DEFAULT NULL,
-  `userId` INT(11) NULL DEFAULT NULL,
+  `userId` INT(11) NOT NULL,
   PRIMARY KEY (`id`),
   INDEX `FK_TOKENXUSUARIO` (`userId` ASC),
   CONSTRAINT `FK_TOKENXUSUARIO`
@@ -459,6 +505,8 @@ DEFAULT CHARACTER SET = latin1;
 -- -----------------------------------------------------
 -- Table `CMS_VALMAR_DB`.`usuario_autoridad`
 -- -----------------------------------------------------
+DROP TABLE IF EXISTS `CMS_VALMAR_DB`.`usuario_autoridad` ;
+
 CREATE TABLE IF NOT EXISTS `CMS_VALMAR_DB`.`usuario_autoridad` (
   `usuario_id` INT(11) NOT NULL,
   `autoridad_id` INT(11) NOT NULL,
@@ -477,6 +525,8 @@ DEFAULT CHARACTER SET = latin1;
 -- -----------------------------------------------------
 -- Table `CMS_VALMAR_DB`.`estado_cuenta`
 -- -----------------------------------------------------
+DROP TABLE IF EXISTS `CMS_VALMAR_DB`.`estado_cuenta` ;
+
 CREATE TABLE IF NOT EXISTS `CMS_VALMAR_DB`.`estado_cuenta` (
   `id` INT(5) NOT NULL AUTO_INCREMENT,
   `id_tienda` INT(5) NOT NULL,
@@ -496,6 +546,8 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Table `CMS_VALMAR_DB`.`estado_cuenta_orden`
 -- -----------------------------------------------------
+DROP TABLE IF EXISTS `CMS_VALMAR_DB`.`estado_cuenta_orden` ;
+
 CREATE TABLE IF NOT EXISTS `CMS_VALMAR_DB`.`estado_cuenta_orden` (
   `id_estado_cuenta` INT(5) NOT NULL,
   `id_orden` INT(5) NOT NULL,
@@ -517,6 +569,8 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Table `CMS_VALMAR_DB`.`pagos_por_cuenta`
 -- -----------------------------------------------------
+DROP TABLE IF EXISTS `CMS_VALMAR_DB`.`pagos_por_cuenta` ;
+
 CREATE TABLE IF NOT EXISTS `CMS_VALMAR_DB`.`pagos_por_cuenta` (
   `id` INT(5) NOT NULL AUTO_INCREMENT,
   `id_cuenta` INT(5) NOT NULL,

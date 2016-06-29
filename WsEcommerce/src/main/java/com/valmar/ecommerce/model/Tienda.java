@@ -8,6 +8,8 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
@@ -30,6 +32,7 @@ public class Tienda {
 
 	@Id
 	@Column(name = "ID")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 
 	@Column(name = "NOMBRE")
@@ -60,7 +63,7 @@ public class Tienda {
 	private Set<MetodoPago> metodoPagos;
 	
 	@Column(name = "COSTO_MINIMO")
-	private BigDecimal costoMnimo;
+	private BigDecimal costoMinimo;
 	
 	@Column(name = "ESTADO_ABIERTO")
 	private int estadoAbierto;
@@ -167,12 +170,12 @@ public class Tienda {
 		this.usuario = usuario;
 	}
 
-	public BigDecimal getCostoMnimo() {
-		return costoMnimo;
+	public BigDecimal getCostoMinimo() {
+		return costoMinimo;
 	}
 
-	public void setCostoMnimo(BigDecimal costoMnimo) {
-		this.costoMnimo = costoMnimo;
+	public void setCostoMinimo(BigDecimal costoMinimo) {
+		this.costoMinimo = costoMinimo;
 	}
 
 	public int getEstadoAbierto() {

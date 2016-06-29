@@ -35,6 +35,23 @@ public class TiendaDaoImpl extends AbstractDao<Integer, Tienda> implements Tiend
 	@Override
 	public void eliminar(int id) {
 		try {
+			
+			Query query1 = getSession().createSQLQuery("delete from tienda_metodo_pago where id_tienda = :id");
+			query1.setInteger("id", id);
+			query1.executeUpdate();
+			
+			Query query2 = getSession().createSQLQuery("delete from tienda_envio where id_tienda = :id");
+			query2.setInteger("id", id);
+			query2.executeUpdate();
+			
+			Query query3 = getSession().createSQLQuery("delete from estado_cuenta where id_tienda = :id");
+			query3.setInteger("id", id);
+			query3.executeUpdate();
+			
+			Query query4 = getSession().createSQLQuery("delete from producto where id_tienda = :id");
+			query4.setInteger("id", id);
+			query4.executeUpdate();
+			
 			Query query = getSession().createSQLQuery("delete from tienda where id = :id");
 			query.setInteger("id", id);
 			query.executeUpdate();
@@ -54,6 +71,15 @@ public class TiendaDaoImpl extends AbstractDao<Integer, Tienda> implements Tiend
 			e.printStackTrace();
 		}
 		return null;
+	}
+
+	@Override
+	public void actualizar(Tienda tiendaBean) {
+		try {
+			merge(tiendaBean);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 }

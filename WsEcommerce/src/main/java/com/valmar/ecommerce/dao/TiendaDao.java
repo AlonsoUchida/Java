@@ -9,4 +9,5 @@ public interface TiendaDao {
     void agregar(Tienda tienda);     
     void eliminar(int id);    
     List<Tienda> listarTiendas();
+	void actualizar(Tienda tiendaBean);
 }

@@ -238,7 +238,7 @@ public class ProductoRestController {
         	_producto.setCaracteristicas(item.getCaracteristicas());
         	_producto.setPresentacion(item.getPresentacion());
         	_producto.setPrecio(item.getPrecio());
-        	_producto.setCostoMinimo(tienda.getCostoMnimo());
+        	_producto.setCostoMinimo(tienda.getCostoMinimo());
         	_producto.setId_tienda(tienda.getId());
         	_producto.setDescuento(item.getDescuento());       	
         	
