@@ -2154,3 +2154,20 @@ INSERT INTO `producto` VALUES (1, 'producto 1', 'producto 1', 'producto 1', '20'
 -- ----------------------------
 INSERT INTO `metodo_pago` VALUES (1, 'metodo pago 1', '100');
 INSERT INTO `metodo_pago` VALUES (2, 'metodo pago 2', '50');
+
+-- ----------------------------
+-- Records of direccion
+-- ----------------------------
+INSERT INTO `direccion` VALUES (1, '1', 'Plaza Las Banderas', 'Av. Mariano Cornejo', '874', '-12.11928 ', '-77.02910', '1');
+INSERT INTO `direccion` VALUES (2, '1', 'Plaza Las Banderas', 'Av. Mariano Cornejo', '974', '-12.11928 ', '-77.02887', '1');
+
+-- ----------------------------
+-- Records of tienda_direccion
+-- ----------------------------
+INSERT INTO `tienda_direccion` VALUES (1, '1', '1');
+
+-- ----------------------------
+-- Records of cliente_direccion
+-- ----------------------------
+INSERT INTO `cliente_direccion` VALUES (1, '2', '1');
+
