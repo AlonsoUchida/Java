@@ -10,4 +10,6 @@ public interface TiendaDao {
     void eliminar(int id);    
     List<Tienda> listarTiendas();
 	void actualizar(Tienda tiendaBean);
+	Tienda obtenerTiendaPorDireccion(int id);
+	List<Tienda> obtenerTiendasPorNombre(String nombre);	
 }

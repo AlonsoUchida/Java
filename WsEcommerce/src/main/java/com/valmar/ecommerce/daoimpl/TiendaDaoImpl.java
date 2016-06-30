@@ -10,11 +10,12 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import com.valmar.ecommerce.dao.AbstractDao;
 import com.valmar.ecommerce.dao.TiendaDao;
+import com.valmar.ecommerce.model.Direccion;
 import com.valmar.ecommerce.model.Tienda;
 
 @Repository("tiendaDao")
 @EnableTransactionManagement
-public class TiendaDaoImpl extends AbstractDao<Integer, Tienda> implements TiendaDao{
+public class TiendaDaoImpl extends AbstractDao<Integer, Tienda> implements TiendaDao {
 
 	@Override
 	public Tienda obtenerPorId(int id) {
@@ -35,23 +36,23 @@ public class TiendaDaoImpl extends AbstractDao<Integer, Tienda> implements Tiend
 	@Override
 	public void eliminar(int id) {
 		try {
-			
+
 			Query query1 = getSession().createSQLQuery("delete from tienda_metodo_pago where id_tienda = :id");
 			query1.setInteger("id", id);
 			query1.executeUpdate();
-			
+
 			Query query2 = getSession().createSQLQuery("delete from tienda_envio where id_tienda = :id");
 			query2.setInteger("id", id);
 			query2.executeUpdate();
-			
+
 			Query query3 = getSession().createSQLQuery("delete from estado_cuenta where id_tienda = :id");
 			query3.setInteger("id", id);
 			query3.executeUpdate();
-			
+
 			Query query4 = getSession().createSQLQuery("delete from producto where id_tienda = :id");
 			query4.setInteger("id", id);
 			query4.executeUpdate();
-			
+
 			Query query = getSession().createSQLQuery("delete from tienda where id = :id");
 			query.setInteger("id", id);
 			query.executeUpdate();
@@ -81,5 +82,29 @@ public class TiendaDaoImpl extends AbstractDao<Integer, Tienda> implements Tiend
 			e.printStackTrace();
 		}
 	}
+
+	@Override
+	public Tienda obtenerTiendaPorDireccion(int id) {
+		Criteria criteria = createEntityCriteria();
+		criteria.createAlias("direcciones", "d");
+		criteria.add(Restrictions.eq("d.id", id));
+		return (Tienda) criteria.uniqueResult();
+	}
+
+	@Override
+	public List<Tienda> obtenerTiendasPorNombre(String nombre) {
+		try {
+			Criteria criteria = createEntityCriteria();
+			criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
+			criteria.add(Restrictions.ilike("nombre", "%"+nombre+"%"));
+			criteria.setMaxResults(20);//Los primeros 20 elementos por defecto
+			List<Tienda> tiendas = (List<Tienda>) criteria.list();
+			return tiendas;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
 
 }

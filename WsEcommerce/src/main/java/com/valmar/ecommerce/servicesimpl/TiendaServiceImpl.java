@@ -61,4 +61,9 @@ public class TiendaServiceImpl implements TiendaService{
 		tiendaDao.actualizar(tiendaBean);		
 	}
 
+	@Override
+	public List<Tienda> obtenerTiendasPorNombre(String nombre) {
+		return tiendaDao.obtenerTiendasPorNombre(nombre);
+	}
+
 }

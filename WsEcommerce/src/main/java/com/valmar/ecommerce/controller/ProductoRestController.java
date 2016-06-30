@@ -21,12 +21,18 @@ import org.springframework.web.util.UriComponentsBuilder;
 import com.valmar.ecommerce.enums.TipoEstado;
 import com.valmar.ecommerce.enums.TipoImagen;
 import com.valmar.ecommerce.model.Categoria;
+import com.valmar.ecommerce.model.Direccion;
+import com.valmar.ecommerce.model.Distrito;
 import com.valmar.ecommerce.model.ImagenProducto;
 import com.valmar.ecommerce.model.Marca;
 import com.valmar.ecommerce.model.Producto;
+import com.valmar.ecommerce.model.Provincia;
 import com.valmar.ecommerce.model.Tienda;
+import com.valmar.ecommerce.model.Usuario;
 import com.valmar.ecommerce.services.ImagenProductoService;
 import com.valmar.ecommerce.services.ProductoService;
+import com.valmar.ecommerce.services.UsuarioService;
+import com.valmar.ecommerce.util.DistanceCalculatorUtil;
 import com.valmar.ecommerce.viewmodel.ImagenProductoVM;
 import com.valmar.ecommerce.viewmodel.ProductoPorTiendaVM;
 import com.valmar.ecommerce.viewmodel.ProductoVM;
@@ -216,15 +222,22 @@ public class ProductoRestController {
     /************************************************************************************************/
     @RequestMapping(value = "/obtenerPorTienda", params = {"id"}, method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<ProductoPorTiendaVM>> obtenerPorTienda(@RequestParam("id") int id) {
+    	List<ProductoPorTiendaVM> _productos = obtenerProductosPorTienda(id);
+    	if(_productos==null){
+    		return new ResponseEntity<List<ProductoPorTiendaVM>>(HttpStatus.NOT_FOUND);
+    	}   
+        return new ResponseEntity<List<ProductoPorTiendaVM>>(_productos, HttpStatus.OK);
+    }
+    
+    private List<ProductoPorTiendaVM> obtenerProductosPorTienda(int id){
     	Tienda tienda = service.obtenerTiendaPorId(id);
     	if (tienda==null){
-    		return new ResponseEntity<List<ProductoPorTiendaVM>>(HttpStatus.NOT_FOUND);
+    		return null;
     	}
     	List<Producto> productos = service.obtenerProductosPorTienda(id);
         if (productos.isEmpty()) {
-            return new ResponseEntity<List<ProductoPorTiendaVM>>(HttpStatus.NO_CONTENT);
+            return null;
         }
-       
         
         List<ProductoPorTiendaVM> _productos = new ArrayList<>();
         for(Producto item : productos){
@@ -235,6 +248,7 @@ public class ProductoRestController {
         	 }
         	_producto.setId(item.getId());
         	_producto.setNombre(item.getNombre());
+        	_producto.setDescripcion(item.getDescripcion());
         	_producto.setCaracteristicas(item.getCaracteristicas());
         	_producto.setPresentacion(item.getPresentacion());
         	_producto.setPrecio(item.getPrecio());
@@ -244,6 +258,47 @@ public class ProductoRestController {
         	
         	_productos.add(_producto);
         }
-        return new ResponseEntity<List<ProductoPorTiendaVM>>(_productos, HttpStatus.OK);
+        return _productos;
+       
+    }
+    
+    @RequestMapping(value = "/obtenerPorDireccionDeUsuario", params = {"id"}, method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<List<ProductoPorTiendaVM>> obtenerPorDireccionDeUsuario(@RequestParam("id") int id) {
+
+    	double radio = 0.030;//distancia en km <--radio de 30m 
+    	double costoMinimo = 0;
+    	Direccion direccion = service.obtenerDireccion(id);
+    	
+    	if (direccion==null){
+    		return new ResponseEntity<List<ProductoPorTiendaVM>>(HttpStatus.NOT_FOUND);
+    	}
+    	
+    	double latitudCliente = Double.parseDouble(direccion.getLatitud());
+    	double longitudCliente = Double.parseDouble(direccion.getLongitud());
+    	
+    	Distrito distrito = direccion.getDistrito();
+    	List<Distrito> distritos = service.obtenerDitritosPorProvincia(distrito.getId());
+    	List<Direccion> direcciones = new ArrayList<>();
+    	List<ProductoPorTiendaVM> productosPorTienda = new ArrayList<>();
+    	
+    	for(Distrito item : distritos){
+    		direcciones.addAll(service.obtenerDireccionesTiendasPorDistrito(item.getId()));
+    	}	
+    	for(Direccion item : direcciones){
+    		double latitudTienda = Double.parseDouble(item.getLatitud());
+    		double longitudTienda = Double.parseDouble(item.getLongitud());
+    		double distancia = DistanceCalculatorUtil.distance(latitudCliente, longitudCliente, latitudTienda, longitudTienda, "K");
+    		if(distancia<radio){
+    			Tienda tienda = service.obtenerTiendaPorDireccion(item.getId());
+    			List<ProductoPorTiendaVM> _productos = obtenerProductosPorTienda(tienda.getId());
+    			productosPorTienda.addAll(_productos);
+    		}
+    		
+    	}
+        if (productosPorTienda.isEmpty()) {
+            return new ResponseEntity<List<ProductoPorTiendaVM>>(HttpStatus.NO_CONTENT);
+        }
+              
+        return new ResponseEntity<List<ProductoPorTiendaVM>>(productosPorTienda, HttpStatus.OK);
     }
 }

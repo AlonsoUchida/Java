@@ -9,7 +9,8 @@
         http://www.springframework.org/schema/beans/spring-beans-4.2.xsd
         http://www.springframework.org/schema/security
         http://www.springframework.org/schema/security/spring-security-4.0.xsd">
-             
+       
+    <security:http pattern="/usuario/agregar" security="none" />      
 	<security:http pattern="/authenticate" security="none" />
 	<security:http pattern="/" security="none" />
 	<!--  <security:http pattern="/**" security="none" /> -->

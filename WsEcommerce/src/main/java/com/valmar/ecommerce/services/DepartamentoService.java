@@ -1,11 +1,9 @@
-package com.valmar.ecommerce.dao;
+package com.valmar.ecommerce.services;
 
 import java.util.List;
 
 import com.valmar.ecommerce.model.Departamento;
 
-public interface DepartamentoDao {
-
-	Departamento obtenerPorId(int id);
+public interface DepartamentoService {
 	List<Departamento> listarDepartamentos();
 }

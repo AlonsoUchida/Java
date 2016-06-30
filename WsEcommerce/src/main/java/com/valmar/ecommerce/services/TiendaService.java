@@ -13,5 +13,6 @@ public interface TiendaService {
     void eliminar(int id);    
     List<Tienda> listarTiendas();
 	Usuario obtenerUsuario(int id_usuario);
-	MetodoPago obtenerMetodoPago(int id_metodoPago);	
+	MetodoPago obtenerMetodoPago(int id_metodoPago);
+	List<Tienda> obtenerTiendasPorNombre(String nombre);	
 }

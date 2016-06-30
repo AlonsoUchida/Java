@@ -54,6 +54,10 @@ public class Direccion {
 	@JsonIgnore
 	@ManyToMany(mappedBy = "direcciones", fetch = FetchType.LAZY)
     private List<Usuario> usuarios;
+	
+	@JsonIgnore
+	@ManyToMany(mappedBy = "direcciones", fetch = FetchType.LAZY)
+    private List<Tienda> tiendas;
 
 	public int getId() {
 		return id;

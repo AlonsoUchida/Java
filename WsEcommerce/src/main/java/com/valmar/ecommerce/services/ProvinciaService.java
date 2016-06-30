@@ -1,11 +1,9 @@
-package com.valmar.ecommerce.dao;
+package com.valmar.ecommerce.services;
 
 import java.util.List;
 
 import com.valmar.ecommerce.model.Provincia;
 
-public interface ProvinciaDao {
-
-	Provincia obtenerPorId(int id);
+public interface ProvinciaService {
 	List<Provincia> listarProvincias();
 }

@@ -17,5 +17,5 @@ public interface DireccionService {
     void agregar(Direccion direccion); 
     void actualizar(Direccion direccion);  
     void eliminar(int id);    
-    List<Direccion> listarDirecciones();
+    List<Direccion> listarDirecciones(); 
 }

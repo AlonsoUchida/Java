@@ -2,6 +2,7 @@ package com.valmar.ecommerce.model;
 
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -89,6 +90,13 @@ public class Tienda {
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "tienda", cascade = CascadeType.ALL)
 	@JsonIgnore
 	private Set<Producto> productos;
+	
+	@ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(
+            name = "tienda_direccion",
+            joinColumns = {@JoinColumn(name = "ID_TIENDA", referencedColumnName = "ID")},
+            inverseJoinColumns = {@JoinColumn(name = "ID_DIRECCION", referencedColumnName = "ID")})
+    private Set<Direccion> direcciones;
 		
 	public int getId() {
 		return id;
@@ -208,6 +216,22 @@ public class Tienda {
 
 	public void setFechaModificacion(Date fechaModificacion) {
 		this.fechaModificacion = fechaModificacion;
+	}
+
+	public Set<Producto> getProductos() {
+		return productos;
+	}
+
+	public void setProductos(Set<Producto> productos) {
+		this.productos = productos;
+	}
+
+	public Set<Direccion> getDirecciones() {
+		return direcciones;
+	}
+
+	public void setDirecciones(Set<Direccion> direcciones) {
+		this.direcciones = direcciones;
 	}
 	
 	

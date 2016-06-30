@@ -11,7 +11,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -25,6 +24,7 @@ import com.valmar.ecommerce.model.Tienda;
 import com.valmar.ecommerce.model.Usuario;
 import com.valmar.ecommerce.services.TiendaService;
 import com.valmar.ecommerce.viewmodel.TiendaVM;
+import com.valmar.ecommerce.viewmodel.TiendaVMLite;
 
 @CrossOrigin
 @RestController
@@ -50,6 +50,22 @@ public class TiendaRestController {
             return new ResponseEntity<Tienda>(HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity<Tienda>(tienda, HttpStatus.OK);
+    }
+    
+    @RequestMapping(value = "/obtenerTiendasPorNombre", params = {"nombre"}, method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<List<TiendaVMLite>> obtenerTiendasPorNombre(@RequestParam("nombre") String nombre) {
+    	 List<Tienda> tiendas = service.obtenerTiendasPorNombre(nombre);
+    	 List<TiendaVMLite> tiendasLite = new ArrayList<>();
+    	 for(Tienda item : tiendas){
+    		 TiendaVMLite _tienda = new TiendaVMLite();
+    		 _tienda.setId(item.getId());
+    		 _tienda.setNombre(item.getNombre());
+    		 tiendasLite.add(_tienda);
+    	 }
+         if(tiendasLite.isEmpty()){
+             return new ResponseEntity<List<TiendaVMLite>>(HttpStatus.NO_CONTENT);//You many decide to return HttpStatus.NOT_FOUND
+         }
+         return new ResponseEntity<List<TiendaVMLite>>(tiendasLite, HttpStatus.OK);
     }
  
     @RequestMapping(value = "/agregar", method = RequestMethod.POST)
