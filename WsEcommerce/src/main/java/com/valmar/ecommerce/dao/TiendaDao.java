@@ -11,5 +11,6 @@ public interface TiendaDao {
     List<Tienda> listarTiendas();
 	void actualizar(Tienda tiendaBean);
 	Tienda obtenerTiendaPorDireccion(int id);
-	List<Tienda> obtenerTiendasPorNombre(String nombre);	
+	List<Tienda> obtenerTiendasPorNombre(String nombre);
+	List<Tienda> listarPorDistrito(int id);	
 }

@@ -19,6 +19,8 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import com.valmar.ecommerce.enums.TipoEstado;
+import com.valmar.ecommerce.model.Direccion;
+import com.valmar.ecommerce.model.Distrito;
 import com.valmar.ecommerce.model.MetodoPago;
 import com.valmar.ecommerce.model.Tienda;
 import com.valmar.ecommerce.model.Usuario;
@@ -43,6 +45,15 @@ public class TiendaRestController {
         return new ResponseEntity<List<Tienda>>(tiendas, HttpStatus.OK);
     }
     
+    @RequestMapping(value = { "/listarPorDistrito" }, params = {"id"}, method = RequestMethod.GET)
+    public ResponseEntity<List<Tienda>> listarPorDistrito(@RequestParam int id) {
+        List<Tienda> tiendas = service.listarPorDistrito(id);
+        if(tiendas.isEmpty()){
+            return new ResponseEntity<List<Tienda>>(HttpStatus.NO_CONTENT);//You many decide to return HttpStatus.NOT_FOUND
+        }
+        return new ResponseEntity<List<Tienda>>(tiendas, HttpStatus.OK);
+    }
+    
     @RequestMapping(value = "/obtenerPorId", params = {"id"}, method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Tienda> obtenerPorId(@RequestParam("id") int id) {
     	Tienda tienda = service.obtenerPorId(id);
@@ -55,11 +66,21 @@ public class TiendaRestController {
     @RequestMapping(value = "/obtenerTiendasPorNombre", params = {"nombre"}, method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<TiendaVMLite>> obtenerTiendasPorNombre(@RequestParam("nombre") String nombre) {
     	 List<Tienda> tiendas = service.obtenerTiendasPorNombre(nombre);
+    	 if ((tiendas == null) || (tiendas.isEmpty())) {
+             return new ResponseEntity<List<TiendaVMLite>>(HttpStatus.NOT_FOUND);
+         }
     	 List<TiendaVMLite> tiendasLite = new ArrayList<>();
     	 for(Tienda item : tiendas){
     		 TiendaVMLite _tienda = new TiendaVMLite();
     		 _tienda.setId(item.getId());
     		 _tienda.setNombre(item.getNombre());
+    		 for(Direccion direccion : item.getDirecciones()){
+    			 _tienda.setDomicilio(direccion.getDomicilio());
+    			 _tienda.setNumero(direccion.getNumero());
+    			 Distrito distrito = direccion.getDistrito();
+    			 _tienda.setDistrito(distrito.getNombre());
+    			 break;
+    		 }
     		 tiendasLite.add(_tienda);
     	 }
          if(tiendasLite.isEmpty()){
