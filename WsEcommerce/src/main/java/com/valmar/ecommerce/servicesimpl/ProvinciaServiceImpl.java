@@ -22,4 +22,9 @@ public class ProvinciaServiceImpl implements ProvinciaService{
 		return provinciaDao.listarProvincias();
 	}
 
+	@Override
+	public List<Provincia> listarPorDepartamento(int id) {
+		return provinciaDao.listarPorDepartamento(id);
+	}
+
 }

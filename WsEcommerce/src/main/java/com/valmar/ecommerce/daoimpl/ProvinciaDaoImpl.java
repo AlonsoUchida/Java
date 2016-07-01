@@ -32,4 +32,13 @@ public class ProvinciaDaoImpl extends AbstractDao<Integer, Provincia> implements
 		return provincias;
 	}
 
+	@Override
+	public List<Provincia> listarPorDepartamento(int id) {
+		Criteria criteria = createEntityCriteria();
+		criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
+		criteria.add(Restrictions.eq("departamento.id", id));
+		List<Provincia> provincias = (List<Provincia>) criteria.list();
+		return provincias;
+	}
+
 }

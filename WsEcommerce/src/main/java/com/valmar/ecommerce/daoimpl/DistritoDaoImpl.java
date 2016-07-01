@@ -46,5 +46,4 @@ public class DistritoDaoImpl extends AbstractDao<Integer, Distrito> implements D
 		List<Distrito> distritos = (List<Distrito>) criteria.list();
 		return distritos;
 	}
-
 }

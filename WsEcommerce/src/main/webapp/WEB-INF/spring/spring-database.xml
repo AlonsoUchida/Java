@@ -27,7 +27,12 @@
         <property name="dataSource" ref="dataSourceProd" />
         <property name="annotatedClasses">
             <list>
-            	<value>com.valmar.ecommerce.model.ImagenProducto</value>
+            	<value>com.valmar.ecommerce.model.DireccionEnvio</value>
+            	<value>com.valmar.ecommerce.model.EstadoCuenta</value>
+            	<value>com.valmar.ecommerce.model.InformacionCliente</value>
+           		<value>com.valmar.ecommerce.model.InformacionProducto</value>
+           		<value>com.valmar.ecommerce.model.ImagenProducto</value>
+            	<value>com.valmar.ecommerce.model.Orden</value>
             	<value>com.valmar.ecommerce.model.Categoria</value>
             	<value>com.valmar.ecommerce.model.Marca</value>
 				<value>com.valmar.ecommerce.model.Departamento</value>

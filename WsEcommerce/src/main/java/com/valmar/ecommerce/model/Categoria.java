@@ -27,7 +27,6 @@ public class Categoria {
 	private int id;
 
 	@Column(name = "NOMBRE")
-	@NotNull
 	private String nombre;
 	
 	@ManyToOne(fetch = FetchType.EAGER)

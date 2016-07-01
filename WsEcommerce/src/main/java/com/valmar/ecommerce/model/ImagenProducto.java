@@ -23,7 +23,7 @@ public class ImagenProducto {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name="ID_PRODUCTO")
 	@JsonIgnore
 	private Producto producto;

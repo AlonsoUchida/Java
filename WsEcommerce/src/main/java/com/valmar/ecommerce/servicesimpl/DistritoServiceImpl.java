@@ -22,4 +22,9 @@ public class DistritoServiceImpl implements DistritoService{
 		return distritoDao.listarDistritos();
 	}
 
+	@Override
+	public List<Distrito> listarPorProvincia(int id) {
+		return distritoDao.obtenerDitritosPorProvincia(id);
+	}
+
 }

@@ -97,6 +97,10 @@ public class Tienda {
             joinColumns = {@JoinColumn(name = "ID_TIENDA", referencedColumnName = "ID")},
             inverseJoinColumns = {@JoinColumn(name = "ID_DIRECCION", referencedColumnName = "ID")})
     private Set<Direccion> direcciones;
+	
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "tienda", cascade = CascadeType.ALL)
+	@JsonBackReference
+	private Set<EstadoCuenta> estadoCuentas;
 		
 	public int getId() {
 		return id;
@@ -233,6 +237,13 @@ public class Tienda {
 	public void setDirecciones(Set<Direccion> direcciones) {
 		this.direcciones = direcciones;
 	}
-	
-	
+
+	public Set<EstadoCuenta> getEstadoCuentas() {
+		return estadoCuentas;
+	}
+
+	public void setEstadoCuentas(Set<EstadoCuenta> estadoCuentas) {
+		this.estadoCuentas = estadoCuentas;
+	}
+		
 }
