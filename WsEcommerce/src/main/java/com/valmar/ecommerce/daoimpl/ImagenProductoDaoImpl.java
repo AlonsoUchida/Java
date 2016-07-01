@@ -74,4 +74,18 @@ public class ImagenProductoDaoImpl extends AbstractDao<Integer, ImagenProducto> 
 		return (ImagenProducto) criteria.uniqueResult();
 	}
 
+	@Override
+	public List<ImagenProducto> listarImagenesPorProducto(int id) {
+		try {
+			Criteria criteria = createEntityCriteria();
+			criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
+			criteria.add(Restrictions.eq("producto.id", id));
+			List<ImagenProducto> imagenes = (List<ImagenProducto>) criteria.list();
+			return imagenes;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
 }

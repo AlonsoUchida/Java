@@ -10,4 +10,5 @@ public interface ImagenProductoService {
     void agregarImagen(ImagenProducto imagen);
     void actualizarImagen(ImagenProducto imagen);
     void eliminarImagen(int id);
+	List<ImagenProducto> listarImagenesPorProducto(int id);
 }

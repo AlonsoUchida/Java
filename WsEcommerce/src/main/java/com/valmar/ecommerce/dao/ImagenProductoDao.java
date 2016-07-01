@@ -11,4 +11,5 @@ public interface ImagenProductoDao {
 	void actualizarImagen(ImagenProducto imagen);
 	void eliminar(int id);
 	ImagenProducto obtenerImagenPorDefecto(int id);
+	List<ImagenProducto> listarImagenesPorProducto(int id);
 }

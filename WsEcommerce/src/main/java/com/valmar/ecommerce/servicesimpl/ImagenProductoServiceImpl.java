@@ -41,4 +41,9 @@ public class ImagenProductoServiceImpl implements ImagenProductoService{
 	public void eliminarImagen(int id) {
 		imagenProductoDao.eliminar(id);
 	}
+
+	@Override
+	public List<ImagenProducto> listarImagenesPorProducto(int id) {
+		return imagenProductoDao.listarImagenesPorProducto(id);
+	}
 }

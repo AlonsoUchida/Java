@@ -1,8 +1,10 @@
 package com.valmar.ecommerce.controller;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -72,10 +74,14 @@ public class ProductoRestController {
         } 
         
         Marca marca = service.obtenerMarcaPorId(producto.getId_marca());
-        Categoria categoria = service.obtenerCategoriaPorId(producto.getId_categoria());
+        List<Categoria> categorias = new ArrayList<>();
+        for(int indice : producto.getId_categoria()){
+        	Categoria categoria = service.obtenerCategoriaPorId(indice);
+        	categorias.add(categoria);
+        }
         Tienda tienda = service.obtenerTiendaPorId(producto.getId_tienda());
         
-        if((marca==null) || (categoria==null) || (tienda==null)){
+        if((marca==null) || (categorias.isEmpty()) || (tienda==null)){
         	return new ResponseEntity<Void>(HttpStatus.NOT_FOUND);
         }
         
@@ -90,8 +96,6 @@ public class ProductoRestController {
         productoBean.setFechaRegistro(new Date());
         productoBean.setFechaModificacion(new Date());    
         productoBean.setMarca(marca);
-        List<Categoria> categorias = new ArrayList<>();
-        categorias.add(categoria);
         productoBean.setCategorias(categorias);
         productoBean.setTienda(tienda);
         
@@ -107,10 +111,15 @@ public class ProductoRestController {
     	
     	Producto _producto = service.obtenerPorId(producto.getId());
         Marca marca = service.obtenerMarcaPorId(producto.getId_marca());
-        Categoria categoria = service.obtenerCategoriaPorId(producto.getId_categoria());
+        List<Categoria> categorias = new ArrayList<>();
+        for(int indice : producto.getId_categoria()){
+        	Categoria categoria = service.obtenerCategoriaPorId(indice);
+        	categorias.add(categoria);
+        }
+        
         Tienda tienda = service.obtenerTiendaPorId(producto.getId_tienda());
         
-        if((marca==null) || (categoria==null) || (tienda==null) || (_producto==null)){
+        if((marca==null) || (categorias.isEmpty()) || (tienda==null) || (_producto==null)){
         	return new ResponseEntity<Void>(HttpStatus.NOT_FOUND);
         }
         
@@ -125,8 +134,6 @@ public class ProductoRestController {
         productoBean.setEstado(TipoEstado.HABILITADO.getValue());
         productoBean.setFechaModificacion(new Date()); 
         productoBean.setMarca(marca);
-        List<Categoria> categorias = new ArrayList<>();
-        categorias.add(categoria);
         productoBean.setCategorias(categorias);
         productoBean.setTienda(tienda);
         
@@ -146,6 +153,10 @@ public class ProductoRestController {
         service.eliminar(id);
         return new ResponseEntity<Producto>(HttpStatus.NO_CONTENT);
     }
+    
+    /************************************************************************************************/
+    /******************************    Imagenes de Producto *****************************************/
+    /************************************************************************************************/
     
     @RequestMapping(value = { "/imagen/listar" }, method = RequestMethod.GET)
     public ResponseEntity<List<ImagenProducto>> listarImagenes() {
@@ -216,6 +227,16 @@ public class ProductoRestController {
         imagenProductoService.eliminarImagen(id);;
         return new ResponseEntity<ImagenProducto>(HttpStatus.NO_CONTENT);
     }
+    
+    
+    @RequestMapping(value = { "/imagen/listarImagenesPorProducto" }, method = RequestMethod.GET)
+    public ResponseEntity<List<ImagenProducto>> listarImagenesPorProducto(int id) {
+        List<ImagenProducto> imagenes = imagenProductoService.listarImagenesPorProducto(id);
+        if(imagenes.isEmpty()){
+            return new ResponseEntity<List<ImagenProducto>>(HttpStatus.NO_CONTENT);
+        }
+        return new ResponseEntity<List<ImagenProducto>>(imagenes, HttpStatus.OK);
+    }
 
     /************************************************************************************************/
     /******************************    Filtros por Tienda y por Radio de Cobertura ******************/
@@ -254,7 +275,16 @@ public class ProductoRestController {
         	_producto.setPrecio(item.getPrecio());
         	_producto.setCostoMinimo(tienda.getCostoMinimo());
         	_producto.setId_tienda(tienda.getId());
-        	_producto.setDescuento(item.getDescuento());       	
+        	_producto.setDescuento(item.getDescuento());
+        	
+        	int[] idCategorias = new int[item.getCategorias().size()];
+        	int count = 0;
+        	for(Categoria cat : item.getCategorias()){
+        		idCategorias[count] = cat.getId();
+        		count++;
+        	}
+        	
+        	_producto.setId_categoria(idCategorias);
         	
         	_productos.add(_producto);
         }
@@ -264,6 +294,7 @@ public class ProductoRestController {
     
     @RequestMapping(value = "/obtenerPorDireccionDeUsuario", params = {"id"}, method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<ProductoPorTiendaVM>> obtenerPorDireccionDeUsuario(@RequestParam("id") int id) {
+
 
     	double radio = 0.030;//distancia en km <--radio de 30m 
     	double costoMinimo = 0;
@@ -292,6 +323,55 @@ public class ProductoRestController {
     			Tienda tienda = service.obtenerTiendaPorDireccion(item.getId());
     			List<ProductoPorTiendaVM> _productos = obtenerProductosPorTienda(tienda.getId());
     			productosPorTienda.addAll(_productos);
+    		}
+    		
+    	}
+        if (productosPorTienda.isEmpty()) {
+            return new ResponseEntity<List<ProductoPorTiendaVM>>(HttpStatus.NO_CONTENT);
+        }
+              
+        return new ResponseEntity<List<ProductoPorTiendaVM>>(productosPorTienda, HttpStatus.OK);
+    }
+    
+    
+    @RequestMapping(value = "/obtenerPorCategoriaDireccionDeUsuario", params = {"id_categoria", "id"}, method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<List<ProductoPorTiendaVM>> obtenerPorCategoriaDireccionDeUsuario(@RequestParam("id_categoria") int id_categoria, @RequestParam("id") int id) {
+
+    	double radio = 0.030;//distancia en km <--radio de 30m 
+    	double costoMinimo = 0;
+    	Direccion direccion = service.obtenerDireccion(id);
+    	
+    	if (direccion==null){
+    		return new ResponseEntity<List<ProductoPorTiendaVM>>(HttpStatus.NOT_FOUND);
+    	}
+    	
+    	double latitudCliente = Double.parseDouble(direccion.getLatitud());
+    	double longitudCliente = Double.parseDouble(direccion.getLongitud());
+    	
+    	Distrito distrito = direccion.getDistrito();
+    	List<Distrito> distritos = service.obtenerDitritosPorProvincia(distrito.getId());
+    	List<Direccion> direcciones = new ArrayList<>();
+    	List<ProductoPorTiendaVM> productosPorTienda = new ArrayList<>();
+    	
+    	for(Distrito item : distritos){
+    		direcciones.addAll(service.obtenerDireccionesTiendasPorDistrito(item.getId()));
+    	}	
+    	for(Direccion item : direcciones){
+    		double latitudTienda = Double.parseDouble(item.getLatitud());
+    		double longitudTienda = Double.parseDouble(item.getLongitud());
+    		double distancia = DistanceCalculatorUtil.distance(latitudCliente, longitudCliente, latitudTienda, longitudTienda, "K");
+    		if(distancia<radio){
+    			Tienda tienda = service.obtenerTiendaPorDireccion(item.getId());
+    			List<ProductoPorTiendaVM> _productos = obtenerProductosPorTienda(tienda.getId());
+    			List<ProductoPorTiendaVM> _productosFinal = new ArrayList<>();
+    			for(ProductoPorTiendaVM prod : _productos){
+    				for(int indice : prod.getId_categoria()){
+    					if(indice==id_categoria){
+    						_productosFinal.add(prod);
+    					}
+    				}
+    			}
+    			productosPorTienda.addAll(_productosFinal);
     		}
     		
     	}

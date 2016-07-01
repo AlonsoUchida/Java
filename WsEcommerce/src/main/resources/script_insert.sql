@@ -2150,6 +2150,12 @@ INSERT INTO `tienda` VALUES (1, 'Mi Tienda', '1045645665464', '4236542', '954645
 INSERT INTO `producto` VALUES (1, 'producto 1', 'producto 1', 'producto 1', '20', '1', '500ml', '10', '1', '1', NOW(), NOW());
 
 -- ----------------------------
+-- Records of producto_categoria
+-- ----------------------------
+
+INSERT INTO `producto_categoria` VALUES (1, '1','1');
+
+-- ----------------------------
 -- Records of metodo_pago
 -- ----------------------------
 INSERT INTO `metodo_pago` VALUES (1, 'metodo pago 1', '100');
