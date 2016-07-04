@@ -2141,7 +2141,14 @@ INSERT INTO `autoridad` VALUES (2, 'ROLE_USER');
 -- Records of tienda
 -- ----------------------------
 
-INSERT INTO `tienda` VALUES (1, 'Mi Tienda', '1045645665464', '4236542', '954645546',  1, 20, 10.0, 1, null, 1, 1, NOW(), NOW());
+INSERT INTO `tienda` VALUES (1, 'Mi Tienda 1', '1045645665464', '4236542', '954645546',  1, 20, 10.0, 1, null, 1, 1, NOW(), NOW());
+INSERT INTO `tienda` VALUES (2, 'Mi Tienda 2', '1045645665464', '4236542', '954645546',  1, 20, 10.0, 1, null, 1, 1, NOW(), NOW());
+INSERT INTO `tienda` VALUES (3, 'Mi Tienda 3', '1045645665464', '4236542', '954645546',  1, 20, 10.0, 1, null, 1, 1, NOW(), NOW());
+INSERT INTO `tienda` VALUES (4, 'Mi Tienda 4', '1045645665464', '4236542', '954645546',  1, 20, 10.0, 1, null, 1, 1, NOW(), NOW());
+INSERT INTO `tienda` VALUES (5, 'Mi Tienda 5', '1045645665464', '4236542', '954645546',  1, 20, 10.0, 1, null, 1, 1, NOW(), NOW());
+INSERT INTO `tienda` VALUES (6, 'Mi Tienda 6', '1045645665464', '4236542', '954645546',  1, 20, 10.0, 1, null, 1, 1, NOW(), NOW());
+INSERT INTO `tienda` VALUES (7, 'Mi Tienda 7', '1045645665464', '4236542', '954645546',  1, 20, 10.0, 1, null, 1, 1, NOW(), NOW());
+INSERT INTO `tienda` VALUES (8, 'Mi Tienda 8', '1045645665464', '4236542', '954645546',  1, 20, 10.0, 1, null, 1, 1, NOW(), NOW());
 
 -- ----------------------------
 -- Records of producto
@@ -2167,11 +2174,26 @@ INSERT INTO `metodo_pago` VALUES (2, 'metodo pago 2', '50');
 INSERT INTO `direccion` VALUES (1, '1', 'Plaza Las Banderas', 'Av. Mariano Cornejo', '874', '-12.11928 ', '-77.02910', '1');
 INSERT INTO `direccion` VALUES (2, '1', 'Plaza Las Banderas', 'Av. Mariano Cornejo', '974', '-12.11928 ', '-77.02887', '1');
 
+INSERT INTO `direccion` VALUES (3, '1', 'Plaza Las Banderas', 'Av. Mariano Cornejo', '974', '-12.11928 ', '-77.02887', '1');
+INSERT INTO `direccion` VALUES (4, '1', 'Plaza Las Banderas', 'Av. Mariano Cornejo', '974', '-12.11928 ', '-77.02897', '1');
+INSERT INTO `direccion` VALUES (5, '1', 'Plaza Las Banderas', 'Av. Mariano Cornejo', '974', '-12.11928 ', '-77.02117', '1');
+INSERT INTO `direccion` VALUES (6, '1', 'Plaza Las Banderas', 'Av. Mariano Cornejo', '974', '-12.11938 ', '-77.02887', '1');
+INSERT INTO `direccion` VALUES (7, '1', 'Plaza Las Banderas', 'Av. Mariano Cornejo', '974', '-12.11948 ', '-77.02887', '1');
+INSERT INTO `direccion` VALUES (8, '1', 'Plaza Las Banderas', 'Av. Mariano Cornejo', '974', '-12.11958 ', '-77.02887', '1');
+INSERT INTO `direccion` VALUES (9, '1', 'Plaza Las Banderas', 'Av. Mariano Cornejo', '974', '-12.11968 ', '-77.02887', '1');
+INSERT INTO `direccion` VALUES (10, '1', 'Plaza Las Banderas', 'Av. Mariano Cornejo', '974', '-12.11978 ', '-77.02887', '1');
+
 -- ----------------------------
 -- Records of tienda_direccion
 -- ----------------------------
 INSERT INTO `tienda_direccion` VALUES (1, '1', '1');
-
+INSERT INTO `tienda_direccion` VALUES (2, '2', '2');
+INSERT INTO `tienda_direccion` VALUES (3, '3', '3');
+INSERT INTO `tienda_direccion` VALUES (4, '4', '4');
+INSERT INTO `tienda_direccion` VALUES (5, '5', '5');
+INSERT INTO `tienda_direccion` VALUES (6, '6', '6');
+INSERT INTO `tienda_direccion` VALUES (7, '7', '7');
+INSERT INTO `tienda_direccion` VALUES (8, '8', '8');
 -- ----------------------------
 -- Records of cliente_direccion
 -- ----------------------------
