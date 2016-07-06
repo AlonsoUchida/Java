@@ -222,7 +222,6 @@ CREATE TABLE IF NOT EXISTS `CMS_VALMAR_DB`.`tienda` (
   `afiliacion_valor` INT(11) NOT NULL,
   `costo_minimo` DECIMAL NULL,
   `estado_abierto` INT(1) NULL,
-  `imagen` BLOB NULL,
   `id_usuario` INT(5) NOT NULL,
   `estado` INT(1) NOT NULL COMMENT 'estatus para indicar si la tienda esta activa o no, dentro d',
   `fecha_registro` DATETIME NULL,
@@ -583,6 +582,27 @@ CREATE TABLE IF NOT EXISTS `CMS_VALMAR_DB`.`pagos_por_cuenta` (
   CONSTRAINT `fkid_pagos_por_cuenta`
     FOREIGN KEY (`id_cuenta`)
     REFERENCES `CMS_VALMAR_DB`.`estado_cuenta` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `CMS_VALMAR_DB`.`imagen_tienda`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `CMS_VALMAR_DB`.`imagen_tienda` ;
+
+CREATE TABLE IF NOT EXISTS `CMS_VALMAR_DB`.`imagen_tienda` (
+  `id` INT(5) NOT NULL AUTO_INCREMENT,
+  `id_tienda` INT(5) NOT NULL,
+  `nombre` VARCHAR(100) NULL,
+  `imagen` BLOB NULL,
+  `defecto` INT(1) NULL,
+  PRIMARY KEY (`id`),
+  INDEX `fk_tienda_idx` (`id_tienda` ASC),
+  CONSTRAINT `fk_tienda`
+    FOREIGN KEY (`id_tienda`)
+    REFERENCES `CMS_VALMAR_DB`.`tienda` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
