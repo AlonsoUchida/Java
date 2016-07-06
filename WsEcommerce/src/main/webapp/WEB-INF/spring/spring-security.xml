@@ -13,6 +13,8 @@
     <security:http pattern="/usuario/agregar" security="none" />   
     <security:http pattern="/cliente/agregar" security="none" />    
 	<security:http pattern="/authenticate" security="none" />
+	<security:http pattern="/GCMNotification" security="none" />
+	<security:http pattern="/notification" security="none" />
 	<security:http pattern="/" security="none" />
 	<!--  <security:http pattern="/**" security="none" /> -->
 	

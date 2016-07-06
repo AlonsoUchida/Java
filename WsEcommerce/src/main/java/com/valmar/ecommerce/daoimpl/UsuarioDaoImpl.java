@@ -72,7 +72,9 @@ public class UsuarioDaoImpl extends AbstractDao<Integer, Usuario> implements Usu
 		criteria.add(Restrictions.eq("correo", username));
 		criteria.add(Restrictions.eq("password", password));
 		Usuario usuario = (Usuario) criteria.uniqueResult();
-		return usuario.getId();
+		if(usuario!=null)
+			return usuario.getId();
+		else return 0;
 	}
 	
 	public Usuario obtenerPorCorreo(String username) {

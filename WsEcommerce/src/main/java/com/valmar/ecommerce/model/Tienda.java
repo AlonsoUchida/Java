@@ -69,9 +69,6 @@ public class Tienda {
 	@Column(name = "ESTADO_ABIERTO")
 	private int estadoAbierto;
 	
-	@Column(name = "IMAGEN")
-	private byte[] imagen;
-	
 	@ManyToOne
     @JoinColumn(name="ID_USUARIO")
     private Usuario usuario;
@@ -101,6 +98,10 @@ public class Tienda {
 	@OneToMany(fetch = FetchType.EAGER, mappedBy = "tienda", cascade = CascadeType.ALL)
 	@JsonBackReference
 	private Set<EstadoCuenta> estadoCuentas;
+	
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "tienda", cascade = CascadeType.ALL)
+	@JsonBackReference
+	private Set<ImagenTienda> imagenes;	
 		
 	public int getId() {
 		return id;
@@ -197,15 +198,7 @@ public class Tienda {
 	public void setEstadoAbierto(int estadoAbierto) {
 		this.estadoAbierto = estadoAbierto;
 	}
-
-	public byte[] getImagen() {
-		return imagen;
-	}
-
-	public void setImagen(byte[] imagen) {
-		this.imagen = imagen;
-	}
-
+	
 	public Date getFechaRegistro() {
 		return fechaRegistro;
 	}
@@ -245,5 +238,14 @@ public class Tienda {
 	public void setEstadoCuentas(Set<EstadoCuenta> estadoCuentas) {
 		this.estadoCuentas = estadoCuentas;
 	}
-		
+
+	public Set<ImagenTienda> getImagenes() {
+		return imagenes;
+	}
+
+	public void setImagenes(Set<ImagenTienda> imagenes) {
+		this.imagenes = imagenes;
+	}
+	
+	
 }
