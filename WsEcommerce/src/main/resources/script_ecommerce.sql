@@ -502,15 +502,15 @@ DEFAULT CHARACTER SET = latin1;
 DROP TABLE IF EXISTS `CMS_VALMAR_DB`.`usuario_autoridad` ;
 
 CREATE TABLE IF NOT EXISTS `CMS_VALMAR_DB`.`usuario_autoridad` (
-  `usuario_id` INT(11) NOT NULL,
-  `autoridad_id` INT(11) NOT NULL,
-  INDEX `usuario_id` (`usuario_id` ASC),
-  INDEX `autoridad_id` (`autoridad_id` ASC),
+  `id_usuario` INT(11) NOT NULL,
+  `id_autoridad` INT(11) NOT NULL,
+  INDEX `usuario_id` (`id_usuario` ASC),
+  INDEX `autoridad_id` (`id_autoridad` ASC),
   CONSTRAINT `usuario_autoridad_ibfk_1`
-    FOREIGN KEY (`usuario_id`)
+    FOREIGN KEY (`id_usuario`)
     REFERENCES `CMS_VALMAR_DB`.`usuario` (`id`),
   CONSTRAINT `usuario_autoridad_ibfk_2`
-    FOREIGN KEY (`autoridad_id`)
+    FOREIGN KEY (`id_autoridad`)
     REFERENCES `CMS_VALMAR_DB`.`autoridad` (`id`))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = latin1;
