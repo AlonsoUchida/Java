@@ -2118,17 +2118,24 @@ INSERT INTO `marca` VALUES (25, 'YELLOWTAIL', 1);
 -- Records of usuarios
 -- ----------------------------
 
+-- Records of usuarios tipo bodeguero 1
 INSERT INTO `usuario` VALUES (1, 'JOSUE', 'MOSQUERA', 'josue.mosquera@valmar.com.pe', '12345', 'M', 1, 1, NOW(), NOW());
 INSERT INTO `usuario` VALUES (2, 'ALONSO', 'UCHIDA', 'javier.uchida@valmar.com.pe', '12345', 'M', 1, 1,  NOW(), NOW());
 INSERT INTO `usuario` VALUES (3, 'VICTOR', 'MALAVER', 'victor.malaver@valmar.com.pe', '12345', 'M', 1, 1,  NOW(), NOW());
 INSERT INTO `usuario` VALUES (4, 'JOHN', 'ORREGO', 'john.orrego@valmar.com.pe', '12345', 'M', 1, 1,  NOW(), NOW());
 INSERT INTO `usuario` VALUES (5, 'RENZO', 'OSSIO', 'renzo.ossio@valmar.com.pe', '12345', 'M', 1, 1,  NOW(), NOW());
-
+-- Records of usuarios tipo cliente 2
 INSERT INTO `usuario` VALUES (6, 'JOSUE', 'MOSQUERA', 'josue.mosquera.cliente@valmar.com.pe', '12345', 'M', 2, 1, NOW(), NOW());
 INSERT INTO `usuario` VALUES (7, 'ALONSO', 'UCHIDA', 'javier.uchida.cliente@valmar.com.pe', '12345', 'M', 2, 1,  NOW(), NOW());
 INSERT INTO `usuario` VALUES (8, 'VICTOR', 'MALAVER', 'victor.malaver.cliente@valmar.com.pe', '12345', 'M', 2, 1,  NOW(), NOW());
 INSERT INTO `usuario` VALUES (9, 'JOHN', 'ORREGO', 'john.orrego.cliente@valmar.com.pe', '12345', 'M', 2, 1,  NOW(), NOW());
 INSERT INTO `usuario` VALUES (10, 'RENZO', 'OSSIO', 'renzo.ossio.cliente@valmar.com.pe', '12345', 'M', 2, 1,  NOW(), NOW());
+-- Records of usuarios tipo vendedor 3
+INSERT INTO `usuario` VALUES (11, 'JOSUE', 'MOSQUERA', 'josue.mosquera.vendendor@valmar.com.pe', '12345', 'M', 3, 1, NOW(), NOW());
+INSERT INTO `usuario` VALUES (12, 'ALONSO', 'UCHIDA', 'javier.uchida.vendendor@valmar.com.pe', '12345', 'M', 3, 1,  NOW(), NOW());
+INSERT INTO `usuario` VALUES (13, 'VICTOR', 'MALAVER', 'victor.malaver.vendendor@valmar.com.pe', '12345', 'M', 3, 1,  NOW(), NOW());
+INSERT INTO `usuario` VALUES (14, 'JOHN', 'ORREGO', 'john.orrego.vendendor@valmar.com.pe', '12345', 'M', 3, 1,  NOW(), NOW());
+INSERT INTO `usuario` VALUES (15, 'RENZO', 'OSSIO', 'renzo.ossio.vendendor@valmar.com.pe', '12345', 'M', 3, 1,  NOW(), NOW());
 
 -- ----------------------------
 -- Records of autoridad
@@ -2141,14 +2148,23 @@ INSERT INTO `autoridad` VALUES (2, 'ROLE_USER');
 -- Records of tienda
 -- ----------------------------
 
-INSERT INTO `tienda`(`id`,`nombre`,`ruc`,`telefono_local`,`telefono_movil`,`afiliacion`,`afiliacion_valor`,`costo_minimo`,`estado_abierto`, `id_usuario`,`estado`,`fecha_registro`,`fecha_modificacion`) VALUES ( '1', 'Arakaki Minimarket', '1045645665464', '4216882', '954645546', '1', '20', '10', '1', '1', '1', '2016-06-30 11:48:11', '2016-06-30 11:48:11' );
-INSERT INTO `tienda`(`id`,`nombre`,`ruc`,`telefono_local`,`telefono_movil`,`afiliacion`,`afiliacion_valor`,`costo_minimo`,`estado_abierto`, `id_usuario`,`estado`,`fecha_registro`,`fecha_modificacion`) VALUES ( '2', 'La Bodega de la Trattoría', '1045645665464', '4236542', '954645546', '1', '20', '10', '1', '1', '1', '2016-07-04 11:22:16', '2016-07-04 11:22:16' );
-INSERT INTO `tienda`(`id`,`nombre`,`ruc`,`telefono_local`,`telefono_movil`,`afiliacion`,`afiliacion_valor`,`costo_minimo`,`estado_abierto`, `id_usuario`,`estado`,`fecha_registro`,`fecha_modificacion`) VALUES ( '3', 'Bodega Cam', '1045645665464', '4236542', '954645546', '1', '20', '10', '1', '1', '1', '2016-07-04 11:22:16', '2016-07-04 11:22:16' );
-INSERT INTO `tienda`(`id`,`nombre`,`ruc`,`telefono_local`,`telefono_movil`,`afiliacion`,`afiliacion_valor`,`costo_minimo`,`estado_abierto`, `id_usuario`,`estado`,`fecha_registro`,`fecha_modificacion`) VALUES ( '4', 'Bodegas y Viñedos Tabernero', '1045645665464', '4236542', '954645546', '1', '20', '10', '1','1', '1', '2016-07-04 11:22:16', '2016-07-04 11:22:16' );
-INSERT INTO `tienda`(`id`,`nombre`,`ruc`,`telefono_local`,`telefono_movil`,`afiliacion`,`afiliacion_valor`,`costo_minimo`,`estado_abierto`, `id_usuario`,`estado`,`fecha_registro`,`fecha_modificacion`) VALUES ( '5', 'La Bodega Ibérica', '1045645665464', '4236542', '954645546', '1', '20', '10', '1','1', '1', '2016-07-04 11:22:16', '2016-07-04 11:22:16' );
-INSERT INTO `tienda`(`id`,`nombre`,`ruc`,`telefono_local`,`telefono_movil`,`afiliacion`,`afiliacion_valor`,`costo_minimo`,`estado_abierto`, `id_usuario`,`estado`,`fecha_registro`,`fecha_modificacion`) VALUES ( '6', 'El Buen Vecino', '1045645665464', '4236542', '954645546', '1', '20', '10', '1','1', '1', '2016-07-04 11:22:16', '2016-07-04 11:22:16' );
-INSERT INTO `tienda`(`id`,`nombre`,`ruc`,`telefono_local`,`telefono_movil`,`afiliacion`,`afiliacion_valor`,`costo_minimo`,`estado_abierto`, `id_usuario`,`estado`,`fecha_registro`,`fecha_modificacion`) VALUES ( '7', 'Bodega Santa Cruz', '1045645665464', '4236542', '954645546', '1', '20', '10', '1','1', '1', '2016-07-04 11:22:16', '2016-07-04 11:22:16' );
-INSERT INTO `tienda`(`id`,`nombre`,`ruc`,`telefono_local`,`telefono_movil`,`afiliacion`,`afiliacion_valor`,`costo_minimo`,`estado_abierto`, `id_usuario`,`estado`,`fecha_registro`,`fecha_modificacion`) VALUES ( '8', 'Bodegas Nico', '1045645665464', '4236542', '954645546', '1', '20', '10', '1','1', '1', '2016-07-04 11:22:16', '2016-07-04 11:22:16' );
+INSERT INTO `tienda`(`id`,`nombre`,`ruc`,`telefono_local`,`telefono_movil`,`afiliacion`,`afiliacion_valor`,`costo_minimo`,`estado_abierto`,`estado`,`fecha_registro`,`fecha_modificacion`) VALUES ( '1', 'Arakaki Minimarket', '1045645665464', '4216882', '954645546', '1', '20', '10', '1', '1', '2016-06-30 11:48:11', '2016-06-30 11:48:11' );
+INSERT INTO `tienda`(`id`,`nombre`,`ruc`,`telefono_local`,`telefono_movil`,`afiliacion`,`afiliacion_valor`,`costo_minimo`,`estado_abierto`,`estado`,`fecha_registro`,`fecha_modificacion`) VALUES ( '2', 'La Bodega de la Trattoría', '1045645665464', '4236542', '954645546', '1', '20', '10', '1', '1', '2016-07-04 11:22:16', '2016-07-04 11:22:16' );
+INSERT INTO `tienda`(`id`,`nombre`,`ruc`,`telefono_local`,`telefono_movil`,`afiliacion`,`afiliacion_valor`,`costo_minimo`,`estado_abierto`,`estado`,`fecha_registro`,`fecha_modificacion`) VALUES ( '3', 'Bodega Cam', '1045645665464', '4236542', '954645546', '1', '20', '10', '1', '1', '2016-07-04 11:22:16', '2016-07-04 11:22:16' );
+INSERT INTO `tienda`(`id`,`nombre`,`ruc`,`telefono_local`,`telefono_movil`,`afiliacion`,`afiliacion_valor`,`costo_minimo`,`estado_abierto`,`estado`,`fecha_registro`,`fecha_modificacion`) VALUES ( '4', 'Bodegas y Viñedos Tabernero', '1045645665464', '4236542', '954645546', '1', '20', '10', '1', '1', '2016-07-04 11:22:16', '2016-07-04 11:22:16' );
+INSERT INTO `tienda`(`id`,`nombre`,`ruc`,`telefono_local`,`telefono_movil`,`afiliacion`,`afiliacion_valor`,`costo_minimo`,`estado_abierto`,`estado`,`fecha_registro`,`fecha_modificacion`) VALUES ( '5', 'La Bodega Ibérica', '1045645665464', '4236542', '954645546', '1', '20', '10', '1', '1', '2016-07-04 11:22:16', '2016-07-04 11:22:16' );
+INSERT INTO `tienda`(`id`,`nombre`,`ruc`,`telefono_local`,`telefono_movil`,`afiliacion`,`afiliacion_valor`,`costo_minimo`,`estado_abierto`,`estado`,`fecha_registro`,`fecha_modificacion`) VALUES ( '6', 'El Buen Vecino', '1045645665464', '4236542', '954645546', '1', '20', '10', '1', '1', '2016-07-04 11:22:16', '2016-07-04 11:22:16' );
+INSERT INTO `tienda`(`id`,`nombre`,`ruc`,`telefono_local`,`telefono_movil`,`afiliacion`,`afiliacion_valor`,`costo_minimo`,`estado_abierto`,`estado`,`fecha_registro`,`fecha_modificacion`) VALUES ( '7', 'Bodega Santa Cruz', '1045645665464', '4236542', '954645546', '1', '20', '10', '1', '1', '2016-07-04 11:22:16', '2016-07-04 11:22:16' );
+INSERT INTO `tienda`(`id`,`nombre`,`ruc`,`telefono_local`,`telefono_movil`,`afiliacion`,`afiliacion_valor`,`costo_minimo`,`estado_abierto`,`estado`,`fecha_registro`,`fecha_modificacion`) VALUES ( '8', 'Bodegas Nico', '1045645665464', '4236542', '954645546', '1', '20', '10', '1', '1', '2016-07-04 11:22:16', '2016-07-04 11:22:16' );
+
+-- ----------------------------
+-- Records of tienda_usuario
+-- ----------------------------
+INSERT INTO `tienda_usuario`(`id`,`id_usuario`,`id_tienda`) VALUES (1, '1', '1');
+INSERT INTO `tienda_usuario`(`id`,`id_usuario`,`id_tienda`) VALUES (2, '2', '2');
+INSERT INTO `tienda_usuario`(`id`,`id_usuario`,`id_tienda`) VALUES (3, '3', '3');
+INSERT INTO `tienda_usuario`(`id`,`id_usuario`,`id_tienda`) VALUES (4, '4', '4');
+INSERT INTO `tienda_usuario`(`id`,`id_usuario`,`id_tienda`) VALUES (5, '5', '5');
 
 -- ----------------------------
 -- Records of producto
