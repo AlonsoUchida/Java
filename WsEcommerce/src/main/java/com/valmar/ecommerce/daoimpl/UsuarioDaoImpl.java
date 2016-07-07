@@ -20,6 +20,7 @@ public class UsuarioDaoImpl extends AbstractDao<Integer, Usuario> implements Usu
 
 	@Override
 	public Usuario obtenerPorId(int id) {
+		//Como el obtener usuario consulta po rid no es necesario crear filtro por tipo
 		Criteria criteria = createEntityCriteria();
 		criteria.add(Restrictions.eq("id", id));
 		return (Usuario) criteria.uniqueResult();
@@ -89,9 +90,24 @@ public class UsuarioDaoImpl extends AbstractDao<Integer, Usuario> implements Usu
 		try {
 			Criteria criteria = createEntityCriteria();
 			criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
-			List<Usuario> usuarios = (List<Usuario>) criteria.list();
 			criteria.add(Restrictions.eq("tipo", TipoUsuario.BODEGUERO.getValue()));
 			criteria.add(Restrictions.eq("estado", TipoEstado.HABILITADO.getValue()));
+			List<Usuario> usuarios = (List<Usuario>) criteria.list();
+			return usuarios;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	@Override
+	public List<Usuario> listarVendedores() {
+		try {
+			Criteria criteria = createEntityCriteria();
+			criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
+			criteria.add(Restrictions.eq("tipo", TipoUsuario.VENDEDOR.getValue()));
+			criteria.add(Restrictions.eq("estado", TipoEstado.HABILITADO.getValue()));
+			List<Usuario> usuarios = (List<Usuario>) criteria.list();			
 			return usuarios;
 		} catch (Exception e) {
 			e.printStackTrace();

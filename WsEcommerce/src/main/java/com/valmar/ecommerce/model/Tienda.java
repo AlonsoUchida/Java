@@ -54,24 +54,12 @@ public class Tienda {
 	
 	@Column(name = "AFILIACION_VALOR")
 	private int afiliacion_valor;
-	
-	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-	  @JoinTable(
-	      name="tienda_metodo_pago",
-	      joinColumns=@JoinColumn(name="ID_TIENDA", referencedColumnName="ID"),
-	      inverseJoinColumns=@JoinColumn(name="ID_METODO_PAGO", referencedColumnName="ID"))
-	@JsonManagedReference
-	private Set<MetodoPago> metodoPagos;
-	
+		
 	@Column(name = "COSTO_MINIMO")
 	private BigDecimal costoMinimo;
 	
 	@Column(name = "ESTADO_ABIERTO")
 	private int estadoAbierto;
-	
-	@ManyToOne
-    @JoinColumn(name="ID_USUARIO")
-    private Usuario usuario;
 	
 	@Column(name = "ESTADO")
 	private int estado;
@@ -84,9 +72,23 @@ public class Tienda {
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date fechaModificacion;
 	
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "tienda", cascade = CascadeType.ALL)
 	@JsonIgnore
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "tienda", cascade = CascadeType.ALL)	
 	private Set<Producto> productos;
+	
+	@ManyToMany(fetch = FetchType.EAGER)
+	  @JoinTable(
+	      name="tienda_metodo_pago",
+	      joinColumns=@JoinColumn(name="ID_TIENDA", referencedColumnName="ID"),
+	      inverseJoinColumns=@JoinColumn(name="ID_METODO_PAGO", referencedColumnName="ID"))
+	private Set<MetodoPago> metodoPagos;
+	
+	@ManyToMany(fetch = FetchType.EAGER)
+	  @JoinTable(
+	      name="tienda_envio",
+	      joinColumns=@JoinColumn(name="ID_TIENDA", referencedColumnName="ID"),
+	      inverseJoinColumns=@JoinColumn(name="ID_ENVIO", referencedColumnName="ID"))
+	private Set<Envio> envios;
 	
 	@ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
@@ -95,13 +97,17 @@ public class Tienda {
             inverseJoinColumns = {@JoinColumn(name = "ID_DIRECCION", referencedColumnName = "ID")})
     private Set<Direccion> direcciones;
 	
-	@OneToMany(fetch = FetchType.EAGER, mappedBy = "tienda", cascade = CascadeType.ALL)
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "tienda", cascade = CascadeType.ALL)
 	@JsonBackReference
 	private Set<EstadoCuenta> estadoCuentas;
 	
-	@OneToMany(fetch = FetchType.EAGER, mappedBy = "tienda", cascade = CascadeType.ALL)
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "tienda", cascade = CascadeType.ALL)
 	@JsonBackReference
 	private Set<ImagenTienda> imagenes;	
+	
+	@JsonIgnore
+	@ManyToMany(fetch = FetchType.LAZY, mappedBy="tiendas")
+	private Set<Usuario> usuarios;
 		
 	public int getId() {
 		return id;
@@ -175,14 +181,6 @@ public class Tienda {
 		this.estado = estado;
 	}
 
-	public Usuario getUsuario() {
-		return usuario;
-	}
-
-	public void setUsuario(Usuario usuario) {
-		this.usuario = usuario;
-	}
-
 	public BigDecimal getCostoMinimo() {
 		return costoMinimo;
 	}
@@ -223,6 +221,14 @@ public class Tienda {
 		this.productos = productos;
 	}
 
+	public Set<Envio> getEnvios() {
+		return envios;
+	}
+
+	public void setEnvios(Set<Envio> envios) {
+		this.envios = envios;
+	}
+
 	public Set<Direccion> getDirecciones() {
 		return direcciones;
 	}
@@ -245,6 +251,14 @@ public class Tienda {
 
 	public void setImagenes(Set<ImagenTienda> imagenes) {
 		this.imagenes = imagenes;
+	}
+
+	public Set<Usuario> getUsuarios() {
+		return usuarios;
+	}
+
+	public void setUsuarios(Set<Usuario> usuarios) {
+		this.usuarios = usuarios;
 	}
 	
 	

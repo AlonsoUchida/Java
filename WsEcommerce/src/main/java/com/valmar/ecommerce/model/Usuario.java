@@ -61,25 +61,29 @@ public class Usuario {
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date fechaModificacion;
 	
-	@ManyToMany(fetch = FetchType.LAZY)
+	@ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "cliente_direccion",
             joinColumns = {@JoinColumn(name = "ID_CLIENTE", referencedColumnName = "ID")},
             inverseJoinColumns = {@JoinColumn(name = "ID_DIRECCION", referencedColumnName = "ID")})
-    private List<Direccion> direcciones;
+	@Column(insertable=false, updatable=false)
+    private Set<Direccion> direcciones;
 	
-	@JsonIgnore
-	@ManyToMany(fetch = FetchType.LAZY)
+	@ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "usuario_autoridad",
-            joinColumns = {@JoinColumn(name = "USUARIO_ID", referencedColumnName = "ID")},
-            inverseJoinColumns = {@JoinColumn(name = "AUTORIDAD_ID", referencedColumnName = "ID")})
+            joinColumns = {@JoinColumn(name = "ID_USUARIO", referencedColumnName = "ID")},
+            inverseJoinColumns = {@JoinColumn(name = "ID_AUTORIDAD", referencedColumnName = "ID")})
+	@Column(insertable=false, updatable=false)
     private List<Authority> authorities;
 	
-	@JsonIgnore
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "usuario", cascade = CascadeType.ALL)
-	@JsonBackReference
-	private Set<Tienda> tiendas;
+	@ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(
+            name = "tienda_usuario",
+            joinColumns = {@JoinColumn(name = "ID_USUARIO", referencedColumnName = "ID")},
+            inverseJoinColumns = {@JoinColumn(name = "ID_TIENDA", referencedColumnName = "ID")})
+	@Column(insertable=false, updatable=false)
+    private Set<Tienda> tiendas;
 	
 	public int getId() {
 		return id;
@@ -177,6 +181,13 @@ public class Usuario {
 	public void setTipo(int tipo) {
 		this.tipo = tipo;
 	}
-	
-	
+
+	public Set<Direccion> getDirecciones() {
+		return direcciones;
+	}
+
+	public void setDirecciones(Set<Direccion> direcciones) {
+		this.direcciones = direcciones;
+	}
+		
 }

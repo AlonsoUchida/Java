@@ -115,7 +115,6 @@ public class TiendaRestController {
     	tiendaBean.setCostoMinimo(tienda.getCostoMinimo());
     	tiendaBean.setEstado(TipoEstado.HABILITADO.getValue());
     	tiendaBean.setEstadoAbierto(tienda.getEstadoAbierto());
-    	tiendaBean.setUsuario(usuario);
     	tiendaBean.setFechaRegistro(new Date());
     	tiendaBean.setFechaModificacion(new Date());
     	
@@ -152,7 +151,6 @@ public class TiendaRestController {
     	tiendaBean.setCostoMinimo(tienda.getCostoMinimo());
     	tiendaBean.setEstado(TipoEstado.HABILITADO.getValue());
     	tiendaBean.setEstadoAbierto(tienda.getEstadoAbierto());
-    	tiendaBean.setUsuario(usuario);
     	tiendaBean.setFechaModificacion(new Date());
     	
     	List<MetodoPago> metodoPagos = new ArrayList<>();

@@ -3,6 +3,8 @@ package com.valmar.ecommerce.model;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
+import com.valmar.ecommerce.enums.AuthorityName;
+
 import java.util.List;
 
 @Entity
