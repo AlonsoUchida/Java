@@ -23,7 +23,7 @@ public class ImagenProducto {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	
-	@ManyToOne(fetch = FetchType.EAGER)
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="ID_PRODUCTO")
 	@JsonIgnore
 	private Producto producto;
@@ -36,7 +36,7 @@ public class ImagenProducto {
 	private byte[] imagen;
 	
 	@Column(name = "DEFECTO")
-	private int defecto;
+	private Integer defecto;
 
 	public int getId() {
 		return id;
@@ -70,11 +70,11 @@ public class ImagenProducto {
 		this.imagen = imagen;
 	}
 
-	public int getDefecto() {
+	public Integer getDefecto() {
 		return defecto;
 	}
 
-	public void setDefecto(int defecto) {
+	public void setDefecto(Integer defecto) {
 		this.defecto = defecto;
 	}
 	

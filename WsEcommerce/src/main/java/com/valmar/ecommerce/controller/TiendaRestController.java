@@ -1,6 +1,8 @@
 package com.valmar.ecommerce.controller;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
@@ -63,7 +65,7 @@ public class TiendaRestController {
 			if(imagen!=null)
 				_tienda.setImagen(imagen.getImagen());
 			if(!item.getDistancia().isEmpty())
-				_tienda.setDistancia(item.getDistancia());
+				_tienda.setDistancia(Double.parseDouble(item.getDistancia()));
 			for (Direccion direccion : item.getDirecciones()) {
 				_tienda.setDomicilio(direccion.getDomicilio());
 				_tienda.setNumero(direccion.getNumero());
@@ -106,6 +108,8 @@ public class TiendaRestController {
     		}   		
     	}
 		List<TiendaVMLite> tiendasLite = clonarTiendasVMLite(tiendas);
+
+		tiendasLite.sort(Comparator.comparing(TiendaVMLite::getDistancia));
 		
 		if (tiendasLite.isEmpty()) {
 			return new ResponseEntity<List<TiendaVMLite>>(HttpStatus.NO_CONTENT);
