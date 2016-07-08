@@ -20,6 +20,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -111,6 +112,9 @@ public class Tienda {
 	@JsonIgnore
 	@ManyToMany(fetch = FetchType.LAZY, mappedBy="tiendas")
 	private Set<Usuario> usuarios;
+	
+	@Transient
+	private String distancia;
 		
 	public int getId() {
 		return id;
@@ -271,6 +275,13 @@ public class Tienda {
 	public void setUsuarios(Set<Usuario> usuarios) {
 		this.usuarios = usuarios;
 	}
-	
+
+	public String getDistancia() {
+		return distancia;
+	}
+
+	public void setDistancia(String distancia) {
+		this.distancia = distancia;
+	}	
 	
 }

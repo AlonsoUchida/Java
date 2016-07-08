@@ -44,7 +44,7 @@ public class VendedorRestController {
     public ResponseEntity<Usuario> obtenerPorId(@RequestParam("id") int id) {
     	Usuario usuario = service.obtenerPorId(id);
         if (usuario == null) {
-            return new ResponseEntity<Usuario>(HttpStatus.NOT_FOUND);
+            return new ResponseEntity<Usuario>(HttpStatus.NO_CONTENT);
         }
         return new ResponseEntity<Usuario>(usuario, HttpStatus.OK);
     }
@@ -73,7 +73,7 @@ public class VendedorRestController {
     @RequestMapping(value = "/actualizar", method = RequestMethod.PUT)
     public ResponseEntity<Void> actualizar(@RequestBody BodegueroVM bodeguero,  UriComponentsBuilder ucBuilder) {
         if (service.obtenerPorId(bodeguero.getId())==null) {
-            return new ResponseEntity<Void>(HttpStatus.NOT_FOUND);
+            return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
         } 
         Usuario clienteBean = new Usuario();
         clienteBean.setId(bodeguero.getId());
@@ -97,7 +97,7 @@ public class VendedorRestController {
     public ResponseEntity<Usuario> eliminar(@RequestParam("id") int id) {
     	Usuario usuario = service.obtenerPorId(id);
         if (usuario == null) {
-            return new ResponseEntity<Usuario>(HttpStatus.NOT_FOUND);
+            return new ResponseEntity<Usuario>(HttpStatus.NO_CONTENT);
         } 
         service.eliminar(id);
         return new ResponseEntity<Usuario>(HttpStatus.NO_CONTENT);

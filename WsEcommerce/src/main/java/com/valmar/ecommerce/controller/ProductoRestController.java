@@ -62,7 +62,7 @@ public class ProductoRestController {
     public ResponseEntity<Producto> obtenerPorId(@RequestParam("id") int id) {
     	Producto producto = service.obtenerPorId(id);
         if (producto == null) {
-            return new ResponseEntity<Producto>(HttpStatus.NOT_FOUND);
+            return new ResponseEntity<Producto>(HttpStatus.NO_CONTENT);
         }
         return new ResponseEntity<Producto>(producto, HttpStatus.OK);
     }
@@ -82,7 +82,7 @@ public class ProductoRestController {
         Tienda tienda = service.obtenerTiendaPorId(producto.getId_tienda());
         
         if((marca==null) || (categorias.isEmpty()) || (tienda==null)){
-        	return new ResponseEntity<Void>(HttpStatus.NOT_FOUND);
+        	return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
         }
         
         Producto productoBean = new Producto();        
@@ -120,7 +120,7 @@ public class ProductoRestController {
         Tienda tienda = service.obtenerTiendaPorId(producto.getId_tienda());
         
         if((marca==null) || (categorias.isEmpty()) || (tienda==null) || (_producto==null)){
-        	return new ResponseEntity<Void>(HttpStatus.NOT_FOUND);
+        	return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
         }
         
         Producto productoBean = new Producto();  
@@ -148,7 +148,7 @@ public class ProductoRestController {
     public ResponseEntity<Producto> eliminar(@RequestParam("id") int id) {
     	Producto producto = service.obtenerPorId(id);
         if (producto == null) {
-            return new ResponseEntity<Producto>(HttpStatus.NOT_FOUND);
+            return new ResponseEntity<Producto>(HttpStatus.NO_CONTENT);
         } 
         service.eliminar(id);
         return new ResponseEntity<Producto>(HttpStatus.NO_CONTENT);
@@ -171,7 +171,7 @@ public class ProductoRestController {
     public ResponseEntity<ImagenProducto> obtenerImagenPorId(@RequestParam("id") int id) {
     	ImagenProducto imagen = imagenProductoService.obtenerImagenPorId(id);
         if (imagen == null) {
-            return new ResponseEntity<ImagenProducto>(HttpStatus.NOT_FOUND);
+            return new ResponseEntity<ImagenProducto>(HttpStatus.NO_CONTENT);
         }
         return new ResponseEntity<ImagenProducto>(imagen, HttpStatus.OK);
     }
@@ -182,7 +182,7 @@ public class ProductoRestController {
         Producto producto = service.obtenerPorId(imagen.getId_producto());
         
         if(producto==null){
-        	return new ResponseEntity<Void>(HttpStatus.NOT_FOUND);
+        	return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
         }
         
         imagenBean.setNombre(imagen.getNombre());
@@ -203,7 +203,7 @@ public class ProductoRestController {
         Producto producto = service.obtenerPorId(imagen.getId_producto());
         
         if(producto==null){
-        	return new ResponseEntity<Void>(HttpStatus.NOT_FOUND);
+        	return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
         }
         imagenBean.setId(imagen.getId());
         imagenBean.setNombre(imagen.getNombre());
@@ -222,7 +222,7 @@ public class ProductoRestController {
     public ResponseEntity<ImagenProducto> eliminarImagen(@RequestParam("id") int id) {
     	ImagenProducto producto = imagenProductoService.obtenerImagenPorId(id);
         if (producto == null) {
-            return new ResponseEntity<ImagenProducto>(HttpStatus.NOT_FOUND);
+            return new ResponseEntity<ImagenProducto>(HttpStatus.NO_CONTENT);
         } 
         imagenProductoService.eliminarImagen(id);;
         return new ResponseEntity<ImagenProducto>(HttpStatus.NO_CONTENT);
@@ -245,7 +245,7 @@ public class ProductoRestController {
     public ResponseEntity<List<ProductoPorTiendaVM>> obtenerPorTienda(@RequestParam("id") int id) {
     	List<ProductoPorTiendaVM> _productos = obtenerProductosPorTienda(id);
     	if(_productos==null){
-    		return new ResponseEntity<List<ProductoPorTiendaVM>>(HttpStatus.NOT_FOUND);
+    		return new ResponseEntity<List<ProductoPorTiendaVM>>(HttpStatus.NO_CONTENT);
     	}   
         return new ResponseEntity<List<ProductoPorTiendaVM>>(_productos, HttpStatus.OK);
     }
@@ -296,12 +296,12 @@ public class ProductoRestController {
     public ResponseEntity<List<ProductoPorTiendaVM>> obtenerPorDireccionDeUsuario(@RequestParam("id") int id) {
 
 
-    	double radio = 0.030;//distancia en km <--radio de 30m 
+    	double radio = DistanceCalculatorUtil.RADIO_USUARIO; 
     	double costoMinimo = 0;
     	Direccion direccion = service.obtenerDireccion(id);
     	
     	if (direccion==null){
-    		return new ResponseEntity<List<ProductoPorTiendaVM>>(HttpStatus.NOT_FOUND);
+    		return new ResponseEntity<List<ProductoPorTiendaVM>>(HttpStatus.NO_CONTENT);
     	}
     	
     	double latitudCliente = Double.parseDouble(direccion.getLatitud());
@@ -337,12 +337,12 @@ public class ProductoRestController {
     @RequestMapping(value = "/obtenerPorCategoriaDireccionDeUsuario", params = {"id_categoria", "id"}, method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<ProductoPorTiendaVM>> obtenerPorCategoriaDireccionDeUsuario(@RequestParam("id_categoria") int id_categoria, @RequestParam("id") int id) {
 
-    	double radio = 0.030;//distancia en km <--radio de 30m 
+    	double radio = DistanceCalculatorUtil.RADIO_USUARIO;
     	double costoMinimo = 0;
     	Direccion direccion = service.obtenerDireccion(id);
     	
     	if (direccion==null){
-    		return new ResponseEntity<List<ProductoPorTiendaVM>>(HttpStatus.NOT_FOUND);
+    		return new ResponseEntity<List<ProductoPorTiendaVM>>(HttpStatus.NO_CONTENT);
     	}
     	
     	double latitudCliente = Double.parseDouble(direccion.getLatitud());

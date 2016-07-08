@@ -14,6 +14,7 @@ public class TiendaVMLite {
 	private int estado;
 	private byte[] imagen;
 	private String horarioAtencion;
+	private String distancia;
 	
 	public int getId() {
 		return id;
@@ -86,6 +87,12 @@ public class TiendaVMLite {
 	}
 	public void setLongitud(String longitud) {
 		this.longitud = longitud;
+	}
+	public String getDistancia() {
+		return distancia;
+	}
+	public void setDistancia(String distancia) {
+		this.distancia = distancia;
 	}
 	
 }

@@ -101,7 +101,7 @@ public class ClienteRestController {
     public ResponseEntity<Usuario> eliminar(@RequestParam("id")int id) {
     	Usuario cliente = service.obtenerPorId(id);
         if (cliente == null) {
-            return new ResponseEntity<Usuario>(HttpStatus.NOT_FOUND);
+            return new ResponseEntity<Usuario>(HttpStatus.NO_CONTENT);
         } 
         service.eliminar(id);
         return new ResponseEntity<Usuario>(HttpStatus.NO_CONTENT);

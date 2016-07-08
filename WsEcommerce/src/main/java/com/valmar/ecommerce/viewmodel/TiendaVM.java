@@ -15,7 +15,7 @@ public class TiendaVM {
 	private BigDecimal costoMinimo;
 	private String horarioAtencion;
 	private int estadoAbierto;
-	private byte[] imagen;
+	private byte[] imagen;	
     private int id_usuario;
 	
 	public int getId() {

@@ -160,5 +160,4 @@ public class TiendaDaoImpl extends AbstractDao<Integer, Tienda> implements Tiend
 		return null;
 	}
 
-
 }

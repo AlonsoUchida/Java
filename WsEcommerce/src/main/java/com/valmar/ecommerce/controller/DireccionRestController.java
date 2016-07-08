@@ -48,7 +48,7 @@ public class DireccionRestController {
     public ResponseEntity<Direccion> obtenerPorId(@RequestParam("id") Integer id) {
     	Direccion direccion = service.obtenerPorId(id);
         if (direccion == null) {
-            return new ResponseEntity<Direccion>(HttpStatus.NOT_FOUND);
+            return new ResponseEntity<Direccion>(HttpStatus.NO_CONTENT);
         }
         return new ResponseEntity<Direccion>(direccion, HttpStatus.OK);
     }
@@ -61,7 +61,7 @@ public class DireccionRestController {
     	Usuario usuario = service.obtenerUsuarioPorId(direccion.getId_usuario());
     	
     	if((distrito==null) || (usuario==null)){
-    		return new ResponseEntity<Void>(HttpStatus.NOT_FOUND);
+    		return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
     	}
     	
     	List<Usuario> usuarios = new ArrayList<>();
@@ -89,7 +89,7 @@ public class DireccionRestController {
     	Usuario usuario = service.obtenerUsuarioPorId(direccion.getId_usuario());
     	
     	if((distrito==null) || (usuario==null)){
-    		return new ResponseEntity<Void>(HttpStatus.NOT_FOUND);
+    		return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
     	}
     	
     	List<Usuario> usuarios = new ArrayList<>();

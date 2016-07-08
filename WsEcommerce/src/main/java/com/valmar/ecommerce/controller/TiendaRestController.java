@@ -28,9 +28,12 @@ import com.valmar.ecommerce.model.MetodoPago;
 import com.valmar.ecommerce.model.Producto;
 import com.valmar.ecommerce.model.Tienda;
 import com.valmar.ecommerce.model.Usuario;
+import com.valmar.ecommerce.services.DireccionService;
 import com.valmar.ecommerce.services.ImagenTiendaService;
 import com.valmar.ecommerce.services.TiendaService;
+import com.valmar.ecommerce.util.DistanceCalculatorUtil;
 import com.valmar.ecommerce.viewmodel.ImagenProductoVM;
+import com.valmar.ecommerce.viewmodel.ProductoPorTiendaVM;
 import com.valmar.ecommerce.viewmodel.TiendaVM;
 import com.valmar.ecommerce.viewmodel.TiendaVMLite;
 
@@ -42,7 +45,38 @@ public class TiendaRestController {
 	@Autowired
 	TiendaService service;
 	@Autowired
+	DireccionService direccionService;
+	@Autowired
 	ImagenTiendaService imagenTiendaService;
+		
+	private List<TiendaVMLite> clonarTiendasVMLite(List<Tienda> tiendas){
+		List<TiendaVMLite> tiendasLite = new ArrayList<>();
+		for (Tienda item : tiendas) {
+			TiendaVMLite _tienda = new TiendaVMLite();
+			_tienda.setId(item.getId());
+			_tienda.setNombre(item.getNombre());
+			_tienda.setHorarioAtencion(item.getHorarioAtencion());
+			_tienda.setEstado(item.getEstado());
+			_tienda.setTelefonoFijo(item.getTelefono_local());
+			_tienda.setTelefonoMovil(item.getTelefono_movil());
+			ImagenTienda imagen = imagenTiendaService.obtenerImagenPorDefectoTienda(item.getId());
+			if(imagen!=null)
+				_tienda.setImagen(imagen.getImagen());
+			if(!item.getDistancia().isEmpty())
+				_tienda.setDistancia(item.getDistancia());
+			for (Direccion direccion : item.getDirecciones()) {
+				_tienda.setDomicilio(direccion.getDomicilio());
+				_tienda.setNumero(direccion.getNumero());
+				Distrito distrito = direccion.getDistrito();
+				_tienda.setDistrito(distrito.getNombre());
+				_tienda.setLatitud(direccion.getLatitud());
+				_tienda.setLongitud(direccion.getLongitud());
+				break;
+			}
+			tiendasLite.add(_tienda);
+		}
+		return tiendasLite;
+	}
 
 	@RequestMapping(value = { "/listar" }, method = RequestMethod.GET)
 	public ResponseEntity<List<Tienda>> listarTiendas() {
@@ -53,7 +87,33 @@ public class TiendaRestController {
 		return new ResponseEntity<List<Tienda>>(tiendas, HttpStatus.OK);
 	}
 	
-	@RequestMapping(value = { "/imagen/listarPorVendedor" }, params = {"id"}, method = RequestMethod.GET)
+	@RequestMapping(value = { "/listarTiendasPorCobertura" }, method = RequestMethod.GET)
+	public ResponseEntity<List<TiendaVMLite>> listarTiendasPorCobertura(@RequestParam String latitud,  
+			@RequestParam String longitud) {
+		List<Tienda> tiendas = new ArrayList<>();
+		List<Direccion> direcciones = direccionService.listarDirecciones();
+		double latitudCliente = Double.parseDouble(latitud);
+		double longitudCliente = Double.parseDouble(longitud);
+		for(Direccion item : direcciones){
+    		double latitudTienda = Double.parseDouble(item.getLatitud());
+    		double longitudTienda = Double.parseDouble(item.getLongitud());
+    		double distancia = DistanceCalculatorUtil.distance(latitudCliente, longitudCliente, latitudTienda, longitudTienda, "K");
+    		if(distancia<DistanceCalculatorUtil.RADIO_USUARIO){
+    			Tienda tienda = service.obtenerTiendaPorDireccion(item.getId());
+    			distancia = distancia  * 1000;
+    			tienda.setDistancia(Double.toString(distancia));
+    			tiendas.add(tienda);
+    		}   		
+    	}
+		List<TiendaVMLite> tiendasLite = clonarTiendasVMLite(tiendas);
+		
+		if (tiendasLite.isEmpty()) {
+			return new ResponseEntity<List<TiendaVMLite>>(HttpStatus.NO_CONTENT);
+		}
+		return new ResponseEntity<List<TiendaVMLite>>(tiendasLite, HttpStatus.OK);
+	}
+	
+	@RequestMapping(value = { "/listarPorVendedor" }, params = {"id"}, method = RequestMethod.GET)
 	public ResponseEntity<List<Tienda>> listarPorVendedor(int id) {
 		List<Tienda> tiendas = service.listarPorVendedor(id);
 		if (tiendas.isEmpty()) {
@@ -66,7 +126,7 @@ public class TiendaRestController {
 	public ResponseEntity<List<TiendaVMLite>> listarPorDistrito(@RequestParam int id) {
 		List<Tienda> tiendas = service.listarPorDistrito(id);
 		if ((tiendas == null) || (tiendas.isEmpty())) {
-			return new ResponseEntity<List<TiendaVMLite>>(HttpStatus.NOT_FOUND);
+			return new ResponseEntity<List<TiendaVMLite>>(HttpStatus.NO_CONTENT);
 		}
 		
 		List<TiendaVMLite> tiendasLite = clonarTiendasVMLite(tiendas);
@@ -79,7 +139,7 @@ public class TiendaRestController {
 	public ResponseEntity<Tienda> obtenerPorId(@RequestParam("id") int id) {
 		Tienda tienda = service.obtenerPorId(id);
 		if (tienda == null) {
-			return new ResponseEntity<Tienda>(HttpStatus.NOT_FOUND);
+			return new ResponseEntity<Tienda>(HttpStatus.NO_CONTENT);
 		}
 		return new ResponseEntity<Tienda>(tienda, HttpStatus.OK);
 	}
@@ -89,7 +149,7 @@ public class TiendaRestController {
 	public ResponseEntity<List<TiendaVMLite>> obtenerTiendasPorNombre(@RequestParam("nombre") String nombre) {
 		List<Tienda> tiendas = service.obtenerTiendasPorNombre(nombre);
 		if ((tiendas == null) || (tiendas.isEmpty())) {
-			return new ResponseEntity<List<TiendaVMLite>>(HttpStatus.NOT_FOUND);
+			return new ResponseEntity<List<TiendaVMLite>>(HttpStatus.NO_CONTENT);
 		}
 		
 		List<TiendaVMLite> tiendasLite = clonarTiendasVMLite(tiendas);
@@ -106,7 +166,7 @@ public class TiendaRestController {
 			@RequestParam("id") int id) {
 		List<Tienda> tiendas = service.obtenerTiendasPorNombreDistrito(nombre, id);
 		if ((tiendas == null) || (tiendas.isEmpty())) {
-			return new ResponseEntity<List<TiendaVMLite>>(HttpStatus.NOT_FOUND);
+			return new ResponseEntity<List<TiendaVMLite>>(HttpStatus.NO_CONTENT);
 		}
 		
 		List<TiendaVMLite> tiendasLite = clonarTiendasVMLite(tiendas);
@@ -116,33 +176,6 @@ public class TiendaRestController {
 		}
 		return new ResponseEntity<List<TiendaVMLite>>(tiendasLite, HttpStatus.OK);
 	}
-	
-	private List<TiendaVMLite> clonarTiendasVMLite(List<Tienda> tiendas){
-		List<TiendaVMLite> tiendasLite = new ArrayList<>();
-		for (Tienda item : tiendas) {
-			TiendaVMLite _tienda = new TiendaVMLite();
-			_tienda.setId(item.getId());
-			_tienda.setNombre(item.getNombre());
-			_tienda.setHorarioAtencion(item.getHorarioAtencion());
-			_tienda.setEstado(item.getEstado());
-			_tienda.setTelefonoFijo(item.getTelefono_local());
-			_tienda.setTelefonoMovil(item.getTelefono_movil());
-			ImagenTienda imagen = imagenTiendaService.obtenerImagenPorDefectoTienda(item.getId());
-			if(imagen!=null)
-				_tienda.setImagen(imagen.getImagen());
-			for (Direccion direccion : item.getDirecciones()) {
-				_tienda.setDomicilio(direccion.getDomicilio());
-				_tienda.setNumero(direccion.getNumero());
-				Distrito distrito = direccion.getDistrito();
-				_tienda.setDistrito(distrito.getNombre());
-				_tienda.setLatitud(direccion.getLatitud());
-				_tienda.setLongitud(direccion.getLongitud());
-				break;
-			}
-			tiendasLite.add(_tienda);
-		}
-		return tiendasLite;
-	}
 
 	@RequestMapping(value = "/agregar", method = RequestMethod.POST)
 	public ResponseEntity<Void> agregar(@RequestBody TiendaVM tienda, UriComponentsBuilder ucBuilder) {
@@ -150,7 +183,7 @@ public class TiendaRestController {
 		Usuario usuario = service.obtenerUsuario(tienda.getId_usuario());
 
 		if (usuario == null) {
-			return new ResponseEntity<Void>(HttpStatus.NOT_FOUND);
+			return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
 		}
 		Tienda tiendaBean = new Tienda();
 		tiendaBean.setNombre(tienda.getNombre());
@@ -187,7 +220,7 @@ public class TiendaRestController {
 		Usuario usuario = service.obtenerUsuario(tienda.getId_usuario());
 
 		if (usuario == null) {
-			return new ResponseEntity<Void>(HttpStatus.NOT_FOUND);
+			return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
 		}
 		Tienda tiendaBean = new Tienda();
 		tiendaBean.setId(tienda.getId());
@@ -222,7 +255,7 @@ public class TiendaRestController {
 	public ResponseEntity<Tienda> eliminar(@RequestParam("id") int id) {
 		Tienda tienda = service.obtenerPorId(id);
 		if (tienda == null) {
-			return new ResponseEntity<Tienda>(HttpStatus.NOT_FOUND);
+			return new ResponseEntity<Tienda>(HttpStatus.NO_CONTENT);
 		}
 		service.eliminar(id);
 		return new ResponseEntity<Tienda>(HttpStatus.NO_CONTENT);
@@ -259,7 +292,7 @@ public class TiendaRestController {
 		Tienda tienda = service.obtenerPorId(imagen.getId_producto());
 
 		if (tienda == null) {
-			return new ResponseEntity<Void>(HttpStatus.NOT_FOUND);
+			return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
 		}
 
 		imagenBean.setNombre(imagen.getNombre());
@@ -280,7 +313,7 @@ public class TiendaRestController {
 		Tienda tienda = service.obtenerPorId(imagen.getId_producto());
 
 		if (tienda == null) {
-			return new ResponseEntity<Void>(HttpStatus.NOT_FOUND);
+			return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
 		}
 		imagenBean.setId(imagen.getId());
 		imagenBean.setNombre(imagen.getNombre());
@@ -299,7 +332,7 @@ public class TiendaRestController {
 	public ResponseEntity<ImagenTienda> eliminarImagen(@RequestParam("id") int id) {
 		ImagenTienda tienda = imagenTiendaService.obtenerImagenPorId(id);
 		if (tienda == null) {
-			return new ResponseEntity<ImagenTienda>(HttpStatus.NOT_FOUND);
+			return new ResponseEntity<ImagenTienda>(HttpStatus.NO_CONTENT);
 		}
 		imagenTiendaService.eliminarImagen(id);
 		;
