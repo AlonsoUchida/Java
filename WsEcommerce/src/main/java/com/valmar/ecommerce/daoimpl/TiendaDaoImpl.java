@@ -149,8 +149,8 @@ public class TiendaDaoImpl extends AbstractDao<Integer, Tienda> implements Tiend
 			criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
 			criteria.createAlias("usuarios", "u");
 			//criteria.createAlias("envios", "e");
-			criteria.add(Restrictions.eq("u.usuario.tipo", TipoUsuario.VENDEDOR.getValue()));
-			criteria.add(Restrictions.eq("u.usuario.id", id));
+			criteria.add(Restrictions.eq("u.tipo", TipoUsuario.VENDEDOR.getValue()));
+			criteria.add(Restrictions.eq("u.id", id));
 			criteria.setMaxResults(20);//Los primeros 20 elementos por defecto
 			List<Tienda> tiendas = (List<Tienda>) criteria.list();
 			return tiendas;
