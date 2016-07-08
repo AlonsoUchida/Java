@@ -222,6 +222,7 @@ CREATE TABLE IF NOT EXISTS `CMS_VALMAR_DB`.`tienda` (
   `afiliacion_valor` INT(11) NOT NULL,
   `costo_minimo` DECIMAL NULL,
   `estado_abierto` INT(1) NULL,
+  `horario_atencion` VARCHAR(45) NULL,
   `estado` INT(1) NOT NULL COMMENT 'estatus para indicar si la tienda esta activa o no, dentro d',
   `fecha_registro` DATETIME NULL,
   `fecha_modificacion` DATETIME NULL,
