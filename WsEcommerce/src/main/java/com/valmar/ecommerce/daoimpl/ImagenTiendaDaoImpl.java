@@ -75,13 +75,28 @@ public class ImagenTiendaDaoImpl extends AbstractDao<Integer, ImagenTienda> impl
 	}
 
 	@Override
-	public List<ImagenTienda> listarImagenesPorTienda(int id) {
+	public List<ImagenTienda>  listarImagenesPorTienda(int id) {
+		try {
+			Criteria criteria = createEntityCriteria();
+			criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
+			criteria.add(Restrictions.eq("tienda.id", id));			
+			List<ImagenTienda> imagenes = (List<ImagenTienda>) criteria.list();
+			return imagenes;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	@Override
+	public ImagenTienda obtenerImagenPorDefectoTienda(int id) {	
 		try {
 			Criteria criteria = createEntityCriteria();
 			criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
 			criteria.add(Restrictions.eq("tienda.id", id));
-			List<ImagenTienda> imagenes = (List<ImagenTienda>) criteria.list();
-			return imagenes;
+			criteria.add(Restrictions.eq("defecto", TipoImagen.DEFECTO.getValue()));
+			ImagenTienda imagen = (ImagenTienda)criteria.uniqueResult();
+			return imagen;
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

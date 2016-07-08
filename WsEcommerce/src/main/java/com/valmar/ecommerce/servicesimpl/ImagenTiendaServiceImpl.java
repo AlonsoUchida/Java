@@ -46,5 +46,10 @@ public class ImagenTiendaServiceImpl implements ImagenTiendaService{
 	public List<ImagenTienda> listarImagenesPorTienda(int id) {
 		return imagenTiendaDao.listarImagenesPorTienda(id);
 	}
+
+	@Override
+	public ImagenTienda obtenerImagenPorDefectoTienda(int id) {
+		return imagenTiendaDao.obtenerImagenPorDefectoTienda(id);
+	}
 	
 }

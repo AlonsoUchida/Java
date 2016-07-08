@@ -7,6 +7,7 @@ public class TiendaVMLite {
 	private String domicilio;
 	private String numero;
 	private String distrito;
+	private byte[] imagen;
 	
 	public int getId() {
 		return id;
@@ -38,6 +39,11 @@ public class TiendaVMLite {
 	public void setDistrito(String distrito) {
 		this.distrito = distrito;
 	}
-	
+	public byte[] getImagen() {
+		return imagen;
+	}
+	public void setImagen(byte[] imagen) {
+		this.imagen = imagen;
+	}
 	
 }

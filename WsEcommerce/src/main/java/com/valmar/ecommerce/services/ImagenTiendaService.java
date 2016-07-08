@@ -12,4 +12,5 @@ public interface ImagenTiendaService {
     void actualizarImagen(ImagenTienda imagen);
     void eliminarImagen(int id);
 	List<ImagenTienda> listarImagenesPorTienda(int id);
+	ImagenTienda obtenerImagenPorDefectoTienda(int id);
 }

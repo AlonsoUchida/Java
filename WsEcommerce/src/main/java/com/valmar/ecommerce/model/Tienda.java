@@ -76,19 +76,19 @@ public class Tienda {
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "tienda", cascade = CascadeType.ALL)	
 	private Set<Producto> productos;
 	
-	@ManyToMany(fetch = FetchType.EAGER)
+	/*@ManyToMany(fetch = FetchType.EAGER)
 	  @JoinTable(
 	      name="tienda_metodo_pago",
 	      joinColumns=@JoinColumn(name="ID_TIENDA", referencedColumnName="ID"),
 	      inverseJoinColumns=@JoinColumn(name="ID_METODO_PAGO", referencedColumnName="ID"))
 	private Set<MetodoPago> metodoPagos;
 	
-	@ManyToMany(fetch = FetchType.EAGER)
+	/*@ManyToMany(fetch = FetchType.EAGER)
 	  @JoinTable(
 	      name="tienda_envio",
 	      joinColumns=@JoinColumn(name="ID_TIENDA", referencedColumnName="ID"),
 	      inverseJoinColumns=@JoinColumn(name="ID_ENVIO", referencedColumnName="ID"))
-	private Set<Envio> envios;
+	private Set<Envio> envios;*/
 	
 	@ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
@@ -165,13 +165,13 @@ public class Tienda {
 		this.afiliacion_valor = afiliacion_valor;
 	}
 	
-	public Set<MetodoPago> getMetodoPagos() {
+	/*public Set<MetodoPago> getMetodoPagos() {
 		return metodoPagos;
 	}
 
 	public void setMetodoPagos(Set<MetodoPago> metodoPagos) {
 		this.metodoPagos = metodoPagos;
-	}
+	}*/
 
 	public int getEstado() {
 		return estado;
@@ -221,13 +221,13 @@ public class Tienda {
 		this.productos = productos;
 	}
 
-	public Set<Envio> getEnvios() {
+	/*public Set<Envio> getEnvios() {
 		return envios;
 	}
 
 	public void setEnvios(Set<Envio> envios) {
 		this.envios = envios;
-	}
+	}*/
 
 	public Set<Direccion> getDirecciones() {
 		return direcciones;

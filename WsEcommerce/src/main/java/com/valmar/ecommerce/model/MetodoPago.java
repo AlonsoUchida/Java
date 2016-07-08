@@ -33,9 +33,9 @@ public class MetodoPago {
 	@NotNull
 	private String valor;
 	
-	@ManyToMany(fetch = FetchType.LAZY, mappedBy="metodoPagos")
+	/*@ManyToMany(fetch = FetchType.LAZY, mappedBy="metodoPagos")
 	@JsonBackReference
-	private Set<Tienda> tiendas;
+	private Set<Tienda> tiendas;*/
 
 	public int getId() {
 		return id;

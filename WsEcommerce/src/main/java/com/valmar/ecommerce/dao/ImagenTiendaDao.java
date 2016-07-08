@@ -12,4 +12,5 @@ public interface ImagenTiendaDao {
 	void eliminar(int id);
 	ImagenTienda obtenerImagenPorDefecto(int id);
 	List<ImagenTienda> listarImagenesPorTienda(int id);
+	ImagenTienda obtenerImagenPorDefectoTienda(int id);
 }

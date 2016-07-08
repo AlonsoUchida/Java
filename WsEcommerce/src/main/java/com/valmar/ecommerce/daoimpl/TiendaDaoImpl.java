@@ -112,6 +112,25 @@ public class TiendaDaoImpl extends AbstractDao<Integer, Tienda> implements Tiend
 			Criteria criteria = createEntityCriteria();
 			criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
 			criteria.createAlias("direcciones", "d");
+			//criteria.createAlias("envios", "e");
+			criteria.add(Restrictions.eq("d.distrito.id", id));
+			criteria.setMaxResults(20);//Los primeros 20 elementos por defecto
+			List<Tienda> tiendas = (List<Tienda>) criteria.list();
+			return tiendas;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	@Override
+	public List<Tienda> obtenerTiendasPorNombreDistrito(String nombre, int id) {
+		try {
+			Criteria criteria = createEntityCriteria();
+			criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
+			criteria.add(Restrictions.ilike("nombre", "%"+nombre+"%"));
+			criteria.createAlias("direcciones", "d");
+			//criteria.createAlias("envios", "e");
 			criteria.add(Restrictions.eq("d.distrito.id", id));
 			criteria.setMaxResults(20);//Los primeros 20 elementos por defecto
 			List<Tienda> tiendas = (List<Tienda>) criteria.list();

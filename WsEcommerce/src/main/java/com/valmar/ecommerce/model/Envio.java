@@ -27,10 +27,10 @@ public class Envio {
 	
 	@Column(name = "VALOR")
 	private String valor;
-	
-	@ManyToMany(fetch = FetchType.LAZY, mappedBy="envios")
+		
+	/*@ManyToMany(fetch = FetchType.LAZY, mappedBy="envios")
 	@JsonBackReference
-	private Set<Tienda> tiendas;
+	private Set<Tienda> tiendas;*/
 
 	public int getId() {
 		return id;
@@ -56,13 +56,13 @@ public class Envio {
 		this.valor = valor;
 	}
 
-	public Set<Tienda> getTiendas() {
+	/*public Set<Tienda> getTiendas() {
 		return tiendas;
 	}
 
 	public void setTiendas(Set<Tienda> tiendas) {
 		this.tiendas = tiendas;
-	}
+	}*/
 	
 	
 }
