@@ -52,6 +52,15 @@ public class TiendaRestController {
 		}
 		return new ResponseEntity<List<Tienda>>(tiendas, HttpStatus.OK);
 	}
+	
+	@RequestMapping(value = { "/imagen/listarPorVendedor" }, params = {"id"}, method = RequestMethod.GET)
+	public ResponseEntity<List<Tienda>> listarPorVendedor(int id) {
+		List<Tienda> tiendas = service.listarPorVendedor(id);
+		if (tiendas.isEmpty()) {
+			return new ResponseEntity<List<Tienda>>(HttpStatus.NO_CONTENT);
+		}
+		return new ResponseEntity<List<Tienda>>(tiendas, HttpStatus.OK);
+	}
 
 	@RequestMapping(value = { "/listarPorDistrito" }, params = { "id" }, method = RequestMethod.GET)
 	public ResponseEntity<List<TiendaVMLite>> listarPorDistrito(@RequestParam int id) {
@@ -59,23 +68,8 @@ public class TiendaRestController {
 		if ((tiendas == null) || (tiendas.isEmpty())) {
 			return new ResponseEntity<List<TiendaVMLite>>(HttpStatus.NOT_FOUND);
 		}
-		List<TiendaVMLite> tiendasLite = new ArrayList<>();
-		for (Tienda item : tiendas) {
-			TiendaVMLite _tienda = new TiendaVMLite();
-			_tienda.setId(item.getId());
-			_tienda.setNombre(item.getNombre());
-			ImagenTienda imagen = imagenTiendaService.obtenerImagenPorDefectoTienda(item.getId());
-			if(imagen!=null)
-				_tienda.setImagen(imagen.getImagen());
-			for (Direccion direccion : item.getDirecciones()) {
-				_tienda.setDomicilio(direccion.getDomicilio());
-				_tienda.setNumero(direccion.getNumero());
-				Distrito distrito = direccion.getDistrito();
-				_tienda.setDistrito(distrito.getNombre());
-				break;
-			}
-			tiendasLite.add(_tienda);
-		}
+		
+		List<TiendaVMLite> tiendasLite = clonarTiendasVMLite(tiendas);
 
 		return new ResponseEntity<List<TiendaVMLite>>(tiendasLite, HttpStatus.OK);
 	}
@@ -97,23 +91,9 @@ public class TiendaRestController {
 		if ((tiendas == null) || (tiendas.isEmpty())) {
 			return new ResponseEntity<List<TiendaVMLite>>(HttpStatus.NOT_FOUND);
 		}
-		List<TiendaVMLite> tiendasLite = new ArrayList<>();
-		for (Tienda item : tiendas) {
-			TiendaVMLite _tienda = new TiendaVMLite();
-			_tienda.setId(item.getId());
-			_tienda.setNombre(item.getNombre());
-			ImagenTienda imagen = imagenTiendaService.obtenerImagenPorDefectoTienda(item.getId());
-			if(imagen!=null)
-				_tienda.setImagen(imagen.getImagen());
-			for (Direccion direccion : item.getDirecciones()) {
-				_tienda.setDomicilio(direccion.getDomicilio());
-				_tienda.setNumero(direccion.getNumero());
-				Distrito distrito = direccion.getDistrito();
-				_tienda.setDistrito(distrito.getNombre());
-				break;
-			}
-			tiendasLite.add(_tienda);
-		}
+		
+		List<TiendaVMLite> tiendasLite = clonarTiendasVMLite(tiendas);
+		
 		if (tiendasLite.isEmpty()) {
 			return new ResponseEntity<List<TiendaVMLite>>(HttpStatus.NO_CONTENT);
 		}
@@ -128,11 +108,25 @@ public class TiendaRestController {
 		if ((tiendas == null) || (tiendas.isEmpty())) {
 			return new ResponseEntity<List<TiendaVMLite>>(HttpStatus.NOT_FOUND);
 		}
+		
+		List<TiendaVMLite> tiendasLite = clonarTiendasVMLite(tiendas);
+		
+		if (tiendasLite.isEmpty()) {
+			return new ResponseEntity<List<TiendaVMLite>>(HttpStatus.NO_CONTENT);
+		}
+		return new ResponseEntity<List<TiendaVMLite>>(tiendasLite, HttpStatus.OK);
+	}
+	
+	private List<TiendaVMLite> clonarTiendasVMLite(List<Tienda> tiendas){
 		List<TiendaVMLite> tiendasLite = new ArrayList<>();
 		for (Tienda item : tiendas) {
 			TiendaVMLite _tienda = new TiendaVMLite();
 			_tienda.setId(item.getId());
 			_tienda.setNombre(item.getNombre());
+			_tienda.setHorarioAtencion(item.getHorarioAtencion());
+			_tienda.setEstado(item.getEstado());
+			_tienda.setTelefonoFijo(item.getTelefono_local());
+			_tienda.setTelefonoMovil(item.getTelefono_movil());
 			ImagenTienda imagen = imagenTiendaService.obtenerImagenPorDefectoTienda(item.getId());
 			if(imagen!=null)
 				_tienda.setImagen(imagen.getImagen());
@@ -141,14 +135,13 @@ public class TiendaRestController {
 				_tienda.setNumero(direccion.getNumero());
 				Distrito distrito = direccion.getDistrito();
 				_tienda.setDistrito(distrito.getNombre());
+				_tienda.setLatitud(direccion.getLatitud());
+				_tienda.setLongitud(direccion.getLongitud());
 				break;
 			}
 			tiendasLite.add(_tienda);
 		}
-		if (tiendasLite.isEmpty()) {
-			return new ResponseEntity<List<TiendaVMLite>>(HttpStatus.NO_CONTENT);
-		}
-		return new ResponseEntity<List<TiendaVMLite>>(tiendasLite, HttpStatus.OK);
+		return tiendasLite;
 	}
 
 	@RequestMapping(value = "/agregar", method = RequestMethod.POST)
@@ -167,6 +160,7 @@ public class TiendaRestController {
 		tiendaBean.setAfiliacion(tienda.getAfiliacion());
 		tiendaBean.setAfiliacion_valor(tienda.getAfiliacion_valor());
 		tiendaBean.setCostoMinimo(tienda.getCostoMinimo());
+		tiendaBean.setHorarioAtencion(tienda.getHorarioAtencion());
 		tiendaBean.setEstado(TipoEstado.HABILITADO.getValue());
 		tiendaBean.setEstadoAbierto(tienda.getEstadoAbierto());
 		tiendaBean.setFechaRegistro(new Date());
@@ -204,6 +198,7 @@ public class TiendaRestController {
 		tiendaBean.setAfiliacion(tienda.getAfiliacion());
 		tiendaBean.setAfiliacion_valor(tienda.getAfiliacion_valor());
 		tiendaBean.setCostoMinimo(tienda.getCostoMinimo());
+		tiendaBean.setHorarioAtencion(tienda.getHorarioAtencion());
 		tiendaBean.setEstado(TipoEstado.HABILITADO.getValue());
 		tiendaBean.setEstadoAbierto(tienda.getEstadoAbierto());
 		tiendaBean.setFechaModificacion(new Date());

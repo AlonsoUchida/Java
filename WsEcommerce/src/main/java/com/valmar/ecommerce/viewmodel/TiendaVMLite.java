@@ -7,7 +7,13 @@ public class TiendaVMLite {
 	private String domicilio;
 	private String numero;
 	private String distrito;
+	private String telefonoFijo;
+	private String telefonoMovil;
+	private String latitud;
+	private String longitud;
+	private int estado;
 	private byte[] imagen;
+	private String horarioAtencion;
 	
 	public int getId() {
 		return id;
@@ -44,6 +50,42 @@ public class TiendaVMLite {
 	}
 	public void setImagen(byte[] imagen) {
 		this.imagen = imagen;
+	}
+	public String getHorarioAtencion() {
+		return horarioAtencion;
+	}
+	public void setHorarioAtencion(String horarioAtencion) {
+		this.horarioAtencion = horarioAtencion;
+	}
+	public String getTelefonoFijo() {
+		return telefonoFijo;
+	}
+	public void setTelefonoFijo(String telefonoFijo) {
+		this.telefonoFijo = telefonoFijo;
+	}
+	public String getTelefonoMovil() {
+		return telefonoMovil;
+	}
+	public void setTelefonoMovil(String telefonoMovil) {
+		this.telefonoMovil = telefonoMovil;
+	}
+	public int getEstado() {
+		return estado;
+	}
+	public void setEstado(int estado) {
+		this.estado = estado;
+	}
+	public String getLatitud() {
+		return latitud;
+	}
+	public void setLatitud(String latitud) {
+		this.latitud = latitud;
+	}
+	public String getLongitud() {
+		return longitud;
+	}
+	public void setLongitud(String longitud) {
+		this.longitud = longitud;
 	}
 	
 }

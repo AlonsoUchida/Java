@@ -19,6 +19,7 @@ import com.valmar.ecommerce.model.AuthenticationRequest;
 import com.valmar.ecommerce.model.Usuario;
 import com.valmar.ecommerce.services.ClienteService;
 import com.valmar.ecommerce.services.UsuarioService;
+import com.valmar.ecommerce.util.EncryptUtil;
 import com.valmar.ecommerce.viewmodel.AuthenticationVM;
 
 @CrossOrigin
@@ -34,6 +35,11 @@ public class AuthenticationRestController {
     @Autowired
     private UsuarioService usuarioService;
 
+    /**
+     * @param authorization
+     * @return
+     * @throws AuthenticationException
+     */
     @RequestMapping(value = "/authenticate", method = RequestMethod.POST)
     public ResponseEntity<?> createAuthenticationToken(@RequestHeader("Authorization") String authorization) throws AuthenticationException {
 
@@ -41,22 +47,29 @@ public class AuthenticationRestController {
 		Usuario usuario = usuarioService.obtenerPorCorreo(authenticationRequest.getUsername());
 		if (usuario == null)
 			return new ResponseEntity<String>("Usuario no existe", HttpStatus.NO_CONTENT);
-		int userId = usuarioService.validarUsuario(authenticationRequest.getUsername(), authenticationRequest.getPassword());
-		if (userId == 0)
-			return new ResponseEntity<String>("Crendeciales incorrectas", HttpStatus.UNAUTHORIZED);
 		
-		UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(
-				authenticationRequest.getUsername(), authenticationRequest.getPassword());
+		int userId = 0;		
+		try {
+			String username = authenticationRequest.getUsername();
+			String password = EncryptUtil.encriptar(authenticationRequest.getPassword());
+			userId = usuarioService.validarUsuario(username, password);
+			if (userId == 0)
+				return new ResponseEntity<String>("Crendeciales incorrectas", HttpStatus.UNAUTHORIZED);
 
-		final Authentication authentication = authenticationManager.authenticate(usernamePasswordAuthenticationToken);
-		SecurityContextHolder.getContext().setAuthentication(authentication);
-
+			UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(username, password);
+			final Authentication authentication = authenticationManager.authenticate(usernamePasswordAuthenticationToken);
+			SecurityContextHolder.getContext().setAuthentication(authentication);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
 		AuthenticationVM authVM = new AuthenticationVM();
 		String token = usuarioService.generarToken(userId);
 		authVM.setIdUsuario(usuario.getId());
 		authVM.setNombre(usuario.getNombre());
 		authVM.setApellido(usuario.getApellido());
 		authVM.setToken(token);
+		authVM.setTipo(usuario.getTipo());
 		
 		// Return the token
 		return new ResponseEntity<AuthenticationVM>(authVM, HttpStatus.OK);

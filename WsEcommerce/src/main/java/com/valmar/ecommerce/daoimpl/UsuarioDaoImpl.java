@@ -27,12 +27,15 @@ public class UsuarioDaoImpl extends AbstractDao<Integer, Usuario> implements Usu
 	}
 
 	@Override
-	public void agregar(Usuario usuario) {
+	public int agregar(Usuario usuario) {
+		int id = 0;
 		try {
 			persist(usuario);
+			id = usuario.getId();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		return id;
 	}
 	
 	@Override

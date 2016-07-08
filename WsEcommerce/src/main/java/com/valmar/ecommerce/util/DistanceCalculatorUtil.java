@@ -2,6 +2,7 @@ package com.valmar.ecommerce.util;
 
 public class DistanceCalculatorUtil {
 
+	private static double RADIO_USUARIO = 2;//km
 //	System.out.println(distance(32.9697, -96.80322, 29.46786, -98.53506, "M") + " Miles\n");
 //	System.out.println(distance(32.9697, -96.80322, 29.46786, -98.53506, "K") + " Kilometers\n");
 //	System.out.println(distance(32.9697, -96.80322, 29.46786, -98.53506, "N") + " Nautical Miles\n");

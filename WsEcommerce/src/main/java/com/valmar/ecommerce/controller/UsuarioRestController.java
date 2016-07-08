@@ -23,6 +23,7 @@ import com.valmar.ecommerce.model.Direccion;
 import com.valmar.ecommerce.model.Usuario;
 import com.valmar.ecommerce.services.DireccionService;
 import com.valmar.ecommerce.services.UsuarioService;
+import com.valmar.ecommerce.util.EncryptUtil;
 import com.valmar.ecommerce.viewmodel.BodegueroVM;
 import com.valmar.ecommerce.viewmodel.ClienteVM;
 
@@ -63,7 +64,7 @@ public class UsuarioRestController {
          clienteBean.setNombre(bodeguero.getNombre());
          clienteBean.setApellido(bodeguero.getApellido());
          clienteBean.setCorreo(bodeguero.getCorreo());
-         clienteBean.setPassword(bodeguero.getPassword());
+         clienteBean.setPassword(EncryptUtil.encriptar(bodeguero.getPassword()));
          clienteBean.setGenero(bodeguero.getGenero());
          clienteBean.setTipo(TipoUsuario.BODEGUERO.getValue());
          clienteBean.setEstado(TipoEstado.HABILITADO.getValue());
@@ -87,7 +88,7 @@ public class UsuarioRestController {
         clienteBean.setNombre(bodeguero.getNombre());
         clienteBean.setApellido(bodeguero.getApellido());
         clienteBean.setCorreo(bodeguero.getCorreo());
-        clienteBean.setPassword(bodeguero.getPassword());
+        clienteBean.setPassword(EncryptUtil.encriptar(bodeguero.getPassword()));
         clienteBean.setGenero(bodeguero.getGenero());
         clienteBean.setTipo(TipoUsuario.BODEGUERO.getValue());
         clienteBean.setEstado(TipoEstado.HABILITADO.getValue());

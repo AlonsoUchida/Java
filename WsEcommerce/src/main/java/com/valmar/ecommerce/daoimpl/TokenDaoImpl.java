@@ -12,7 +12,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import com.valmar.ecommerce.dao.AbstractDao;
-import com.valmar.ecommerce.util.Util;
+import com.valmar.ecommerce.util.DateUtil;
 import com.valmar.ecommerce.dao.TokenDao;
 import com.valmar.ecommerce.model.Token;
 import com.valmar.ecommerce.model.Usuario;
@@ -77,8 +77,8 @@ public class TokenDaoImpl extends AbstractDao<Integer, Token> implements TokenDa
 				for (Object[] row : results) {
 					token.setId(Long.parseLong(row[0].toString()));
 					token.setAuthToken(row[1].toString());
-					token.setIssuedOn(Util.getDateFromString(row[2].toString()));
-					token.setExpiresOn(Util.getDateFromString(row[3].toString()));
+					token.setIssuedOn(DateUtil.getDateFromString(row[2].toString()));
+					token.setExpiresOn(DateUtil.getDateFromString(row[3].toString()));
 				}
 				//Refresh the Expires date of token
 				Calendar calendar = Calendar.getInstance();

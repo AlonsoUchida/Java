@@ -13,5 +13,6 @@ public interface TiendaDao {
 	Tienda obtenerTiendaPorDireccion(int id);
 	List<Tienda> obtenerTiendasPorNombre(String nombre);
 	List<Tienda> listarPorDistrito(int id);
-	List<Tienda> obtenerTiendasPorNombreDistrito(String nombre, int id);	
+	List<Tienda> obtenerTiendasPorNombreDistrito(String nombre, int id);
+	List<Tienda> listarPorVendedor(int id);	
 }

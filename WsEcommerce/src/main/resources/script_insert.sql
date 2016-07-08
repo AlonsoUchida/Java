@@ -2119,23 +2119,23 @@ INSERT INTO `marca` VALUES (25, 'YELLOWTAIL', 1);
 -- ----------------------------
 
 -- Records of usuarios tipo bodeguero 1
-INSERT INTO `usuario` VALUES (1, 'JOSUE', 'MOSQUERA', 'josue.mosquera@valmar.com.pe', '12345', 'M', 1, 1, NOW(), NOW());
-INSERT INTO `usuario` VALUES (2, 'ALONSO', 'UCHIDA', 'javier.uchida@valmar.com.pe', '12345', 'M', 1, 1,  NOW(), NOW());
-INSERT INTO `usuario` VALUES (3, 'VICTOR', 'MALAVER', 'victor.malaver@valmar.com.pe', '12345', 'M', 1, 1,  NOW(), NOW());
-INSERT INTO `usuario` VALUES (4, 'JOHN', 'ORREGO', 'john.orrego@valmar.com.pe', '12345', 'M', 1, 1,  NOW(), NOW());
-INSERT INTO `usuario` VALUES (5, 'RENZO', 'OSSIO', 'renzo.ossio@valmar.com.pe', '12345', 'M', 1, 1,  NOW(), NOW());
+INSERT INTO `usuario` VALUES (1, 'JOSUE', 'MOSQUERA', 'josue.mosquera@valmar.com.pe', 'IRHhatCFrBo=', 'M', 1, 1, NOW(), NOW());
+INSERT INTO `usuario` VALUES (2, 'ALONSO', 'UCHIDA', 'javier.uchida@valmar.com.pe', 'IRHhatCFrBo=', 'M', 1, 1,  NOW(), NOW());
+INSERT INTO `usuario` VALUES (3, 'VICTOR', 'MALAVER', 'victor.malaver@valmar.com.pe', 'IRHhatCFrBo=', 'M', 1, 1,  NOW(), NOW());
+INSERT INTO `usuario` VALUES (4, 'JOHN', 'ORREGO', 'john.orrego@valmar.com.pe', 'IRHhatCFrBo=', 'M', 1, 1,  NOW(), NOW());
+INSERT INTO `usuario` VALUES (5, 'RENZO', 'OSSIO', 'renzo.ossio@valmar.com.pe', 'IRHhatCFrBo=', 'M', 1, 1,  NOW(), NOW());
 -- Records of usuarios tipo cliente 2
-INSERT INTO `usuario` VALUES (6, 'JOSUE', 'MOSQUERA', 'josue.mosquera.cliente@valmar.com.pe', '12345', 'M', 2, 1, NOW(), NOW());
-INSERT INTO `usuario` VALUES (7, 'ALONSO', 'UCHIDA', 'javier.uchida.cliente@valmar.com.pe', '12345', 'M', 2, 1,  NOW(), NOW());
-INSERT INTO `usuario` VALUES (8, 'VICTOR', 'MALAVER', 'victor.malaver.cliente@valmar.com.pe', '12345', 'M', 2, 1,  NOW(), NOW());
-INSERT INTO `usuario` VALUES (9, 'JOHN', 'ORREGO', 'john.orrego.cliente@valmar.com.pe', '12345', 'M', 2, 1,  NOW(), NOW());
-INSERT INTO `usuario` VALUES (10, 'RENZO', 'OSSIO', 'renzo.ossio.cliente@valmar.com.pe', '12345', 'M', 2, 1,  NOW(), NOW());
+INSERT INTO `usuario` VALUES (6, 'JOSUE', 'MOSQUERA', 'josue.mosquera.cliente@valmar.com.pe', 'IRHhatCFrBo=', 'M', 2, 1, NOW(), NOW());
+INSERT INTO `usuario` VALUES (7, 'ALONSO', 'UCHIDA', 'javier.uchida.cliente@valmar.com.pe', 'IRHhatCFrBo=', 'M', 2, 1,  NOW(), NOW());
+INSERT INTO `usuario` VALUES (8, 'VICTOR', 'MALAVER', 'victor.malaver.cliente@valmar.com.pe', 'IRHhatCFrBo=', 'M', 2, 1,  NOW(), NOW());
+INSERT INTO `usuario` VALUES (9, 'JOHN', 'ORREGO', 'john.orrego.cliente@valmar.com.pe', 'IRHhatCFrBo=', 'M', 2, 1,  NOW(), NOW());
+INSERT INTO `usuario` VALUES (10, 'RENZO', 'OSSIO', 'renzo.ossio.cliente@valmar.com.pe', 'IRHhatCFrBo=', 'M', 2, 1,  NOW(), NOW());
 -- Records of usuarios tipo vendedor 3
-INSERT INTO `usuario` VALUES (11, 'JOSUE', 'MOSQUERA', 'josue.mosquera.vendendor@valmar.com.pe', '12345', 'M', 3, 1, NOW(), NOW());
-INSERT INTO `usuario` VALUES (12, 'ALONSO', 'UCHIDA', 'javier.uchida.vendendor@valmar.com.pe', '12345', 'M', 3, 1,  NOW(), NOW());
-INSERT INTO `usuario` VALUES (13, 'VICTOR', 'MALAVER', 'victor.malaver.vendendor@valmar.com.pe', '12345', 'M', 3, 1,  NOW(), NOW());
-INSERT INTO `usuario` VALUES (14, 'JOHN', 'ORREGO', 'john.orrego.vendendor@valmar.com.pe', '12345', 'M', 3, 1,  NOW(), NOW());
-INSERT INTO `usuario` VALUES (15, 'RENZO', 'OSSIO', 'renzo.ossio.vendendor@valmar.com.pe', '12345', 'M', 3, 1,  NOW(), NOW());
+INSERT INTO `usuario` VALUES (11, 'JOSUE', 'MOSQUERA', 'josue.mosquera.vendendor@valmar.com.pe', 'IRHhatCFrBo=', 'M', 3, 1, NOW(), NOW());
+INSERT INTO `usuario` VALUES (12, 'ALONSO', 'UCHIDA', 'javier.uchida.vendendor@valmar.com.pe', 'IRHhatCFrBo=', 'M', 3, 1,  NOW(), NOW());
+INSERT INTO `usuario` VALUES (13, 'VICTOR', 'MALAVER', 'victor.malaver.vendendor@valmar.com.pe', 'IRHhatCFrBo=', 'M', 3, 1,  NOW(), NOW());
+INSERT INTO `usuario` VALUES (14, 'JOHN', 'ORREGO', 'john.orrego.vendendor@valmar.com.pe', 'IRHhatCFrBo=', 'M', 3, 1,  NOW(), NOW());
+INSERT INTO `usuario` VALUES (15, 'RENZO', 'OSSIO', 'renzo.ossio.vendendor@valmar.com.pe', 'IRHhatCFrBo=', 'M', 3, 1,  NOW(), NOW());
 
 -- ----------------------------
 -- Records of autoridad

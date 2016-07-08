@@ -61,6 +61,9 @@ public class Tienda {
 	@Column(name = "ESTADO_ABIERTO")
 	private int estadoAbierto;
 	
+	@Column(name = "HORARIO_ATENCION")
+	private String horarioAtencion;
+	
 	@Column(name = "ESTADO")
 	private int estado;
 	
@@ -196,7 +199,15 @@ public class Tienda {
 	public void setEstadoAbierto(int estadoAbierto) {
 		this.estadoAbierto = estadoAbierto;
 	}
-	
+		
+	public String getHorarioAtencion() {
+		return horarioAtencion;
+	}
+
+	public void setHorarioAtencion(String horarioAtencion) {
+		this.horarioAtencion = horarioAtencion;
+	}
+
 	public Date getFechaRegistro() {
 		return fechaRegistro;
 	}

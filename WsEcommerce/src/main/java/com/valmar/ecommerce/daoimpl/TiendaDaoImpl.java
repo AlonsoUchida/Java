@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import com.valmar.ecommerce.dao.AbstractDao;
 import com.valmar.ecommerce.dao.TiendaDao;
+import com.valmar.ecommerce.enums.TipoUsuario;
 import com.valmar.ecommerce.model.Direccion;
 import com.valmar.ecommerce.model.Tienda;
 
@@ -132,6 +133,24 @@ public class TiendaDaoImpl extends AbstractDao<Integer, Tienda> implements Tiend
 			criteria.createAlias("direcciones", "d");
 			//criteria.createAlias("envios", "e");
 			criteria.add(Restrictions.eq("d.distrito.id", id));
+			criteria.setMaxResults(20);//Los primeros 20 elementos por defecto
+			List<Tienda> tiendas = (List<Tienda>) criteria.list();
+			return tiendas;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	@Override
+	public List<Tienda> listarPorVendedor(int id) {
+		try {
+			Criteria criteria = createEntityCriteria();
+			criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
+			criteria.createAlias("usuarios", "u");
+			//criteria.createAlias("envios", "e");
+			criteria.add(Restrictions.eq("u.usuario.tipo", TipoUsuario.VENDEDOR.getValue()));
+			criteria.add(Restrictions.eq("u.usuario.id", id));
 			criteria.setMaxResults(20);//Los primeros 20 elementos por defecto
 			List<Tienda> tiendas = (List<Tienda>) criteria.list();
 			return tiendas;

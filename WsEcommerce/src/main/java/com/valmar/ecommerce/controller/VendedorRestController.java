@@ -20,6 +20,7 @@ import com.valmar.ecommerce.enums.TipoEstado;
 import com.valmar.ecommerce.enums.TipoUsuario;
 import com.valmar.ecommerce.model.Usuario;
 import com.valmar.ecommerce.services.UsuarioService;
+import com.valmar.ecommerce.util.EncryptUtil;
 import com.valmar.ecommerce.viewmodel.BodegueroVM;
 
 @CrossOrigin
@@ -29,9 +30,7 @@ public class VendedorRestController {
 
 	@Autowired
 	UsuarioService service;
-    /*
-     * This method will list all existing audios.
-     */
+
     @RequestMapping(value = { "/listar" }, method = RequestMethod.GET)
     public ResponseEntity<List<Usuario>> listarVendedores() {
         List<Usuario> usuarios = service.listarVendedores();
@@ -51,26 +50,24 @@ public class VendedorRestController {
     }
  
     @RequestMapping(value = "/agregar", method = RequestMethod.POST)
-    public ResponseEntity<Void> agregar(@RequestBody BodegueroVM bodeguero,  UriComponentsBuilder ucBuilder) {
+    public ResponseEntity<Integer> agregar(@RequestBody BodegueroVM bodeguero,  UriComponentsBuilder ucBuilder) {
     	 if (service.obtenerPorCorreo(bodeguero.getCorreo())!=null) {
-             return new ResponseEntity<Void>(HttpStatus.CONFLICT);
+             return new ResponseEntity<Integer>(HttpStatus.CONFLICT);
          } 
          Usuario clienteBean = new Usuario();
          clienteBean.setNombre(bodeguero.getNombre());
          clienteBean.setApellido(bodeguero.getApellido());
          clienteBean.setCorreo(bodeguero.getCorreo());
-         clienteBean.setPassword(bodeguero.getPassword());
+         clienteBean.setPassword(EncryptUtil.encriptar(bodeguero.getPassword()));
          clienteBean.setGenero(bodeguero.getGenero());
          clienteBean.setTipo(TipoUsuario.VENDEDOR.getValue());
          clienteBean.setEstado(TipoEstado.HABILITADO.getValue());
          clienteBean.setFechaRegistro(new Date());
          clienteBean.setFechaModificacion(new Date());
          
-         service.agregar(clienteBean); 
+         int id = service.agregar(clienteBean); 
          
-         HttpHeaders headers = new HttpHeaders();
-         headers.setLocation(ucBuilder.path("/vendedor/{correo}").buildAndExpand(bodeguero.getCorreo()).toUri());
-         return new ResponseEntity<Void>(headers, HttpStatus.CREATED);
+         return new ResponseEntity<Integer>(id, HttpStatus.CREATED);
     }
     
     @RequestMapping(value = "/actualizar", method = RequestMethod.PUT)
@@ -83,7 +80,7 @@ public class VendedorRestController {
         clienteBean.setNombre(bodeguero.getNombre());
         clienteBean.setApellido(bodeguero.getApellido());
         clienteBean.setCorreo(bodeguero.getCorreo());
-        clienteBean.setPassword(bodeguero.getPassword());
+        clienteBean.setPassword(EncryptUtil.encriptar(bodeguero.getPassword()));
         clienteBean.setGenero(bodeguero.getGenero());
         clienteBean.setTipo(TipoUsuario.VENDEDOR.getValue());
         clienteBean.setEstado(TipoEstado.HABILITADO.getValue());

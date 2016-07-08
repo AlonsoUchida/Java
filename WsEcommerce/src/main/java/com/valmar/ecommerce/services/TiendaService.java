@@ -16,5 +16,6 @@ public interface TiendaService {
 	MetodoPago obtenerMetodoPago(int id_metodoPago);
 	List<Tienda> obtenerTiendasPorNombre(String nombre);
 	List<Tienda> listarPorDistrito(int id);
-	List<Tienda> obtenerTiendasPorNombreDistrito(String nombre, int id);	
+	List<Tienda> obtenerTiendasPorNombreDistrito(String nombre, int id);
+	List<Tienda> listarPorVendedor(int id);	
 }

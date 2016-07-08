@@ -1,6 +1,5 @@
 package com.valmar.ecommerce.controller;
 
-import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +7,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -43,7 +43,7 @@ public class ContactoRestController {
     public ResponseEntity<Contacto> obtenerPorId(@RequestParam("id") Integer id) {
     	Contacto contacto = service.obtenerPorId(id);
         if (contacto == null) {
-            return new ResponseEntity<Contacto>(HttpStatus.NOT_FOUND);
+            return new ResponseEntity<Contacto>(HttpStatus.NO_CONTENT);
         }
         return new ResponseEntity<Contacto>(contacto, HttpStatus.OK);
     }
@@ -62,7 +62,7 @@ public class ContactoRestController {
     @RequestMapping(value = "/actualizar", method = RequestMethod.PUT)
     public ResponseEntity<Void> actualizar(@RequestBody Contacto contacto,  UriComponentsBuilder ucBuilder) {
         if (service.obtenerPorId(contacto.getId())==null) {
-            return new ResponseEntity<Void>(HttpStatus.NOT_FOUND);
+            return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
         } 
         
         service.actualizar(contacto); 
@@ -76,7 +76,7 @@ public class ContactoRestController {
     public ResponseEntity<Contacto> eliminar(@RequestParam("id")int id) {
     	Contacto contacto = service.obtenerPorId(id);
         if (contacto == null) {
-            return new ResponseEntity<Contacto>(HttpStatus.NOT_FOUND);
+            return new ResponseEntity<Contacto>(HttpStatus.NO_CONTENT);
         } 
         service.eliminar(id);
         return new ResponseEntity<Contacto>(HttpStatus.NO_CONTENT);

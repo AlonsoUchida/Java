@@ -20,6 +20,7 @@ import com.valmar.ecommerce.enums.TipoEstado;
 import com.valmar.ecommerce.enums.TipoUsuario;
 import com.valmar.ecommerce.model.Usuario;
 import com.valmar.ecommerce.services.ClienteService;
+import com.valmar.ecommerce.util.EncryptUtil;
 import com.valmar.ecommerce.viewmodel.ClienteVM;
 
 @CrossOrigin
@@ -29,9 +30,7 @@ public class ClienteRestController {
 
 	@Autowired
     ClienteService service;
-    /*
-     * This method will list all existing audios.
-     */
+
     @RequestMapping(value = { "/listar" }, method = RequestMethod.GET)
     public ResponseEntity<List<Usuario>> listarClientes() {
         List<Usuario> clientes = service.listarClientes();
@@ -46,7 +45,7 @@ public class ClienteRestController {
     public ResponseEntity<Usuario> obtenerPorId(@RequestParam("id") Integer id) {
     	Usuario cliente = service.obtenerPorId(id);
         if (cliente == null) {
-            return new ResponseEntity<Usuario>(HttpStatus.NOT_FOUND);
+            return new ResponseEntity<Usuario>(HttpStatus.NO_CONTENT);
         }
         return new ResponseEntity<Usuario>(cliente, HttpStatus.OK);
     }
@@ -60,7 +59,7 @@ public class ClienteRestController {
         clienteBean.setNombre(cliente.getNombre());
         clienteBean.setApellido(cliente.getApellido());
         clienteBean.setCorreo(cliente.getCorreo());
-        clienteBean.setPassword(cliente.getPassword());
+        clienteBean.setPassword(EncryptUtil.encriptar(cliente.getPassword()));
         clienteBean.setGenero(cliente.getGenero());
         clienteBean.setTipo(TipoUsuario.CLIENTE.getValue());
         clienteBean.setEstado(TipoEstado.HABILITADO.getValue());
@@ -78,7 +77,7 @@ public class ClienteRestController {
     @RequestMapping(value = "/actualizar", method = RequestMethod.PUT)
     public ResponseEntity<Void> actualizar(@RequestBody ClienteVM cliente,  UriComponentsBuilder ucBuilder) {
         if (service.obtenerPorId(cliente.getId())==null) {
-            return new ResponseEntity<Void>(HttpStatus.NOT_FOUND);
+            return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
         } 
         Usuario clienteBean = new Usuario();
         clienteBean.setId(cliente.getId());

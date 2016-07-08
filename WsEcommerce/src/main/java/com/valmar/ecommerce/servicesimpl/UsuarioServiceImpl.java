@@ -29,8 +29,8 @@ public class UsuarioServiceImpl implements UsuarioService{
 	}
 
 	@Override
-	public void agregar(Usuario usuario) {
-		usuarioDao.agregar(usuario);
+	public int agregar(Usuario usuario) {
+		return usuarioDao.agregar(usuario);
 		
 	}
 	

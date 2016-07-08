@@ -13,6 +13,7 @@ public class TiendaVM {
 	private int afiliacion_valor;
 	private int[] metodoPagos;
 	private BigDecimal costoMinimo;
+	private String horarioAtencion;
 	private int estadoAbierto;
 	private byte[] imagen;
     private int id_usuario;
@@ -76,6 +77,12 @@ public class TiendaVM {
 	}
 	public void setEstadoAbierto(int estadoAbierto) {
 		this.estadoAbierto = estadoAbierto;
+	}	
+	public String getHorarioAtencion() {
+		return horarioAtencion;
+	}
+	public void setHorarioAtencion(String horarioAtencion) {
+		this.horarioAtencion = horarioAtencion;
 	}
 	public byte[] getImagen() {
 		return imagen;
