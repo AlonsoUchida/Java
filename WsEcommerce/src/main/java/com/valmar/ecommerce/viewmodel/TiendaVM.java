@@ -12,6 +12,7 @@ public class TiendaVM {
 	private int afiliacion;
 	private int afiliacion_valor;
 	private int[] metodoPagos;
+	private int[] envios;
 	private BigDecimal costoMinimo;
 	private String horarioAtencion;
 	private int estadoAbierto;
@@ -96,4 +97,11 @@ public class TiendaVM {
 	public void setId_usuarios(int[] id_usuarios) {
 		this.id_usuarios = id_usuarios;
 	}
+	public int[] getEnvios() {
+		return envios;
+	}
+	public void setEnvios(int[] envios) {
+		this.envios = envios;
+	}
+	
 }

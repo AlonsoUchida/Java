@@ -28,12 +28,10 @@ public class MetodoPago {
 	private int id;
 
 	@Column(name = "NOMBRE")
-	@NotNull
 	private String nombre;
 	
-	@Column(name = "VALOR")
-	@NotNull
-	private String valor;
+	@Column(name = "ESTADO")
+	private int estado;
 	
 	@ManyToMany(fetch = FetchType.EAGER)
 	  @JoinTable(
@@ -59,12 +57,12 @@ public class MetodoPago {
 		this.nombre = nombre;
 	}
 
-	public String getValor() {
-		return valor;
+	public int getEstado() {
+		return estado;
 	}
 
-	public void setValor(String valor) {
-		this.valor = valor;
+	public void setEstado(int estado) {
+		this.estado = estado;
 	}
 
 	public Set<Tienda> getTiendas() {

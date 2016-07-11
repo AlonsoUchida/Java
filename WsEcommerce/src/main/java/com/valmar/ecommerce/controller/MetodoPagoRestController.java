@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import com.valmar.ecommerce.enums.TipoEstado;
 import com.valmar.ecommerce.model.MetodoPago;
 import com.valmar.ecommerce.model.Tienda;
 import com.valmar.ecommerce.model.Usuario;
@@ -37,7 +38,7 @@ public class MetodoPagoRestController {
     public ResponseEntity<Void> agregar(@RequestBody MetodoPagoVM metodoPago,  UriComponentsBuilder ucBuilder) {
 		MetodoPago metodoPagoBean = new MetodoPago();
 		metodoPagoBean.setNombre(metodoPago.getNombre());
-		metodoPagoBean.setValor(metodoPago.getValor());
+		metodoPagoBean.setEstado(TipoEstado.HABILITADO.getValue());
 		Tienda tienda = tiendaService.obtenerPorId(metodoPago.getId_tienda());
 		if(tienda==null){
 			return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);

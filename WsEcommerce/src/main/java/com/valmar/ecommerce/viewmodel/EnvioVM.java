@@ -3,7 +3,7 @@ package com.valmar.ecommerce.viewmodel;
 public class EnvioVM {
 	private int id;
 	private String nombre;
-	private String valor;
+	
 	private int id_tienda;
 	public int getId() {
 		return id;
@@ -16,12 +16,6 @@ public class EnvioVM {
 	}
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
-	}
-	public String getValor() {
-		return valor;
-	}
-	public void setValor(String valor) {
-		this.valor = valor;
 	}
 	public int getId_tienda() {
 		return id_tienda;

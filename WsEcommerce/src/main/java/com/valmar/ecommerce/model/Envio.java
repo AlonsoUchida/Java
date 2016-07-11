@@ -27,8 +27,8 @@ public class Envio {
 	@Column(name = "NOMBRE")
 	private String nombre;
 	
-	@Column(name = "VALOR")
-	private String valor;
+	@Column(name = "ESTADO")
+	private int estado;
 		
 	@ManyToMany(fetch = FetchType.EAGER)
 	  @JoinTable(
@@ -54,12 +54,12 @@ public class Envio {
 		this.nombre = nombre;
 	}
 
-	public String getValor() {
-		return valor;
+	public int getEstado() {
+		return estado;
 	}
 
-	public void setValor(String valor) {
-		this.valor = valor;
+	public void setEstado(int estado) {
+		this.estado = estado;
 	}
 
 	public Set<Tienda> getTiendas() {

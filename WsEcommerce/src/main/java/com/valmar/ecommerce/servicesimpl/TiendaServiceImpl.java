@@ -6,9 +6,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.valmar.ecommerce.dao.EnvioDao;
 import com.valmar.ecommerce.dao.MetodoPagoDao;
 import com.valmar.ecommerce.dao.TiendaDao;
 import com.valmar.ecommerce.dao.UsuarioDao;
+import com.valmar.ecommerce.model.Envio;
 import com.valmar.ecommerce.model.MetodoPago;
 import com.valmar.ecommerce.model.Tienda;
 import com.valmar.ecommerce.model.Usuario;
@@ -25,6 +27,8 @@ public class TiendaServiceImpl implements TiendaService{
 	UsuarioDao usuarioDao;
 	@Autowired
 	MetodoPagoDao metodoPagoDao;
+	@Autowired
+	EnvioDao envioDao;
 	
 	@Override
 	public Tienda obtenerPorId(int id) {
@@ -84,6 +88,11 @@ public class TiendaServiceImpl implements TiendaService{
 	@Override
 	public Tienda obtenerTiendaPorDireccion(int id) {
 		return tiendaDao.obtenerTiendaPorDireccion(id);
+	}
+
+	@Override
+	public Envio obtenerEnvio(int id_envio) {
+		return envioDao.obtenerPorId(id_envio);
 	}
 
 }

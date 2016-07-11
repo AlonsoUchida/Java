@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import com.valmar.ecommerce.enums.TipoEstado;
 import com.valmar.ecommerce.model.Envio;
 import com.valmar.ecommerce.model.Tienda;
 import com.valmar.ecommerce.services.EnvioService;
@@ -35,7 +36,7 @@ public class EnvioRestController {
     public ResponseEntity<Void> agregar(@RequestBody EnvioVM envio,  UriComponentsBuilder ucBuilder) {
 		Envio envioBean = new Envio();
 		envioBean.setNombre(envio.getNombre());
-		envioBean.setValor(envio.getValor());
+		envioBean.setEstado(TipoEstado.HABILITADO.getValue());
 		Tienda tienda = tiendaService.obtenerPorId(envio.getId_tienda());
 		if(tienda==null){
 			return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
