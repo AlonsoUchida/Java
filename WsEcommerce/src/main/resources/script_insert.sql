@@ -2179,12 +2179,6 @@ INSERT INTO `producto` VALUES (1, 'producto 1', 'producto 1', 'producto 1', '20'
 INSERT INTO `producto_categoria` VALUES (1, '1','1');
 
 -- ----------------------------
--- Records of metodo_pago
--- ----------------------------
-INSERT INTO `metodo_pago` VALUES (1, 'metodo pago 1', '100');
-INSERT INTO `metodo_pago` VALUES (2, 'metodo pago 2', '50');
-
--- ----------------------------
 -- Records of direccion
 -- ----------------------------
 INSERT INTO `direccion`(`id`,`id_distrito`,`referencia`,`domicilio`,`numero`,`latitud`,`longitud`,`activo`) VALUES ( '1', '1', 'Av Belén', 'Av Belén 265,San Isidro ', '15076', '-12.105620', '-77.047332', '1' );
@@ -2211,4 +2205,16 @@ INSERT INTO `tienda_direccion` VALUES (8, '8', '8');
 -- Records of cliente_direccion
 -- ----------------------------
 INSERT INTO `cliente_direccion` VALUES (1, '2', '1');
+
+-- ----------------------------
+-- Records of envio
+-- ----------------------------
+INSERT INTO `CMS_VALMAR_DB`.`envio` (`id`, `nombre`, `estado`) VALUES ('1', 'Delivery', '1');
+-- ----------------------------
+-- Records of metodo_pago
+-- ----------------------------
+INSERT INTO `CMS_VALMAR_DB`.`metodo_pago` (`id`, `nombre`, `estado`) VALUES ('1', 'Efectivo', '1');
+INSERT INTO `CMS_VALMAR_DB`.`metodo_pago` (`id`, `nombre`, `estado`) VALUES ('2', 'Tarjeta', '1');
+
+
 
