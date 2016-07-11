@@ -10,11 +10,13 @@ import com.valmar.ecommerce.dao.DepartamentoDao;
 import com.valmar.ecommerce.dao.DireccionDao;
 import com.valmar.ecommerce.dao.DistritoDao;
 import com.valmar.ecommerce.dao.ProvinciaDao;
+import com.valmar.ecommerce.dao.TiendaDao;
 import com.valmar.ecommerce.dao.UsuarioDao;
 import com.valmar.ecommerce.model.Departamento;
 import com.valmar.ecommerce.model.Direccion;
 import com.valmar.ecommerce.model.Distrito;
 import com.valmar.ecommerce.model.Provincia;
+import com.valmar.ecommerce.model.Tienda;
 import com.valmar.ecommerce.model.Usuario;
 import com.valmar.ecommerce.services.DireccionService;
 
@@ -33,6 +35,8 @@ public class DireccionServiceImpl implements DireccionService{
 	private DistritoDao distritoDao;
 	@Autowired
 	private UsuarioDao usuarioDao;
+	@Autowired
+	private TiendaDao tiendaDao;
 	
 	@Override
 	public Direccion obtenerPorId(int id) {
@@ -79,6 +83,11 @@ public class DireccionServiceImpl implements DireccionService{
 	@Override
 	public Usuario obtenerUsuarioPorId(int id) {
 		return usuarioDao.obtenerPorId(id);
+	}
+
+	@Override
+	public Tienda obtenerTiendaPorId(int id) {
+		return tiendaDao.obtenerPorId(id);
 	}
 
 

@@ -7,6 +7,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import com.valmar.ecommerce.dao.AbstractDao;
 import com.valmar.ecommerce.dao.MetodoPagoDao;
+import com.valmar.ecommerce.model.Envio;
 import com.valmar.ecommerce.model.MetodoPago;
 
 @Repository("metodoPagoDao")
@@ -19,5 +20,15 @@ public class MetodoPagoDaoImpl extends AbstractDao<Integer, MetodoPago> implemen
 		criteria.add(Restrictions.eq("id", id));
 		return (MetodoPago) criteria.uniqueResult();
 	}
+	
+	@Override
+	public void agregar(MetodoPago metodoPago) {
+		try{
+			persist(metodoPago);
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+	}
+
 
 }

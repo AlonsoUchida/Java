@@ -6,6 +6,7 @@ import com.valmar.ecommerce.model.Departamento;
 import com.valmar.ecommerce.model.Direccion;
 import com.valmar.ecommerce.model.Distrito;
 import com.valmar.ecommerce.model.Provincia;
+import com.valmar.ecommerce.model.Tienda;
 import com.valmar.ecommerce.model.Usuario;
 
 public interface DireccionService {
@@ -14,6 +15,7 @@ public interface DireccionService {
 	Departamento obtenerDepartamentoPorId(int id);
 	Distrito obtenerDistritoPorId(int id);
 	Usuario obtenerUsuarioPorId(int id);
+	Tienda obtenerTiendaPorId(int id);
     void agregar(Direccion direccion); 
     void actualizar(Direccion direccion);  
     void eliminar(int id);    

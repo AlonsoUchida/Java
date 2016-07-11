@@ -22,8 +22,10 @@ import com.valmar.ecommerce.model.Departamento;
 import com.valmar.ecommerce.model.Direccion;
 import com.valmar.ecommerce.model.Distrito;
 import com.valmar.ecommerce.model.Provincia;
+import com.valmar.ecommerce.model.Tienda;
 import com.valmar.ecommerce.model.Usuario;
 import com.valmar.ecommerce.services.DireccionService;
+import com.valmar.ecommerce.services.TiendaService;
 import com.valmar.ecommerce.viewmodel.DireccionVM;
 
 @CrossOrigin
@@ -97,6 +99,63 @@ public class DireccionRestController {
     	
     	direccionBean.setId(direccion.getId());
     	direccionBean.setUsuarios(usuarios);
+    	direccionBean.setDistrito(distrito);
+    	direccionBean.setReferencia(direccion.getReferencia());
+    	direccionBean.setDomicilio(direccion.getDomicilio());
+    	direccionBean.setNumero(direccion.getNumero());
+    	direccionBean.setLatitud(direccion.getLatitud());
+    	direccionBean.setLongitud(direccion.getLongitud());
+    	direccionBean.setActivo(DireccionActiva.NO_ACTIVA.getValue());
+    	
+        service.actualizar(direccionBean); 
+        
+        return new ResponseEntity<Void>(HttpStatus.CREATED);
+    }
+    
+    @RequestMapping(value = "/agregarPorTienda", method = RequestMethod.POST)
+    public ResponseEntity<Void> agregarPorTienda(@RequestBody DireccionVM direccion,  UriComponentsBuilder ucBuilder) {
+    	
+    	Direccion direccionBean = new Direccion();
+    	Distrito distrito = service.obtenerDistritoPorId(direccion.getId_distrito());
+    	Tienda tienda = service.obtenerTiendaPorId(direccion.getId_tienda());
+    	
+    	if((distrito==null) || (tienda==null)){
+    		return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
+    	}
+    	
+    	List<Tienda> tiendas = new ArrayList<>();
+    	tiendas.add(tienda);
+    	
+    	direccionBean.setTiendas(tiendas);
+    	direccionBean.setDistrito(distrito);
+    	direccionBean.setReferencia(direccion.getReferencia());
+    	direccionBean.setDomicilio(direccion.getDomicilio());
+    	direccionBean.setNumero(direccion.getNumero());
+    	direccionBean.setLatitud(direccion.getLatitud());
+    	direccionBean.setLongitud(direccion.getLongitud());
+    	direccionBean.setActivo(DireccionActiva.NO_ACTIVA.getValue());
+    	
+        service.agregar(direccionBean); 
+        
+        return new ResponseEntity<Void>(HttpStatus.CREATED);
+    }
+    
+    @RequestMapping(value = "/actualizarPorTienda", method = RequestMethod.PUT)
+    public ResponseEntity<Void> actualizarPorTienda(@RequestBody DireccionVM direccion,  UriComponentsBuilder ucBuilder) {
+    	
+    	Direccion direccionBean = new Direccion();
+    	Distrito distrito = service.obtenerDistritoPorId(direccion.getId_distrito());
+    	Tienda tienda = service.obtenerTiendaPorId(direccion.getId_tienda());
+    	
+    	if((distrito==null) || (tienda==null)){
+    		return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
+    	}
+    	
+    	List<Tienda> tiendas = new ArrayList<>();
+    	tiendas.add(tienda);
+    	
+    	direccionBean.setId(direccion.getId());
+    	direccionBean.setTiendas(tiendas);
     	direccionBean.setDistrito(distrito);
     	direccionBean.setReferencia(direccion.getReferencia());
     	direccionBean.setDomicilio(direccion.getDomicilio());

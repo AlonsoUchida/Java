@@ -16,7 +16,7 @@ public class TiendaVM {
 	private String horarioAtencion;
 	private int estadoAbierto;
 	private byte[] imagen;	
-    private int id_usuario;
+    private int[] id_usuarios;
 	
 	public int getId() {
 		return id;
@@ -90,10 +90,10 @@ public class TiendaVM {
 	public void setImagen(byte[] imagen) {
 		this.imagen = imagen;
 	}
-	public int getId_usuario() {
-		return id_usuario;
+	public int[] getId_usuarios() {
+		return id_usuarios;
 	}
-	public void setId_usuario(int id_usuario) {
-		this.id_usuario = id_usuario;
+	public void setId_usuarios(int[] id_usuarios) {
+		this.id_usuarios = id_usuarios;
 	}
 }

@@ -130,6 +130,14 @@ public class Direccion {
 	public void setUsuarios(List<Usuario> usuarios) {
 		this.usuarios = usuarios;
 	}
+
+	public List<Tienda> getTiendas() {
+		return tiendas;
+	}
+
+	public void setTiendas(List<Tienda> tiendas) {
+		this.tiendas = tiendas;
+	}
 	
 	
 }

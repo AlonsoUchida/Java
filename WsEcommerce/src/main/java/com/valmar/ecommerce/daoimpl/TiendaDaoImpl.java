@@ -87,6 +87,7 @@ public class TiendaDaoImpl extends AbstractDao<Integer, Tienda> implements Tiend
 	@Override
 	public Tienda obtenerTiendaPorDireccion(int id) {
 		Criteria criteria = createEntityCriteria();
+		criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
 		criteria.createAlias("direcciones", "d");
 		criteria.add(Restrictions.eq("d.id", id));
 		return (Tienda) criteria.uniqueResult();

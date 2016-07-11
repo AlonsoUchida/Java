@@ -8,6 +8,8 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
@@ -33,9 +35,13 @@ public class MetodoPago {
 	@NotNull
 	private String valor;
 	
-	/*@ManyToMany(fetch = FetchType.LAZY, mappedBy="metodoPagos")
+	@ManyToMany(fetch = FetchType.EAGER)
+	  @JoinTable(
+	      name="tienda_metodo_pago",
+	      joinColumns=@JoinColumn(name="ID_METODO_PAGO", referencedColumnName="ID"),
+	      inverseJoinColumns=@JoinColumn(name="ID_TIENDA", referencedColumnName="ID"))
 	@JsonBackReference
-	private Set<Tienda> tiendas;*/
+	private Set<Tienda> tiendas;
 
 	public int getId() {
 		return id;
@@ -59,6 +65,14 @@ public class MetodoPago {
 
 	public void setValor(String valor) {
 		this.valor = valor;
+	}
+
+	public Set<Tienda> getTiendas() {
+		return tiendas;
+	}
+
+	public void setTiendas(Set<Tienda> tiendas) {
+		this.tiendas = tiendas;
 	}
 	
 	

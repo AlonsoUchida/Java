@@ -5,6 +5,7 @@ public class DireccionVM {
 	
 	private int id;
 	private int id_usuario;
+	private int id_tienda;
 	private String referencia;
 	private String domicilio;
 	private String numero;
@@ -24,6 +25,12 @@ public class DireccionVM {
 	}
 	public void setId_usuario(int id_usuario) {
 		this.id_usuario = id_usuario;
+	}	
+	public int getId_tienda() {
+		return id_tienda;
+	}
+	public void setId_tienda(int id_tienda) {
+		this.id_tienda = id_tienda;
 	}
 	public String getReferencia() {
 		return referencia;

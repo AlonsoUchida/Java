@@ -199,7 +199,7 @@ DEFAULT CHARACTER SET = utf8;
 DROP TABLE IF EXISTS `CMS_VALMAR_DB`.`envio` ;
 
 CREATE TABLE IF NOT EXISTS `CMS_VALMAR_DB`.`envio` (
-  `id` INT(3) NOT NULL,
+  `id` INT(3) NOT NULL AUTO_INCREMENT,
   `nombre` VARCHAR(200) NOT NULL,
   `valor` VARCHAR(100) NOT NULL,
   PRIMARY KEY (`id`))
@@ -440,8 +440,8 @@ DROP TABLE IF EXISTS `CMS_VALMAR_DB`.`tienda_envio` ;
 
 CREATE TABLE IF NOT EXISTS `CMS_VALMAR_DB`.`tienda_envio` (
   `id` INT(11) NOT NULL AUTO_INCREMENT,
-  `id_tienda` INT(11) NOT NULL,
-  `id_envio` INT(3) NOT NULL,
+  `id_tienda` INT(11) NULL,
+  `id_envio` INT(3) NULL,
   PRIMARY KEY (`id`),
   INDEX `id_tienda` (`id_tienda` ASC),
   INDEX `id_envio` (`id_envio` ASC),
@@ -462,8 +462,8 @@ DROP TABLE IF EXISTS `CMS_VALMAR_DB`.`tienda_metodo_pago` ;
 
 CREATE TABLE IF NOT EXISTS `CMS_VALMAR_DB`.`tienda_metodo_pago` (
   `id` INT(11) NOT NULL AUTO_INCREMENT,
-  `id_tienda` INT(11) NOT NULL,
-  `id_metodo_pago` INT(3) NOT NULL,
+  `id_tienda` INT(11) NULL,
+  `id_metodo_pago` INT(3) NULL,
   PRIMARY KEY (`id`),
   INDEX `id_tienda` (`id_tienda` ASC),
   INDEX `id_metodo_pago` (`id_metodo_pago` ASC),

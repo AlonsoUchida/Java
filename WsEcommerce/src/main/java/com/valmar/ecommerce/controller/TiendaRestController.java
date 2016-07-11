@@ -6,6 +6,7 @@ import java.util.Comparator;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -64,7 +65,7 @@ public class TiendaRestController {
 			ImagenTienda imagen = imagenTiendaService.obtenerImagenPorDefectoTienda(item.getId());
 			if(imagen!=null)
 				_tienda.setImagen(imagen.getImagen());
-			if(!item.getDistancia().isEmpty())
+			if(item.getDistancia()!=null)
 				_tienda.setDistancia(Double.parseDouble(item.getDistancia()));
 			for (Direccion direccion : item.getDirecciones()) {
 				_tienda.setDomicilio(direccion.getDomicilio());
@@ -183,12 +184,7 @@ public class TiendaRestController {
 
 	@RequestMapping(value = "/agregar", method = RequestMethod.POST)
 	public ResponseEntity<Void> agregar(@RequestBody TiendaVM tienda, UriComponentsBuilder ucBuilder) {
-
-		Usuario usuario = service.obtenerUsuario(tienda.getId_usuario());
-
-		if (usuario == null) {
-			return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
-		}
+		
 		Tienda tiendaBean = new Tienda();
 		tiendaBean.setNombre(tienda.getNombre());
 		tiendaBean.setRuc(tienda.getRuc());
@@ -199,6 +195,18 @@ public class TiendaRestController {
 		tiendaBean.setCostoMinimo(tienda.getCostoMinimo());
 		tiendaBean.setHorarioAtencion(tienda.getHorarioAtencion());
 		tiendaBean.setEstado(TipoEstado.HABILITADO.getValue());
+		List<Usuario> usuarios = new ArrayList<>();
+		if(tienda.getId_usuarios()!=null)
+		{
+			for(int id_usuario : tienda.getId_usuarios()){
+				Usuario usuario = service.obtenerUsuario(id_usuario);
+				if (usuario == null) {
+					return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
+				}
+				usuarios.add(usuario);
+			}
+		}
+		tiendaBean.setUsuarios(new HashSet(usuarios));
 		tiendaBean.setEstadoAbierto(tienda.getEstadoAbierto());
 		tiendaBean.setFechaRegistro(new Date());
 		tiendaBean.setFechaModificacion(new Date());
@@ -221,11 +229,6 @@ public class TiendaRestController {
 	@RequestMapping(value = "/actualizar", method = RequestMethod.PUT)
 	public ResponseEntity<Void> actualizar(@RequestBody TiendaVM tienda, UriComponentsBuilder ucBuilder) {
 
-		Usuario usuario = service.obtenerUsuario(tienda.getId_usuario());
-
-		if (usuario == null) {
-			return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
-		}
 		Tienda tiendaBean = new Tienda();
 		tiendaBean.setId(tienda.getId());
 		tiendaBean.setNombre(tienda.getNombre());
@@ -236,6 +239,18 @@ public class TiendaRestController {
 		tiendaBean.setAfiliacion_valor(tienda.getAfiliacion_valor());
 		tiendaBean.setCostoMinimo(tienda.getCostoMinimo());
 		tiendaBean.setHorarioAtencion(tienda.getHorarioAtencion());
+		List<Usuario> usuarios = new ArrayList<>();
+		if(tienda.getId_usuarios()!=null)
+		{	
+			for(int id_usuario : tienda.getId_usuarios()){
+				Usuario usuario = service.obtenerUsuario(id_usuario);
+				if (usuario == null) {
+					return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
+				}
+				usuarios.add(usuario);
+			}	
+		}
+		tiendaBean.setUsuarios(new HashSet(usuarios));
 		tiendaBean.setEstado(TipoEstado.HABILITADO.getValue());
 		tiendaBean.setEstadoAbierto(tienda.getEstadoAbierto());
 		tiendaBean.setFechaModificacion(new Date());
@@ -293,7 +308,7 @@ public class TiendaRestController {
 	@RequestMapping(value = "/imagen/agregar", method = RequestMethod.POST)
 	public ResponseEntity<Void> agregarImagen(@RequestBody ImagenProductoVM imagen, UriComponentsBuilder ucBuilder) {
 		ImagenTienda imagenBean = new ImagenTienda();
-		Tienda tienda = service.obtenerPorId(imagen.getId_producto());
+		Tienda tienda = service.obtenerPorId(imagen.getId_tienda());
 
 		if (tienda == null) {
 			return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
@@ -314,7 +329,7 @@ public class TiendaRestController {
 	@RequestMapping(value = "/imagen/actualizar", method = RequestMethod.PUT)
 	public ResponseEntity<Void> actualizarImagen(@RequestBody ImagenProductoVM imagen, UriComponentsBuilder ucBuilder) {
 		ImagenTienda imagenBean = new ImagenTienda();
-		Tienda tienda = service.obtenerPorId(imagen.getId_producto());
+		Tienda tienda = service.obtenerPorId(imagen.getId_tienda());
 
 		if (tienda == null) {
 			return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);

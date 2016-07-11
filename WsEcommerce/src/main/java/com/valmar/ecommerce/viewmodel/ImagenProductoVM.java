@@ -5,6 +5,7 @@ public class ImagenProductoVM {
 	
 	private int id;
 	private int id_producto;
+	private int id_tienda;
 	private String nombre;	
 	private byte[] imagen;
 	private int defecto;
@@ -20,6 +21,12 @@ public class ImagenProductoVM {
 	}
 	public void setId_producto(int id_producto) {
 		this.id_producto = id_producto;
+	}	
+	public int getId_tienda() {
+		return id_tienda;
+	}
+	public void setId_tienda(int id_tienda) {
+		this.id_tienda = id_tienda;
 	}
 	public String getNombre() {
 		return nombre;
