@@ -9,7 +9,11 @@
         http://www.springframework.org/schema/beans/spring-beans-4.2.xsd
         http://www.springframework.org/schema/security
         http://www.springframework.org/schema/security/spring-security-4.0.xsd">
-       
+    
+    <security:http pattern="/tipodocumento/listar" security="none" />
+    <security:http pattern="/distrito/listarPorProvincia" security="none" />
+    <security:http pattern="/provincia/listarPorDepartamento" security="none" />  
+    <security:http pattern="/departamento/listar" security="none" /> 
     <security:http pattern="/usuario/agregar" security="none" />   
     <security:http pattern="/cliente/agregar" security="none" />    
 	<security:http pattern="/authenticate" security="none" />
