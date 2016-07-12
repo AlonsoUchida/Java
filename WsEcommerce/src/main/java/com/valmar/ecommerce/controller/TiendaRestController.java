@@ -333,7 +333,7 @@ public class TiendaRestController {
 		imagenBean.setNombre(imagen.getNombre());
 		imagenBean.setTienda(tienda);
 		imagenBean.setImagen(imagen.getImagen().getBytes());
-		imagenBean.setDefecto(TipoImagen.SECUNDARIO.getValue());
+		imagenBean.setDefecto(imagen.getDefecto());
 
 		imagenTiendaService.agregarImagen(imagenBean);
 
@@ -354,7 +354,7 @@ public class TiendaRestController {
 		imagenBean.setNombre(imagen.getNombre());
 		imagenBean.setTienda(tienda);
 		imagenBean.setImagen(imagen.getImagen().getBytes());
-		imagenBean.setDefecto(imagen.getId());
+		imagenBean.setDefecto(imagen.getDefecto());
 
 		imagenTiendaService.actualizarImagen(imagenBean);
 
