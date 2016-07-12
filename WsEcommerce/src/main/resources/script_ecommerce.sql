@@ -94,6 +94,8 @@ CREATE TABLE IF NOT EXISTS `CMS_VALMAR_DB`.`distrito` (
   `id` INT(3) NOT NULL,
   `nombre` VARCHAR(100) NOT NULL,
   `id_provincia` INT(3) NOT NULL,
+  `latitud` VARCHAR(100) NULL,
+  `longitud` VARCHAR(100) NULL,
   PRIMARY KEY (`id`),
   INDEX `id_provincia` (`id_provincia` ASC),
   CONSTRAINT `distrito_ibfk_1`
@@ -129,22 +131,53 @@ DEFAULT CHARACTER SET = utf8;
 
 
 -- -----------------------------------------------------
+-- Table `CMS_VALMAR_DB`.`tipo_documento`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `CMS_VALMAR_DB`.`tipo_documento` ;
+
+CREATE TABLE IF NOT EXISTS `CMS_VALMAR_DB`.`tipo_documento` (
+  `id` INT(3) NOT NULL,
+  `descripcion` VARCHAR(45) NULL,
+  PRIMARY KEY (`id`))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
 -- Table `CMS_VALMAR_DB`.`usuario`
 -- -----------------------------------------------------
 DROP TABLE IF EXISTS `CMS_VALMAR_DB`.`usuario` ;
 
 CREATE TABLE IF NOT EXISTS `CMS_VALMAR_DB`.`usuario` (
-  `id` INT(11) NOT NULL AUTO_INCREMENT,
+  `id` INT(11) NOT NULL,
   `nombre` VARCHAR(100) NULL DEFAULT NULL,
   `apellido` VARCHAR(200) NULL DEFAULT NULL,
   `correo` VARCHAR(200) NULL DEFAULT NULL,
   `password` VARCHAR(250) NULL DEFAULT NULL,
   `genero` CHAR(1) NULL DEFAULT NULL,
   `tipo` INT(1) NULL DEFAULT NULL,
+  `id_tipo_documento` INT(5) NULL,
+  `valor_documento` VARCHAR(45) NULL,
+  `telefono_local` VARCHAR(45) NULL,
+  `telefono_fijo` VARCHAR(45) NULL,
+  `id_distrito` INT(11) NULL,
+  `direccion_fiscal` VARCHAR(200) NULL,
+  `fecha_nacimiento` DATETIME NULL,
   `estado` INT(1) NULL DEFAULT NULL,
   `fecha_registro` DATETIME NULL DEFAULT NULL,
   `fecha_modificacion` DATETIME NULL DEFAULT NULL,
-  PRIMARY KEY (`id`))
+  PRIMARY KEY (`id`),
+  INDEX `fk_distrito_idx` (`id_distrito` ASC),
+  INDEX `fk_tipo_documento_idx` (`id_tipo_documento` ASC),
+  CONSTRAINT `fk_distrito`
+    FOREIGN KEY (`id_distrito`)
+    REFERENCES `CMS_VALMAR_DB`.`distrito` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_tipo_documento`
+    FOREIGN KEY (`id_tipo_documento`)
+    REFERENCES `CMS_VALMAR_DB`.`tipo_documento` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
 ENGINE = InnoDB
 AUTO_INCREMENT = 6
 DEFAULT CHARACTER SET = utf8;
@@ -371,6 +404,7 @@ CREATE TABLE IF NOT EXISTS `CMS_VALMAR_DB`.`orden` (
   `costo_envio` DECIMAL NULL DEFAULT NULL,
   `costo_total` DECIMAL NULL DEFAULT NULL,
   `fecha_envio` DATETIME NULL DEFAULT NULL,
+  `firma` TEXT NULL,
   PRIMARY KEY (`id`),
   INDEX `id_direccion_envio` (`id_direccion_envio` ASC),
   INDEX `id_informacion_cliente` (`id_informacion_cliente` ASC),
@@ -487,7 +521,7 @@ CREATE TABLE IF NOT EXISTS `CMS_VALMAR_DB`.`token` (
   `authToken` VARCHAR(500) NULL DEFAULT NULL,
   `issuedOn` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `expiresOn` TIMESTAMP NULL DEFAULT NULL,
-  `userId` INT(11) NOT NULL,
+  `userId` INT(3) NOT NULL,
   PRIMARY KEY (`id`),
   INDEX `FK_TOKENXUSUARIO` (`userId` ASC),
   CONSTRAINT `FK_TOKENXUSUARIO`
