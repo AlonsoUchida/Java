@@ -1,5 +1,7 @@
 package com.valmar.ecommerce.servicesimpl;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -18,6 +20,11 @@ public class TipoDocumentoServiceImpl implements TipoDocumentoService{
 	@Override
 	public TipoDocumento obtenerPorId(int id) {
 		return tipoDocumentoDao.obtenerPorId(id);
+	}
+
+	@Override
+	public List<TipoDocumento> listar() {
+		return tipoDocumentoDao.listar();
 	}
 
 }
