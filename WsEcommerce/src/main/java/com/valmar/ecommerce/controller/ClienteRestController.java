@@ -18,8 +18,13 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import com.valmar.ecommerce.enums.TipoEstado;
 import com.valmar.ecommerce.enums.TipoUsuario;
+import com.valmar.ecommerce.model.Distrito;
+import com.valmar.ecommerce.model.TipoDocumento;
 import com.valmar.ecommerce.model.Usuario;
 import com.valmar.ecommerce.services.ClienteService;
+import com.valmar.ecommerce.services.DistritoService;
+import com.valmar.ecommerce.services.TipoDocumentoService;
+import com.valmar.ecommerce.util.DateUtil;
 import com.valmar.ecommerce.util.EncryptUtil;
 import com.valmar.ecommerce.viewmodel.ClienteVM;
 
@@ -30,6 +35,12 @@ public class ClienteRestController {
 
 	@Autowired
     ClienteService service;
+	
+	@Autowired
+	TipoDocumentoService tipoDocumentoService;
+	
+	@Autowired
+	DistritoService distritoService;
 
     @RequestMapping(value = { "/listar" }, method = RequestMethod.GET)
     public ResponseEntity<List<Usuario>> listarClientes() {
@@ -62,6 +73,18 @@ public class ClienteRestController {
         clienteBean.setPassword(EncryptUtil.encriptar(cliente.getPassword()));
         clienteBean.setGenero(cliente.getGenero());
         clienteBean.setTipo(TipoUsuario.CLIENTE.getValue());
+        TipoDocumento tipoDocumento = tipoDocumentoService.obtenerPorId(cliente.getId_tipoDocumento());
+        if(tipoDocumento!=null)
+        	clienteBean.setTipoDocumento(tipoDocumento);
+        clienteBean.setValorDocumento(cliente.getValorDocumento());
+        clienteBean.setTelefonoLocal(cliente.getTelefonoLocal());
+        clienteBean.setTelefonoMovil(cliente.getTelefonoMovil());
+        Distrito distrito  = distritoService.obtenerPorId(cliente.getId_distrito());
+        if(distrito!=null)
+        	clienteBean.setDistrito(distrito);
+        clienteBean.setDireccionFiscal(cliente.getDireccionFiscal());     
+        Date fechaNacimiento = DateUtil.getDateFromString(cliente.getFechaNacimiento());
+        clienteBean.setFechaNacimiento(fechaNacimiento);
         clienteBean.setEstado(TipoEstado.HABILITADO.getValue());
         clienteBean.setFechaRegistro(new Date());
         clienteBean.setFechaModificacion(new Date());
@@ -84,10 +107,23 @@ public class ClienteRestController {
         clienteBean.setNombre(cliente.getNombre());
         clienteBean.setApellido(cliente.getApellido());
         clienteBean.setCorreo(cliente.getCorreo());
-        clienteBean.setPassword(cliente.getPassword());
+        clienteBean.setPassword(EncryptUtil.encriptar(cliente.getPassword()));
         clienteBean.setGenero(cliente.getGenero());
         clienteBean.setTipo(TipoUsuario.CLIENTE.getValue());
+        TipoDocumento tipoDocumento = tipoDocumentoService.obtenerPorId(cliente.getId_tipoDocumento());
+        if(tipoDocumento!=null)
+        	clienteBean.setTipoDocumento(tipoDocumento);
+        clienteBean.setValorDocumento(cliente.getValorDocumento());
+        clienteBean.setTelefonoLocal(cliente.getTelefonoLocal());
+        clienteBean.setTelefonoMovil(cliente.getTelefonoMovil());
+        Distrito distrito  = distritoService.obtenerPorId(cliente.getId_distrito());
+        if(distrito!=null)
+        	clienteBean.setDistrito(distrito);
+        clienteBean.setDireccionFiscal(cliente.getDireccionFiscal());     
+        Date fechaNacimiento = DateUtil.getDateFromString(cliente.getFechaNacimiento());
+        clienteBean.setFechaNacimiento(fechaNacimiento);
         clienteBean.setEstado(TipoEstado.HABILITADO.getValue());
+        clienteBean.setFechaRegistro(new Date());
         clienteBean.setFechaModificacion(new Date());
         
         service.actualizar(clienteBean); 

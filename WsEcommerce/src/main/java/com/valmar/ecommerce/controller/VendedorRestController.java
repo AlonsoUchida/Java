@@ -18,7 +18,9 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import com.valmar.ecommerce.enums.TipoEstado;
 import com.valmar.ecommerce.enums.TipoUsuario;
+import com.valmar.ecommerce.model.TipoDocumento;
 import com.valmar.ecommerce.model.Usuario;
+import com.valmar.ecommerce.services.TipoDocumentoService;
 import com.valmar.ecommerce.services.UsuarioService;
 import com.valmar.ecommerce.util.EncryptUtil;
 import com.valmar.ecommerce.viewmodel.BodegueroVM;
@@ -31,6 +33,9 @@ public class VendedorRestController {
 	@Autowired
 	UsuarioService service;
 
+	@Autowired
+	TipoDocumentoService tipoDocumentoService;
+	
     @RequestMapping(value = { "/listar" }, method = RequestMethod.GET)
     public ResponseEntity<List<Usuario>> listarVendedores() {
         List<Usuario> usuarios = service.listarVendedores();
@@ -60,6 +65,10 @@ public class VendedorRestController {
          clienteBean.setCorreo(bodeguero.getCorreo());
          clienteBean.setPassword(EncryptUtil.encriptar(bodeguero.getPassword()));
          clienteBean.setGenero(bodeguero.getGenero());
+         TipoDocumento tipoDocumento = tipoDocumentoService.obtenerPorId(bodeguero.getId_tipoDocumento());
+         if(tipoDocumento!=null)
+         	clienteBean.setTipoDocumento(tipoDocumento);
+         clienteBean.setValorDocumento(bodeguero.getValorDocumento());
          clienteBean.setTipo(TipoUsuario.VENDEDOR.getValue());
          clienteBean.setEstado(TipoEstado.HABILITADO.getValue());
          clienteBean.setFechaRegistro(new Date());
@@ -82,6 +91,10 @@ public class VendedorRestController {
         clienteBean.setCorreo(bodeguero.getCorreo());
         clienteBean.setPassword(EncryptUtil.encriptar(bodeguero.getPassword()));
         clienteBean.setGenero(bodeguero.getGenero());
+        TipoDocumento tipoDocumento = tipoDocumentoService.obtenerPorId(bodeguero.getId_tipoDocumento());
+        if(tipoDocumento!=null)
+        	clienteBean.setTipoDocumento(tipoDocumento);
+        clienteBean.setValorDocumento(bodeguero.getValorDocumento());
         clienteBean.setTipo(TipoUsuario.VENDEDOR.getValue());
         clienteBean.setEstado(TipoEstado.HABILITADO.getValue());
         clienteBean.setFechaModificacion(new Date());

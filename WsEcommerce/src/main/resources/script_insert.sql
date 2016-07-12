@@ -250,7 +250,7 @@ INSERT INTO `categoria` VALUES ('10', 'Cinzano (vermú)', NULL);
 -- Records of distrito
 -- ----------------------------
 
-INSERT INTO `distrito` VALUES
+INSERT INTO `distrito` (`id`, `nombre`, `id_provincia`) VALUES
 (1, 'CHACHAPOYAS', 1),
 (2, 'ASUNCION', 1),
 (3, 'BALSAS', 1),
@@ -2115,28 +2115,22 @@ INSERT INTO `marca` VALUES (24, 'ROBERT MONDAVI', 1);
 INSERT INTO `marca` VALUES (25, 'YELLOWTAIL', 1);
 
 -- ----------------------------
+-- Records of tipo_documento
+-- ----------------------------
+INSERT INTO `CMS_VALMAR_DB`.`tipo_documento` (`id`, `descripcion`) VALUES ('1', 'Dni');
+INSERT INTO `CMS_VALMAR_DB`.`tipo_documento` (`id`, `descripcion`) VALUES ('2', 'Carnet de Extranjería');
+INSERT INTO `CMS_VALMAR_DB`.`tipo_documento` (`id`, `descripcion`) VALUES ('3', 'Pasaporte');
+
+-- ----------------------------
 -- Records of usuarios
 -- ----------------------------
 
 -- Records of usuarios tipo bodeguero 1
-INSERT INTO `usuario` VALUES (1, 'JOSUE', 'MOSQUERA', 'josue.mosquera@valmar.com.pe', 'IRHhatCFrBo=', 'M', 1, 1, NOW(), NOW());
-INSERT INTO `usuario` VALUES (2, 'ALONSO', 'UCHIDA', 'javier.uchida@valmar.com.pe', 'IRHhatCFrBo=', 'M', 1, 1,  NOW(), NOW());
-INSERT INTO `usuario` VALUES (3, 'VICTOR', 'MALAVER', 'victor.malaver@valmar.com.pe', 'IRHhatCFrBo=', 'M', 1, 1,  NOW(), NOW());
-INSERT INTO `usuario` VALUES (4, 'JOHN', 'ORREGO', 'john.orrego@valmar.com.pe', 'IRHhatCFrBo=', 'M', 1, 1,  NOW(), NOW());
-INSERT INTO `usuario` VALUES (5, 'RENZO', 'OSSIO', 'renzo.ossio@valmar.com.pe', 'IRHhatCFrBo=', 'M', 1, 1,  NOW(), NOW());
+INSERT INTO `usuario` VALUES (1, 'JOSUE', 'MOSQUERA', 'josue.mosquera@valmar.com.pe', 'IRHhatCFrBo=', 'M', 1, 1, '43986525', '4236492', '958456456', 1, 'Av. Mariano Corenjo 341 Pueblo Libre',  NOW(),  1, NOW(), NOW());
 -- Records of usuarios tipo cliente 2
-INSERT INTO `usuario` VALUES (6, 'JOSUE', 'MOSQUERA', 'josue.mosquera.cliente@valmar.com.pe', 'IRHhatCFrBo=', 'M', 2, 1, NOW(), NOW());
-INSERT INTO `usuario` VALUES (7, 'ALONSO', 'UCHIDA', 'javier.uchida.cliente@valmar.com.pe', 'IRHhatCFrBo=', 'M', 2, 1,  NOW(), NOW());
-INSERT INTO `usuario` VALUES (8, 'VICTOR', 'MALAVER', 'victor.malaver.cliente@valmar.com.pe', 'IRHhatCFrBo=', 'M', 2, 1,  NOW(), NOW());
-INSERT INTO `usuario` VALUES (9, 'JOHN', 'ORREGO', 'john.orrego.cliente@valmar.com.pe', 'IRHhatCFrBo=', 'M', 2, 1,  NOW(), NOW());
-INSERT INTO `usuario` VALUES (10, 'RENZO', 'OSSIO', 'renzo.ossio.cliente@valmar.com.pe', 'IRHhatCFrBo=', 'M', 2, 1,  NOW(), NOW());
+INSERT INTO `usuario` VALUES (2, 'JOSUE', 'MOSQUERA', 'josue.mosquera.cliente@valmar.com.pe', 'IRHhatCFrBo=', 'M', 2, 1, '43986525', '4236492', '958456456', 1, 'Av. Mariano Corenjo 341 Pueblo Libre',  NOW(), 1, NOW(), NOW());
 -- Records of usuarios tipo vendedor 3
-INSERT INTO `usuario` VALUES (11, 'JOSUE', 'MOSQUERA', 'josue.mosquera.vendendor@valmar.com.pe', 'IRHhatCFrBo=', 'M', 3, 1, NOW(), NOW());
-INSERT INTO `usuario` VALUES (12, 'ALONSO', 'UCHIDA', 'javier.uchida.vendendor@valmar.com.pe', 'IRHhatCFrBo=', 'M', 3, 1,  NOW(), NOW());
-INSERT INTO `usuario` VALUES (13, 'VICTOR', 'MALAVER', 'victor.malaver.vendendor@valmar.com.pe', 'IRHhatCFrBo=', 'M', 3, 1,  NOW(), NOW());
-INSERT INTO `usuario` VALUES (14, 'JOHN', 'ORREGO', 'john.orrego.vendendor@valmar.com.pe', 'IRHhatCFrBo=', 'M', 3, 1,  NOW(), NOW());
-INSERT INTO `usuario` VALUES (15, 'RENZO', 'OSSIO', 'renzo.ossio.vendendor@valmar.com.pe', 'IRHhatCFrBo=', 'M', 3, 1,  NOW(), NOW());
-
+INSERT INTO `usuario` VALUES (3, 'ALONSO', 'UCHIDA', 'javier.uchida.vendendor@valmar.com.pe', 'IRHhatCFrBo=', 'M', 3, 1, '43986525', '4236492','958456456', 1, 'Av. Mariano Corenjo 341 Pueblo Libre',  NOW(),  1,  NOW(), NOW());
 -- ----------------------------
 -- Records of autoridad
 -- ----------------------------
@@ -2163,8 +2157,6 @@ INSERT INTO `tienda`(`id`,`nombre`,`ruc`,`telefono_local`,`telefono_movil`,`afil
 INSERT INTO `tienda_usuario`(`id`,`id_usuario`,`id_tienda`) VALUES (1, '1', '1');
 INSERT INTO `tienda_usuario`(`id`,`id_usuario`,`id_tienda`) VALUES (2, '2', '2');
 INSERT INTO `tienda_usuario`(`id`,`id_usuario`,`id_tienda`) VALUES (3, '3', '3');
-INSERT INTO `tienda_usuario`(`id`,`id_usuario`,`id_tienda`) VALUES (4, '4', '4');
-INSERT INTO `tienda_usuario`(`id`,`id_usuario`,`id_tienda`) VALUES (5, '5', '5');
 
 -- ----------------------------
 -- Records of producto

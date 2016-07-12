@@ -8,4 +8,5 @@ import com.valmar.ecommerce.model.Provincia;
 public interface DistritoService {
 	List<Distrito> listarDistritos();
 	List<Distrito> listarPorProvincia(int id);
+	Distrito obtenerPorId(int id_distrito);
 }

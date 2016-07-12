@@ -21,13 +21,18 @@ public class Distrito {
 	private int id;
 
 	@Column(name = "NOMBRE")
-	@NotNull
 	private String nombre;
 	
 	@OneToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name="ID_PROVINCIA")
 	@JsonManagedReference
 	private Provincia provincia;
+	
+	@Column(name = "LATITUD")
+	private String latitud;
+	
+	@Column(name = "LONGITUD")
+	private String longitud;
 
 	public int getId() {
 		return id;
@@ -51,6 +56,22 @@ public class Distrito {
 
 	public void setProvincia(Provincia provincia) {
 		this.provincia = provincia;
+	}
+
+	public String getLatitud() {
+		return latitud;
+	}
+
+	public void setLatitud(String latitud) {
+		this.latitud = latitud;
+	}
+
+	public String getLongitud() {
+		return longitud;
+	}
+
+	public void setLongitud(String longitud) {
+		this.longitud = longitud;
 	}
 	
 	

@@ -94,6 +94,8 @@ CREATE TABLE IF NOT EXISTS `CMS_VALMAR_DB`.`distrito` (
   `id` INT(3) NOT NULL,
   `nombre` VARCHAR(100) NOT NULL,
   `id_provincia` INT(3) NOT NULL,
+  `latitud` VARCHAR(100) NULL,
+  `longitud` VARCHAR(100) NULL,
   PRIMARY KEY (`id`),
   INDEX `id_provincia` (`id_provincia` ASC),
   CONSTRAINT `distrito_ibfk_1`
@@ -113,8 +115,8 @@ DROP TABLE IF EXISTS `CMS_VALMAR_DB`.`direccion` ;
 CREATE TABLE IF NOT EXISTS `CMS_VALMAR_DB`.`direccion` (
   `id` INT(5) NOT NULL AUTO_INCREMENT,
   `id_distrito` INT(3) NOT NULL,
-  `referencia` VARCHAR(250) NOT NULL,
-  `domicilio` VARCHAR(250) NOT NULL,
+  `referencia` VARCHAR(250) NULL,
+  `domicilio` VARCHAR(250) NULL,
   `numero` VARCHAR(50) NULL DEFAULT NULL,
   `latitud` VARCHAR(500) NULL,
   `longitud` VARCHAR(500) NULL,
@@ -126,6 +128,18 @@ CREATE TABLE IF NOT EXISTS `CMS_VALMAR_DB`.`direccion` (
     REFERENCES `CMS_VALMAR_DB`.`distrito` (`id`))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
+
+
+-- -----------------------------------------------------
+-- Table `CMS_VALMAR_DB`.`tipo_documento`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `CMS_VALMAR_DB`.`tipo_documento` ;
+
+CREATE TABLE IF NOT EXISTS `CMS_VALMAR_DB`.`tipo_documento` (
+  `id` INT(3) NOT NULL,
+  `descripcion` VARCHAR(45) NOT NULL,
+  PRIMARY KEY (`id`))
+ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
@@ -141,10 +155,29 @@ CREATE TABLE IF NOT EXISTS `CMS_VALMAR_DB`.`usuario` (
   `password` VARCHAR(250) NULL DEFAULT NULL,
   `genero` CHAR(1) NULL DEFAULT NULL,
   `tipo` INT(1) NULL DEFAULT NULL,
-  `estado` INT(1) NULL DEFAULT NULL,
-  `fecha_registro` DATETIME NULL DEFAULT NULL,
-  `fecha_modificacion` DATETIME NULL DEFAULT NULL,
-  PRIMARY KEY (`id`))
+  `valor_documento` VARCHAR(45) NULL,
+  `telefono_local` VARCHAR(45) NULL,
+  `telefono_movil` VARCHAR(45) NULL,
+  `direccion_fiscal` VARCHAR(200) NULL,
+  `fecha_nacimiento` DATETIME NULL,
+  `id_distrito` INT(11) NULL,
+  `id_tipo_documento` INT(5) NOT NULL,
+  `estado` INT(1) NOT NULL,
+  `fecha_registro` DATETIME NOT NULL,
+  `fecha_modificacion` DATETIME NOT NULL,
+  PRIMARY KEY (`id`),
+  INDEX `fk_distrito_idx` (`id_distrito` ASC),
+  INDEX `fk_tipo_documento_idx` (`id_tipo_documento` ASC),
+  CONSTRAINT `fk_distrito`
+    FOREIGN KEY (`id_distrito`)
+    REFERENCES `CMS_VALMAR_DB`.`distrito` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_tipo_documento`
+    FOREIGN KEY (`id_tipo_documento`)
+    REFERENCES `CMS_VALMAR_DB`.`tipo_documento` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
 ENGINE = InnoDB
 AUTO_INCREMENT = 6
 DEFAULT CHARACTER SET = utf8;
@@ -214,18 +247,18 @@ DROP TABLE IF EXISTS `CMS_VALMAR_DB`.`tienda` ;
 
 CREATE TABLE IF NOT EXISTS `CMS_VALMAR_DB`.`tienda` (
   `id` INT(11) NOT NULL AUTO_INCREMENT,
-  `nombre` VARCHAR(250) NOT NULL,
-  `ruc` VARCHAR(30) NOT NULL,
-  `telefono_local` VARCHAR(10) NOT NULL,
+  `nombre` VARCHAR(250) NULL,
+  `ruc` VARCHAR(30) NULL,
+  `telefono_local` VARCHAR(10) NULL,
   `telefono_movil` VARCHAR(10) NULL DEFAULT NULL,
-  `afiliacion` INT(2) NOT NULL,
-  `afiliacion_valor` INT(11) NOT NULL,
+  `afiliacion` INT(2) NULL,
+  `afiliacion_valor` INT(11) NULL,
   `costo_minimo` DECIMAL NULL,
   `estado_abierto` INT(1) NULL,
   `horario_atencion` VARCHAR(45) NULL,
   `estado` INT(1) NOT NULL COMMENT 'estatus para indicar si la tienda esta activa o no, dentro d',
-  `fecha_registro` DATETIME NULL,
-  `fecha_modificacion` DATETIME NULL,
+  `fecha_registro` DATETIME NOT NULL,
+  `fecha_modificacion` DATETIME NOT NULL,
   PRIMARY KEY (`id`))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
@@ -261,9 +294,9 @@ CREATE TABLE IF NOT EXISTS `CMS_VALMAR_DB`.`producto` (
   `descuento` DECIMAL NULL DEFAULT NULL,
   `id_marca` INT(5) NOT NULL,
   `id_tienda` INT(5) NOT NULL,
-  `estado` INT(1) NULL DEFAULT NULL,
-  `fecha_registro` DATETIME NULL DEFAULT NULL,
-  `fecha_modificacion` DATETIME NULL DEFAULT NULL,
+  `estado` INT(1) NOT NULL,
+  `fecha_registro` DATETIME NOT NULL,
+  `fecha_modificacion` DATETIME NOT NULL,
   PRIMARY KEY (`id`),
   INDEX `id_tienda` (`id_tienda` ASC),
   INDEX `producto_marca_idx` (`id_marca` ASC),
@@ -371,6 +404,7 @@ CREATE TABLE IF NOT EXISTS `CMS_VALMAR_DB`.`orden` (
   `costo_envio` DECIMAL NULL DEFAULT NULL,
   `costo_total` DECIMAL NULL DEFAULT NULL,
   `fecha_envio` DATETIME NULL DEFAULT NULL,
+  `firma` TEXT NULL,
   PRIMARY KEY (`id`),
   INDEX `id_direccion_envio` (`id_direccion_envio` ASC),
   INDEX `id_informacion_cliente` (`id_informacion_cliente` ASC),
@@ -487,7 +521,7 @@ CREATE TABLE IF NOT EXISTS `CMS_VALMAR_DB`.`token` (
   `authToken` VARCHAR(500) NULL DEFAULT NULL,
   `issuedOn` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `expiresOn` TIMESTAMP NULL DEFAULT NULL,
-  `userId` INT(11) NOT NULL,
+  `userId` INT(3) NOT NULL,
   PRIMARY KEY (`id`),
   INDEX `FK_TOKENXUSUARIO` (`userId` ASC),
   CONSTRAINT `FK_TOKENXUSUARIO`
