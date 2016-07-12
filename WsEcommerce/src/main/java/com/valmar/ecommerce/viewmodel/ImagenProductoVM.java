@@ -1,13 +1,12 @@
 package com.valmar.ecommerce.viewmodel;
 
-
 public class ImagenProductoVM {
 	
 	private int id;
 	private int id_producto;
 	private int id_tienda;
 	private String nombre;	
-	private byte[] imagen;
+	private String imagen;
 	private int defecto;
 	
 	public int getId() {
@@ -34,10 +33,10 @@ public class ImagenProductoVM {
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
 	}
-	public byte[] getImagen() {
+	public String getImagen() {
 		return imagen;
 	}
-	public void setImagen(byte[] imagen) {
+	public void setImagen(String imagen) {
 		this.imagen = imagen;
 	}
 	public int getDefecto() {

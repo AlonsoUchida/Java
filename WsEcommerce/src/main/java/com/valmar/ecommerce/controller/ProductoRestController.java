@@ -187,7 +187,7 @@ public class ProductoRestController {
         
         imagenBean.setNombre(imagen.getNombre());
         imagenBean.setProducto(producto);
-        imagenBean.setImagen(imagen.getImagen());
+        imagenBean.setImagen(imagen.getImagen().getBytes());
         imagenBean.setDefecto(TipoImagen.SECUNDARIO.getValue());
         
         imagenProductoService.agregarImagen(imagenBean);
@@ -208,7 +208,7 @@ public class ProductoRestController {
         imagenBean.setId(imagen.getId());
         imagenBean.setNombre(imagen.getNombre());
         imagenBean.setProducto(producto);
-        imagenBean.setImagen(imagen.getImagen());
+        imagenBean.setImagen(imagen.getImagen().getBytes());
         imagenBean.setDefecto(imagen.getId());
         
         imagenProductoService.actualizarImagen(imagenBean);

@@ -1,7 +1,7 @@
 -- ******************************************************************************************************************************************************************
 -- Records of all tables*********************************************************************************************************************************************
 -- ******************************************************************************************************************************************************************
-
+USE `CMS_VALMAR_DB` ;
 
 -- ----------------------------
 -- Records of departamento
@@ -2126,11 +2126,11 @@ INSERT INTO `CMS_VALMAR_DB`.`tipo_documento` (`id`, `descripcion`) VALUES ('3', 
 -- ----------------------------
 
 -- Records of usuarios tipo bodeguero 1
-INSERT INTO `usuario` VALUES (1, 'JOSUE', 'MOSQUERA', 'josue.mosquera@valmar.com.pe', 'IRHhatCFrBo=', 'M', 1, 1, '43986525', '4236492', '958456456', 1, 'Av. Mariano Corenjo 341 Pueblo Libre',  NOW(),  1, NOW(), NOW());
+INSERT INTO `usuario` VALUES (1, 'JOSUE', 'MOSQUERA', 'josue.mosquera@valmar.com.pe', 'IRHhatCFrBo=', 'M', 1, '43986525', '4236492', '958456456', 'Av. Mariano Corenjo 341 Pueblo Libre',  NOW(), 1, 1, 1, NOW(), NOW());
 -- Records of usuarios tipo cliente 2
-INSERT INTO `usuario` VALUES (2, 'JOSUE', 'MOSQUERA', 'josue.mosquera.cliente@valmar.com.pe', 'IRHhatCFrBo=', 'M', 2, 1, '43986525', '4236492', '958456456', 1, 'Av. Mariano Corenjo 341 Pueblo Libre',  NOW(), 1, NOW(), NOW());
+INSERT INTO `usuario` VALUES (2, 'JOSUE', 'MOSQUERA', 'josue.mosquera.cliente@valmar.com.pe', 'IRHhatCFrBo=', 'M', 2, '43986525', '4236492', '958456456', 'Av. Mariano Corenjo 341 Pueblo Libre',  NOW(), 1, 1, 1, NOW(), NOW());
 -- Records of usuarios tipo vendedor 3
-INSERT INTO `usuario` VALUES (3, 'ALONSO', 'UCHIDA', 'javier.uchida.vendendor@valmar.com.pe', 'IRHhatCFrBo=', 'M', 3, 1, '43986525', '4236492','958456456', 1, 'Av. Mariano Corenjo 341 Pueblo Libre',  NOW(),  1,  NOW(), NOW());
+INSERT INTO `usuario` VALUES (3, 'ALONSO', 'UCHIDA', 'javier.uchida@valmar.com.pe', 'IRHhatCFrBo=', 'M', 3 , '43986525', '4236492','958456456',  'Av. Mariano Corenjo 341 Pueblo Libre',  NOW(), 1, 1,  1,  NOW(), NOW());
 -- ----------------------------
 -- Records of autoridad
 -- ----------------------------
