@@ -8,6 +8,8 @@ public class BodegueroVM {
 	private String correo;
 	private String password;
 	private String genero;
+	private int id_tipoDocumento; 
+	private String valorDocumento;
 	
 	public int getId() {
 		return id;
@@ -24,7 +26,6 @@ public class BodegueroVM {
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
 	}
-
 
 	public String getCorreo() {
 		return correo;
@@ -56,6 +57,22 @@ public class BodegueroVM {
 
 	public void setGenero(String genero) {
 		this.genero = genero;
+	}
+
+	public int getId_tipoDocumento() {
+		return id_tipoDocumento;
+	}
+
+	public void setId_tipoDocumento(int id_tipoDocumento) {
+		this.id_tipoDocumento = id_tipoDocumento;
+	}
+
+	public String getValorDocumento() {
+		return valorDocumento;
+	}
+
+	public void setValorDocumento(String valorDocumento) {
+		this.valorDocumento = valorDocumento;
 	}
 	
 }

@@ -42,6 +42,9 @@ public class Orden {
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date fechaEnvio;
 	
+	@Column(name = "FIRMA")
+	private String firma;
+	
 	@JsonIgnore
 	@ManyToMany(mappedBy = "ordenes", fetch = FetchType.LAZY)
     private List<EstadoCuenta> estadoCuentas;
@@ -87,9 +90,7 @@ public class Orden {
 
 	public BigDecimal getCostoTotal() {
 		return costoTotal;
-	}
-	
-	
+	}	
 
 	public DireccionEnvio getDireccionEnvio() {
 		return direccionEnvio;
@@ -134,6 +135,15 @@ public class Orden {
 	public void setEstadoCuentas(List<EstadoCuenta> estadoCuentas) {
 		this.estadoCuentas = estadoCuentas;
 	}
+
+	public String getFirma() {
+		return firma;
+	}
+
+	public void setFirma(String firma) {
+		this.firma = firma;
+	}
+	
 	
 	
 }

@@ -15,6 +15,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -50,8 +51,32 @@ public class Usuario {
 	@Column(name = "TIPO")
 	private int tipo;
 	
+	@OneToOne
+	@JoinColumn(name="ID_TIPO_DOCUMENTO")
+	private TipoDocumento tipoDocumento; 
+	
+	@Column(name = "VALOR_DOCUMENTO")
+	private String valorDocumento;
+	
+	@Column(name = "TELEFONO_LOCAL")
+	private String telefonoLocal;	
+	
+	@Column(name = "TELEFONO_MOVIL")
+	private String telefonoMovil;	
+	
+	@Column(name = "DIRECCION_FISCAL")
+	private String direccionFiscal;	
+	
+	@Column(name = "FECHA_NACIMIENTO", updatable=false)
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date fechaNacimiento;
+	
+	@OneToOne
+	@JoinColumn(name="ID_DISTRITO")
+	private Distrito distrito;
+	
 	@Column(name = "ESTADO")
-	private int estado;
+	private int estado;	
 	
 	@Column(name = "FECHA_REGISTRO", updatable=false)
 	@Temporal(TemporalType.TIMESTAMP)
@@ -188,6 +213,62 @@ public class Usuario {
 
 	public void setDirecciones(Set<Direccion> direcciones) {
 		this.direcciones = direcciones;
+	}
+
+	public TipoDocumento getTipoDocumento() {
+		return tipoDocumento;
+	}
+
+	public void setTipoDocumento(TipoDocumento tipoDocumento) {
+		this.tipoDocumento = tipoDocumento;
+	}
+
+	public String getValorDocumento() {
+		return valorDocumento;
+	}
+
+	public void setValorDocumento(String valorDocumento) {
+		this.valorDocumento = valorDocumento;
+	}
+
+	public String getTelefonoLocal() {
+		return telefonoLocal;
+	}
+
+	public void setTelefonoLocal(String telefonoLocal) {
+		this.telefonoLocal = telefonoLocal;
+	}
+
+	public String getTelefonoMovil() {
+		return telefonoMovil;
+	}
+
+	public void setTelefonoMovil(String telefonoMovil) {
+		this.telefonoMovil = telefonoMovil;
+	}
+
+	public String getDireccionFiscal() {
+		return direccionFiscal;
+	}
+
+	public void setDireccionFiscal(String direccionFiscal) {
+		this.direccionFiscal = direccionFiscal;
+	}
+
+	public Date getFechaNacimiento() {
+		return fechaNacimiento;
+	}
+
+	public void setFechaNacimiento(Date fechaNacimiento) {
+		this.fechaNacimiento = fechaNacimiento;
+	}
+
+	public Distrito getDistrito() {
+		return distrito;
+	}
+
+	public void setDistrito(Distrito distrito) {
+		this.distrito = distrito;
 	}
 		
 }
