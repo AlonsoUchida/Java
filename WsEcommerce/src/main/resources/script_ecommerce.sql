@@ -706,7 +706,7 @@ DROP TABLE IF EXISTS `CMS_VALMAR_DB`.`tipo_tienda` ;
 
 CREATE TABLE IF NOT EXISTS `CMS_VALMAR_DB`.`tipo_tienda` (
   `id` INT(5) NOT NULL AUTO_INCREMENT,
-  `descripción` VARCHAR(100) NULL,
+  `descripcion` VARCHAR(100) NULL,
   PRIMARY KEY (`id`))
 ENGINE = InnoDB;
 
@@ -717,7 +717,7 @@ ENGINE = InnoDB;
 DROP TABLE IF EXISTS `CMS_VALMAR_DB`.`tienda_tipo_tienda` ;
 
 CREATE TABLE IF NOT EXISTS `CMS_VALMAR_DB`.`tienda_tipo_tienda` (
-  `id` INT(14) NOT NULL,
+  `id` INT(14) NOT NULL AUTO_INCREMENT,
   `id_tienda` INT(11) NOT NULL,
   `id_tipo_tienda` INT(5) NOT NULL,
   PRIMARY KEY (`id`),

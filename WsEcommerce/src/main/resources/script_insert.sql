@@ -1,7 +1,7 @@
 -- ******************************************************************************************************************************************************************
 -- Records of all tables*********************************************************************************************************************************************
 -- ******************************************************************************************************************************************************************
-USE `CMS_VALMAR_DB_DEV` ;
+USE `CMS_VALMAR_DB_DEV`;
 
 -- ----------------------------
 -- Records of departamento
@@ -2117,9 +2117,9 @@ INSERT INTO `marca` VALUES (25, 'YELLOWTAIL', 1);
 -- ----------------------------
 -- Records of tipo_documento
 -- ----------------------------
-INSERT INTO `CMS_VALMAR_DB_DEV`.`tipo_documento` (`id`, `descripcion`) VALUES ('1', 'Dni');
-INSERT INTO `CMS_VALMAR_DB_DEV`.`tipo_documento` (`id`, `descripcion`) VALUES ('2', 'Carnet de Extranjería');
-INSERT INTO `CMS_VALMAR_DB_DEV`.`tipo_documento` (`id`, `descripcion`) VALUES ('3', 'Pasaporte');
+INSERT INTO `tipo_documento` (`id`, `descripcion`) VALUES ('1', 'Dni');
+INSERT INTO `tipo_documento` (`id`, `descripcion`) VALUES ('2', 'Carnet de Extranjería');
+INSERT INTO `tipo_documento` (`id`, `descripcion`) VALUES ('3', 'Pasaporte');
 
 -- ----------------------------
 -- Records of usuarios
@@ -2201,12 +2201,26 @@ INSERT INTO `cliente_direccion` VALUES (1, '2', '1');
 -- ----------------------------
 -- Records of envio
 -- ----------------------------
-INSERT INTO `CMS_VALMAR_DB_DEV`.`envio` (`id`, `nombre`, `estado`) VALUES ('1', 'Delivery', '1');
+INSERT INTO `envio` (`id`, `nombre`, `estado`) VALUES ('1', 'Delivery', '1');
 -- ----------------------------
 -- Records of metodo_pago
 -- ----------------------------
-INSERT INTO `CMS_VALMAR_DB_DEV`.`metodo_pago` (`id`, `nombre`, `estado`) VALUES ('1', 'Efectivo', '1');
-INSERT INTO `CMS_VALMAR_DB_DEV`.`metodo_pago` (`id`, `nombre`, `estado`) VALUES ('2', 'Tarjeta', '1');
+INSERT INTO `metodo_pago` (`id`, `nombre`, `estado`) VALUES ('1', 'Efectivo', '1');
+INSERT INTO `metodo_pago` (`id`, `nombre`, `estado`) VALUES ('2', 'Tarjeta', '1');
 
+-- ----------------------------
+-- Records of banco
+-- ----------------------------
+INSERT INTO `banco` (`id`, `nombre`) VALUES ('1', 'BCP');
+INSERT INTO `banco` (`id`, `nombre`) VALUES ('2', 'Interbank');
+INSERT INTO `banco` (`id`, `nombre`) VALUES ('3', 'Scotiabank');
+INSERT INTO `banco` (`id`, `nombre`) VALUES ('4', 'BBVA Continental');
 
-
+-- ----------------------------
+-- Records of tipo_tienda
+-- ----------------------------
+INSERT INTO `tipo_tienda` (`id`, `descripcion`) VALUES ('1', 'Libreria'); 
+INSERT INTO `tipo_tienda` (`id`, `descripcion`) VALUES ('2', 'Licores'); 
+INSERT INTO `tipo_tienda` (`id`, `descripcion`) VALUES ('3', 'Abarrotes'); 
+INSERT INTO `tipo_tienda` (`id`, `descripcion`) VALUES ('4', 'Bazar'); 
+INSERT INTO `tipo_tienda` (`id`, `descripcion`) VALUES ('5', 'Panaderia'); 
