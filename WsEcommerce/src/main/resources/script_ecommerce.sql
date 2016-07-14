@@ -108,6 +108,25 @@ COMMENT = 'tabla de datos distritos de perú';
 
 
 -- -----------------------------------------------------
+-- Table `CMS_VALMAR_DB`.`urbanizacion`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `CMS_VALMAR_DB`.`urbanizacion` ;
+
+CREATE TABLE IF NOT EXISTS `CMS_VALMAR_DB`.`urbanizacion` (
+  `id` INT NOT NULL,
+  `nombre` VARCHAR(45) NULL,
+  `id_distrito` INT(3) NULL,
+  PRIMARY KEY (`id`),
+  INDEX `fkid_distrito_idx` (`id_distrito` ASC),
+  CONSTRAINT `fkid_distrito`
+    FOREIGN KEY (`id_distrito`)
+    REFERENCES `CMS_VALMAR_DB`.`distrito` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
 -- Table `CMS_VALMAR_DB`.`direccion`
 -- -----------------------------------------------------
 DROP TABLE IF EXISTS `CMS_VALMAR_DB`.`direccion` ;
@@ -121,11 +140,18 @@ CREATE TABLE IF NOT EXISTS `CMS_VALMAR_DB`.`direccion` (
   `latitud` VARCHAR(500) NULL,
   `longitud` VARCHAR(500) NULL,
   `activo` INT(1) NULL,
+  `id_urbanizacion` INT(3) NULL,
   PRIMARY KEY (`id`),
   INDEX `id_distrito` (`id_distrito` ASC),
+  INDEX `urbanizaciones_ibfk_1_idx` (`id_urbanizacion` ASC),
   CONSTRAINT `direcciones_ibfk_3`
     FOREIGN KEY (`id_distrito`)
-    REFERENCES `CMS_VALMAR_DB`.`distrito` (`id`))
+    REFERENCES `CMS_VALMAR_DB`.`distrito` (`id`),
+  CONSTRAINT `urbanizaciones_ibfk_1`
+    FOREIGN KEY (`id_urbanizacion`)
+    REFERENCES `CMS_VALMAR_DB`.`urbanizacion` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
 
