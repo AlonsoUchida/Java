@@ -6,7 +6,7 @@ import com.valmar.ecommerce.model.Tienda;
 
 public interface TiendaDao {
 	Tienda obtenerPorId(int id);	 
-    void agregar(Tienda tienda);     
+    int agregar(Tienda tienda);     
     void eliminar(int id);    
     List<Tienda> listarTiendas();
 	void actualizar(Tienda tiendaBean);

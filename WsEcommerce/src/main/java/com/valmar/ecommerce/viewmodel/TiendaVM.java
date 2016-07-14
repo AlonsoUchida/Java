@@ -2,6 +2,8 @@ package com.valmar.ecommerce.viewmodel;
 
 import java.math.BigDecimal;
 
+import com.valmar.ecommerce.model.Banco;
+
 public class TiendaVM {
 
 	private int id;
@@ -18,6 +20,10 @@ public class TiendaVM {
 	private int estadoAbierto;
 	private byte[] imagen;	
     private int[] id_usuarios;
+	private String paginaweb;
+	private int tarjeta;
+	private int id_banco;
+	private int[] id_tipo_tienda;
 	
 	public int getId() {
 		return id;
@@ -102,6 +108,30 @@ public class TiendaVM {
 	}
 	public void setEnvios(int[] envios) {
 		this.envios = envios;
+	}
+	public String getPaginaweb() {
+		return paginaweb;
+	}
+	public void setPaginaweb(String paginaweb) {
+		this.paginaweb = paginaweb;
+	}
+	public int getTarjeta() {
+		return tarjeta;
+	}
+	public void setTarjeta(int tarjeta) {
+		this.tarjeta = tarjeta;
+	}
+	public int getId_banco() {
+		return id_banco;
+	}
+	public void setId_banco(int id_banco) {
+		this.id_banco = id_banco;
+	}
+	public int[] getId_tipo_tienda() {
+		return id_tipo_tienda;
+	}
+	public void setId_tipo_tienda(int[] id_tipo_tienda) {
+		this.id_tipo_tienda = id_tipo_tienda;
 	}
 	
 }

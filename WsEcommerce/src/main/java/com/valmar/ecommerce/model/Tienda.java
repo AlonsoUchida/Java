@@ -65,6 +65,16 @@ public class Tienda {
 	@Column(name = "HORARIO_ATENCION")
 	private String horarioAtencion;
 	
+	@Column(name = "PAGINAWEB")
+	private String paginaweb;
+	
+	@Column(name = "TARJETA")
+	private Integer tarjeta;
+	
+	@ManyToOne
+	@JoinColumn(name = "ID_BANCO")
+	private Banco banco;
+	
 	@Column(name = "ESTADO")
 	private int estado;
 	
@@ -114,6 +124,13 @@ public class Tienda {
 	@JsonIgnore
 	@ManyToMany(fetch = FetchType.LAZY, mappedBy="tiendas")
 	private Set<Usuario> usuarios;
+	
+	@ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(
+            name = "tienda_tipo_tienda",
+            joinColumns = {@JoinColumn(name = "ID_TIENDA", referencedColumnName = "ID")},
+            inverseJoinColumns = {@JoinColumn(name = "ID_TIPO_TIENDA", referencedColumnName = "ID")})
+    private Set<TipoTienda> tipoTiendas;
 	
 	@Transient
 	private String distancia;
@@ -284,6 +301,38 @@ public class Tienda {
 
 	public void setDistancia(String distancia) {
 		this.distancia = distancia;
+	}
+
+	public String getPaginaweb() {
+		return paginaweb;
+	}
+
+	public void setPaginaweb(String paginaweb) {
+		this.paginaweb = paginaweb;
+	}
+
+	public Integer getTarjeta() {
+		return tarjeta;
+	}
+
+	public void setTarjeta(Integer tarjeta) {
+		this.tarjeta = tarjeta;
+	}
+
+	public Banco getBanco() {
+		return banco;
+	}
+
+	public void setBanco(Banco banco) {
+		this.banco = banco;
+	}
+
+	public Set<TipoTienda> getTipoTiendas() {
+		return tipoTiendas;
+	}
+
+	public void setTipoTiendas(Set<TipoTienda> tipoTiendas) {
+		this.tipoTiendas = tipoTiendas;
 	}	
 	
 }

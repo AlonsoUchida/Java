@@ -26,12 +26,14 @@ public class TiendaDaoImpl extends AbstractDao<Integer, Tienda> implements Tiend
 	}
 
 	@Override
-	public void agregar(Tienda tienda) {
+	public int agregar(Tienda tienda) {
 		try {
 			persist(tienda);
+			return tienda.getId();					
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		return 0;
 	}
 
 	@Override

@@ -36,8 +36,8 @@ public class TiendaServiceImpl implements TiendaService{
 	}
 
 	@Override
-	public void agregar(Tienda tienda) {
-		tiendaDao.agregar(tienda);
+	public int agregar(Tienda tienda) {
+		return tiendaDao.agregar(tienda);
 	}
 
 	@Override

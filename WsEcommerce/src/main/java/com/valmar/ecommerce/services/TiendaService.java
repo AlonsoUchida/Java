@@ -9,7 +9,7 @@ import com.valmar.ecommerce.model.Usuario;
 
 public interface TiendaService {
 	Tienda obtenerPorId(int id);	 
-    void agregar(Tienda tienda); 
+    int agregar(Tienda tienda); 
     void actulizar(Tienda tiendaBean);
     void eliminar(int id);    
     List<Tienda> listarTiendas();

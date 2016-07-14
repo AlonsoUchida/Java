@@ -23,6 +23,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import com.valmar.ecommerce.enums.TipoEstado;
 import com.valmar.ecommerce.enums.TipoImagen;
+import com.valmar.ecommerce.model.Banco;
 import com.valmar.ecommerce.model.Direccion;
 import com.valmar.ecommerce.model.Distrito;
 import com.valmar.ecommerce.model.Envio;
@@ -31,10 +32,13 @@ import com.valmar.ecommerce.model.ImagenTienda;
 import com.valmar.ecommerce.model.MetodoPago;
 import com.valmar.ecommerce.model.Producto;
 import com.valmar.ecommerce.model.Tienda;
+import com.valmar.ecommerce.model.TipoTienda;
 import com.valmar.ecommerce.model.Usuario;
+import com.valmar.ecommerce.services.BancoService;
 import com.valmar.ecommerce.services.DireccionService;
 import com.valmar.ecommerce.services.ImagenTiendaService;
 import com.valmar.ecommerce.services.TiendaService;
+import com.valmar.ecommerce.services.TipoTiendaService;
 import com.valmar.ecommerce.util.DistanceCalculatorUtil;
 import com.valmar.ecommerce.viewmodel.ImagenProductoVM;
 import com.valmar.ecommerce.viewmodel.ProductoPorTiendaVM;
@@ -52,6 +56,10 @@ public class TiendaRestController {
 	DireccionService direccionService;
 	@Autowired
 	ImagenTiendaService imagenTiendaService;
+	@Autowired
+	TipoTiendaService tipoTiendaService;
+	@Autowired
+	BancoService bancoService;
 
 	private List<TiendaVMLite> clonarTiendasVMLite(List<Tienda> tiendas) {
 		List<TiendaVMLite> tiendasLite = new ArrayList<>();
@@ -105,8 +113,8 @@ public class TiendaRestController {
 					longitudTienda, "K");
 			if (distancia < DistanceCalculatorUtil.RADIO_USUARIO) {
 				Tienda tienda = service.obtenerTiendaPorDireccion(item.getId());
-				if(tienda!=null){
-					distancia = distancia * 1000;				
+				if (tienda != null) {
+					distancia = distancia * 1000;
 					tienda.setDistancia(Double.toString(distancia));
 					tiendas.add(tienda);
 				}
@@ -187,7 +195,7 @@ public class TiendaRestController {
 	}
 
 	@RequestMapping(value = "/agregar", method = RequestMethod.POST)
-	public ResponseEntity<Void> agregar(@RequestBody TiendaVM tienda, UriComponentsBuilder ucBuilder) {
+	public ResponseEntity<Integer> agregar(@RequestBody TiendaVM tienda, UriComponentsBuilder ucBuilder) {
 
 		Tienda tiendaBean = new Tienda();
 		tiendaBean.setNombre(tienda.getNombre());
@@ -198,43 +206,55 @@ public class TiendaRestController {
 		tiendaBean.setAfiliacion_valor(tienda.getAfiliacion_valor());
 		tiendaBean.setCostoMinimo(tienda.getCostoMinimo());
 		tiendaBean.setHorarioAtencion(tienda.getHorarioAtencion());
-		tiendaBean.setEstado(TipoEstado.HABILITADO.getValue());
-		List<Usuario> usuarios = new ArrayList<>();
+		tiendaBean.setPaginaweb(tienda.getPaginaweb());
+		tiendaBean.setTarjeta(tienda.getTarjeta());
+		
+		Banco banco = bancoService.obtenerPorId(tienda.getId_banco());
+		if(banco!=null)
+			tiendaBean.setBanco(banco);
+		
+		if (tienda.getId_tipo_tienda() != null) {
+			List<TipoTienda> tipoTiendas = new ArrayList<>();
+			for (int id_tienda : tienda.getId_tipo_tienda()) {
+				TipoTienda tipoTienda = tipoTiendaService.obtenerPorId(id_tienda);
+				tipoTiendas.add(tipoTienda);
+			}
+			tiendaBean.setTipoTiendas(new HashSet<TipoTienda>(tipoTiendas));
+		}
+	
 		if (tienda.getId_usuarios() != null) {
+			List<Usuario> usuarios = new ArrayList<>();
 			for (int id_usuario : tienda.getId_usuarios()) {
 				Usuario usuario = service.obtenerUsuario(id_usuario);
-				if (usuario == null) {
-					return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
-				}
 				usuarios.add(usuario);
 			}
+			tiendaBean.setUsuarios(new HashSet<Usuario>(usuarios));
 		}
-		tiendaBean.setUsuarios(new HashSet<Usuario>(usuarios));
+		tiendaBean.setEstado(TipoEstado.HABILITADO.getValue());
 		tiendaBean.setEstadoAbierto(tienda.getEstadoAbierto());
 		tiendaBean.setFechaRegistro(new Date());
 		tiendaBean.setFechaModificacion(new Date());
 
-		List<MetodoPago> metodoPagos = new ArrayList<>();
-		for(int indice : tienda.getMetodoPagos()){
-			MetodoPago metodoPago = service.obtenerMetodoPago(indice);
-			metodoPagos.add(metodoPago);
+		if (tienda.getMetodoPagos() != null) {
+			List<MetodoPago> metodoPagos = new ArrayList<>();
+			for (int indice : tienda.getMetodoPagos()) {
+				MetodoPago metodoPago = service.obtenerMetodoPago(indice);
+				metodoPagos.add(metodoPago);
+			}
+			tiendaBean.setMetodoPagos(new HashSet<MetodoPago>(metodoPagos));
 		}
-		tiendaBean.setMetodoPagos(new HashSet<MetodoPago>(metodoPagos));
-		
-		List<Envio> envios = new ArrayList<>();
-		for(int indice : tienda.getEnvios()){
-			Envio envio = service.obtenerEnvio(indice);
-			envios.add(envio);
+		if (tienda.getEnvios() != null) {
+			List<Envio> envios = new ArrayList<>();
+			for (int indice : tienda.getEnvios()) {
+				Envio envio = service.obtenerEnvio(indice);
+				envios.add(envio);
+			}
+			tiendaBean.setEnvios(new HashSet<Envio>(envios));
 		}
-		tiendaBean.setEnvios(new HashSet<Envio>(envios));
-		
-		tiendaBean.setMetodoPagos(new HashSet<MetodoPago>(metodoPagos));
 
-		service.agregar(tiendaBean);
+		int id = service.agregar(tiendaBean);
 
-		HttpHeaders headers = new HttpHeaders();
-		headers.setLocation(ucBuilder.path("/tienda/{nombre}").buildAndExpand(tienda.getNombre()).toUri());
-		return new ResponseEntity<Void>(headers, HttpStatus.CREATED);
+		return new ResponseEntity<Integer>(id, HttpStatus.CREATED);
 	}
 
 	@RequestMapping(value = "/actualizar", method = RequestMethod.PUT)
@@ -250,34 +270,51 @@ public class TiendaRestController {
 		tiendaBean.setAfiliacion_valor(tienda.getAfiliacion_valor());
 		tiendaBean.setCostoMinimo(tienda.getCostoMinimo());
 		tiendaBean.setHorarioAtencion(tienda.getHorarioAtencion());
-		List<Usuario> usuarios = new ArrayList<>();
+		tiendaBean.setPaginaweb(tienda.getPaginaweb());
+		tiendaBean.setTarjeta(tienda.getTarjeta());
+		
+		Banco banco = bancoService.obtenerPorId(tienda.getId_banco());
+		if(banco!=null)
+			tiendaBean.setBanco(banco);
+		
+		if (tienda.getId_tipo_tienda() != null) {
+			List<TipoTienda> tipoTiendas = new ArrayList<>();
+			for (int id_tienda : tienda.getId_tipo_tienda()) {
+				TipoTienda tipoTienda = tipoTiendaService.obtenerPorId(id_tienda);
+				tipoTiendas.add(tipoTienda);
+			}
+			tiendaBean.setTipoTiendas(new HashSet<TipoTienda>(tipoTiendas));
+		}
+	
 		if (tienda.getId_usuarios() != null) {
+			List<Usuario> usuarios = new ArrayList<>();
 			for (int id_usuario : tienda.getId_usuarios()) {
 				Usuario usuario = service.obtenerUsuario(id_usuario);
-				if (usuario == null) {
-					return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
-				}
 				usuarios.add(usuario);
 			}
+			tiendaBean.setUsuarios(new HashSet<Usuario>(usuarios));
 		}
-		tiendaBean.setUsuarios(new HashSet<Usuario>(usuarios));
 		tiendaBean.setEstado(TipoEstado.HABILITADO.getValue());
 		tiendaBean.setEstadoAbierto(tienda.getEstadoAbierto());
+		tiendaBean.setFechaRegistro(new Date());
 		tiendaBean.setFechaModificacion(new Date());
 
-		List<MetodoPago> metodoPagos = new ArrayList<>();
-		for(int indice : tienda.getMetodoPagos()){
-			MetodoPago metodoPago = service.obtenerMetodoPago(indice);
-			metodoPagos.add(metodoPago);
+		if (tienda.getMetodoPagos() != null) {
+			List<MetodoPago> metodoPagos = new ArrayList<>();
+			for (int indice : tienda.getMetodoPagos()) {
+				MetodoPago metodoPago = service.obtenerMetodoPago(indice);
+				metodoPagos.add(metodoPago);
+			}
+			tiendaBean.setMetodoPagos(new HashSet<MetodoPago>(metodoPagos));
 		}
-		tiendaBean.setMetodoPagos(new HashSet<MetodoPago>(metodoPagos));
-		
-		List<Envio> envios = new ArrayList<>();
-		for(int indice : tienda.getEnvios()){
-			Envio envio = service.obtenerEnvio(indice);
-			envios.add(envio);
+		if (tienda.getEnvios() != null) {
+			List<Envio> envios = new ArrayList<>();
+			for (int indice : tienda.getEnvios()) {
+				Envio envio = service.obtenerEnvio(indice);
+				envios.add(envio);
+			}
+			tiendaBean.setEnvios(new HashSet<Envio>(envios));
 		}
-		tiendaBean.setEnvios(new HashSet<Envio>(envios));
 
 		service.actulizar(tiendaBean);
 
