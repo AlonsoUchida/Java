@@ -20,5 +20,6 @@ public interface TiendaService {
 	List<Tienda> listarPorDistrito(int id);
 	List<Tienda> obtenerTiendasPorNombreDistrito(String nombre, int id);
 	List<Tienda> listarPorVendedor(int id);
-	Tienda obtenerTiendaPorDireccion(int id);	
+	Tienda obtenerTiendaPorDireccion(int id);
+	List<Tienda> obtenerTiendasPorNombreDistritoUrbanizacion(String nombre, int id, int id_urbanizacion);	
 }

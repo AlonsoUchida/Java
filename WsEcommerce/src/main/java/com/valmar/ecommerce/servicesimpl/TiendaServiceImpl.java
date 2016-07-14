@@ -95,4 +95,9 @@ public class TiendaServiceImpl implements TiendaService{
 		return envioDao.obtenerPorId(id_envio);
 	}
 
+	@Override
+	public List<Tienda> obtenerTiendasPorNombreDistritoUrbanizacion(String nombre, int id, int id_urbanizacion) {
+		return tiendaDao.obtenerTiendasPorNombreDistritoUrbanizacion(nombre, id, id_urbanizacion);
+	}
+
 }

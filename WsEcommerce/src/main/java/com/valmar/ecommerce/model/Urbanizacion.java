@@ -7,30 +7,26 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
-@Table(name = "distrito")
-public class Distrito {
+@Table(name = "urbanizacion")
+public class Urbanizacion {
 
 	@Id
 	@Column(name = "ID")
 	private int id;
 
-	@Column(name = "NOMBRE")
+	@Column(name = "NOMBRE", length = 500)
+	@NotNull
 	private String nombre;
 	
 	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name="ID_PROVINCIA")
+	@JoinColumn(name="ID_DISTRITO")
 	@JsonManagedReference
-	private Provincia provincia;
-	
-	@Column(name = "LATITUD")
-	private String latitud;
-	
-	@Column(name = "LONGITUD")
-	private String longitud;
+	private Distrito distrito;
 
 	public int getId() {
 		return id;
@@ -48,28 +44,12 @@ public class Distrito {
 		this.nombre = nombre;
 	}
 
-	public Provincia getProvincia() {
-		return provincia;
+	public Distrito getDistrito() {
+		return distrito;
 	}
 
-	public void setProvincia(Provincia provincia) {
-		this.provincia = provincia;
-	}
-
-	public String getLatitud() {
-		return latitud;
-	}
-
-	public void setLatitud(String latitud) {
-		this.latitud = latitud;
-	}
-
-	public String getLongitud() {
-		return longitud;
-	}
-
-	public void setLongitud(String longitud) {
-		this.longitud = longitud;
+	public void setDistrito(Distrito distrito) {
+		this.distrito = distrito;
 	}
 	
 	

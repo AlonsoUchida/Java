@@ -10,6 +10,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
@@ -46,10 +47,15 @@ public class Direccion {
 	@Column(name = "ACTIVO")
 	private int activo;
 	
-	@OneToOne(fetch = FetchType.EAGER)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name="ID_DISTRITO")
 	@JsonManagedReference
 	private Distrito distrito;
+	
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name="ID_URBANIZACION")
+	@JsonManagedReference
+	private Urbanizacion urbanizacion;
 	
 	@JsonIgnore
 	@ManyToMany(mappedBy = "direcciones", fetch = FetchType.LAZY)

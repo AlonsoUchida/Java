@@ -163,4 +163,26 @@ public class TiendaDaoImpl extends AbstractDao<Integer, Tienda> implements Tiend
 		return null;
 	}
 
+	@Override
+	public List<Tienda> obtenerTiendasPorNombreDistritoUrbanizacion(String nombre, int id, int id_urbanizacion) {
+		try {
+			Criteria criteria = createEntityCriteria();
+			criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
+			criteria.add(Restrictions.ilike("nombre", "%"+nombre+"%"));
+			criteria.createAlias("direcciones", "d");
+			//criteria.createAlias("envios", "e");
+			if(id_urbanizacion==0)
+				criteria.add(Restrictions.eq("d.distrito.id", id));
+			else
+				criteria.add(Restrictions.eq("d.urbanizacion.id", id));
+			
+			criteria.setMaxResults(20);//Los primeros 20 elementos por defecto
+			List<Tienda> tiendas = (List<Tienda>) criteria.list();
+			return tiendas;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
 }

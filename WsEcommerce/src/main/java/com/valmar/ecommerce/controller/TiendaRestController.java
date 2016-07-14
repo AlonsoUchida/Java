@@ -194,6 +194,23 @@ public class TiendaRestController {
 		return new ResponseEntity<List<TiendaVMLite>>(tiendasLite, HttpStatus.OK);
 	}
 
+	@RequestMapping(value = "/obtenerTiendasPorNombreDistritoUrbanizacion", params = { "nombre",
+			"id" , "id_urbanizacion"}, method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<List<TiendaVMLite>> obtenerTiendasPorNombreDistritoUrbanizacion(@RequestParam("nombre") String nombre,
+			@RequestParam("id") int id, @RequestParam("id_urbanizacion") int id_urbanizacion) {
+		List<Tienda> tiendas = service.obtenerTiendasPorNombreDistritoUrbanizacion(nombre, id, id_urbanizacion);
+		if ((tiendas == null) || (tiendas.isEmpty())) {
+			return new ResponseEntity<List<TiendaVMLite>>(HttpStatus.NO_CONTENT);
+		}
+
+		List<TiendaVMLite> tiendasLite = clonarTiendasVMLite(tiendas);
+
+		if (tiendasLite.isEmpty()) {
+			return new ResponseEntity<List<TiendaVMLite>>(HttpStatus.NO_CONTENT);
+		}
+		return new ResponseEntity<List<TiendaVMLite>>(tiendasLite, HttpStatus.OK);
+	}
+
 	@RequestMapping(value = "/agregar", method = RequestMethod.POST)
 	public ResponseEntity<Integer> agregar(@RequestBody TiendaVM tienda, UriComponentsBuilder ucBuilder) {
 
@@ -208,11 +225,11 @@ public class TiendaRestController {
 		tiendaBean.setHorarioAtencion(tienda.getHorarioAtencion());
 		tiendaBean.setPaginaweb(tienda.getPaginaweb());
 		tiendaBean.setTarjeta(tienda.getTarjeta());
-		
+
 		Banco banco = bancoService.obtenerPorId(tienda.getId_banco());
-		if(banco!=null)
+		if (banco != null)
 			tiendaBean.setBanco(banco);
-		
+
 		if (tienda.getId_tipo_tienda() != null) {
 			List<TipoTienda> tipoTiendas = new ArrayList<>();
 			for (int id_tienda : tienda.getId_tipo_tienda()) {
@@ -221,7 +238,7 @@ public class TiendaRestController {
 			}
 			tiendaBean.setTipoTiendas(new HashSet<TipoTienda>(tipoTiendas));
 		}
-	
+
 		if (tienda.getId_usuarios() != null) {
 			List<Usuario> usuarios = new ArrayList<>();
 			for (int id_usuario : tienda.getId_usuarios()) {
@@ -272,11 +289,11 @@ public class TiendaRestController {
 		tiendaBean.setHorarioAtencion(tienda.getHorarioAtencion());
 		tiendaBean.setPaginaweb(tienda.getPaginaweb());
 		tiendaBean.setTarjeta(tienda.getTarjeta());
-		
+
 		Banco banco = bancoService.obtenerPorId(tienda.getId_banco());
-		if(banco!=null)
+		if (banco != null)
 			tiendaBean.setBanco(banco);
-		
+
 		if (tienda.getId_tipo_tienda() != null) {
 			List<TipoTienda> tipoTiendas = new ArrayList<>();
 			for (int id_tienda : tienda.getId_tipo_tienda()) {
@@ -285,7 +302,7 @@ public class TiendaRestController {
 			}
 			tiendaBean.setTipoTiendas(new HashSet<TipoTienda>(tipoTiendas));
 		}
-	
+
 		if (tienda.getId_usuarios() != null) {
 			List<Usuario> usuarios = new ArrayList<>();
 			for (int id_usuario : tienda.getId_usuarios()) {
