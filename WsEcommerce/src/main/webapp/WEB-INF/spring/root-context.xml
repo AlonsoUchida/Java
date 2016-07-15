@@ -10,5 +10,4 @@
 		 <!-- <context:exclude-filter type="regex" 
 			expression="com.valmar.ecommerce.cotroller.*" /> -->
 	</context:component-scan> 
-		
 </beans>
