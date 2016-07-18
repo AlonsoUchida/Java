@@ -1,16 +1,13 @@
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ page session="false" %>
-<html>
-<head>
-	<title>Home</title>
-</head>
-<body>
-<h1>
-	Ecommerce Web Service  
-</h1>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ page session="false"%>
+<div class="jumbotron text-center">
+	<h1>Home Page</h1>
 
-<P>  The time on the server is ${serverTime}. </P>
-</body>
-</html>
+	<p>{{ message }}</p>
+
+	<h1>Ecommerce Web Service</h1>
+
+	<P>The time on the server is ${serverTime}.</P>
+</div>
 
 

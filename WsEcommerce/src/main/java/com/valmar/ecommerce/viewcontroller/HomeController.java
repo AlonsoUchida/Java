@@ -50,12 +50,6 @@ public class HomeController {
 
 		return "home";
 	}
-	
-	@RequestMapping(value = "/", method = RequestMethod.GET)
-	public String index(Locale locale, Model model) {
-		
-		return "Index";
-	}
 
 	@RequestMapping(value = "/notification", method = RequestMethod.GET)
 	public String notification(Locale locale, Model model) {

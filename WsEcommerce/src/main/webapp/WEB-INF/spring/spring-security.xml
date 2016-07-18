@@ -11,8 +11,7 @@
         http://www.springframework.org/schema/security/spring-security-4.0.xsd">
     
     <security:http pattern="/static/**" security="none" />
-    <security:http pattern="/UsuarioManagement" security="none" />
-    <security:http pattern="/Login" security="none" />
+    <security:http pattern="/views/**" security="none" />
     
     <security:http pattern="/tipodocumento/listar" security="none" />
     <security:http pattern="/distrito/listarPorProvincia" security="none" />

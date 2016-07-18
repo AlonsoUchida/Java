@@ -5,12 +5,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 @Controller
-@RequestMapping("/static/UsuarioManagement")
+@RequestMapping("/static")
 public class UsuarioController {
  
-      @RequestMapping(method = RequestMethod.GET)
+      @RequestMapping(value="/usuario", method = RequestMethod.GET)
         public String getUsuarioManagement() {
-            return "UsuarioManagement";
+            return "Usuario";
         }
  
 }

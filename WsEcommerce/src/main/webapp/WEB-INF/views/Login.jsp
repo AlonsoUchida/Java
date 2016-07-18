@@ -7,9 +7,9 @@
 <meta charset="utf-8" />
 <title>AngularJS User Registration and Login Example</title>
 <link rel="stylesheet"
-	href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" />
+	href="https://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" />
 <link
-	href="//cdn.rawgit.com/cornflourblue/angular-registration-login-example/master/app-content/app.css"
+	href="https://cdn.rawgit.com/cornflourblue/angular-registration-login-example/master/app-content/app.css"
 	rel="stylesheet" />
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
