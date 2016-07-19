@@ -1,18 +1,34 @@
 'use strict';
  
-App.controller('UsuarioController', ['$scope', 'UsuarioService', 'token', function($scope, UsuarioService, token) {
+App.controller('UsuarioController', ['$scope', 'UsuarioService', function($scope, UsuarioService) {
           var self = this;
           self.usuario = {id:null, nombre:'',apellido:'',correo:'', password:'', genero:'', 
         		  id_tipoDocumento:'', valorDocumento:'' };
-          self.usuarios =[];      
           
-          console.log('UsuarioController:' + token);
-         
+          $scope.generos = [{"id" : "M", "descripcion" : "Hombre"},{"id" : "F", "descripcion" : "Mujer"}] 
+          
+          self.listarTipoDocumentos = function(){
+        	  UsuarioService.listarTipoDocumentos()
+                  .then(
+                               function(d) {  
+                            	   $scope.tipoDocumentos = d;
+                            	   $scope.$apply();
+                                   console.log("usuario tipo documentos:" + $scope.tipoDocumentos);        
+                               },
+                                function(errResponse){
+                                    console.error('Error while fetching Currencies');
+                                }
+                       );
+          };
+          
+          
           self.listar = function(){
         	  UsuarioService.listar()
                   .then(
-                               function(d) {
-                                    self.usuarios = d;
+                               function(d) {  
+                            	   $scope.usuarios = d;
+                            	   $scope.$apply();
+                                   console.log("usuario controller:" + $scope.usuarios);        
                                },
                                 function(errResponse){
                                     console.error('Error while fetching Currencies');
@@ -21,6 +37,7 @@ App.controller('UsuarioController', ['$scope', 'UsuarioService', 'token', functi
           };
             
           self.agregar = function(usuario){
+        	  console.log(usuario);
         	  UsuarioService.agregar(usuario)
                       .then(
                     		  self.listar, 
@@ -31,6 +48,7 @@ App.controller('UsuarioController', ['$scope', 'UsuarioService', 'token', functi
           };
  
          self.actualizar = function(usuario){
+        	 console.log(usuario);
         	 UsuarioService.actualizar(usuario)
                       .then(
                               self.listar, 
@@ -50,8 +68,10 @@ App.controller('UsuarioController', ['$scope', 'UsuarioService', 'token', functi
                   );
           };
  
+
           self.listar();
- 
+          self.listarTipoDocumentos();
+          
           self.submit = function() {
               if(self.usuario.id===null){
                   console.log('Saving New User', self.usuario);    
