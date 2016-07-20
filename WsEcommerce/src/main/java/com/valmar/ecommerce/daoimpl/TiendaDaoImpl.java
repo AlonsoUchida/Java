@@ -134,7 +134,7 @@ public class TiendaDaoImpl extends AbstractDao<Integer, Tienda> implements Tiend
 			criteria.createAlias("direcciones", "d");
 			//criteria.createAlias("envios", "e");
 			criteria.add(Restrictions.eq("d.distrito.id", id));
-			criteria.setMaxResults(20);//Los primeros 20 elementos por defecto
+			//criteria.setMaxResults(20);//Los primeros 20 elementos por defecto
 			List<Tienda> tiendas = (List<Tienda>) criteria.list();
 			return tiendas;
 		} catch (Exception e) {
