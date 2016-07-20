@@ -5,8 +5,20 @@ App.controller('UsuarioController', ['$scope', 'UsuarioService', function($scope
           self.usuario = {id:null, nombre:'',apellido:'',correo:'', password:'', genero:'', 
         		  id_tipoDocumento:'', valorDocumento:'' };
           
-          $scope.generos = [{"id" : "M", "descripcion" : "Hombre"},{"id" : "F", "descripcion" : "Mujer"}] 
-          
+          $scope.generos = [{"id" : "M", "descripcion" : "Hombre"},{"id" : "F", "descripcion" : "Mujer"}];
+          self.genero = "";
+          self.tipoDocumento = "";
+          $scope.actualizarGenero = function (genero) {
+             self.usuario.genero = genero.id;
+             console.log(self.usuario.genero);
+             
+          };
+
+          $scope.actualizarTipoDocumento = function (tipoDocumento) {
+             self.usuario.id_tipoDocumento = tipoDocumento.id;
+             console.log(self.usuario.id_tipoDocumento);
+          };
+
           self.listarTipoDocumentos = function(){
         	  UsuarioService.listarTipoDocumentos()
                   .then(

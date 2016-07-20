@@ -60,8 +60,10 @@
                           <div class="form-group col-md-12">
                               <label class="col-md-2 control-lable" for="genero">Genero</label>
                               <div class="col-md-7">
-                                 <select ng-model="ctrl.usuario.genero" ng-options="genero as genero.descripcion for genero in generos"></select>
+                                 <select ng-model="ctrl.genero" ng-options="genero as genero.descripcion for genero in generos"
+                                 ng-change="actualizarGenero(ctrl.genero)"></select>
                               </div>
+
                           </div>
                       </div> 
                         
@@ -70,7 +72,8 @@
                               <label class="col-md-2 control-lable" for="tipoDocumento">Tipo Documento</label>
                               
                               <div class="col-md-7">
-                              	<select ng-model="ctrl.usuario.id_tipoDocumento" ng-options="tipoDocumento as tipoDocumento.descripcion for tipoDocumento in tipoDocumentos"></select>
+                              	<select ng-model="ctrl.tipoDocumento" ng-options="tipoDocumento as tipoDocumento.descripcion for tipoDocumento in tipoDocumentos"
+                                ng-change="actualizarTipoDocumento(ctrl.tipoDocumento)"></select>
                               </div>
                           </div>
                       </div>   
