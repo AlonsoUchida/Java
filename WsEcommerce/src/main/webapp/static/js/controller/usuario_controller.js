@@ -1,22 +1,24 @@
 'use strict';
- 
 App.controller('UsuarioController', ['$scope', 'UsuarioService', function($scope, UsuarioService) {
           var self = this;
           self.usuario = {id:null, nombre:'',apellido:'',correo:'', password:'', genero:'', 
-        		  id_tipoDocumento:'', valorDocumento:'' };
-          
+        		  id_tipoDocumento:'', valorDocumento:'', direccionFiscal: '', fechaNacimiento: ''  };
+        
+          $scope.fechaNacimiento = "";
           $scope.generos = [{"id" : "M", "descripcion" : "Hombre"},{"id" : "F", "descripcion" : "Mujer"}];
           self.genero = "";
           self.tipoDocumento = "";
+          
           $scope.actualizarGenero = function (genero) {
              self.usuario.genero = genero.id;
-             console.log(self.usuario.genero);
+             console.log("actualizarGenero:" + self.usuario.genero);
              
           };
 
           $scope.actualizarTipoDocumento = function (tipoDocumento) {
+        	  console.log(tipoDocumento);
              self.usuario.id_tipoDocumento = tipoDocumento.id;
-             console.log(self.usuario.id_tipoDocumento);
+             console.log("actualizarTipoDocumento:" + self.usuario.id_tipoDocumento);
           };
 
           self.listarTipoDocumentos = function(){
@@ -24,8 +26,7 @@ App.controller('UsuarioController', ['$scope', 'UsuarioService', function($scope
                   .then(
                                function(d) {  
                             	   $scope.tipoDocumentos = d;
-                            	   $scope.$apply();
-                                   console.log("usuario tipo documentos:" + $scope.tipoDocumentos);        
+                            	   $scope.$apply();        
                                },
                                 function(errResponse){
                                     console.error('Error while fetching Currencies');
@@ -39,8 +40,7 @@ App.controller('UsuarioController', ['$scope', 'UsuarioService', function($scope
                   .then(
                                function(d) {  
                             	   $scope.usuarios = d;
-                            	   $scope.$apply();
-                                   console.log("usuario controller:" + $scope.usuarios);        
+                            	   $scope.$apply();       
                                },
                                 function(errResponse){
                                     console.error('Error while fetching Currencies');
@@ -49,7 +49,6 @@ App.controller('UsuarioController', ['$scope', 'UsuarioService', function($scope
           };
             
           self.agregar = function(usuario){
-        	  console.log(usuario);
         	  UsuarioService.agregar(usuario)
                       .then(
                     		  self.listar, 
@@ -60,7 +59,6 @@ App.controller('UsuarioController', ['$scope', 'UsuarioService', function($scope
           };
  
          self.actualizar = function(usuario){
-        	 console.log(usuario);
         	 UsuarioService.actualizar(usuario)
                       .then(
                               self.listar, 
@@ -86,6 +84,7 @@ App.controller('UsuarioController', ['$scope', 'UsuarioService', function($scope
           
           self.submit = function() {
               if(self.usuario.id===null){
+            	  self.usuario.fechaNacimiento = $scope.fechaNacimiento;
                   console.log('Saving New User', self.usuario);    
                   self.agregar(self.usuario);
               }else{
@@ -97,9 +96,34 @@ App.controller('UsuarioController', ['$scope', 'UsuarioService', function($scope
                
           self.edit = function(id){
               console.log('id to be edited', id);
-              for(var i = 0; i < self.usuario.length; i++){
-                  if(self.usuarios[i].id === id) {
-                     self.usuario = angular.copy(self.usuarios[i]);
+              console.log(self.usuarios);
+              for(var i = 0; i < $scope.usuarios.length; i++){
+                  if($scope.usuarios[i].id === id) {
+                	  console.log($scope.usuarios[i]);
+                	  self.usuario = angular.copy($scope.usuarios[i]);
+                	  
+                	  for(var j = 0; j < $scope.generos.length; j++){
+                		  console.log("$scope.generos[j].id " + $scope.generos[j].id);
+                		  console.log("$scope.usuarios[i].genero " + $scope.usuarios[i].genero);
+                		  if($scope.generos[j].id == $scope.usuarios[i].genero){
+                			  self.genero = $scope.generos[j];
+                			  self.usuario.genero = $scope.generos[j].id;
+                			  console.log("setted: " + self.usuario.genero);
+                		  }
+                	  }
+                	  for(var j = 0; j < $scope.tipoDocumentos.length; j++){
+                		  console.log("$scope.tipoDocumentos[j].id " + $scope.tipoDocumentos[j].id);
+                		  console.log("$scope.usuarios[i].id_tipoDocumento " + $scope.usuarios[i].tipoDocumento.id);
+                		  if($scope.tipoDocumentos[j].id == $scope.usuarios[i].tipoDocumento.id){
+                			  self.tipoDocumento = $scope.tipoDocumentos[j];
+                			  self.usuario.id_tipoDocumento = self.tipoDocumento.id;
+                			  console.log("setted: " + self.usuario.id_tipoDocumento);
+                		  }
+                	  }          
+                	 var date = new Date($scope.usuarios[i].fechaNacimiento);
+                	 var date =  date.format("dd/MM/yyyy");
+                	 console.log("date: " +date);
+                	 $scope.datepickerFechaNacimiento =  date.toString();    
                      break;
                   }
               }
@@ -116,8 +140,35 @@ App.controller('UsuarioController', ['$scope', 'UsuarioService', function($scope
            
           self.reset = function(){
               self.usuario= {id:null, nombre:'', apellido:'',correo:'', password:'', genero:'', 
-            		  id_tipoDocumento:'', valorDocumento:'' };
+            		  id_tipoDocumento:'', valorDocumento:'', direccionFiscal: '', fechaNacimiento: ''};
+              self.genero = "";
+              self.tipoDocumento = "";
+              $scope.fechaNacimiento = "";
+              $scope.datepickerFechaNacimiento =  ""; 
               $scope.myForm.$setPristine(); //reset Form
           };
  
       }]);
+
+App.directive("datepicker", function () {
+	  return {
+	    restrict: "A",
+	    require: "ngModel",
+	    link: function (scope, elem, attrs, ngModelCtrl) {
+	      var updateModel = function (dateText) {
+	        scope.$apply(function (dateText) {
+	          ngModelCtrl.$setViewValue(dateText);
+	        });
+	      };
+	      var options = {
+	        dateFormat: "dd/mm/yy",
+	        onSelect: function (dateText) {
+	          console.log(dateText);
+	          scope.fechaNacimiento = dateText;
+	          updateModel(dateText);
+	        }
+	      };
+	      elem.datepicker(options);
+	    }
+	  }
+	});

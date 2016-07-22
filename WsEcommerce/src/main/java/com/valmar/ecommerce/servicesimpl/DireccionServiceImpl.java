@@ -90,5 +90,10 @@ public class DireccionServiceImpl implements DireccionService{
 		return tiendaDao.obtenerPorId(id);
 	}
 
+	@Override
+	public List<Direccion> listarPorTienda(Integer id) {
+		return direccionDao.listarPorTienda(id);
+	}
+
 
 }

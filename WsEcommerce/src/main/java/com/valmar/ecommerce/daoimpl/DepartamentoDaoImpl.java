@@ -32,4 +32,12 @@ public class DepartamentoDaoImpl extends AbstractDao<Integer, Departamento> impl
 		return departamentos;
 	}
 
+	@Override
+	public Departamento obtenerDepartamentoPorProvincia(int id) {
+		Criteria criteria = createEntityCriteria();
+		criteria.createAlias("provincias", "p");
+		criteria.add(Restrictions.eq("p.id", id));
+		return (Departamento) criteria.uniqueResult();
+	}
+
 }

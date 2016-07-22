@@ -1,15 +1,19 @@
 'use strict';
  
-App.factory('UsuarioService', ['$http', '$q', 'token', function($http, $q, token){
+App.factory('TiendaService', ['$http', '$q', 'token', function($http, $q, token){
  
     return {
     		
-		    listarTipoDocumentos: function() {
+		    listarBancos: function() {
 		            var settings = {
 		                 "async": true,
 		                 "crossDomain": true,
-		                 "url": "http://localhost:8080/ecommerce/tipodocumento/listar",
-		                 "method": "GET"
+		                 "url": "http://localhost:8080/ecommerce/banco/listar",
+		                 "method": "GET",
+		                 "headers": {
+		                        "token": token,
+		                        "cache-control": "no-cache",
+		                 }
 		             }
 		
 		            return $.ajax(settings)
@@ -31,7 +35,7 @@ App.factory('UsuarioService', ['$http', '$q', 'token', function($http, $q, token
                    var settings = {
                         "async": true,
                         "crossDomain": true,
-                        "url": "http://localhost:8080/ecommerce/usuario/listar",
+                        "url": "http://localhost:8080/ecommerce/tienda/listar",
                         "method": "GET",
                         "headers": {
                         "token": token,
@@ -59,7 +63,7 @@ App.factory('UsuarioService', ['$http', '$q', 'token', function($http, $q, token
                var settings = {
                 "async": true,
                 "crossDomain": true,
-                "url": "http://localhost:8080/ecommerce/cliente/obtenerPorId?id="+id,
+                "url": "http://localhost:8080/ecommerce/tienda/obtenerPorId?id="+id,
                 "method": "GET",
                 "headers": {
                 "cache-control": "no-cache",
@@ -73,21 +77,22 @@ App.factory('UsuarioService', ['$http', '$q', 'token', function($http, $q, token
                			  var status = xhr.status;   
                			  console.log(status);
                			})
-               .fail(
-                function(errResponse, statusText, xhr){
-               	 var status = xhr.status;   
-      			  	 console.log(status);
-                    console.error('Error while getting user');
-                    return $q.reject(errResponse);
-                });
+               .error( function(jqXHR, textStatus, errorThrown) {
+            	   var status = jqXHR.status; 
+            	   if(status==401){
+            		   alert("Sus crendenciales han expirado. Por favor, ingrese nuevamente.");
+            	   }
+    			  	 console.log(status);
+                  return $q.reject(errResponse);
+            	});
 
             },
              
-            agregar: function(usuario){
+            agregar: function(tienda){
                    var settings = {
                     "async": true,
                     "crossDomain": true,
-                    "url": "http://localhost:8080/ecommerce/usuario/agregar",
+                    "url": "http://localhost:8080/ecommerce/tienda/agregar",
                     "method": "POST",
                     "headers": {
                     "token": token,
@@ -95,16 +100,16 @@ App.factory('UsuarioService', ['$http', '$q', 'token', function($http, $q, token
                     "cache-control": "no-cache"
                     },
                     "processData": false,
-                    "data": JSON.stringify(usuario)
+                    "data": JSON.stringify(tienda)
                     }
 
                    return $.ajax(settings)
                    .done(
                    		function(response, statusText, xhr){
-                   			  var status = xhr.status; 
-                   			  if(status==201){
-                   				  alert("Bodeguero creado satisfactoriamente");
-                   			  }
+                   			  var status = xhr.status;   
+                   			if(status==201){
+                 				  alert("Tienda creada satisfactoriamente");
+                 			  }
                    			  console.log(status);
                    			})
                    .error( function(jqXHR, textStatus, errorThrown) {
@@ -113,21 +118,20 @@ App.factory('UsuarioService', ['$http', '$q', 'token', function($http, $q, token
                 		   alert("Sus crendenciales han expirado. Por favor, ingrese nuevamente.");
                 	   }
                 	   if(status==409){
-                		   alert("Usuario ya existe");
+                		   alert("Tienda ya existe");
                 	   }
         			  	 console.log(status);
-                      console.error('Error while creating users');
                       return $q.reject(errResponse);
                 	});
 
             },
              
-            actualizar: function(usuario, id){
-
+            actualizar: function(tienda, id){
+            	console.log("actualizar:" + tienda);
                     var settings = {
                     "async": true,
                     "crossDomain": true,
-                    "url": "http://localhost:8080/ecommerce/usuario/actualizar",
+                    "url": "http://localhost:8080/ecommerce/tienda/actualizar",
                     "method": "PUT",
                     "headers": {
                     "content-type": "application/json",
@@ -135,7 +139,7 @@ App.factory('UsuarioService', ['$http', '$q', 'token', function($http, $q, token
                     "cache-control": "no-cache"
                     },
                     "processData": false,
-                    "data": JSON.stringify(usuario)
+                    "data": JSON.stringify(tienda)
                     }
 
                     return $.ajax(settings)
@@ -143,9 +147,6 @@ App.factory('UsuarioService', ['$http', '$q', 'token', function($http, $q, token
                     		function(response, statusText, xhr){
                     			  var status = xhr.status;   
                     			  console.log(status);
-                    			  if(status==200){
-                       				  alert("Bodeguero se ha actualizado satisfactoriamente");
-                       			  }
                     			})
                     .error( function(jqXHR, textStatus, errorThrown) {
                  	   var status = jqXHR.status; 
@@ -162,7 +163,7 @@ App.factory('UsuarioService', ['$http', '$q', 'token', function($http, $q, token
                     var settings = {
                         "async": true,
                         "crossDomain": true,
-                        "url": "http://localhost:8080/ecommerce/usuario/eliminar?id="+id,
+                        "url": "http://localhost:8080/ecommerce/tienda/eliminar?id="+id,
                         "method": "DELETE",
                         "headers": {
                         "token": token,
@@ -171,22 +172,23 @@ App.factory('UsuarioService', ['$http', '$q', 'token', function($http, $q, token
                     }
 
                     return $.ajax(settings)
-                        .done(
-                        		function(response, statusText, xhr){
-                        			  var status = xhr.status;   
-                        			  console.log(status);
-                        			  if(status==204)
-                        			  {
-                        				  console.log("Elimino satisfactoriamente");
-                        			  }
-                        			})
-                        .fail(
-                         function(errResponse, statusText, xhr){
-                        	 var status = xhr.status;   
-               			  	 console.log(status);
-                             console.error('Error while deleting users');
-                             return $q.reject(errResponse);
-                         });
+                    .done(
+                    		function(response, statusText, xhr){
+                    			  var status = xhr.status;
+                    			  if(status==204)
+                    			  {
+                    				  console.log("Elimino satisfactoriamente");
+                    			  }
+                    			  console.log(status);
+                    			})
+                    .error( function(jqXHR, textStatus, errorThrown) {
+                 	   var status = jqXHR.status; 
+                 	   if(status==401){
+                 		   alert("Sus crendenciales han expirado. Por favor, ingrese nuevamente.");
+                 	   }
+         			  	 console.log(status);
+                       return $q.reject(errResponse);
+                 	});
 
             }     
          

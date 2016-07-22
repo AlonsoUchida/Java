@@ -10,6 +10,8 @@ public class BodegueroVM {
 	private String genero;
 	private int id_tipoDocumento; 
 	private String valorDocumento;
+	private String direccionFiscal;
+	private String fechaNacimiento;
 	
 	public int getId() {
 		return id;
@@ -73,6 +75,22 @@ public class BodegueroVM {
 
 	public void setValorDocumento(String valorDocumento) {
 		this.valorDocumento = valorDocumento;
+	}
+
+	public String getDireccionFiscal() {
+		return direccionFiscal;
+	}
+
+	public void setDireccionFiscal(String direccionFiscal) {
+		this.direccionFiscal = direccionFiscal;
+	}
+
+	public String getFechaNacimiento() {
+		return fechaNacimiento;
+	}
+
+	public void setFechaNacimiento(String fechaNacimiento) {
+		this.fechaNacimiento = fechaNacimiento;
 	}
 	
 }

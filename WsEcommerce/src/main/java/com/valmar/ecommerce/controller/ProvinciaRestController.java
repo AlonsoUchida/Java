@@ -39,4 +39,13 @@ public class ProvinciaRestController {
         }
         return new ResponseEntity<List<Provincia>>(provincias, HttpStatus.OK);
     }
+    
+    @RequestMapping(value = { "/obtenerProvinciaPorDistrito" }, params = {"id"}, method = RequestMethod.GET)
+    public ResponseEntity<Provincia> obtenerProvinciaPorDistrito(@RequestParam int id) {
+       Provincia provincia = service.obtenerProvinciaPorDistrito(id);
+        if(provincia==null){
+            return new ResponseEntity<Provincia>(HttpStatus.NO_CONTENT);//You many decide to return HttpStatus.NOT_FOUND
+        }
+        return new ResponseEntity<Provincia>(provincia, HttpStatus.OK);
+    }
 }

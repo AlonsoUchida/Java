@@ -1,6 +1,7 @@
 package com.valmar.ecommerce.controller;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -54,6 +55,16 @@ public class DireccionRestController {
         }
         return new ResponseEntity<Direccion>(direccion, HttpStatus.OK);
     }
+    
+    @RequestMapping(value = "/listarPorTienda", params= {"id"}, 
+    		method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<List<Direccion>> listarPorTienda(@RequestParam("id") Integer id) {
+    	List<Direccion> direcciones = service.listarPorTienda(id);
+        if(direcciones.isEmpty()){
+            return new ResponseEntity<List<Direccion>>(HttpStatus.NO_CONTENT);//You many decide to return HttpStatus.NOT_FOUND
+        }
+        return new ResponseEntity<List<Direccion>>(direcciones, HttpStatus.OK);
+    }
  
     @RequestMapping(value = "/agregar", method = RequestMethod.POST)
     public ResponseEntity<Void> agregar(@RequestBody DireccionVM direccion,  UriComponentsBuilder ucBuilder) {
@@ -69,7 +80,7 @@ public class DireccionRestController {
     	List<Usuario> usuarios = new ArrayList<>();
     	usuarios.add(usuario);
     	
-    	direccionBean.setUsuarios(usuarios);
+    	direccionBean.setUsuarios(new HashSet(usuarios));
     	direccionBean.setDistrito(distrito);
     	direccionBean.setReferencia(direccion.getReferencia());
     	direccionBean.setDomicilio(direccion.getDomicilio());
@@ -98,7 +109,7 @@ public class DireccionRestController {
     	usuarios.add(usuario);
     	
     	direccionBean.setId(direccion.getId());
-    	direccionBean.setUsuarios(usuarios);
+    	direccionBean.setUsuarios(new HashSet(usuarios));
     	direccionBean.setDistrito(distrito);
     	direccionBean.setReferencia(direccion.getReferencia());
     	direccionBean.setDomicilio(direccion.getDomicilio());
@@ -126,7 +137,7 @@ public class DireccionRestController {
     	List<Tienda> tiendas = new ArrayList<>();
     	tiendas.add(tienda);
     	
-    	direccionBean.setTiendas(tiendas);
+    	direccionBean.setTiendas(new HashSet(tiendas));
     	direccionBean.setDistrito(distrito);
     	direccionBean.setReferencia(direccion.getReferencia());
     	direccionBean.setDomicilio(direccion.getDomicilio());
@@ -155,7 +166,7 @@ public class DireccionRestController {
     	tiendas.add(tienda);
     	
     	direccionBean.setId(direccion.getId());
-    	direccionBean.setTiendas(tiendas);
+    	direccionBean.setTiendas(new HashSet(tiendas));
     	direccionBean.setDistrito(distrito);
     	direccionBean.setReferencia(direccion.getReferencia());
     	direccionBean.setDomicilio(direccion.getDomicilio());

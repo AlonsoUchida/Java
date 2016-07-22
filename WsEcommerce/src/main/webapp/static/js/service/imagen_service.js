@@ -1,37 +1,79 @@
 'use strict';
  
-App.factory('UsuarioService', ['$http', '$q', 'token', function($http, $q, token){
+App.factory('ImagenService', ['$http', '$q', 'token', 'servidor', function($http, $q, token, servidor){
  
     return {
     		
-		    listarTipoDocumentos: function() {
-		            var settings = {
-		                 "async": true,
-		                 "crossDomain": true,
-		                 "url": "http://localhost:8080/ecommerce/tipodocumento/listar",
-		                 "method": "GET"
-		             }
-		
-		            return $.ajax(settings)
-	                   .done(
-	                   		function(response, statusText, xhr){
-	                   			  var status = xhr.status;   
-	                   			  console.log(status);
-	                   			})
-	                   .error( function(jqXHR, textStatus, errorThrown) {
-	                	   var status = jqXHR.status; 
-	                	   if(status==401){
-	                		   alert("Sus crendenciales han expirado. Por favor, ingrese nuevamente.");
-	                	   }
-	        			  	 console.log(status);
-	                      return $q.reject(errResponse);
-	                	});
-		     },
+    	listarPorTienda : function(id) {
+			var settings = {
+				"async" : true,
+				"crossDomain" : true,
+				"url" : servidor
+						+ "/tienda/imagen/listarImagenesPorTienda?id="+ id,
+				"method" : "GET",
+				"headers" : {
+					"token" : token,
+					"cache-control" : "no-cache",
+				}
+			}
+
+			return $
+					.ajax(settings)
+					.done(
+							function(response,
+									statusText, xhr) {
+								var status = xhr.status;
+								console.log(status);
+							})
+					.error(
+							function(jqXHR, textStatus,
+									errorThrown) {
+								var status = jqXHR.status;
+								if (status == 401) {
+									alert("Sus crendenciales han expirado. Por favor, ingrese nuevamente.");
+								}
+								console.log(status);
+								return $q
+										.reject(errResponse);
+							});
+		},
+    	listarTiendas : function() {
+			var settings = {
+				"async" : true,
+				"crossDomain" : true,
+				"url" : servidor + "/tienda/listar",
+				"method" : "GET",
+				"headers" : {
+					"token" : token,
+					"cache-control" : "no-cache",
+				}
+			}
+
+			return $
+					.ajax(settings)
+					.done(
+							function(response,
+									statusText, xhr) {
+								var status = xhr.status;
+								console.log(status);
+							})
+					.error(
+							function(jqXHR, textStatus,
+									errorThrown) {
+								var status = jqXHR.status;
+								if (status == 401) {
+									alert("Sus crendenciales han expirado. Por favor, ingrese nuevamente.");
+								}
+								console.log(status);
+								return $q
+										.reject(errResponse);
+							});
+		},
             listar: function() {
                    var settings = {
                         "async": true,
                         "crossDomain": true,
-                        "url": "http://localhost:8080/ecommerce/usuario/listar",
+                        "url": servidor + "/tienda/imagen/listar",
                         "method": "GET",
                         "headers": {
                         "token": token,
@@ -59,7 +101,7 @@ App.factory('UsuarioService', ['$http', '$q', 'token', function($http, $q, token
                var settings = {
                 "async": true,
                 "crossDomain": true,
-                "url": "http://localhost:8080/ecommerce/cliente/obtenerPorId?id="+id,
+                "url": servidor + "/tienda/imagen/obtenerPorId?id="+id,
                 "method": "GET",
                 "headers": {
                 "cache-control": "no-cache",
@@ -87,7 +129,7 @@ App.factory('UsuarioService', ['$http', '$q', 'token', function($http, $q, token
                    var settings = {
                     "async": true,
                     "crossDomain": true,
-                    "url": "http://localhost:8080/ecommerce/usuario/agregar",
+                    "url": servidor +"/tienda/imagen/agregar",
                     "method": "POST",
                     "headers": {
                     "token": token,
@@ -127,7 +169,7 @@ App.factory('UsuarioService', ['$http', '$q', 'token', function($http, $q, token
                     var settings = {
                     "async": true,
                     "crossDomain": true,
-                    "url": "http://localhost:8080/ecommerce/usuario/actualizar",
+                    "url": servidor + "/tienda/imagen/actualizar",
                     "method": "PUT",
                     "headers": {
                     "content-type": "application/json",
@@ -162,7 +204,7 @@ App.factory('UsuarioService', ['$http', '$q', 'token', function($http, $q, token
                     var settings = {
                         "async": true,
                         "crossDomain": true,
-                        "url": "http://localhost:8080/ecommerce/usuario/eliminar?id="+id,
+                        "url": servidor + "/tienda/imagen/eliminar?id="+id,
                         "method": "DELETE",
                         "headers": {
                         "token": token,

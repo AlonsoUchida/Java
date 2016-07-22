@@ -22,4 +22,9 @@ public class DepartamentoServiceImpl implements DepartamentoService{
 		return departamentoDao.listarDepartamentos();
 	}
 
+	@Override
+	public Departamento obtenerDepartamentoPorProvincia(int id) {
+		return departamentoDao.obtenerDepartamentoPorProvincia(id);
+	}
+
 }

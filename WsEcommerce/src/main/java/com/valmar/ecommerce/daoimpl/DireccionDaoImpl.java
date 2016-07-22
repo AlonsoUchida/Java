@@ -12,8 +12,6 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 import com.valmar.ecommerce.dao.AbstractDao;
 import com.valmar.ecommerce.dao.DireccionDao;
 import com.valmar.ecommerce.model.Direccion;
-import com.valmar.ecommerce.model.Distrito;
-import com.valmar.ecommerce.model.Token;
 
 
 @Repository("direccionDao")
@@ -48,9 +46,18 @@ public class DireccionDaoImpl extends AbstractDao<Integer, Direccion> implements
 	@Override
 	public void eliminar(int id) {
 		try {
-			Query query = getSession().createSQLQuery("delete from direccion where id = :id");
-			query.setInteger("id", id);
-			query.executeUpdate();
+			Query query1 = getSession().createSQLQuery("delete from cliente_direccion where id_direccion = :id");
+			query1.setInteger("id", id);
+			query1.executeUpdate();
+			
+			Query query2 = getSession().createSQLQuery("delete from tienda_direccion where id_direccion = :id");
+			query2.setInteger("id", id);
+			query2.executeUpdate();
+			
+			Query query3 = getSession().createSQLQuery("delete from direccion where id = :id");
+			query3.setInteger("id", id);
+			query3.executeUpdate();
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -97,6 +104,21 @@ public class DireccionDaoImpl extends AbstractDao<Integer, Direccion> implements
 			return null;
 		}
 		return direcciones;
+	}
+
+	@Override
+	public List<Direccion> listarPorTienda(Integer id) {
+		try {
+			Criteria criteria = createEntityCriteria();
+			criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
+			criteria.createAlias("tiendas", "t");
+			criteria.add(Restrictions.eq("t.id", id));
+			List<Direccion> direcciones = (List<Direccion>) criteria.list();
+			return direcciones;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
 	}
 
 }

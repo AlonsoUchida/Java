@@ -76,7 +76,7 @@ public class TiendaRestController {
 				_tienda.setImagen(imagen.getImagen());
 			if (item.getDistancia() != null)
 				_tienda.setDistancia(Double.parseDouble(item.getDistancia()));
-			for (Direccion direccion : item.getDirecciones()) {
+			for (Direccion direccion : item.getDireccionesTienda()) {
 				_tienda.setDomicilio(direccion.getDomicilio());
 				_tienda.setNumero(direccion.getNumero());
 				Distrito distrito = direccion.getDistrito();

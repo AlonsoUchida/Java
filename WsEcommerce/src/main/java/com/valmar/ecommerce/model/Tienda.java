@@ -111,7 +111,7 @@ public class Tienda {
             name = "tienda_direccion",
             joinColumns = {@JoinColumn(name = "ID_TIENDA", referencedColumnName = "ID")},
             inverseJoinColumns = {@JoinColumn(name = "ID_DIRECCION", referencedColumnName = "ID")})
-    private Set<Direccion> direcciones;
+    private Set<Direccion> direccionesTienda;
 	
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "tienda", cascade = CascadeType.ALL)
 	@JsonBackReference
@@ -263,12 +263,12 @@ public class Tienda {
 		this.envios = envios;
 	}
 
-	public Set<Direccion> getDirecciones() {
-		return direcciones;
+	public Set<Direccion> getDireccionesTienda() {
+		return direccionesTienda;
 	}
 
-	public void setDirecciones(Set<Direccion> direcciones) {
-		this.direcciones = direcciones;
+	public void setDireccionesTienda(Set<Direccion> direccionesTienda) {
+		this.direccionesTienda = direccionesTienda;
 	}
 
 	public Set<EstadoCuenta> getEstadoCuentas() {

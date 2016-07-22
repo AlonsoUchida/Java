@@ -8,4 +8,5 @@ public interface DepartamentoDao {
 
 	Departamento obtenerPorId(int id);
 	List<Departamento> listarDepartamentos();
+	Departamento obtenerDepartamentoPorProvincia(int id);
 }

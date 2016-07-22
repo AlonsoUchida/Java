@@ -6,4 +6,5 @@ import com.valmar.ecommerce.model.Departamento;
 
 public interface DepartamentoService {
 	List<Departamento> listarDepartamentos();
+	Departamento obtenerDepartamentoPorProvincia(int id);
 }

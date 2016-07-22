@@ -12,4 +12,5 @@ public interface DireccionDao {
     void eliminar(int id);    
     List<Direccion> listarDirecciones();	
     List<Direccion> obtenerDireccionesTiendasPorDistrito(int id);
+	List<Direccion> listarPorTienda(Integer id);
 }

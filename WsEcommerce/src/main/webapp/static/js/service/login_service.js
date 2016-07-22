@@ -21,14 +21,14 @@ App.factory('LoginService', ['$http', '$q', '$location', '$window', function($ht
                       switch (datos.status) {
                           case 401:
                               // No autorizado
-                        	  console.log(" 1 ");
+                        	  alert("Crendenciales Incorrectas");
                               break;
                           case 204:
                               // No existe el usuario
-                        	  console.log(" 1 ");
+                        	  alert("No existe el usuario");
                               break;
                           case 500:
-                        	  console.log(" 1 ");
+                        	  alert("Error en el servicio");
                               break;
                           case 200:
                               var data = JSON.parse(datos.responseText);
@@ -37,12 +37,12 @@ App.factory('LoginService', ['$http', '$q', '$location', '$window', function($ht
                               break;
                           default:
                               // Sin internet
-                        	  console.log(" 1 Sin internet");
+                          	  alert("Sin internet");
                               break;
                       }
                   },
                   error: function (xhr, ajaxOptions, thrownError) {
-                	  console.log(" 1 xhr");
+                	  console.log("xhr");
                   }
               });
           }

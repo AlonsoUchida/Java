@@ -25,6 +25,7 @@ import com.valmar.ecommerce.model.Usuario;
 import com.valmar.ecommerce.services.DireccionService;
 import com.valmar.ecommerce.services.TipoDocumentoService;
 import com.valmar.ecommerce.services.UsuarioService;
+import com.valmar.ecommerce.util.DateUtil;
 import com.valmar.ecommerce.util.EncryptUtil;
 import com.valmar.ecommerce.viewmodel.BodegueroVM;
 import com.valmar.ecommerce.viewmodel.ClienteVM;
@@ -73,6 +74,9 @@ public class UsuarioRestController {
          if(tipoDocumento!=null)
          	clienteBean.setTipoDocumento(tipoDocumento);
          clienteBean.setValorDocumento(bodeguero.getValorDocumento());
+         clienteBean.setDireccionFiscal(bodeguero.getDireccionFiscal());
+         if(bodeguero.getFechaNacimiento()!=null && !bodeguero.getFechaNacimiento().isEmpty())
+        	 clienteBean.setFechaNacimiento(DateUtil.getDateFromString(bodeguero.getFechaNacimiento()));
          clienteBean.setTipo(TipoUsuario.BODEGUERO.getValue());
          clienteBean.setEstado(TipoEstado.HABILITADO.getValue());
          clienteBean.setFechaRegistro(new Date());
@@ -81,7 +85,7 @@ public class UsuarioRestController {
          service.agregar(clienteBean); 
          
          HttpHeaders headers = new HttpHeaders();
-         headers.setLocation(ucBuilder.path("/cliente/{correo}").buildAndExpand(bodeguero.getCorreo()).toUri());
+         headers.setLocation(ucBuilder.path("/bodeguero/{correo}").buildAndExpand(bodeguero.getCorreo()).toUri());
          return new ResponseEntity<Void>(headers, HttpStatus.CREATED);
     }
     
@@ -101,6 +105,9 @@ public class UsuarioRestController {
         if(tipoDocumento!=null)
         	clienteBean.setTipoDocumento(tipoDocumento);
         clienteBean.setValorDocumento(bodeguero.getValorDocumento());
+        clienteBean.setDireccionFiscal(bodeguero.getDireccionFiscal());
+        if(bodeguero.getFechaNacimiento()!=null && !bodeguero.getFechaNacimiento().isEmpty())
+       	 clienteBean.setFechaNacimiento(DateUtil.getDateFromString(bodeguero.getFechaNacimiento()));
         clienteBean.setTipo(TipoUsuario.BODEGUERO.getValue());
         clienteBean.setEstado(TipoEstado.HABILITADO.getValue());
         clienteBean.setFechaModificacion(new Date());
@@ -108,7 +115,7 @@ public class UsuarioRestController {
         service.actualizar(clienteBean); 
         
         HttpHeaders headers = new HttpHeaders();
-        headers.setLocation(ucBuilder.path("/cliente/{correo}").buildAndExpand(bodeguero.getCorreo()).toUri());
+        headers.setLocation(ucBuilder.path("/bodeguero/{correo}").buildAndExpand(bodeguero.getCorreo()).toUri());
         return new ResponseEntity<Void>(headers, HttpStatus.OK);
     }
     

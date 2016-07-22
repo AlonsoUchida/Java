@@ -1,7 +1,9 @@
 package com.valmar.ecommerce.model;
 
 import java.util.List;
+import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -9,6 +11,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
@@ -47,23 +50,27 @@ public class Direccion {
 	@Column(name = "ACTIVO")
 	private int activo;
 	
-	@ManyToOne(fetch = FetchType.EAGER)
+	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	@JoinColumn(name="ID_DISTRITO")
 	@JsonManagedReference
 	private Distrito distrito;
 	
-	@ManyToOne(fetch = FetchType.EAGER)
+	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	@JoinColumn(name="ID_URBANIZACION")
 	@JsonManagedReference
 	private Urbanizacion urbanizacion;
 	
 	@JsonIgnore
-	@ManyToMany(mappedBy = "direcciones", fetch = FetchType.LAZY)
-    private List<Usuario> usuarios;
+	@ManyToMany(mappedBy = "direccionesCliente", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private Set<Usuario> usuarios;
 	
 	@JsonIgnore
-	@ManyToMany(mappedBy = "direcciones", fetch = FetchType.LAZY)
-    private List<Tienda> tiendas;
+	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@JoinTable(
+            name = "tienda_direccion",
+            joinColumns = {@JoinColumn(name = "ID_DIRECCION", referencedColumnName = "ID")},
+            inverseJoinColumns = {@JoinColumn(name = "ID_TIENDA", referencedColumnName = "ID")})
+    private Set<Tienda> tiendas;
 
 	public int getId() {
 		return id;
@@ -129,19 +136,19 @@ public class Direccion {
 		this.activo = activo;
 	}
 
-	public List<Usuario> getUsuarios() {
+	public Set<Usuario> getUsuarios() {
 		return usuarios;
 	}
 
-	public void setUsuarios(List<Usuario> usuarios) {
+	public void setUsuarios(Set<Usuario> usuarios) {
 		this.usuarios = usuarios;
 	}
 
-	public List<Tienda> getTiendas() {
+	public Set<Tienda> getTiendas() {
 		return tiendas;
 	}
 
-	public void setTiendas(List<Tienda> tiendas) {
+	public void setTiendas(Set<Tienda> tiendas) {
 		this.tiendas = tiendas;
 	}
 	

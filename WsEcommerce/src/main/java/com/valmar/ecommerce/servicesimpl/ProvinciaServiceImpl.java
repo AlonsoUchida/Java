@@ -27,4 +27,9 @@ public class ProvinciaServiceImpl implements ProvinciaService{
 		return provinciaDao.listarPorDepartamento(id);
 	}
 
+	@Override
+	public Provincia obtenerProvinciaPorDistrito(int id) {
+		return provinciaDao.obtenerProvinciaPorDistrito(id);
+	}
+
 }

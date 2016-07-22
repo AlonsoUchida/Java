@@ -24,9 +24,7 @@ public class DistritoRestController {
 
 	@Autowired
 	DistritoService service;
-    /*
-     * This method will list all existing audios.
-     */
+
     @RequestMapping(value = { "/listar" }, method = RequestMethod.GET)
     public ResponseEntity<List<Distrito>> listarDistritos() {
         List<Distrito> distritos = service.listarDistritos();

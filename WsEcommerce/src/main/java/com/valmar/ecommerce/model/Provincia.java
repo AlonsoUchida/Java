@@ -1,16 +1,22 @@
 package com.valmar.ecommerce.model;
 
+import java.util.Set;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
@@ -30,6 +36,10 @@ public class Provincia {
 	@JoinColumn(name="ID_DEPARTAMENTO")
 	@JsonManagedReference
 	private Departamento departamento;
+	
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "provincia", cascade = CascadeType.ALL)
+	@JsonIgnore
+	private Set<Distrito> distritos;
 
 	public int getId() {
 		return id;
@@ -54,4 +64,13 @@ public class Provincia {
 	public void setDepartamento(Departamento departamento) {
 		this.departamento = departamento;
 	}
+
+	public Set<Distrito> getDistritos() {
+		return distritos;
+	}
+
+	public void setDistritos(Set<Distrito> distritos) {
+		this.distritos = distritos;
+	}
+	
 }

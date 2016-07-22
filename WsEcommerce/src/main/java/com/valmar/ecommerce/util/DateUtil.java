@@ -7,14 +7,18 @@ import java.util.Date;
 
 public class DateUtil {
 
-	public static Date getDateFromString(String dateString){
-		DateFormat format = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
-		try {
-			return (Date) format.parse(dateString);
-		} catch (ParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			return null;
+	public static Date getDateFromString(String dateString) {
+		String[] formatStrings = {"yyyy-MM-dd hh:mm:ss", "dd/MM/yyyy"};
+		for (String formatString : formatStrings) {
+			DateFormat format = new SimpleDateFormat(formatString);
+			try {
+				Date date = format.parse(dateString);
+				return date;
+			} catch (ParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
+		return null;
 	}
 }

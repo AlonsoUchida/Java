@@ -92,7 +92,7 @@ public class Usuario {
             joinColumns = {@JoinColumn(name = "ID_CLIENTE", referencedColumnName = "ID")},
             inverseJoinColumns = {@JoinColumn(name = "ID_DIRECCION", referencedColumnName = "ID")})
 	@Column(insertable=false, updatable=false)
-    private Set<Direccion> direcciones;
+    private Set<Direccion> direccionesCliente;
 	
 	@ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
@@ -207,12 +207,12 @@ public class Usuario {
 		this.tipo = tipo;
 	}
 
-	public Set<Direccion> getDirecciones() {
-		return direcciones;
+	public Set<Direccion> getDireccionesCliente() {
+		return direccionesCliente;
 	}
 
-	public void setDirecciones(Set<Direccion> direcciones) {
-		this.direcciones = direcciones;
+	public void setDireccionesCliente(Set<Direccion> direccionesCliente) {
+		this.direccionesCliente = direccionesCliente;
 	}
 
 	public TipoDocumento getTipoDocumento() {

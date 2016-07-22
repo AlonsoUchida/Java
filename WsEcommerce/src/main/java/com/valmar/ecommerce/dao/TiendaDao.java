@@ -2,6 +2,7 @@ package com.valmar.ecommerce.dao;
 
 import java.util.List;
 
+import com.valmar.ecommerce.model.Direccion;
 import com.valmar.ecommerce.model.Tienda;
 
 public interface TiendaDao {
