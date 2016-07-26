@@ -13,6 +13,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.codec.Base64;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -386,7 +387,7 @@ public class TiendaRestController {
 
 		imagenBean.setNombre(imagen.getNombre());
 		imagenBean.setTienda(tienda);
-		imagenBean.setImagen(imagen.getImagen().getBytes());
+		imagenBean.setImagen(imagen.getImagen());
 		imagenBean.setDefecto(imagen.getDefecto());
 
 		imagenTiendaService.agregarImagen(imagenBean);
@@ -407,7 +408,7 @@ public class TiendaRestController {
 		imagenBean.setId(imagen.getId());
 		imagenBean.setNombre(imagen.getNombre());
 		imagenBean.setTienda(tienda);
-		imagenBean.setImagen(imagen.getImagen().getBytes());
+		imagenBean.setImagen(imagen.getImagen());
 		imagenBean.setDefecto(imagen.getDefecto());
 
 		imagenTiendaService.actualizarImagen(imagenBean);
@@ -434,6 +435,7 @@ public class TiendaRestController {
 		if (imagenes.isEmpty()) {
 			return new ResponseEntity<List<ImagenTienda>>(HttpStatus.NO_CONTENT);
 		}
+
 		return new ResponseEntity<List<ImagenTienda>>(imagenes, HttpStatus.OK);
 	}
 

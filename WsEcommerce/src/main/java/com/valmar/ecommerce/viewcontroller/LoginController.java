@@ -23,5 +23,11 @@ public class LoginController {
 		model.addAttribute("serverTime", formattedDate);
 		return "Login";
 	}
+	
+	@RequestMapping(value="static/cerrar", method = RequestMethod.GET)
+    public String getCerrar() {
+        return "Login";
+    }
 
 }
+

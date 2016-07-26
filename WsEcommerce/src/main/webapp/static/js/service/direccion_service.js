@@ -272,7 +272,7 @@ App.factory('DireccionService',
 														var status = xhr.status;
 														console.log(status);
 														console
-																.error('Error while getting user');
+																.error('Error while getting direccion');
 														return $q
 																.reject(errResponse);
 													});

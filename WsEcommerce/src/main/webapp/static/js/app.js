@@ -1,7 +1,7 @@
 'use strict';
 
-var App = angular.module('myApp', [ 'ngRoute' ]);
-App.value('token',  document.getElementById("token").innerHTML);
+var App = angular.module('myApp', [ 'ngRoute', 'ngFileUpload']);
+App.value('token',  document.getElementById("token") != null ? document.getElementById("token").innerHTML : null);
 App.value('servidor', 'http://localhost:8080/ecommerce');
 App.config(function($routeProvider) {
 	$routeProvider
@@ -24,10 +24,15 @@ App.config(function($routeProvider) {
 		templateUrl : 'static/imagen',
 		controller : 'ImagenController'
 	})
+	.when('/cerrar', {
+		templateUrl : 'static/cerrar'
+	})
 	.otherwise({
 		redirectTo : '/'
 	});
-	var divOne = document.getElementById('token');
-	divOne.style.display='none';
+	if(document.getElementById("token") != null){
+		var divOne = document.getElementById('token');
+		divOne.style.display='none';
+	};
 });
 

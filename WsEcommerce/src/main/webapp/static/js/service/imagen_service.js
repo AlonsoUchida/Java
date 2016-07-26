@@ -4,71 +4,71 @@ App.factory('ImagenService', ['$http', '$q', 'token', 'servidor', function($http
  
     return {
     		
-    	listarPorTienda : function(id) {
-			var settings = {
-				"async" : true,
-				"crossDomain" : true,
-				"url" : servidor
-						+ "/tienda/imagen/listarImagenesPorTienda?id="+ id,
-				"method" : "GET",
-				"headers" : {
-					"token" : token,
-					"cache-control" : "no-cache",
+	    	listarPorTienda : function(id) {
+				var settings = {
+					"async" : true,
+					"crossDomain" : true,
+					"url" : servidor
+							+ "/tienda/imagen/listarImagenesPorTienda?id="+ id,
+					"method" : "GET",
+					"headers" : {
+						"token" : token,
+						"cache-control" : "no-cache",
+					}
 				}
-			}
-
-			return $
-					.ajax(settings)
-					.done(
-							function(response,
-									statusText, xhr) {
-								var status = xhr.status;
-								console.log(status);
-							})
-					.error(
-							function(jqXHR, textStatus,
-									errorThrown) {
-								var status = jqXHR.status;
-								if (status == 401) {
-									alert("Sus crendenciales han expirado. Por favor, ingrese nuevamente.");
-								}
-								console.log(status);
-								return $q
-										.reject(errResponse);
-							});
-		},
-    	listarTiendas : function() {
-			var settings = {
-				"async" : true,
-				"crossDomain" : true,
-				"url" : servidor + "/tienda/listar",
-				"method" : "GET",
-				"headers" : {
-					"token" : token,
-					"cache-control" : "no-cache",
+	
+				return $
+						.ajax(settings)
+						.done(
+								function(response,
+										statusText, xhr) {
+									var status = xhr.status;
+									console.log(status);
+								})
+						.error(
+								function(jqXHR, textStatus,
+										errorThrown) {
+									var status = jqXHR.status;
+									if (status == 401) {
+										alert("Sus crendenciales han expirado. Por favor, ingrese nuevamente.");
+									}
+									console.log(status);
+									return $q
+											.reject(errResponse);
+								});
+			},
+	    	listarTiendas : function() {
+				var settings = {
+					"async" : true,
+					"crossDomain" : true,
+					"url" : servidor + "/tienda/listar",
+					"method" : "GET",
+					"headers" : {
+						"token" : token,
+						"cache-control" : "no-cache",
+					}
 				}
-			}
-
-			return $
-					.ajax(settings)
-					.done(
-							function(response,
-									statusText, xhr) {
-								var status = xhr.status;
-								console.log(status);
-							})
-					.error(
-							function(jqXHR, textStatus,
-									errorThrown) {
-								var status = jqXHR.status;
-								if (status == 401) {
-									alert("Sus crendenciales han expirado. Por favor, ingrese nuevamente.");
-								}
-								console.log(status);
-								return $q
-										.reject(errResponse);
-							});
-		},
+	
+				return $
+						.ajax(settings)
+						.done(
+								function(response,
+										statusText, xhr) {
+									var status = xhr.status;
+									console.log(status);
+								})
+						.error(
+								function(jqXHR, textStatus,
+										errorThrown) {
+									var status = jqXHR.status;
+									if (status == 401) {
+										alert("Sus crendenciales han expirado. Por favor, ingrese nuevamente.");
+									}
+									console.log(status);
+									return $q
+											.reject(errResponse);
+								});
+			},
             listar: function() {
                    var settings = {
                         "async": true,
@@ -119,7 +119,7 @@ App.factory('ImagenService', ['$http', '$q', 'token', 'servidor', function($http
                 function(errResponse, statusText, xhr){
                	 var status = xhr.status;   
       			  	 console.log(status);
-                    console.error('Error while getting user');
+                    console.error('Error while getting imagen');
                     return $q.reject(errResponse);
                 });
 
@@ -145,7 +145,7 @@ App.factory('ImagenService', ['$http', '$q', 'token', 'servidor', function($http
                    		function(response, statusText, xhr){
                    			  var status = xhr.status; 
                    			  if(status==201){
-                   				  alert("Bodeguero creado satisfactoriamente");
+                   				  alert("La imagen creado satisfactoriamente");
                    			  }
                    			  console.log(status);
                    			})
@@ -153,9 +153,6 @@ App.factory('ImagenService', ['$http', '$q', 'token', 'servidor', function($http
                 	   var status = jqXHR.status; 
                 	   if(status==401){
                 		   alert("Sus crendenciales han expirado. Por favor, ingrese nuevamente.");
-                	   }
-                	   if(status==409){
-                		   alert("Usuario ya existe");
                 	   }
         			  	 console.log(status);
                       console.error('Error while creating users');
@@ -186,7 +183,7 @@ App.factory('ImagenService', ['$http', '$q', 'token', 'servidor', function($http
                     			  var status = xhr.status;   
                     			  console.log(status);
                     			  if(status==200){
-                       				  alert("Bodeguero se ha actualizado satisfactoriamente");
+                       				  alert("La imagen se ha actualizado satisfactoriamente");
                        			  }
                     			})
                     .error( function(jqXHR, textStatus, errorThrown) {
@@ -226,7 +223,7 @@ App.factory('ImagenService', ['$http', '$q', 'token', 'servidor', function($http
                          function(errResponse, statusText, xhr){
                         	 var status = xhr.status;   
                			  	 console.log(status);
-                             console.error('Error while deleting users');
+                             console.error('Error while deleting imagenes');
                              return $q.reject(errResponse);
                          });
 

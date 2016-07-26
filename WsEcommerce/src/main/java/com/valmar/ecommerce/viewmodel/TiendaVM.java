@@ -18,7 +18,7 @@ public class TiendaVM {
 	private BigDecimal costoMinimo;
 	private String horarioAtencion;
 	private int estadoAbierto;
-	private byte[] imagen;	
+	private String imagen;	
     private int[] id_usuarios;
 	private String paginaweb;
 	private int tarjeta;
@@ -91,10 +91,10 @@ public class TiendaVM {
 	public void setHorarioAtencion(String horarioAtencion) {
 		this.horarioAtencion = horarioAtencion;
 	}
-	public byte[] getImagen() {
+	public String getImagen() {
 		return imagen;
 	}
-	public void setImagen(byte[] imagen) {
+	public void setImagen(String imagen) {
 		this.imagen = imagen;
 	}
 	public int[] getId_usuarios() {

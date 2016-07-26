@@ -12,7 +12,7 @@ public class TiendaVMLite {
 	private String latitud;
 	private String longitud;
 	private int estado;
-	private byte[] imagen;
+	private String imagen;
 	private String horarioAtencion;
 	private double distancia;
 	
@@ -46,10 +46,10 @@ public class TiendaVMLite {
 	public void setDistrito(String distrito) {
 		this.distrito = distrito;
 	}
-	public byte[] getImagen() {
+	public String getImagen() {
 		return imagen;
 	}
-	public void setImagen(byte[] imagen) {
+	public void setImagen(String imagen) {
 		this.imagen = imagen;
 	}
 	public String getHorarioAtencion() {

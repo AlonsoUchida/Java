@@ -28,7 +28,7 @@ public class DireccionDaoImpl extends AbstractDao<Integer, Direccion> implements
 	@Override
 	public void agregar(Direccion direccion) {
 		try {
-			persist(direccion);
+			merge(direccion);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

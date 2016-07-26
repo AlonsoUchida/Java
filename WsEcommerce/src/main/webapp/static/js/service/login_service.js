@@ -1,8 +1,7 @@
 'use strict';
  
-App.factory('LoginService', ['$http', '$q', '$location', '$window', function($http, $q, $location, $window){
+App.factory('LoginService', ['$http', '$q', '$location', '$window', 'servidor', function($http, $q, $location, $window,servidor){
 	 var token = "";
-	 var servidor = "http://localhost:8080/ecommerce";
     return {
     	  login: function (email, password) {
     		  console.log("login service");

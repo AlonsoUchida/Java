@@ -7,6 +7,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
@@ -32,7 +33,7 @@ public class ImagenTienda {
 	private String nombre;
 	
 	@Column(name = "IMAGEN")
-	private byte[] imagen;
+	private String imagen;
 	
 	@Column(name = "DEFECTO")
 	private Integer defecto;
@@ -61,11 +62,11 @@ public class ImagenTienda {
 		this.nombre = nombre;
 	}
 
-	public byte[] getImagen() {
+	public String getImagen() {
 		return imagen;
 	}
 
-	public void setImagen(byte[] imagen) {
+	public void setImagen(String imagen) {
 		this.imagen = imagen;
 	}
 

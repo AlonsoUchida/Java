@@ -39,7 +39,7 @@ public class ImagenTiendaDaoImpl extends AbstractDao<Integer, ImagenTienda> impl
 	
 	@Override
 	public void agregarImagen(ImagenTienda imagen) {
-		try {
+		try {			
 			persist(imagen);
 		} catch (Exception e) {
 			e.printStackTrace();

@@ -1,27 +1,52 @@
 'use strict';
-App.controller('ImagenController', ['$scope', 'ImagenService', function($scope, ImagenService) {
+App.controller('ImagenController', ['$scope','ImagenService', 'Upload', function($scope, ImagenService, Upload) {
           var self = this;
           self.imagen = {id:null, id_tienda:'',nombre:'',imagen:'', defecto:''};
           
           $scope.defectos = [{"id" : 1, "nombre": "Principal"},{"id" : 2, "nombre": "Secundario"}];
-          $scope.myFile = "";
+          $scope.picFile = "";
+          $scope.tienda = "";
           self.tienda = "";
           self.defecto = "";
           
-          $scope.uploadFile = function(){
-              var file = $scope.myFile;
-              console.log('file is ' );
-              console.dir(file);
-              self.imagen.imagen = file;
-              console.log('file', self.imagen.imagen);
+          self.sleep = function (milliseconds) {
+        	  var start = new Date().getTime();
+        	  for (var i = 0; i < 1e7; i++) {
+        	    if ((new Date().getTime() - start) > milliseconds){
+        	      break;
+        	    }
+        	  }
+        	};
+ 
+          $scope.convertToBase64 = function(){
+        	  var imagenToString64 = "";
+        	  if ($scope.picFile) {
+                  var reader = new FileReader();
+                  reader.onload = function(readerEvt) {
+                      var binaryString = readerEvt.target.result;
+                      imagenToString64 = btoa(binaryString);
+                      self.imagen.imagen = imagenToString64;
+                      console.log('self.imagen.imagen:', self.imagen.imagen);
+                  };
+                  reader.readAsBinaryString($scope.picFile);
+              }             
           };
-          v
           
-          $scope.actualizarImagen = function (imagen) {
-             self.imagen = imagen.id;
-             console.log("actualizarImagen:" + self.imagen);           
-          };
-          
+          $scope.actualizarTienda = function (tienda) {
+              self.imagen.id_tienda = tienda.id;
+              self.listarPorTienda(tienda.id);
+              for(var i=0; i < $scope.tiendas.length; i++){
+            	  if(tienda.id == $scope.tiendas[i].id){
+            		  self.tienda = $scope.tiendas[i];
+            		  $scope.tienda = self.tienda;
+            		  console.log("self.tienda", self.tienda);
+            		  console.log("$scope.tienda", $scope.tienda);
+            	  }
+              }
+              console.log("actualizarTienda:" + self.imagen.id_tienda);
+              
+           };
+
           $scope.actualizarDefecto = function (defecto) {
               self.imagen.defecto = defecto.id;
               console.log(self.imagen.defecto);
@@ -39,24 +64,30 @@ App.controller('ImagenController', ['$scope', 'ImagenService', function($scope, 
                                   }
                          );
             };
-                
-          self.listar = function(){
-        	  ImagenService.listar()
-                  .then(
-                               function(d) {  
-                            	   $scope.imagenes = d;
-                            	   $scope.$apply();       
-                               },
-                                function(errResponse){
-                                    console.error('Error while fetching Currencies');
-                                }
-                       );
-          };
+            
+            self.listarPorTienda = function(id){
+          	  ImagenService.listarPorTienda(id)
+                    .then(
+                                 function(d) {  
+                                   self.sleep(5000);
+                              	   $scope.imagenes = d;
+                              	   self.tienda = $scope.tienda;
+                              	   $scope.$apply();      
+                              	   console.log("self.tienda -l", self.tienda);
+                              	   console.log("$scope.tienda -l", $scope.tienda);
+                                 },
+                                  function(errResponse){
+                                      console.error('Error while fetching Currencies');
+                                  }
+                         );
+            };
+
             
           self.agregar = function(imagen){
         	  ImagenService.agregar(imagen)
                       .then(
-                    		  self.listar, 
+                    		  self.sleep(3000),
+                    		  self.listarPorTienda(imagen.id_tienda),	  
                               function(errResponse){
                                    console.error('Error while creating.');
                               } 
@@ -66,7 +97,8 @@ App.controller('ImagenController', ['$scope', 'ImagenService', function($scope, 
          self.actualizar = function(imagen){
         	 ImagenService.actualizar(imagen)
                       .then(
-                              self.listar, 
+                    		  self.sleep(3000),
+                    		  self.listarPorTienda(imagen.id_tienda),           		  
                               function(errResponse){
                                    console.error('Error while updating.');
                               } 
@@ -76,26 +108,22 @@ App.controller('ImagenController', ['$scope', 'ImagenService', function($scope, 
          self.eliminar = function(id){
         	 ImagenService.eliminar(id)
                       .then(
-                              self.listar, 
+                    		  self.sleep(3000),
+                    		  self.listarPorTienda(self.imagen.id_tienda), 
                               function(errResponse){
                                    console.error('Error while deleting.');
                               } 
                   );
           };
  
-
-          self.listar();
           self.listarTiendas();
           
           self.submit = function() {
-        	  if(self.myFile!=null){
-        		  self.tienda.imagen = self.myFile;
-        		  console.log();
-        	  }
               if(self.imagen.id===null){
-                  console.log('Saving New User', self.imagen);    
+                  console.log('Saving New Imagen', self.imagen);    
                   self.agregar(self.imagen);
               }else{
+            	  $scope.convertToBase64();
                   self.actualizar(self.imagen, self.imagen.id);
                   console.log('User updated with id ', self.imagen.id);
               }
@@ -108,15 +136,30 @@ App.controller('ImagenController', ['$scope', 'ImagenService', function($scope, 
               for(var i = 0; i < $scope.imagenes.length; i++){
                   if($scope.imagenes[i].id === id) {
                 	  console.log($scope.imagenes[i]);
-                	  self.usuario = angular.copy($scope.imagenes[i]);
+                	  self.imagen.id = $scope.imagenes[i].id;//angular.copy($scope.imagenes[i]);
+                	  self.imagen.nombre = $scope.imagenes[i].nombre;
+                	  self.imagen.imagen = $scope.imagenes[i].imagen;
+
+                	  $scope.picFile =" data:image/JPEG;base64," +$scope.imagenes[i].imagen;
+                	  console.log("$scope.picFile after", $scope.picFile);
                 	  
-                	  for(var j = 0; j < $scope.tiendas.length; j++){     	
-                		  if($scope.tiendas[j].id == self.imagen.id_tienda){
+                	 /* 
+                	  * for(var j = 0; j < $scope.tiendas.length; j++){     	
+                		  if($scope.tiendas[j].id == $scope.imagenes[i].id_tienda){
                 			  self.tienda = $scope.tiendas[j];
                 			  self.imagen.id_tienda = $scope.tiendas[j].id;
-                			  console.log("setted: " + self.imagen.id_tienda);
+                			  console.log("setted id_tienda: " + self.imagen.id_tienda);
                 		  }
-                	}
+                	  }
+                	  */
+                	  
+                	  for(var j = 0; j < $scope.defectos.length; j++){     	
+                		  if($scope.defectos[j].id == $scope.imagenes[i].defecto){
+                			  self.defecto = $scope.defectos[j];
+                			  self.imagen.defecto = $scope.defectos[j].id;
+                			  console.log("setted defecto: " + self.imagen.defecto);
+                		  }
+                	  }
                 	  
                      break;
                   }
@@ -134,27 +177,13 @@ App.controller('ImagenController', ['$scope', 'ImagenService', function($scope, 
            
           self.reset = function(){
               self.imagen = {id:null, id_tienda:'',nombre:'',imagen:'', defecto:''};
+              $scope.picFile = "";
               self.tienda = "";
+              self.defecto = "";
               $scope.myForm.$setPristine(); //reset Form
           };
  
       }]);
-
-App.directive('fileModel', ['$parse', function ($parse) {
-    return {
-        restrict: 'A',
-        link: function(scope, element, attrs) {
-            var model = $parse(attrs.fileModel);
-            var modelSetter = model.assign;
-            
-            element.bind('change', function(){
-                scope.$apply(function(){
-                    modelSetter(scope, element[0].files[0]);
-                });
-            });
-        }
-    };
-}]);
 
 
 

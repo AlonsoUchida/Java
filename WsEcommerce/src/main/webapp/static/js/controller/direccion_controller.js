@@ -139,7 +139,7 @@ App.controller('DireccionController', ['$scope', 'DireccionService', function($s
         	  DireccionService.agregar(direccion)
                       .then(
                     		  console.log("Direcció agregada en el controlador"),
-                    		  self.sleep(3000),
+                    		  self.sleep(5000),
                     		  self.listarPorTienda(self.tienda.id), 
                               function(errResponse){
                                    console.error('Error while creating Usuario.');

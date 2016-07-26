@@ -12,7 +12,6 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
 @Table(name = "imagen_producto")
@@ -33,7 +32,7 @@ public class ImagenProducto {
 	private String nombre;
 	
 	@Column(name = "IMAGEN")
-	private byte[] imagen;
+	private String imagen;
 	
 	@Column(name = "DEFECTO")
 	private Integer defecto;
@@ -62,11 +61,11 @@ public class ImagenProducto {
 		this.nombre = nombre;
 	}
 
-	public byte[] getImagen() {
+	public String getImagen() {
 		return imagen;
 	}
 
-	public void setImagen(byte[] imagen) {
+	public void setImagen(String imagen) {
 		this.imagen = imagen;
 	}
 

@@ -1,7 +1,10 @@
 
 	   <div class="generic-container" ng-controller="ImagenController as ctrl">
           <div class="panel panel-default">
-              <div class="panel-heading"><span class="lead">Registro de Imagen Por Tienda</span></div>
+              <div class="panel-heading">
+              		<span class="lead">Registro de Imagen Por Tienda</span>
+              		<button type="button" ng-click="ctrl.reset()" class="btn btn-default" style="float: right;">Refrescar</button>
+              </div>
               <div class="formcontainer">
                   <form ng-submit="ctrl.submit()" name="myForm" class="form-horizontal">
                       <input type="hidden" ng-model="ctrl.imagen.id" />
@@ -32,27 +35,24 @@
                               </div>
                           </div>
                       </div>
+                     
                       
-                      <!-- IMAGEN -->
                       <div class="row">
                       		<div class="form-group col-md-12">
-		                      	 <label class="col-md-2 control-lable" for="departamento">Imagen</label>
-		                      	 <input type="file" file-model="myFile"/>
-		    					 <button ng-click="uploadFile()">subir</button>
-		    					 <div id="dialog" title="Basic dialog">
-								  <p>Image:</p>
-								   <img ng-src="{{image.path}}" style="width: {{image.width}}px; height: {{image.height}}px" />
-								
-								</div>
-									    					
-		    					<div class="has-error" ng-show="myForm.$dirty">
-	                     	              <span ng-show="myForm.uname.$error.required">Este campo es requerido</span>
-	                                      <span ng-show="myForm.uname.$error.minlength">El minimo tamaño es de 3 caracteres</span>
-	                                      <span ng-show="myForm.uname.$invalid">Este campo es invalido</span>
-	                            </div>
-                            </div>
+							 <label class="col-md-2 control-lable" for="imagen">Imagen</label>
+							 <div class="col-md-7">
+						      <input type="file" ngf-select ng-model="picFile" id="imagen" name="file"    
+						             accept="image/*" ngf-max-size="2MB" required
+						             ngf-model-invalid="errorFile" ng-change="convertToBase64()">
+						      <div class="has-error" ng-show="myForm.$dirty">
+	                     	       <span ng-show="myForm.uname.$error.required">Este campo es requerido</span>
+	                          </div>	                          
+	                            <img ng-show="myForm.file.$valid" ngf-thumbnail="picFile" class="thumb" height="300" width="300"> 
+						      <button ng-click="picFile = null" ng-show="picFile" class="btn btn-primary btn-sm" >Quitar</button>						     
+						      </div>
+						 </div>
                       </div> 
-                      
+                    
                       <div class="row">
                           <div class="form-group col-md-12">
                               <label class="col-md-2 control-lable" for="departamento">Defecto</label>
@@ -90,14 +90,14 @@
                           </tr>
                       </thead>
                       <tbody>
-                          <tr ng-repeat="i in imagenes">
+                          <tr ng-repeat="i in imagenes" height="300">
                               <td><span ng-bind="i.id"></span></td>
                               <td><span ng-bind="i.nombre"></span></td>
-                              <td><span ng-bind="i.imagen"></span></td>
+                              <td><img ng-src="data:image/JPEG;base64,{{i.imagen}}"  height="300" width="300"></td>
                               <td><span ng-bind="i.defecto"></span></td>
                               <td>
-                              <button type="button" ng-click="ctrl.edit(d.id)" class="btn btn-success custom-width">Editar</button>  
-                              <button type="button" ng-click="ctrl.remove(d.id)" class="btn btn-danger custom-width">Eliminar</button>
+                              <button type="button" ng-click="ctrl.edit(i.id)" class="btn btn-success custom-width">Editar</button>  
+                              <button type="button" ng-click="ctrl.remove(i.id)" class="btn btn-danger custom-width">Eliminar</button>
                               </td>
                           </tr>
                       </tbody>
