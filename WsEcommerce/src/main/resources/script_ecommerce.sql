@@ -267,18 +267,6 @@ DEFAULT CHARACTER SET = utf8;
 
 
 -- -----------------------------------------------------
--- Table `CMS_VALMAR_DB`.`banco`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `CMS_VALMAR_DB`.`banco` ;
-
-CREATE TABLE IF NOT EXISTS `CMS_VALMAR_DB`.`banco` (
-  `id` INT(3) NOT NULL AUTO_INCREMENT,
-  `nombre` VARCHAR(100) NULL,
-  PRIMARY KEY (`id`))
-ENGINE = InnoDB;
-
-
--- -----------------------------------------------------
 -- Table `CMS_VALMAR_DB`.`tienda`
 -- -----------------------------------------------------
 DROP TABLE IF EXISTS `CMS_VALMAR_DB`.`tienda` ;
@@ -296,17 +284,10 @@ CREATE TABLE IF NOT EXISTS `CMS_VALMAR_DB`.`tienda` (
   `horario_atencion` VARCHAR(45) NULL,
   `paginaweb` VARCHAR(200) NULL,
   `tarjeta` INT(1) NULL,
-  `id_banco` INT(3) NULL,
   `estado` INT(1) NOT NULL COMMENT 'estatus para indicar si la tienda esta activa o no, dentro d',
   `fecha_registro` DATETIME NOT NULL,
   `fecha_modificacion` DATETIME NOT NULL,
-  PRIMARY KEY (`id`),
-  INDEX `fkid_banco_idx` (`id_banco` ASC),
-  CONSTRAINT `fkid_banco`
-    FOREIGN KEY (`id_banco`)
-    REFERENCES `CMS_VALMAR_DB`.`banco` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
+  PRIMARY KEY (`id`))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
 
@@ -726,6 +707,18 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
+-- Table `CMS_VALMAR_DB`.`banco`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `CMS_VALMAR_DB`.`banco` ;
+
+CREATE TABLE IF NOT EXISTS `CMS_VALMAR_DB`.`banco` (
+  `id` INT(3) NOT NULL AUTO_INCREMENT,
+  `nombre` VARCHAR(100) NULL,
+  PRIMARY KEY (`id`))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
 -- Table `CMS_VALMAR_DB`.`tipo_tienda`
 -- -----------------------------------------------------
 DROP TABLE IF EXISTS `CMS_VALMAR_DB`.`tipo_tienda` ;
@@ -757,6 +750,31 @@ CREATE TABLE IF NOT EXISTS `CMS_VALMAR_DB`.`tienda_tipo_tienda` (
   CONSTRAINT `fkid_tipo_tienda`
     FOREIGN KEY (`id_tipo_tienda`)
     REFERENCES `CMS_VALMAR_DB`.`tipo_tienda` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `CMS_VALMAR_DB`.`tienda_banco`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `CMS_VALMAR_DB`.`tienda_banco` ;
+
+CREATE TABLE IF NOT EXISTS `CMS_VALMAR_DB`.`tienda_banco` (
+  `id` INT(11) NOT NULL AUTO_INCREMENT,
+  `id_banco` INT(11) NOT NULL,
+  `id_tienda` INT(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  INDEX `fkid_banco_idx` (`id_banco` ASC),
+  INDEX `fkid_tienda_idx` (`id_tienda` ASC),
+  CONSTRAINT `fkid_tienda_banco_1`
+    FOREIGN KEY (`id_banco`)
+    REFERENCES `CMS_VALMAR_DB`.`banco` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fkid_tienda_banco_2`
+    FOREIGN KEY (`id_tienda`)
+    REFERENCES `CMS_VALMAR_DB`.`tienda` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;

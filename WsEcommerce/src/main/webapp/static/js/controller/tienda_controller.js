@@ -2,17 +2,19 @@
  
 App.controller('TiendaController', ['$scope', 'TiendaService', function($scope, TiendaService) {
           var self = this;
+          
           self.tienda = {id:null, nombre:'',ruc:'',telefono_local:'', telefono_movil:'', horarioAtencion:'', 
-        		  paginaweb:'', tarjeta:'', id_banco: '' };
+        		  paginaweb:'', tarjeta: 2, id_banco: [] };
+          
+          $scope.tarjetas = [{"id" : 1, "nombre": "Si Utilizo"},{"id" : 2, "nombre": "No Utilizo"}];
+          $scope.bancos = {};
           
           /*$scope.horarios = [{"nombre": "1:00 AM"},{"nombre": "2:00 AM"},{"nombre": "3:00 AM"},{"nombre": "4:00 AM"},{"nombre": "5:00 AM"},{"nombre": "6:00 AM"},
                              {"nombre": "7:00 AM"},{"nombre": "8:00 AM"},{"nombre": "9:00 AM"},{"nombre": "10:00 AM"},{"nombre": "11:00 AM"},{"nombre": "12:00 PM"},
                              {"nombre": "1:00 PM"},{"nombre": "2:00 PM"},{"nombre": "3:00 PM"},{"nombre": "4:00 PM"},{"nombre": "5:00 PM"},{"nombre": "6:00 PM"},
                              {"nombre": "7:00 PM"},{"nombre": "8:00 PM"},{"nombre": "9:00 PM"},{"nombre": "10:00 PM"},{"nombre": "11:00 PM"},{"nombre": "12:00 AM"}];*/
-          $scope.tarjetas = [{"id" : 1, "nombre": "Si Utilizo"},{"id" : 2, "nombre": "No Utilizo"}];
-          $scope.bancos = {};
-          
-          self.tarjeta = "";
+         
+          self.tarjeta = $scope.tarjetas[1];
           self.banco = "";
           /*self.horarioApertura = "";
           self.horarioCierre = "";
@@ -34,8 +36,11 @@ App.controller('TiendaController', ['$scope', 'TiendaService', function($scope, 
 
 
           $scope.actualizarBanco = function (banco) {
-             self.tienda.id_banco = banco.id;
-             console.log(self.tienda.id_banco);
+        	  self.tienda.id_banco = [];
+             for(var i=0; i < banco.length; i++){
+            	 self.tienda.id_banco.push(banco[i].id);
+             };
+             console.log("self.tienda.id_banco", self.tienda.id_banco);
           };
           
           $scope.actualizarTarjeta = function (tarjeta) {
@@ -142,15 +147,16 @@ App.controller('TiendaController', ['$scope', 'TiendaService', function($scope, 
                   			  console.log("setted: " + self.tienda.tarjeta);
                   		  }
                 	 }
+                	 var _bancos = [];
                 	 for(var j = 0; j < $scope.bancos.length; j++){
-               		  console.log("$scope.bancos[j].id " + $scope.bancos[j].id);
-               		  console.log("$scope.tiendas[i].banco.id " + $scope.tiendas[i].banco.id);
-               		  if($scope.bancos[j].id == $scope.tiendas[i].banco.id){
-               			  self.banco = $scope.bancos[j];
-               			  self.tienda.id_banco = self.banco.id;
-               			  console.log("setted: " + self.tienda.id_banco);
-               		  }
-               	  	}   
+                		 for(var z = 0; z < $scope.tiendas[i].bancos.length; z++){
+                			 if($scope.tiendas[i].bancos[z].id == $scope.bancos[j].id){
+                				 _bancos.push($scope.bancos[j]);
+                			 }
+                		 }
+                	 }
+                	 self.banco = _bancos;
+                	 $scope.actualizarBanco(self.banco);
                   }
               }
           };
@@ -166,7 +172,7 @@ App.controller('TiendaController', ['$scope', 'TiendaService', function($scope, 
            
           self.reset = function(){
         	  self.tienda = {id:null, nombre:'',ruc:'',telefono_local:'', telefono_movil:'', horarioAtencion:'', 
-            		  paginaweb:'', tarjeta:'', id_banco: '' };
+            		  paginaweb:'', tarjeta:1, id_banco: '' };
         	  self.tarjeta = "";
               self.banco = "";
               /*self.horarioApertura = "";

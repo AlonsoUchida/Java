@@ -71,9 +71,12 @@ public class Tienda {
 	@Column(name = "TARJETA")
 	private Integer tarjeta;
 	
-	@ManyToOne
-	@JoinColumn(name = "ID_BANCO")
-	private Banco banco;
+	@ManyToMany(fetch = FetchType.EAGER)
+	  @JoinTable(
+	      name="tienda_banco",
+	      joinColumns=@JoinColumn(name="ID_TIENDA", referencedColumnName="ID"),
+	      inverseJoinColumns=@JoinColumn(name="ID_BANCO", referencedColumnName="ID"))
+	private Set<Banco> bancos;
 	
 	@Column(name = "ESTADO")
 	private int estado;
@@ -319,12 +322,12 @@ public class Tienda {
 		this.tarjeta = tarjeta;
 	}
 
-	public Banco getBanco() {
-		return banco;
+	public Set<Banco> getBancos() {
+		return bancos;
 	}
 
-	public void setBanco(Banco banco) {
-		this.banco = banco;
+	public void setBancos(Set<Banco> bancos) {
+		this.bancos = bancos;
 	}
 
 	public Set<TipoTienda> getTipoTiendas() {

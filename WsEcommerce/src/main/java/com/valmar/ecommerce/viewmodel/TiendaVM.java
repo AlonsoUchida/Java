@@ -22,7 +22,7 @@ public class TiendaVM {
     private int[] id_usuarios;
 	private String paginaweb;
 	private int tarjeta;
-	private int id_banco;
+	private int[] id_banco;
 	private int[] id_tipo_tienda;
 	
 	public int getId() {
@@ -121,10 +121,10 @@ public class TiendaVM {
 	public void setTarjeta(int tarjeta) {
 		this.tarjeta = tarjeta;
 	}
-	public int getId_banco() {
+	public int[] getId_banco() {
 		return id_banco;
 	}
-	public void setId_banco(int id_banco) {
+	public void setId_banco(int[] id_banco) {
 		this.id_banco = id_banco;
 	}
 	public int[] getId_tipo_tienda() {

@@ -24,10 +24,10 @@
                           <div class="form-group col-md-12">
                               <label class="col-md-2 control-lable" for="apellido">Ruc</label>
                               <div class="col-md-7">
-                                  <input type="text" ng-model="ctrl.tienda.ruc" id="ruc" class="username form-control input-sm" placeholder="Ingresa el ruc" required ng-minlength="3"/>
+                                  <input type="text" ng-model="ctrl.tienda.ruc" id="ruc" class="username form-control input-sm" placeholder="Ingresa el ruc" required ng-minlength="3" />
                                   <div class="has-error" ng-show="myForm.$dirty">
                                       <span ng-show="myForm.uname.$error.required">Este campo es requerido</span>
-                                      <span ng-show="myForm.uname.$error.minlength">El minimo tamaño es de 3 caracteres</span>
+                                      <span ng-show="myForm.uname.$error.minlength">El minimo tamaño es de 3 caracteres</span>                                      
                                       <span ng-show="myForm.uname.$invalid">Este campo es invalido</span>
                                   </div>
                               </div>
@@ -37,10 +37,11 @@
                           <div class="form-group col-md-12">
                               <label class="col-md-2 control-lable" for="correo">Telefono Local</label>
                               <div class="col-md-7">
-                                  <input type="number" ng-model="ctrl.tienda.telefono_local" id="telefonoLocal" class="username form-control input-sm" placeholder="Ingresa el telefono local" required/>
+                                  <input type="number" ng-model="ctrl.tienda.telefono_local" id="telefonoLocal" class="username form-control input-sm" placeholder="Ingresa el telefono local"  ng-maxlength="10" required/>
                                   <div class="has-error" ng-show="myForm.$dirty">
                                      <span ng-show="myForm.uname.$error.required">Este campo es requerido</span>
                                       <span ng-show="myForm.uname.$error.minlength">El minimo tamaño es de 3 caracteres</span>
+                                      <span ng-show="myForm.uname.$error.maxlength">El minimo tamaño es de 10 caracteres</span>
                                       <span ng-show="myForm.uname.$invalid">Este campo es invalido</span>
                                   </div>
                               </div>
@@ -50,10 +51,11 @@
                           <div class="form-group col-md-12">
                               <label class="col-md-2 control-lable" for="correo">Telefono Movil</label>
                               <div class="col-md-7">
-                                  <input type="number" ng-model="ctrl.tienda.telefono_movil" id="telefonoMovil" class="username form-control input-sm" placeholder="Ingresa el telefono movil" required/>
+                                  <input type="number" ng-model="ctrl.tienda.telefono_movil" id="telefonoMovil" class="username form-control input-sm" placeholder="Ingresa el telefono movil" ng-maxlength="10" required />
                                   <div class="has-error" ng-show="myForm.$dirty">
                                       <span ng-show="myForm.uname.$error.required">Este campo es requerido</span>
                                       <span ng-show="myForm.uname.$error.minlength">El minimo tamaño es de 3 caracteres</span>
+                                      <span ng-show="myForm.uname.$error.maxlength">El minimo tamaño es de 10 caracteres</span>
                                       <span ng-show="myForm.uname.$invalid">Este campo es invalido</span>
                                   </div>
                               </div>
@@ -105,9 +107,8 @@
                           <div class="form-group col-md-12">
                               <label class="col-md-2 control-lable" for="paginaweb">Pagina Web</label>
                                <div class="col-md-7">
-                                  <input type="text" ng-model="ctrl.tienda.paginaweb" id="paginaweb" class="username form-control input-sm" placeholder="Ingrese la url de la pagina web" required/>
+                                  <input type="text" ng-model="ctrl.tienda.paginaweb" id="paginaweb" class="username form-control input-sm" placeholder="Ingrese la url de la pagina web"/>
                                   <div class="has-error" ng-show="myForm.$dirty">
-                                      <span ng-show="myForm.uname.$error.required">Este campo es requerido</span>
                                       <span ng-show="myForm.uname.$error.minlength">El minimo tamaño es de 3 caracteres</span>
                                       <span ng-show="myForm.uname.$invalid">Este campo es invalido</span>
                                   </div>
@@ -134,7 +135,7 @@
                               <label class="col-md-2 control-lable" for="banco">Banco</label>
                               <div class="col-md-7">
                                  <select ng-model="ctrl.banco" ng-options="banco as banco.nombre for banco in bancos"
-                                 ng-change="actualizarBanco(ctrl.banco)"></select>
+                                 ng-change="actualizarBanco(ctrl.banco)" multiple></select>
                                  <span ng-show="myForm.uname.$error.required">Este campo es requerido</span>                         
                                  <span ng-show="myForm.uname.$invalid">Este campo es invalido</span>
                               </div>

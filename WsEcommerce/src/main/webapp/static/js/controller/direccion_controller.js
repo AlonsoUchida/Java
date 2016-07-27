@@ -93,7 +93,6 @@ App.controller('DireccionController', ['$scope', 'DireccionService', function($s
                           );
              };
 
-           //Cargar provincias por departamento
           self.listarProvinciasPorDepartamento = function(departamento){
         	  DireccionService.listarProvinciasPorDepartamento(departamento)
                   .then(
@@ -107,7 +106,6 @@ App.controller('DireccionController', ['$scope', 'DireccionService', function($s
                        );
           };
           
-          //Cargar 
           self.listarDistritosPorProvincia = function(provincia){
         	  DireccionService.listarDistritosPorProvincia(provincia)
                   .then(
@@ -124,7 +122,7 @@ App.controller('DireccionController', ['$scope', 'DireccionService', function($s
           self.listarPorTienda = function(id){
         	  DireccionService.listarPorTienda(id)
                   .then(
-                               function(d) {  
+                               function(d) {                           	   
                             	   $scope.direcciones = d;
                             	   $scope.$apply();      
                             	   console.log("Testing", $scope.direcciones);
@@ -138,9 +136,10 @@ App.controller('DireccionController', ['$scope', 'DireccionService', function($s
           self.agregar = function(direccion){
         	  DireccionService.agregar(direccion)
                       .then(
-                    		  console.log("Direcció agregada en el controlador"),
-                    		  self.sleep(5000),
-                    		  self.listarPorTienda(self.tienda.id), 
+                    		  function() {                           	   
+                    			  self.listarPorTienda(self.tienda.id)
+                              },
+                    		 
                               function(errResponse){
                                    console.error('Error while creating Usuario.');
                               } 
@@ -150,9 +149,9 @@ App.controller('DireccionController', ['$scope', 'DireccionService', function($s
          self.actualizar = function(direccion){
         	 DireccionService.actualizar(direccion)
                       .then(
-                    		  console.log("Direcció actualizada en el controlador"),
-                    		  self.sleep(3000),
-                    		  self.listarPorTienda(self.tienda.id), 
+                    		  function() {                           	   
+                    			  self.listarPorTienda(self.tienda.id)
+                              },
                               function(errResponse){
                                    console.error('Error while updating User.');
                               } 
@@ -162,9 +161,9 @@ App.controller('DireccionController', ['$scope', 'DireccionService', function($s
          self.eliminar = function(id){
         	 DireccionService.eliminar(id)
                       .then(
-                    		  self.sleep(3000),
-                    		  console.log(self.tienda.id),
-                    		  self.listarPorTienda(self.tienda.id), 
+                    		  function() {                           	   
+                    			  self.listarPorTienda(self.tienda.id)
+                              },
                               function(errResponse){
                                    console.error('Error while deleting User.');
                               } 
@@ -201,19 +200,32 @@ App.controller('DireccionController', ['$scope', 'DireccionService', function($s
                 	self.direccion.latitud = $scope.direcciones[i].latitud;
                 	self.direccion.longitud = $scope.direcciones[i].longitud;
                 	self.direccion.referencia = $scope.direcciones[i].referencia;
-                	                	
+                	
                 	for(var j = 0; j < $scope.distritos.length; j++){
-              		console.log("$scope.distritos[j].id " + $scope.distritos[j].id);
-              		console.log("$scope.direcciones[i].distrito.id", $scope.direcciones[i].distrito.id);
+              		/*console.log("$scope.distritos[j].id " + $scope.distritos[j].id);
+              		console.log("$scope.direcciones[i].distrito.id", $scope.direcciones[i].distrito.id);*/
               		  if($scope.distritos[j].id == $scope.direcciones[i].distrito.id){
-              			  self.distrito = $scope.distritos[j];
-              			  self.direccion.id_distrito = $scope.distritos[j].id;
-              			  self.provincia = $scope.direcciones[i].distrito.provincia;
-              			  self.departamento = $scope.direcciones[i].distrito.provincia.departamento;
-              			  self.sleep(1000); 
-              			console.log("setted:1 ", self.distrito);
-              			console.log("setted:2 ", self.provincia);
-              			console.log("setted:3 ", self.departamento );
+	              			self.distrito = $scope.distritos[j];
+	              			console.log("setted:1 ", self.distrito);
+              			
+              			  for(var z = 0; z < $scope.provincias.length; z++){
+	              			  if($scope.direcciones[i].distrito.provincia.id == $scope.provincias[z].id)
+	              			  {
+	              				self.provincia = $scope.provincias[z];
+	              				console.log("setted:2 ", self.provincia);
+	              			  }
+              			  }
+              			  
+              			  for(var z = 0; z < $scope.departamentos.length; z++){
+	              			  if($scope.direcciones[i].distrito.provincia.departamento.id == $scope.departamentos[z].id)
+	              			  {
+	              				self.departamento = $scope.departamentos[z];
+	              				console.log("setted:3 ", self.departamento );
+	              			  }
+            			  }
+      			  
+              			  self.direccion.id_distrito = $scope.distritos[j].id;             			  
+
               		  }
               	  	}
                 	

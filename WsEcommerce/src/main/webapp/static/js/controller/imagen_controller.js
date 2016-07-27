@@ -86,8 +86,9 @@ App.controller('ImagenController', ['$scope','ImagenService', 'Upload', function
           self.agregar = function(imagen){
         	  ImagenService.agregar(imagen)
                       .then(
-                    		  self.sleep(3000),
-                    		  self.listarPorTienda(imagen.id_tienda),	  
+                    		  function() {  
+                    			  self.listarPorTienda(imagen.id_tienda)
+                    		  }, 	  
                               function(errResponse){
                                    console.error('Error while creating.');
                               } 
@@ -97,8 +98,9 @@ App.controller('ImagenController', ['$scope','ImagenService', 'Upload', function
          self.actualizar = function(imagen){
         	 ImagenService.actualizar(imagen)
                       .then(
-                    		  self.sleep(3000),
-                    		  self.listarPorTienda(imagen.id_tienda),           		  
+                    		  function() {  
+                    			  self.listarPorTienda(imagen.id_tienda)
+                    		  },           		  
                               function(errResponse){
                                    console.error('Error while updating.');
                               } 
@@ -108,8 +110,9 @@ App.controller('ImagenController', ['$scope','ImagenService', 'Upload', function
          self.eliminar = function(id){
         	 ImagenService.eliminar(id)
                       .then(
-                    		  self.sleep(3000),
-                    		  self.listarPorTienda(self.imagen.id_tienda), 
+                    		  function() {  
+                    			  self.listarPorTienda(self.imagen.id_tienda)
+                    		  }, 
                               function(errResponse){
                                    console.error('Error while deleting.');
                               } 

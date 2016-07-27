@@ -34,40 +34,11 @@
 
 <body ng-app="myApp">
 	<P id="token">${tkn}</P>
-	<script type="text/javascript">
-		function close() {
-			console.log("$window.location.href", $window.location.href);
-			$window.location.href = $window.location.href;
-		};
-	</script>
-
-	<!-- HEADER AND NAVBAR -->
-	<header>
-		<nav class="navbar navbar-default">
-			<div class="container">
-				<div class="navbar-header">
-					<a class="navbar-brand" href="/">Administración</a>
-				</div>
-
-				<ul class="nav navbar-nav navbar-right">
-					<li><a href="#/"><i class="fa fa-home"></i> Inicio </a></li>
-					<li><a href="#/usuario"><i class="fa fa-comment"></i>Bodegueros</a></li>
-					<li><a href="#/tienda"><i class="fa fa-comment"></i>Tiendas</a></li>
-					<li><a href="#/direccion"><i class="fa fa-comment"></i>Direcciones</a></li>
-					<li><a href="#/imagen"><i class="fa fa-comment"></i>Imagenes</a></li>
-					<li><button onclick="close()"> Cerrar </button></li>
-					<li><a href="" onclick="close()"><i class="fa fa-comment"></i>Cerrar Sesión</a></li>
-				</ul>
-			</div>
-		</nav>
-	</header>
-
-	<!-- MAIN CONTENT AND INJECTED VIEWS -->
-	<div id="main">
-		<div ng-view></div>
-	</div>
-
+	
 	<script src="<c:url value='/static/js/app.js' />"></script>
+	<script src="<c:url value='/static/js/service/home_service.js' />"></script>
+	<script
+		src="<c:url value='/static/js/controller/home_controller.js' />"></script>
 	<script src="<c:url value='/static/js/service/usuario_service.js' />"></script>
 	<script
 		src="<c:url value='/static/js/controller/usuario_controller.js' />"></script>
@@ -80,6 +51,31 @@
 	<script src="<c:url value='/static/js/service/imagen_service.js' />"></script>
 	<script
 		src="<c:url value='/static/js/controller/imagen_controller.js' />"></script>
+	<!-- HEADER AND NAVBAR -->
+	<header>
+		<nav class="navbar navbar-default">
+			<div class="container" ng-controller="HomeController">
+				<div class="navbar-header">
+					<a class="navbar-brand" href="/">Administración</a>
+				</div>
 
+				<ul class="nav navbar-nav navbar-right">
+					<li><a href="#/"><i class="fa fa-home"></i> Inicio </a></li>
+					<li><a href="#/usuario"><i class="fa fa-comment"></i>Bodegueros</a></li>
+					<li><a href="#/tienda"><i class="fa fa-comment"></i>Tiendas</a></li>
+					<li><a href="#/direccion"><i class="fa fa-comment"></i>Direcciones</a></li>
+					<li><a href="#/imagen"><i class="fa fa-comment"></i>Imagenes</a></li>
+					<li><a href="/ecommerce/"><i class="fa fa-comment"></i>Cerrar Sesión</a></li>
+				</ul>
+			</div>
+		</nav>
+	</header>
+
+	<!-- MAIN CONTENT AND INJECTED VIEWS -->
+	<div id="main">
+		<div ng-view></div>
+	</div>
+
+	
 </body>
 </html>

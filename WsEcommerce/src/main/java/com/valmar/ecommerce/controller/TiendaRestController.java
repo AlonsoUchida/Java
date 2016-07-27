@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -226,10 +227,13 @@ public class TiendaRestController {
 		tiendaBean.setHorarioAtencion(tienda.getHorarioAtencion());
 		tiendaBean.setPaginaweb(tienda.getPaginaweb());
 		tiendaBean.setTarjeta(tienda.getTarjeta());
-
-		Banco banco = bancoService.obtenerPorId(tienda.getId_banco());
-		if (banco != null)
-			tiendaBean.setBanco(banco);
+		List<Banco> bancos = new ArrayList<>();
+		for(int id : tienda.getId_banco()){
+			Banco banco = bancoService.obtenerPorId(id);
+			if (banco != null)
+				bancos.add(banco);
+		}
+		tiendaBean.setBancos(new HashSet<Banco>(bancos));		
 
 		if (tienda.getId_tipo_tienda() != null) {
 			List<TipoTienda> tipoTiendas = new ArrayList<>();
@@ -291,9 +295,13 @@ public class TiendaRestController {
 		tiendaBean.setPaginaweb(tienda.getPaginaweb());
 		tiendaBean.setTarjeta(tienda.getTarjeta());
 
-		Banco banco = bancoService.obtenerPorId(tienda.getId_banco());
-		if (banco != null)
-			tiendaBean.setBanco(banco);
+		List<Banco> bancos = new ArrayList<>();
+		for(int id : tienda.getId_banco()){
+			Banco banco = bancoService.obtenerPorId(id);
+			if (banco != null)
+				bancos.add(banco);
+		}
+		tiendaBean.setBancos(new HashSet<Banco>(bancos));		
 
 		if (tienda.getId_tipo_tienda() != null) {
 			List<TipoTienda> tipoTiendas = new ArrayList<>();

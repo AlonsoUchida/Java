@@ -6,7 +6,8 @@ App.value('servidor', 'http://localhost:8080/ecommerce');
 App.config(function($routeProvider) {
 	$routeProvider
 	.when('/', {
-		templateUrl : 'static/home'
+		templateUrl : 'static/home',
+		controller : 'HomeController'
 	})
 	.when('/usuario', {
 		templateUrl : 'static/usuario',
@@ -23,9 +24,6 @@ App.config(function($routeProvider) {
 	.when('/imagen', {
 		templateUrl : 'static/imagen',
 		controller : 'ImagenController'
-	})
-	.when('/cerrar', {
-		templateUrl : 'static/cerrar'
 	})
 	.otherwise({
 		redirectTo : '/'
