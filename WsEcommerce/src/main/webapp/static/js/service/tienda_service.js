@@ -1,6 +1,6 @@
 'use strict';
  
-App.factory('TiendaService', ['$http', '$q', 'token', function($http, $q, token){
+App.factory('TiendaService', ['$http', '$q', 'token', 'servidor', function($http, $q, token, servidor){
  
     return {
     		
@@ -8,7 +8,7 @@ App.factory('TiendaService', ['$http', '$q', 'token', function($http, $q, token)
 		            var settings = {
 		                 "async": true,
 		                 "crossDomain": true,
-		                 "url": "http://localhost:8080/ecommerce/banco/listar",
+		                 "url": servidor + "/banco/listar",
 		                 "method": "GET",
 		                 "headers": {
 		                        "token": token,
@@ -35,7 +35,7 @@ App.factory('TiendaService', ['$http', '$q', 'token', function($http, $q, token)
                    var settings = {
                         "async": true,
                         "crossDomain": true,
-                        "url": "http://localhost:8080/ecommerce/tienda/listar",
+                        "url": servidor + "/tienda/listar",
                         "method": "GET",
                         "headers": {
                         "token": token,
@@ -63,7 +63,7 @@ App.factory('TiendaService', ['$http', '$q', 'token', function($http, $q, token)
                var settings = {
                 "async": true,
                 "crossDomain": true,
-                "url": "http://localhost:8080/ecommerce/tienda/obtenerPorId?id="+id,
+                "url": servidor + "/tienda/obtenerPorId?id="+id,
                 "method": "GET",
                 "headers": {
                 "cache-control": "no-cache",
@@ -92,7 +92,7 @@ App.factory('TiendaService', ['$http', '$q', 'token', function($http, $q, token)
                    var settings = {
                     "async": true,
                     "crossDomain": true,
-                    "url": "http://localhost:8080/ecommerce/tienda/agregar",
+                    "url": servidor + "/tienda/agregar",
                     "method": "POST",
                     "headers": {
                     "token": token,
@@ -131,7 +131,7 @@ App.factory('TiendaService', ['$http', '$q', 'token', function($http, $q, token)
                     var settings = {
                     "async": true,
                     "crossDomain": true,
-                    "url": "http://localhost:8080/ecommerce/tienda/actualizar",
+                    "url": servidor + "/tienda/actualizar",
                     "method": "PUT",
                     "headers": {
                     "content-type": "application/json",
@@ -163,7 +163,7 @@ App.factory('TiendaService', ['$http', '$q', 'token', function($http, $q, token)
                     var settings = {
                         "async": true,
                         "crossDomain": true,
-                        "url": "http://localhost:8080/ecommerce/tienda/eliminar?id="+id,
+                        "url": servidor + "/tienda/eliminar?id="+id,
                         "method": "DELETE",
                         "headers": {
                         "token": token,

@@ -2,12 +2,11 @@
 
 var App = angular.module('myApp', [ 'ngRoute', 'ngFileUpload']);
 App.value('token',  document.getElementById("token") != null ? document.getElementById("token").innerHTML : null);
-App.value('servidor', 'http://localhost:8080/ecommerce');
+App.value('servidor', 'http://192.168.0.5:8080/ecommerce');
 App.config(function($routeProvider) {
 	$routeProvider
 	.when('/', {
-		templateUrl : 'static/home',
-		controller : 'HomeController'
+		templateUrl : 'static/home'
 	})
 	.when('/usuario', {
 		templateUrl : 'static/usuario',

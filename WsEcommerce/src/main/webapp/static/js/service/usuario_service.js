@@ -8,7 +8,7 @@ App.factory('UsuarioService', ['$http', '$q', 'token', function($http, $q, token
 		            var settings = {
 		                 "async": true,
 		                 "crossDomain": true,
-		                 "url": "http://localhost:8080/ecommerce/tipodocumento/listar",
+		                 "url": servidor + "/tipodocumento/listar",
 		                 "method": "GET"
 		             }
 		
@@ -31,7 +31,7 @@ App.factory('UsuarioService', ['$http', '$q', 'token', function($http, $q, token
                    var settings = {
                         "async": true,
                         "crossDomain": true,
-                        "url": "http://localhost:8080/ecommerce/usuario/listar",
+                        "url": servidor + "/usuario/listar",
                         "method": "GET",
                         "headers": {
                         "token": token,
@@ -59,7 +59,7 @@ App.factory('UsuarioService', ['$http', '$q', 'token', function($http, $q, token
                var settings = {
                 "async": true,
                 "crossDomain": true,
-                "url": "http://localhost:8080/ecommerce/cliente/obtenerPorId?id="+id,
+                "url": servidor + "/cliente/obtenerPorId?id="+id,
                 "method": "GET",
                 "headers": {
                 "cache-control": "no-cache",
@@ -87,7 +87,7 @@ App.factory('UsuarioService', ['$http', '$q', 'token', function($http, $q, token
                    var settings = {
                     "async": true,
                     "crossDomain": true,
-                    "url": "http://localhost:8080/ecommerce/usuario/agregar",
+                    "url": servidor + "/usuario/agregar",
                     "method": "POST",
                     "headers": {
                     "token": token,
@@ -127,7 +127,7 @@ App.factory('UsuarioService', ['$http', '$q', 'token', function($http, $q, token
                     var settings = {
                     "async": true,
                     "crossDomain": true,
-                    "url": "http://localhost:8080/ecommerce/usuario/actualizar",
+                    "url": servidor + "/usuario/actualizar",
                     "method": "PUT",
                     "headers": {
                     "content-type": "application/json",
@@ -162,7 +162,7 @@ App.factory('UsuarioService', ['$http', '$q', 'token', function($http, $q, token
                     var settings = {
                         "async": true,
                         "crossDomain": true,
-                        "url": "http://localhost:8080/ecommerce/usuario/eliminar?id="+id,
+                        "url": servidor + "/usuario/eliminar?id="+id,
                         "method": "DELETE",
                         "headers": {
                         "token": token,

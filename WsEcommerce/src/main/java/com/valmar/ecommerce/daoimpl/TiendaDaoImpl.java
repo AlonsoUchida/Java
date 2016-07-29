@@ -52,9 +52,17 @@ public class TiendaDaoImpl extends AbstractDao<Integer, Tienda> implements Tiend
 			query3.setInteger("id", id);
 			query3.executeUpdate();
 
-			Query query4 = getSession().createSQLQuery("delete from producto where id_tienda = :id");
+			Query query4 = getSession().createSQLQuery("update producto set estado = 2 where id_tienda = :id");
 			query4.setInteger("id", id);
 			query4.executeUpdate();
+			
+			Query query5 = getSession().createSQLQuery("delete from tienda_banco where id_tienda = :id");
+			query5.setInteger("id", id);
+			query5.executeUpdate();
+			
+			Query query6 = getSession().createSQLQuery("delete from tienda_direccion where id_tienda = :id");
+			query6.setInteger("id", id);
+			query6.executeUpdate();
 
 			Query query = getSession().createSQLQuery("delete from tienda where id = :id");
 			query.setInteger("id", id);

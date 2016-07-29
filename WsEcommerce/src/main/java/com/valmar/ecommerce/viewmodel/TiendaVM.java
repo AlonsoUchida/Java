@@ -2,8 +2,6 @@ package com.valmar.ecommerce.viewmodel;
 
 import java.math.BigDecimal;
 
-import com.valmar.ecommerce.model.Banco;
-
 public class TiendaVM {
 
 	private int id;

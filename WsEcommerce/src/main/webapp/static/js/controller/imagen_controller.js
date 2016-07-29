@@ -7,6 +7,7 @@ App.controller('ImagenController', ['$scope','ImagenService', 'Upload', function
           $scope.picFile = "";
           $scope.tienda = "";
           self.tienda = "";
+          self.id_tienda = "";
           self.defecto = "";
           
           self.sleep = function (milliseconds) {
@@ -34,11 +35,13 @@ App.controller('ImagenController', ['$scope','ImagenService', 'Upload', function
           
           $scope.actualizarTienda = function (tienda) {
               self.imagen.id_tienda = tienda.id;
+              self.id_tienda = self.imagen.id_tienda;
+              console.log("self.id_tienda", self.id_tienda);
               self.listarPorTienda(tienda.id);
               for(var i=0; i < $scope.tiendas.length; i++){
             	  if(tienda.id == $scope.tiendas[i].id){
             		  self.tienda = $scope.tiendas[i];
-            		  $scope.tienda = self.tienda;
+            		  $scope.tienda = self.tienda;          		  
             		  console.log("self.tienda", self.tienda);
             		  console.log("$scope.tienda", $scope.tienda);
             	  }
@@ -69,7 +72,6 @@ App.controller('ImagenController', ['$scope','ImagenService', 'Upload', function
           	  ImagenService.listarPorTienda(id)
                     .then(
                                  function(d) {  
-                                   self.sleep(5000);
                               	   $scope.imagenes = d;
                               	   self.tienda = $scope.tienda;
                               	   $scope.$apply();      
@@ -87,7 +89,7 @@ App.controller('ImagenController', ['$scope','ImagenService', 'Upload', function
         	  ImagenService.agregar(imagen)
                       .then(
                     		  function() {  
-                    			  self.listarPorTienda(imagen.id_tienda)
+                    			  self.listarPorTienda(self.id_tienda)
                     		  }, 	  
                               function(errResponse){
                                    console.error('Error while creating.');
@@ -99,7 +101,7 @@ App.controller('ImagenController', ['$scope','ImagenService', 'Upload', function
         	 ImagenService.actualizar(imagen)
                       .then(
                     		  function() {  
-                    			  self.listarPorTienda(imagen.id_tienda)
+                    			  self.listarPorTienda(self.id_tienda)
                     		  },           		  
                               function(errResponse){
                                    console.error('Error while updating.');
@@ -111,7 +113,7 @@ App.controller('ImagenController', ['$scope','ImagenService', 'Upload', function
         	 ImagenService.eliminar(id)
                       .then(
                     		  function() {  
-                    			  self.listarPorTienda(self.imagen.id_tienda)
+                    			  self.listarPorTienda(self.id_tienda)
                     		  }, 
                               function(errResponse){
                                    console.error('Error while deleting.');

@@ -2,8 +2,12 @@
 	   <div class="generic-container" ng-controller="ImagenController as ctrl">
           <div class="panel panel-default">
               <div class="panel-heading">
-              		<span class="lead">Registro de Imagen Por Tienda</span>
-              		<button type="button" ng-click="ctrl.reset()" class="btn btn-default" style="float: right;">Refrescar</button>
+              <div class="row">
+              	 	<span class="lead">Registro de Imagen Por Tienda</span> 
+	              	 <div class="form-actions floatRight">
+	              	 <button type="button" ng-click="ctrl.reset()" class="btn btn-default" style="float: right;">Refrescar</button>
+	              	 </div>
+              	 </div>
               </div>
               <div class="formcontainer">
                   <form ng-submit="ctrl.submit()" name="myForm" class="form-horizontal">

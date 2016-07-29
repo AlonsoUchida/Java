@@ -34,9 +34,6 @@
 	<P id="token">${tkn}</P>
 	
 	<script src="<c:url value='/static/js/app.js' />"></script>
-	<script src="<c:url value='/static/js/service/home_service.js' />"></script>
-	<script
-		src="<c:url value='/static/js/controller/home_controller.js' />"></script>
 	<script src="<c:url value='/static/js/service/usuario_service.js' />"></script>
 	<script
 		src="<c:url value='/static/js/controller/usuario_controller.js' />"></script>
@@ -52,7 +49,7 @@
 	<!-- HEADER AND NAVBAR -->
 	<header>
 		<nav class="navbar navbar-default">
-			<div class="container" ng-controller="HomeController">
+			<div class="container">
 				<div class="navbar-header">
 					<a class="navbar-brand" href="/">Administración</a>
 				</div>
