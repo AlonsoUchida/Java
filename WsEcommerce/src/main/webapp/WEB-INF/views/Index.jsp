@@ -25,10 +25,8 @@
 	src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.4/angular-cookies.js"></script>
 
 <script src="https://ajax.aspnetcdn.com/ajax/4.0/1/MicrosoftAjax.js"></script>
-<script
-	src="<c:url value='/static/js/libs/ng-file-upload-bower-12.0.4/ng-file-upload-shim.js' />"></script>
-<script
-	src="<c:url value='/static/js/libs/ng-file-upload-bower-12.0.4/ng-file-upload.js' />"></script>
+<script src="<c:url value='/static/js/libs/ng-file-upload-bower/ng-file-upload-shim.js' />"></script>
+<script src="<c:url value='/static/js/libs/ng-file-upload-bower/ng-file-upload.js' />"></script>
 
 </head>
 
