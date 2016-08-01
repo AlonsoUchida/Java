@@ -433,7 +433,7 @@ public class TiendaRestController {
 			return new ResponseEntity<ImagenTienda>(HttpStatus.NO_CONTENT);
 		}
 		imagenTiendaService.eliminarImagen(id);
-		;
+
 		return new ResponseEntity<ImagenTienda>(HttpStatus.NO_CONTENT);
 	}
 

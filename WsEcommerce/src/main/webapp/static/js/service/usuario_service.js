@@ -1,6 +1,6 @@
 'use strict';
  
-App.factory('UsuarioService', ['$http', '$q', 'token', function($http, $q, token){
+App.factory('UsuarioService', ['$http', '$q', 'token', 'servidor', function($http, $q, token, servidor){
  
     return {
     		

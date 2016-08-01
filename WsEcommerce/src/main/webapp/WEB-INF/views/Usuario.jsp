@@ -44,8 +44,8 @@
                               <div class="col-md-7">
                                   <input type="email" ng-model="ctrl.usuario.correo" id="correo" class="email form-control input-sm" placeholder="Ingresa tu correo" required/>
                                   <div class="has-error" ng-show="myForm.$dirty">
-                                      <span ng-show="myForm.email.$error.required">This is a required field</span>
-                                      <span ng-show="myForm.email.$invalid">This field is invalid </span>
+                                      <span ng-show="myForm.email.$error.required">Este campo es requerido</span>
+                                      <span ng-show="myForm.email.$invalid">Este campo es invalido</span>
                                   </div>
                               </div>
                           </div>
