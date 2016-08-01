@@ -188,12 +188,14 @@ CREATE TABLE IF NOT EXISTS `CMS_VALMAR_DB`.`usuario` (
   `fecha_nacimiento` DATETIME NULL,
   `id_distrito` INT(11) NULL,
   `id_tipo_documento` INT(5) NOT NULL,
+  `id_usuario` INT(11) NULL,
   `estado` INT(1) NOT NULL,
   `fecha_registro` DATETIME NOT NULL,
   `fecha_modificacion` DATETIME NOT NULL,
   PRIMARY KEY (`id`),
   INDEX `fk_distrito_idx` (`id_distrito` ASC),
   INDEX `fk_tipo_documento_idx` (`id_tipo_documento` ASC),
+  INDEX `fk_usuario_idx` (`id_usuario` ASC),
   CONSTRAINT `fk_distrito`
     FOREIGN KEY (`id_distrito`)
     REFERENCES `CMS_VALMAR_DB`.`distrito` (`id`)
@@ -202,6 +204,11 @@ CREATE TABLE IF NOT EXISTS `CMS_VALMAR_DB`.`usuario` (
   CONSTRAINT `fk_tipo_documento`
     FOREIGN KEY (`id_tipo_documento`)
     REFERENCES `CMS_VALMAR_DB`.`tipo_documento` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_usuario`
+    FOREIGN KEY (`id_usuario`)
+    REFERENCES `CMS_VALMAR_DB`.`usuario` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB
@@ -274,6 +281,7 @@ DROP TABLE IF EXISTS `CMS_VALMAR_DB`.`tienda` ;
 CREATE TABLE IF NOT EXISTS `CMS_VALMAR_DB`.`tienda` (
   `id` INT(11) NOT NULL AUTO_INCREMENT,
   `nombre` VARCHAR(250) NULL,
+  `razon_social` VARCHAR(200) NULL,
   `ruc` VARCHAR(30) NULL,
   `telefono_local` VARCHAR(10) NULL,
   `telefono_movil` VARCHAR(10) NULL DEFAULT NULL,
