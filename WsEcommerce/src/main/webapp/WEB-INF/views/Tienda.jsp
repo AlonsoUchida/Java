@@ -11,6 +11,20 @@
               <div class="formcontainer">
                   <form ng-submit="ctrl.submit()" name="myForm" class="form-horizontal">
                       <input type="hidden" ng-model="ctrl.tienda.id" />
+                      
+                       <div class="row">
+                          <div class="form-group col-md-12">
+                              <label class="col-md-2 control-lable" for="tarjeta">Bodeguero</label>
+                              <div class="col-md-7">
+                                 <select ng-model="ctrl.bodeguero" ng-options='bodeguero as (bodeguero.nombre + " " + bodeguero.apellido) for bodeguero in bodegueros'
+                                 ng-change="actualizarBodeguero(ctrl.bodeguero)" required></select>
+                                 <span ng-show="myForm.uname.$error.required">Este campo es requerido</span>    
+                                 <span ng-show="myForm.uname.$invalid">Este campo es invalido</span>
+                              </div>
+
+                          </div>
+                      </div> 
+                      
                       <div class="row">
                           <div class="form-group col-md-12">
                               <label class="col-md-2 control-lable" for="nombre">Nombre</label>

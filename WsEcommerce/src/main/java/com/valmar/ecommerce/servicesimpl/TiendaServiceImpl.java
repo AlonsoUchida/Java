@@ -100,4 +100,9 @@ public class TiendaServiceImpl implements TiendaService{
 		return tiendaDao.obtenerTiendasPorNombreDistritoUrbanizacion(nombre, id, id_urbanizacion);
 	}
 
+	@Override
+	public List<Tienda> listarPorBodeguero(int id) {
+		return tiendaDao.listarPorBodeguero(id);
+	}
+
 }

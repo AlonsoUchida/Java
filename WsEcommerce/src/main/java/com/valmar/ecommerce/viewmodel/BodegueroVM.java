@@ -12,6 +12,7 @@ public class BodegueroVM {
 	private String valorDocumento;
 	private String direccionFiscal;
 	private String fechaNacimiento;
+	private int id_vendedor;
 	
 	public int getId() {
 		return id;
@@ -91,6 +92,14 @@ public class BodegueroVM {
 
 	public void setFechaNacimiento(String fechaNacimiento) {
 		this.fechaNacimiento = fechaNacimiento;
+	}
+
+	public int getId_vendedor() {
+		return id_vendedor;
+	}
+
+	public void setId_vendedor(int id_vendedor) {
+		this.id_vendedor = id_vendedor;
 	}
 	
 }

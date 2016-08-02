@@ -2131,6 +2131,10 @@ INSERT INTO `usuario` VALUES (1, 'JOSUE', 'MOSQUERA', 'josue.mosquera@valmar.com
 INSERT INTO `usuario` VALUES (2, 'JOSUE', 'MOSQUERA', 'josue.mosquera.cliente@valmar.com.pe', 'IRHhatCFrBo=', 'M', 2, '43986525', '4236492', '958456456', 'Av. Mariano Corenjo 341 Pueblo Libre',  NOW(), 1, 1, null,1, NOW(), NOW());
 -- Records of usuarios tipo vendedor 3
 INSERT INTO `usuario` VALUES (3, 'ALONSO', 'UCHIDA', 'javier.uchida@valmar.com.pe', 'IRHhatCFrBo=', 'M', 3 , '43986525', '4236492','958456456',  'Av. Mariano Corenjo 341 Pueblo Libre',  NOW(), 1, 1, null, 1, NOW(), NOW());
+-- Records of usuarios tipo bodeguero 4
+INSERT INTO `usuario` VALUES (4, 'ALONSO', 'UCHIDA', 'javier.uchida2@valmar.com.pe', 'IRHhatCFrBo=', 'M', 1 , '43986525', '4236492','958456456',  'Av. Mariano Corenjo 341 Pueblo Libre',  NOW(), 1, 1, 3, 1, NOW(), NOW());
+-- Records of usuarios tipo bodeguero 5
+INSERT INTO `usuario` VALUES (5, 'ALONSO', 'UCHIDA', 'javier.uchida3@valmar.com.pe', 'IRHhatCFrBo=', 'M', 1 , '43986525', '4236492','958456456',  'Av. Mariano Corenjo 341 Pueblo Libre',  NOW(), 1, 1, 3, 1, NOW(), NOW());
 -- ----------------------------
 -- Records of autoridad
 -- ----------------------------

@@ -193,4 +193,20 @@ public class TiendaDaoImpl extends AbstractDao<Integer, Tienda> implements Tiend
 		return null;
 	}
 
+	@Override
+	public List<Tienda> listarPorBodeguero(int id) {
+		try {
+			Criteria criteria = createEntityCriteria();
+			criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
+			criteria.createAlias("usuarios", "u");
+			criteria.add(Restrictions.eq("u.tipo", TipoUsuario.BODEGUERO.getValue()));
+			criteria.add(Restrictions.eq("u.id", id));
+			List<Tienda> tiendas = (List<Tienda>) criteria.list();
+			return tiendas;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
 }

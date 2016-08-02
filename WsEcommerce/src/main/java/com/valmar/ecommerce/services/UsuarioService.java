@@ -19,4 +19,7 @@ public interface UsuarioService {
 	public String obtenerUsuarioPorToken(String token);
 	Usuario obtenerPorCorreo(String username);
 	List<Usuario> listarVendedores();
+	//Validar al vendedor
+	Usuario obtenerPorCorreoVendedor(String username);
+	List<Usuario> listarUsuariosPorVendedor(int id);
 }

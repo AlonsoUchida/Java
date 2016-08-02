@@ -2,6 +2,7 @@ package com.valmar.ecommerce.enums;
 
 public enum TipoUsuario {
 	
+	ADMINISTRADOR(0),
 	BODEGUERO(1),
 	CLIENTE(2),
 	VENDEDOR(3);

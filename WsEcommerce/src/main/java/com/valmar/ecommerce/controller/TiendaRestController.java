@@ -100,6 +100,15 @@ public class TiendaRestController {
 		}
 		return new ResponseEntity<List<Tienda>>(tiendas, HttpStatus.OK);
 	}
+	
+	@RequestMapping(value = { "/listarPorBodeguero" }, params = {"id"}, method = RequestMethod.GET)
+	public ResponseEntity<List<Tienda>> listarPorBodeguero(@RequestParam int id) {
+		List<Tienda> tiendas = service.listarPorBodeguero(id);
+		if (tiendas.isEmpty()) {
+			return new ResponseEntity<List<Tienda>>(HttpStatus.NO_CONTENT);
+		}
+		return new ResponseEntity<List<Tienda>>(tiendas, HttpStatus.OK);
+	}
 
 	@RequestMapping(value = { "/listarTiendasPorCobertura" }, method = RequestMethod.GET)
 	public ResponseEntity<List<TiendaVMLite>> listarTiendasPorCobertura(@RequestParam String latitud,
@@ -359,11 +368,9 @@ public class TiendaRestController {
 		return new ResponseEntity<Tienda>(HttpStatus.NO_CONTENT);
 	}
 
-	/************************************************************************************************/
-	/******************************
-	 * Imagenes de Producto
-	 *****************************************/
-	/************************************************************************************************/
+	/************************************************************************************************
+	 ********************************** Imagenes de Producto*****************************************
+	 ************************************************************************************************/
 
 	@RequestMapping(value = { "/imagen/listar" }, method = RequestMethod.GET)
 	public ResponseEntity<List<ImagenTienda>> listarImagenes() {

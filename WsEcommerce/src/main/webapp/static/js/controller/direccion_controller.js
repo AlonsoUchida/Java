@@ -8,15 +8,7 @@ App.controller('DireccionController', ['$scope', 'DireccionService', function($s
           self.departamento = "";
           self.provincia = "";
           self.tienda = "";
-          
-          self.sleep = function (milliseconds) {
-        	  var start = new Date().getTime();
-        	  for (var i = 0; i < 1e7; i++) {
-        	    if ((new Date().getTime() - start) > milliseconds){
-        	      break;
-        	    }
-        	  }
-        	};
+
           
           $scope.actualizarTienda = function (tienda) {
               self.direccion.id_tienda = tienda.id;

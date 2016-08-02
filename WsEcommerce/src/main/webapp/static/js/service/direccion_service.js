@@ -1,15 +1,10 @@
 'use strict';
 
-App.factory('DireccionService',
-				[
-						'$http',
-						'$q',
-						'token',
-						'servidor',
+App.factory('DireccionService', ['$http','$q','token','servidor',
 						function($http, $q, token, servidor) {
 
 							return {
-
+								
 								listarTiendas : function() {
 									var settings = {
 										"async" : true,

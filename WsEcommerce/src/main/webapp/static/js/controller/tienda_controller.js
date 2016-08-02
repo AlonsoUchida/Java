@@ -1,11 +1,11 @@
 'use strict';
  
-App.controller('TiendaController', ['$scope', 'TiendaService', function($scope, TiendaService) {
+App.controller('TiendaController', ['$scope', 'TiendaService', 'usuarioId', function($scope, TiendaService, usuarioId) {
           var self = this;
           
           self.tienda = {id:null, nombre:'',ruc:'',telefono_local:'', telefono_movil:'', horarioAtencion:'', 
-        		  paginaweb:'', tarjeta: 2, id_banco: [] };
-          
+        		  paginaweb:'', tarjeta: 2, id_banco: [], id_usuarios: []};
+         
           $scope.tarjetas = [{"id" : 1, "nombre": "Si Utilizo"},{"id" : 2, "nombre": "No Utilizo"}];
           $scope.bancos = {};
           
@@ -16,6 +16,7 @@ App.controller('TiendaController', ['$scope', 'TiendaService', function($scope, 
          
           self.tarjeta = $scope.tarjetas[1];
           self.banco = "";
+          self.bodegueroid = "";
           /*self.horarioApertura = "";
           self.horarioCierre = "";
           self.horarioString= "";        
@@ -33,8 +34,16 @@ App.controller('TiendaController', ['$scope', 'TiendaService', function($scope, 
              console.log(self.tienda.horarioAtencion);
              
           };*/
-
-
+          
+          $scope.actualizarBodeguero = function (bodeguero) {
+        	  self.tienda.id_usuarios = [];
+              self.tienda.id_usuarios.push(bodeguero.id);
+              self.bodegueroid = bodeguero.id;
+              console.log('self.tienda.id_usuarios', self.tienda.id_usuarios);
+              self.listarPorBodeguero(self.bodegueroid);
+              
+           };
+           
           $scope.actualizarBanco = function (banco) {
         	  self.tienda.id_banco = [];
              for(var i=0; i < banco.length; i++){
@@ -62,9 +71,23 @@ App.controller('TiendaController', ['$scope', 'TiendaService', function($scope, 
                        );
           };
           
+          self.listarBodegueros = function(id){
+        	  TiendaService.listarBodegueros(id)
+                  .then(
+                               function(d) {  
+                            	   $scope.bodegueros = d;
+                            	   $scope.$apply();
+                                   console.log("usuario bodegueros:" + $scope.bodegueros);        
+                               },
+                                function(errResponse){
+                                    console.error('Error while fetching Currencies');
+                                }
+                       );
+          };
+         
           
-          self.listar = function(){
-        	  TiendaService.listar()
+          self.listarPorBodeguero = function(id){
+        	  TiendaService.listarPorBodeguero(id)
                   .then(
                                function(d) {  
                             	   $scope.tiendas = d;
@@ -81,7 +104,7 @@ App.controller('TiendaController', ['$scope', 'TiendaService', function($scope, 
         	  console.log(tienda);
         	  TiendaService.agregar(tienda)
                       .then(
-                    		  self.listar, 
+                    		  self.listarPorBodeguero(self.bodegueroid), 
                               function(errResponse){
                                    console.error('Error while creating Tienda.');
                               } 
@@ -92,7 +115,7 @@ App.controller('TiendaController', ['$scope', 'TiendaService', function($scope, 
         	 console.log(tienda);
         	 TiendaService.actualizar(tienda)
                       .then(
-                              self.listar, 
+                    		  self.listarPorBodeguero(self.bodegueroid), 
                               function(errResponse){
                                    console.error('Error while updating Tienda.');
                               } 
@@ -102,17 +125,16 @@ App.controller('TiendaController', ['$scope', 'TiendaService', function($scope, 
          self.eliminar = function(id){
         	 TiendaService.eliminar(id)
                       .then(
-                              self.listar, 
+                    		  self.listarPorBodeguero(self.bodegueroid), 
                               function(errResponse){
                                    console.error('Error while deleting Tienda.');
                               } 
                   );
           };
- 
-
-          self.listar();
+           
+          self.listarBodegueros(usuarioId);
           self.listarBancos();
-          
+        
           self.submit = function() {
               if(self.tienda.id===null){
                   console.log('Saving New tienda', self.tienda);    
@@ -172,9 +194,11 @@ App.controller('TiendaController', ['$scope', 'TiendaService', function($scope, 
            
           self.reset = function(){
         	  self.tienda = {id:null, nombre:'',ruc:'',telefono_local:'', telefono_movil:'', horarioAtencion:'', 
-            		  paginaweb:'', tarjeta:1, id_banco: '' };
+            		  paginaweb:'', tarjeta:1, id_banco: [], id_usuarios: [] };
         	  self.tarjeta = "";
               self.banco = "";
+              self.tienda.id_usuarios = [];
+              self.tienda.id_usuarios.push(self.bodegueroid);
               /*self.horarioApertura = "";
               self.horarioCierre = "";
               self.horarioString = "";

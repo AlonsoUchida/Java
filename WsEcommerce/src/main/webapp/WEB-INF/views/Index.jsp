@@ -32,6 +32,7 @@
 
 <body ng-app="myApp">
 	<P id="token">${tkn}</P>
+	<P id="usuario">${idUsuario}</P>
 	
 	<script src="<c:url value='/static/js/app.js' />"></script>
 	<script src="<c:url value='/static/js/service/usuario_service.js' />"></script>

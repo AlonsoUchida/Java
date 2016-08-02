@@ -10,15 +10,6 @@ App.controller('ImagenController', ['$scope','ImagenService', 'Upload', function
           self.id_tienda = "";
           self.defecto = "";
           
-          self.sleep = function (milliseconds) {
-        	  var start = new Date().getTime();
-        	  for (var i = 0; i < 1e7; i++) {
-        	    if ((new Date().getTime() - start) > milliseconds){
-        	      break;
-        	    }
-        	  }
-        	};
- 
           $scope.convertToBase64 = function(){
         	  var imagenToString64 = "";
         	  if ($scope.picFile) {

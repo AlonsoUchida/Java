@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.hibernate.Criteria;
 import org.hibernate.Query;
+import org.hibernate.criterion.Disjunction;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
@@ -109,6 +110,34 @@ public class UsuarioDaoImpl extends AbstractDao<Integer, Usuario> implements Usu
 			Criteria criteria = createEntityCriteria();
 			criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
 			criteria.add(Restrictions.eq("tipo", TipoUsuario.VENDEDOR.getValue()));
+			criteria.add(Restrictions.eq("estado", TipoEstado.HABILITADO.getValue()));
+			List<Usuario> usuarios = (List<Usuario>) criteria.list();			
+			return usuarios;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	@Override
+	public Usuario obtenerPorCorreoVendedor(String username) {
+		Criteria criteria = createEntityCriteria();
+		criteria.add(Restrictions.like("correo", username)); 
+		Disjunction distOr = Restrictions.disjunction();
+		distOr.add(Restrictions.like("tipo", TipoUsuario.VENDEDOR.getValue()));
+		distOr.add(Restrictions.like("tipo", TipoUsuario.ADMINISTRADOR.getValue()));
+		criteria.add(distOr); 
+		Usuario usuario = (Usuario)criteria.uniqueResult();
+		return usuario;
+	}
+
+	@Override
+	public List<Usuario> listarUsuariosPorVendedor(int id) {
+		try {
+			Criteria criteria = createEntityCriteria();
+			criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
+			criteria.add(Restrictions.eq("usuario.id", id));
+			criteria.add(Restrictions.eq("tipo", TipoUsuario.BODEGUERO.getValue()));
 			criteria.add(Restrictions.eq("estado", TipoEstado.HABILITADO.getValue()));
 			List<Usuario> usuarios = (List<Usuario>) criteria.list();			
 			return usuarios;

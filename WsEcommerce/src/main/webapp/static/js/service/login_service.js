@@ -1,12 +1,13 @@
 'use strict';
  
-App.factory('LoginService', ['$http', '$q', '$location', '$window', 'servidor', function($http, $q, $location, $window,servidor){
+App.factory('LoginService', ['$http', '$q', '$window', 'servidor', function($http, $q, $window, servidor){
 	 var token = "";
+	 var idUsuario = "";
     return {
     	  login: function (email, password) {
     		  console.log("login service");
               $.ajax({
-                  url: servidor + "/authenticate",
+                  url: servidor + "/authenticate_vendedor",
                   type: 'POST',
                   dataType: 'json',
                   beforeSend: function (xhr) {
@@ -32,7 +33,8 @@ App.factory('LoginService', ['$http', '$q', '$location', '$window', 'servidor', 
                           case 200:
                               var data = JSON.parse(datos.responseText);
                               token = data.token;
-                              $window.location.href = $window.location.href + "index?tkn=" + token;
+                              idUsuario = data.idUsuario;
+                              $window.location.href = $window.location.href + "index?tkn=" + token + "&idUsuario=" +idUsuario;
                               break;
                           default:
                               // Sin internet

@@ -16,4 +16,6 @@ public interface UsuarioDao {
     int validarUsuario(String username, String password);	
 	Usuario obtenerPorCorreo(String username);
 	List<Usuario> listarVendedores();
+	Usuario obtenerPorCorreoVendedor(String username);
+	List<Usuario> listarUsuariosPorVendedor(int id);
 }

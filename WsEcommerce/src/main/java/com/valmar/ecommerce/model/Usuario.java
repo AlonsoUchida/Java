@@ -14,6 +14,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
@@ -74,6 +75,16 @@ public class Usuario {
 	@OneToOne
 	@JoinColumn(name="ID_DISTRITO")
 	private Distrito distrito;
+	
+	@ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name="ID_USUARIO")
+	@JsonIgnore
+    private Usuario usuario;
+	
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "usuario", cascade = CascadeType.ALL)
+	@JsonBackReference
+	private Set<Usuario> usuarios;
+	
 	
 	@Column(name = "ESTADO")
 	private int estado;	
@@ -269,6 +280,22 @@ public class Usuario {
 
 	public void setDistrito(Distrito distrito) {
 		this.distrito = distrito;
+	}
+
+	public Usuario getUsuario() {
+		return usuario;
+	}
+
+	public void setUsuario(Usuario usuario) {
+		this.usuario = usuario;
+	}
+
+	public Set<Usuario> getUsuarios() {
+		return usuarios;
+	}
+
+	public void setUsuarios(Set<Usuario> usuarios) {
+		this.usuarios = usuarios;
 	}
 		
 }

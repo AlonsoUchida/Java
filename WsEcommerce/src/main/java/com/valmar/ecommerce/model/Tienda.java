@@ -37,6 +37,9 @@ public class Tienda {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 
+	@Column(name = "RAZON_SOCIAL")
+	private String razonSocial;
+	
 	@Column(name = "NOMBRE")
 	private String nombre;
 	
@@ -336,6 +339,14 @@ public class Tienda {
 
 	public void setTipoTiendas(Set<TipoTienda> tipoTiendas) {
 		this.tipoTiendas = tipoTiendas;
+	}
+
+	public String getRazonSocial() {
+		return razonSocial;
+	}
+
+	public void setRazonSocial(String razonSocial) {
+		this.razonSocial = razonSocial;
 	}	
 	
 }

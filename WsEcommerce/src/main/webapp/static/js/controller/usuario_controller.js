@@ -1,8 +1,8 @@
 'use strict';
-App.controller('UsuarioController', ['$scope', 'UsuarioService', function($scope, UsuarioService) {
+App.controller('UsuarioController', ['$scope', 'UsuarioService', 'usuarioId', function($scope, UsuarioService, usuarioId) {
           var self = this;
           self.usuario = {id:null, nombre:'',apellido:'',correo:'', password:'', genero:'', 
-        		  id_tipoDocumento:'', valorDocumento:'', direccionFiscal: '', fechaNacimiento: ''  };
+        		  id_tipoDocumento:'', valorDocumento:'', direccionFiscal: '', fechaNacimiento: '', id_vendedor: ''  };
         
           $scope.fechaNacimiento = "";
           $scope.generos = [{"id" : "M", "descripcion" : "Hombre"},{"id" : "F", "descripcion" : "Mujer"}];
@@ -47,11 +47,26 @@ App.controller('UsuarioController', ['$scope', 'UsuarioService', function($scope
                                 }
                        );
           };
+          
+          self.listarPorVendedor = function(id){
+        	  UsuarioService.listarPorVendedor(id)
+                  .then(
+                               function(d) {  
+                            	   $scope.usuarios = d;
+                            	   $scope.$apply();       
+                               },
+                                function(errResponse){
+                                    console.error('Error while fetching Currencies');
+                                }
+                       );
+          };
             
           self.agregar = function(usuario){
         	  UsuarioService.agregar(usuario)
                       .then(
-                    		  self.listar, 
+                    		  function(){
+                    			  self.listarPorVendedor(usuarioId)
+                    		  }, 
                               function(errResponse){
                                    console.error('Error while creating Usuario.');
                               } 
@@ -61,7 +76,9 @@ App.controller('UsuarioController', ['$scope', 'UsuarioService', function($scope
          self.actualizar = function(usuario){
         	 UsuarioService.actualizar(usuario)
                       .then(
-                              self.listar, 
+                    		  function(){
+                    			  self.listarPorVendedor(usuarioId)
+                    		  }, 
                               function(errResponse){
                                    console.error('Error while updating User.');
                               } 
@@ -71,20 +88,22 @@ App.controller('UsuarioController', ['$scope', 'UsuarioService', function($scope
          self.eliminar = function(id){
         	 UsuarioService.eliminar(id)
                       .then(
-                              self.listar, 
+                    		  function(){
+                    			  self.listarPorVendedor(usuarioId)
+                    		  },  
                               function(errResponse){
                                    console.error('Error while deleting User.');
                               } 
                   );
           };
  
-
-          self.listar();
+          self.listarPorVendedor(usuarioId);
           self.listarTipoDocumentos();
           
           self.submit = function() {
+        	  self.usuario.id_vendedor = usuarioId;
               if(self.usuario.id===null){
-            	  self.usuario.fechaNacimiento = $scope.fechaNacimiento;
+            	  self.usuario.fechaNacimiento = $scope.fechaNacimiento;            	  
                   console.log('Saving New User', self.usuario);    
                   self.agregar(self.usuario);
               }else{

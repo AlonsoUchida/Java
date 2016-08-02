@@ -50,6 +50,15 @@ public class UsuarioRestController {
         return new ResponseEntity<List<Usuario>>(usuarios, HttpStatus.OK);
     }
     
+    @RequestMapping(value = { "/listarPorVendedor" }, method = RequestMethod.GET)
+    public ResponseEntity<List<Usuario>> listarUsuariosPorVendedor(@RequestParam("id") int id) {
+        List<Usuario> usuarios = service.listarUsuariosPorVendedor(id);
+        if(usuarios.isEmpty()){
+            return new ResponseEntity<List<Usuario>>(HttpStatus.NO_CONTENT);//You many decide to return HttpStatus.NOT_FOUND
+        }
+        return new ResponseEntity<List<Usuario>>(usuarios, HttpStatus.OK);
+    }
+    
     @RequestMapping(value = "/obtenerPorId", params={"id"}, method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Usuario> obtenerPorId(@RequestParam("id") int id) {
     	Usuario usuario = service.obtenerPorId(id);
@@ -77,6 +86,11 @@ public class UsuarioRestController {
          clienteBean.setDireccionFiscal(bodeguero.getDireccionFiscal());
          if(bodeguero.getFechaNacimiento()!=null && !bodeguero.getFechaNacimiento().isEmpty())
         	 clienteBean.setFechaNacimiento(DateUtil.getDateFromString(bodeguero.getFechaNacimiento()));
+         //Para asociar el vendedor que lo registra
+         Usuario vendedor = service.obtenerPorId(bodeguero.getId_vendedor());
+         if(vendedor!=null)
+        	 clienteBean.setUsuario(vendedor);
+         
          clienteBean.setTipo(TipoUsuario.BODEGUERO.getValue());
          clienteBean.setEstado(TipoEstado.HABILITADO.getValue());
          clienteBean.setFechaRegistro(new Date());
@@ -108,6 +122,10 @@ public class UsuarioRestController {
         clienteBean.setDireccionFiscal(bodeguero.getDireccionFiscal());
         if(bodeguero.getFechaNacimiento()!=null && !bodeguero.getFechaNacimiento().isEmpty())
        	 clienteBean.setFechaNacimiento(DateUtil.getDateFromString(bodeguero.getFechaNacimiento()));
+        //Para asociar el vendedor que lo registra
+        Usuario vendedor = service.obtenerPorId(bodeguero.getId_vendedor());
+        if(vendedor!=null)
+       	 clienteBean.setUsuario(vendedor);
         clienteBean.setTipo(TipoUsuario.BODEGUERO.getValue());
         clienteBean.setEstado(TipoEstado.HABILITADO.getValue());
         clienteBean.setFechaModificacion(new Date());

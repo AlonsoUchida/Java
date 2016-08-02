@@ -45,7 +45,29 @@ public class AuthenticationRestController {
 
     	AuthenticationRequest authenticationRequest = jwtTokenUtil.getAuthenticationRequest(authorization);
 		Usuario usuario = usuarioService.obtenerPorCorreo(authenticationRequest.getUsername());
-		if (usuario == null)
+		return authenticationToken(authenticationRequest, usuario);
+    	
+    }
+    
+    
+    @RequestMapping(value = "/authenticate_vendedor", method = RequestMethod.POST)
+    public ResponseEntity<?> authenticateVendedor(@RequestHeader("Authorization") String authorization) throws AuthenticationException {
+
+    	AuthenticationRequest authenticationRequest = jwtTokenUtil.getAuthenticationRequest(authorization);
+		Usuario usuario = usuarioService.obtenerPorCorreoVendedor(authenticationRequest.getUsername());		
+    	return authenticationToken(authenticationRequest, usuario);
+		
+    }
+    
+    /**
+    * Esta función realiza la autenticación de las credenciales
+    * mediante basic authentication.
+    *
+    * @author  Alonso Uchida
+    * @version 1.0
+    */
+    private ResponseEntity<?> authenticationToken(AuthenticationRequest authenticationRequest, Usuario usuario){
+    	if (usuario == null)
 			return new ResponseEntity<String>("Usuario no existe", HttpStatus.NO_CONTENT);
 		
 		int userId = 0;		
@@ -73,7 +95,6 @@ public class AuthenticationRestController {
 		
 		// Return the token
 		return new ResponseEntity<AuthenticationVM>(authVM, HttpStatus.OK);
-    	
     }
 
 }
