@@ -16,7 +16,7 @@
                           <div class="form-group col-md-12">
                               <label class="col-md-2 control-lable" for="tarjeta">Bodeguero</label>
                               <div class="col-md-7">
-                                 <select ng-model="ctrl.bodeguero" ng-options='bodeguero as (bodeguero.nombre + " " + bodeguero.apellido) for bodeguero in bodegueros'
+                                 <select id="soflow" ng-model="ctrl.bodeguero" ng-options='bodeguero as (bodeguero.nombre + " " + bodeguero.apellido) for bodeguero in bodegueros'
                                  ng-change="actualizarBodeguero(ctrl.bodeguero)" required></select>
                                  <span ng-show="myForm.uname.$error.required">Este campo es requerido</span>    
                                  <span ng-show="myForm.uname.$invalid">Este campo es invalido</span>
@@ -43,6 +43,19 @@
                               <label class="col-md-2 control-lable" for="apellido">Ruc</label>
                               <div class="col-md-7">
                                   <input type="text" ng-model="ctrl.tienda.ruc" id="ruc" class="username form-control input-sm" placeholder="Ingresa el ruc" required ng-minlength="3" />
+                                  <div class="has-error" ng-show="myForm.$dirty">
+                                      <span ng-show="myForm.uname.$error.required">Este campo es requerido</span>
+                                      <span ng-show="myForm.uname.$error.minlength">El minimo tamaño es de 3 caracteres</span>                                      
+                                      <span ng-show="myForm.uname.$invalid">Este campo es invalido</span>
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+                      <div class="row">
+                          <div class="form-group col-md-12">
+                              <label class="col-md-2 control-lable" for="razonSocial">Razón Social</label>
+                              <div class="col-md-7">
+                                  <input type="text" ng-model="ctrl.tienda.razon_social" id="razonSocial" class="username form-control input-sm" placeholder="Ingresa la Razón Social" required ng-minlength="3" />
                                   <div class="has-error" ng-show="myForm.$dirty">
                                       <span ng-show="myForm.uname.$error.required">Este campo es requerido</span>
                                       <span ng-show="myForm.uname.$error.minlength">El minimo tamaño es de 3 caracteres</span>                                      
@@ -139,7 +152,7 @@
                           <div class="form-group col-md-12">
                               <label class="col-md-2 control-lable" for="tarjeta">Uso de Tarjeta</label>
                               <div class="col-md-7">
-                                 <select ng-model="ctrl.tarjeta" ng-options="tarjeta as tarjeta.nombre for tarjeta in tarjetas"
+                                 <select id="soflow" ng-model="ctrl.tarjeta" ng-options="tarjeta as tarjeta.nombre for tarjeta in tarjetas"
                                  ng-change="actualizarTarjeta(ctrl.tarjeta)" required></select>
                                  <span ng-show="myForm.uname.$error.required">Este campo es requerido</span>    
                                  <span ng-show="myForm.uname.$invalid">Este campo es invalido</span>
@@ -174,12 +187,19 @@
                 <!-- Default panel contents -->
               <div class="panel-heading"><span class="lead">Lista de Tiendas</span></div>
               <div class="tablecontainer">
+              <input ng-model="q" id="search" class="form-control" placeholder="Filter text" style='margin-top: 12px'>
+			    <select ng-model="pageSize" id="pageSize" class="form-control" style='margin-top: 12px'>
+			        <option value="5">5</option>
+			        <option value="10">10</option>
+			        <option value="15">15</option>
+			        <option value="20">20</option>
+			     </select>
                   <table class="table table-hover">
                       <thead>
                           <tr>
-                              <th>ID.</th>
                               <th>Nombre</th>
                               <th>Ruc</th>
+                              <th>Razón Social</th>  
                               <th>Telefono Local</th>                              
                               <th>Horario de Atencion</th>
                               <th>Pagina Web</th>
@@ -187,11 +207,11 @@
                           </tr>
                       </thead>
                       <tbody>
-                          <tr ng-repeat="t in tiendas">
-                              <td><span ng-bind="t.id"></span></td>
+                          <tr ng-repeat="t in tiendas | filter:q | startFrom:currentPage*pageSize | limitTo:pageSize">
                               <td><span ng-bind="t.nombre"></span></td>
                               <td><span ng-bind="t.ruc"></span></td>
-                              <td><span ng-bind="t.telefonoLocal"></span></td>
+                              <td><span ng-bind="t.razonSocial"></span></td>
+                              <td><span ng-bind="t.telefono_local"></span></td>
                               <td><span ng-bind="t.horarioAtencion"></span></td>
                               <td><span ng-bind="t.paginaweb"></span></td>
                               <td>
@@ -201,6 +221,16 @@
                           </tr>
                       </tbody>
                   </table>
+                  <div style="padding: 0.3cm">
+                         <button ng-disabled="currentPage == 0" ng-click="currentPage=currentPage-1" class="btn btn-default">
+					        Anterior
+					    </button>
+					    {{currentPage+1}}/{{numberOfPages()}}
+					    <button ng-disabled="getData()!=null ? currentPage >= getData().length/pageSize - 1 : true" ng-click="currentPage=currentPage+1" class="btn btn-default">
+					        Siguiente
+					    </button>
+					   </div>
+              	</div>
               </div>
           </div>
       </div>

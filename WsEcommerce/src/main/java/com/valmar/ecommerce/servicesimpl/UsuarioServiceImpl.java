@@ -93,4 +93,9 @@ public class UsuarioServiceImpl implements UsuarioService{
 		return usuarioDao.listarUsuariosPorVendedor(id);
 	}
 
+	@Override
+	public Usuario obtenerPorCorreoCliente(String username) {
+		return usuarioDao.obtenerPorCorreoCliente(username);
+	}
+
 }

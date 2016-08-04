@@ -1,5 +1,6 @@
 'use strict';
-App.controller('DireccionController', ['$scope', 'DireccionService', function($scope, DireccionService) {
+App.controller('DireccionController', ['$scope', '$filter', 'DireccionService', 
+                                       function($scope, $filter, DireccionService) {
           var self = this;
           self.direccion = {id:null, id_distrito:null, domcilio:'',numero:'', referencia:'', latitud:'', 
         		  longitud:'', id_tienda: null};
@@ -8,29 +9,36 @@ App.controller('DireccionController', ['$scope', 'DireccionService', function($s
           self.departamento = "";
           self.provincia = "";
           self.tienda = "";
-
           
           $scope.actualizarTienda = function (tienda) {
-              self.direccion.id_tienda = tienda.id;
-              self.listarPorTienda(tienda.id);
-              console.log("actualizarTienda:" + self.direccion.id_tienda);
+        	  if(tienda!=null){
+	              self.direccion.id_tienda = tienda.id;
+	              self.listarPorTienda(tienda.id);
+	              console.log("actualizarTienda: " + self.direccion.id_tienda);
+        	  }
               
            };
           
           $scope.actualizarDistrito = function (distrito) {
-             self.direccion.id_distrito = distrito.id;
-             console.log("actualizarDistrito:" + self.direccion.id_distrito);
+        	  if(distrito!=null){
+	             self.direccion.id_distrito = distrito.id;
+	             console.log("actualizarDistrito: " + self.direccion.id_distrito);
+        	  }
              
           };
 
           $scope.actualizarDepartamento = function (departamento) {
-             self.listarProvinciasPorDepartamento(departamento.id); 
-             console.log("actualizarDepartamento:");
+        	  if(departamento!=null){
+	             self.listarProvinciasPorDepartamento(departamento.id); 
+	             console.log("actualizarDepartamento: ");
+        	  }
           };
           
           $scope.actualizarProvincia = function (provincia) {
-              self.listarDistritosPorProvincia(provincia.id); 
-              console.log("actualizarProvincia:");
+        	  if(provincia!=null){
+	              self.listarDistritosPorProvincia(provincia.id); 
+	              console.log("actualizarProvincia:");
+        	  }
            };
            
            self.listarTiendas = function(){
@@ -50,8 +58,11 @@ App.controller('DireccionController', ['$scope', 'DireccionService', function($s
          	  DireccionService.listarDepartamentos()
                    .then(
                                 function(d) {  
-                             	   $scope.departamentos = d;
-                             	   $scope.$apply();        
+                             	   $scope.departamentos = d;                           	   
+                             	   $scope.$apply(); 
+                             	   //Setear por defecto miraflores
+                             	   self.departamento = $scope.departamentos[14];
+                             	   //console.log('self.departamento', self.departamento);
                                 },
                                  function(errResponse){
                                      console.error('Error while fetching Currencies');
@@ -64,7 +75,10 @@ App.controller('DireccionController', ['$scope', 'DireccionService', function($s
                     .then(
                                  function(d) {  
                               	   $scope.provincias = d;
-                              	   $scope.$apply();        
+                              	   $scope.$apply();  
+                              	   //Setear por defecto miraflores
+                              	   self.provincia = $scope.provincias[126];
+                              	   //console.log('self.provincia', self.provincia);
                                  },
                                   function(errResponse){
                                       console.error('Error while fetching Currencies');
@@ -77,7 +91,11 @@ App.controller('DireccionController', ['$scope', 'DireccionService', function($s
                      .then(
                                   function(d) {  
                                	   $scope.distritos = d;
-                               	   $scope.$apply();        
+                               	   $scope.$apply(); 
+                               	   //Setear por defecto miraflores
+                               	   self.distrito = $scope.distritos[1271];
+                               	   self.direccion.id_distrito = self.distrito.id;
+                               	   //console.log('self.distrito', self.distrito);
                                   },
                                    function(errResponse){
                                        console.error('Error while fetching Currencies');
@@ -117,7 +135,7 @@ App.controller('DireccionController', ['$scope', 'DireccionService', function($s
                                function(d) {                           	   
                             	   $scope.direcciones = d;
                             	   $scope.$apply();      
-                            	   console.log("Testing", $scope.direcciones);
+                            	   console.log("$scope.direcciones", $scope.direcciones);
                                },
                                 function(errResponse){
                                     console.error('Error while fetching Currencies');
@@ -255,6 +273,28 @@ App.controller('DireccionController', ['$scope', 'DireccionService', function($s
               self.listarDistritos();
               $scope.myForm.$setPristine(); 
           };
+          
+          /********Paging*******/
+          $scope.currentPage = 0;
+          $scope.pageSize = 10;
+          $scope.q = '';
+          
+          $scope.getData = function () {
+            // https://docs.angularjs.org/api/ng/filter/filter        	  
+        	if($scope.direcciones!=null){
+        		return $filter('filter')($scope.direcciones, $scope.q);
+        	}else{
+        		return null;
+        	}
+          }
+          
+          $scope.numberOfPages=function(){
+        	  if($scope.getData()!=null){
+        		  return Math.ceil($scope.getData().length/$scope.pageSize);  
+        	  }else{
+        		  return 0;
+        	  }
+          }
  
       }]);
 

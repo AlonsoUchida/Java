@@ -3,7 +3,12 @@
 App.factory('LoginService', ['$http', '$q', '$window', 'servidor', function($http, $q, $window, servidor){
 	 var token = "";
 	 var idUsuario = "";
+	 var tipoUsuario = "";
     return {
+    	  cerrar: function () {
+    		  console.log("$window.location.href", $window.location.href);
+    		  //$window.location.href = $window.location.href;
+    	  },
     	  login: function (email, password) {
     		  console.log("login service");
               $.ajax({
@@ -34,7 +39,8 @@ App.factory('LoginService', ['$http', '$q', '$window', 'servidor', function($htt
                               var data = JSON.parse(datos.responseText);
                               token = data.token;
                               idUsuario = data.idUsuario;
-                              $window.location.href = $window.location.href + "index?tkn=" + token + "&idUsuario=" +idUsuario;
+                              tipoUsuario = data.tipo;
+                              $window.location.href = $window.location.href + "index?tkn=" + token + "&idUsuario=" +idUsuario + "&tipoUsuario=" + tipoUsuario;
                               break;
                           default:
                               // Sin internet

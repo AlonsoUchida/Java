@@ -147,5 +147,17 @@ public class UsuarioDaoImpl extends AbstractDao<Integer, Usuario> implements Usu
 		return null;
 	}
 
+	@Override
+	public Usuario obtenerPorCorreoCliente(String username) {
+		Criteria criteria = createEntityCriteria();
+		criteria.add(Restrictions.like("correo", username)); 
+		Disjunction distOr = Restrictions.disjunction();
+		distOr.add(Restrictions.like("tipo", TipoUsuario.CLIENTE.getValue()));
+		distOr.add(Restrictions.like("tipo", TipoUsuario.ADMINISTRADOR.getValue()));
+		criteria.add(distOr); 
+		Usuario usuario = (Usuario)criteria.uniqueResult();
+		return usuario;
+	}
+
 
 }

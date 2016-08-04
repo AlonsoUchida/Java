@@ -22,4 +22,5 @@ public interface UsuarioService {
 	//Validar al vendedor
 	Usuario obtenerPorCorreoVendedor(String username);
 	List<Usuario> listarUsuariosPorVendedor(int id);
+	Usuario obtenerPorCorreoCliente(String username);
 }

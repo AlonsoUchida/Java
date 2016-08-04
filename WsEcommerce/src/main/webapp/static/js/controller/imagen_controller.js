@@ -1,5 +1,6 @@
 'use strict';
-App.controller('ImagenController', ['$scope','ImagenService', 'Upload', function($scope, ImagenService, Upload) {
+App.controller('ImagenController', ['$scope', '$filter', 'ImagenService', 'Upload', 
+                                    function($scope, $filter, ImagenService, Upload) {
           var self = this;
           self.imagen = {id:null, id_tienda:'',nombre:'',imagen:'', defecto:''};
           
@@ -172,12 +173,33 @@ App.controller('ImagenController', ['$scope','ImagenService', 'Upload', function
  
            
           self.reset = function(){
-              self.imagen = {id:null, id_tienda:'',nombre:'',imagen:'', defecto:''};
+              self.imagen = {id:null, id_tienda:self.imagen.id_tienda,nombre:'',imagen:'', defecto:''};
               $scope.picFile = "";
-              self.tienda = "";
               self.defecto = "";
               $scope.myForm.$setPristine(); //reset Form
           };
+          
+          /********Paging*******/
+          $scope.currentPage = 0;
+          $scope.pageSize = 10;
+          $scope.q = '';
+          
+          $scope.getData = function () {
+            // https://docs.angularjs.org/api/ng/filter/filter        	  
+        	if($scope.imagenes!=null){
+        		return $filter('filter')($scope.imagenes, $scope.q);
+        	}else{
+        		return null;
+        	}
+          }
+          
+          $scope.numberOfPages=function(){
+        	  if($scope.getData()!=null){
+        		  return Math.ceil($scope.getData().length/$scope.pageSize);  
+        	  }else{
+        		  return 0;
+        	  }
+          }
  
       }]);
 

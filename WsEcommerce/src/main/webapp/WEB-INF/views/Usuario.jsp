@@ -64,7 +64,7 @@
                           </div>
                       </div>
                       
-                       <div class="row">
+                       <!--  <div class="row">
                           <div class="form-group col-md-12">
                               <label class="col-md-2 control-lable" for="fechaNacimiento">Fecha de Nacimiento</label>
                               <div class="col-md-7">
@@ -74,20 +74,38 @@
                                       <span ng-show="myForm.uname.$invalid">Este campo es invalido</span>
                                   </div>
                               </div>
-                          </div>
+                          </div>                          
+                      </div>  -->
+                      
+                      <div class="row">
+                          <div class="form-group col-md-12">
+                              <label class="col-md-2 control-lable" for="fechaNacimiento">Fecha de Nacimiento</label>
+                              <div class="col-md-7">
+			                      <div  ng-cloak="" class="datepickerdemoBasicUsage">
+									  <md-content>
+									      <md-datepicker name="dateField" ng-model="fechaNacimiento" md-placeholder="Ingrese la fecha" required=""></md-datepicker>									
+									      <div class="validation-messages" ng-messages="myForm.dateField.$error">
+									        <div ng-message="valid">Este campo es invalido</div>
+									        <div ng-message="required">Este campo es requerido</div>
+									      </div>									
+									  </md-content>
+									</div>
+						 	</div>
+                          </div>                          
                       </div>  
                       
                       <div class="row">
                           <div class="form-group col-md-12">
                               <label class="col-md-2 control-lable" for="genero">Genero</label>
                               <div class="col-md-7">
-                                 <select ng-model="ctrl.genero" ng-options="genero as genero.descripcion for genero in generos"
+                                 <select id="soflow" ng-model="ctrl.genero" ng-options="genero as genero.descripcion for genero in generos"
                                  ng-change="actualizarGenero(ctrl.genero)" required></select>
                                  <span ng-show="myForm.uname.$error.required">Este campo es requerido</span>
                                  <span ng-show="myForm.uname.$invalid">Este campo es invalido</span>
                               </div>
 
                           </div>
+
                       </div> 
                         
                         <div class="row">
@@ -95,7 +113,7 @@
                               <label class="col-md-2 control-lable" for="tipoDocumento">Tipo Documento</label>
                               
                               <div class="col-md-7">
-                              	<select ng-model="ctrl.tipoDocumento" ng-options="tipoDocumento as tipoDocumento.descripcion for tipoDocumento in tipoDocumentos"
+                              	<select id="soflow" ng-model="ctrl.tipoDocumento" ng-options="tipoDocumento as tipoDocumento.descripcion for tipoDocumento in tipoDocumentos"
                                 ng-change="actualizarTipoDocumento(ctrl.tipoDocumento)" required></select>
                                 <span ng-show="myForm.uname.$error.required">Este campo es requerido</span>
                                 <span ng-show="myForm.uname.$invalid">Este campo es invalido</span>
@@ -144,10 +162,16 @@
                 <!-- Default panel contents -->
               <div class="panel-heading"><span class="lead">Lista de Usuarios</span></div>
               <div class="tablecontainer">
+               <input ng-model="q" id="search" class="form-control" placeholder="Filter text" style='margin-top: 12px;'>
+			    <select ng-model="pageSize" id="pageSize" class="form-control" style='margin-top: 12px;'>
+			        <option value="5">5</option>
+			        <option value="10">10</option>
+			        <option value="15">15</option>
+			        <option value="20">20</option>
+			     </select>
                   <table class="table table-hover">
                       <thead>
                           <tr>
-                              <th>ID.</th>
                               <th>Nombre</th>
                               <th>Apellido</th>
                               <th>Correo</th>
@@ -155,8 +179,7 @@
                           </tr>
                       </thead>
                       <tbody>
-                          <tr ng-repeat="u in usuarios">
-                              <td><span ng-bind="u.id"></span></td>
+                          <tr ng-repeat="u in usuarios | filter:q | startFrom:currentPage*pageSize | limitTo:pageSize">
                               <td><span ng-bind="u.nombre"></span></td>
                               <td><span ng-bind="u.apellido"></span></td>
                               <td><span ng-bind="u.correo"></span></td>
@@ -165,10 +188,21 @@
                               <button type="button" ng-click="ctrl.remove(u.id)" class="btn btn-danger custom-width">Eliminar</button>
                               </td>
                           </tr>
-                      </tbody>
+                      </tbody>                     
                   </table>
-              </div>
+                  <div style="padding: 0.3cm">
+                         <button ng-disabled="currentPage == 0" ng-click="currentPage=currentPage-1" class="btn btn-default">
+					        Anterior
+					    </button>
+					    {{currentPage+1}}/{{numberOfPages()}}
+					    <button ng-disabled="getData()!=null ? currentPage >= getData().length/pageSize - 1 : true" ng-click="currentPage=currentPage+1" class="btn btn-default">
+					        Siguiente
+					    </button>
+					   </div>
+              	</div>
           </div>
+     
+		          
       </div>
 
       

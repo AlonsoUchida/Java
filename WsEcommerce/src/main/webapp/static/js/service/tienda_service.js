@@ -200,6 +200,9 @@ App.factory('TiendaService', ['$http', '$q', 'token', 'servidor', function($http
                     		function(response, statusText, xhr){
                     			  var status = xhr.status;   
                     			  console.log(status);
+                    			  if(status==200){
+                     				  alert("Tienda actualizada satisfactoriamente");
+                     			  }
                     			})
                     .error( function(jqXHR, textStatus, errorThrown) {
                  	   var status = jqXHR.status; 

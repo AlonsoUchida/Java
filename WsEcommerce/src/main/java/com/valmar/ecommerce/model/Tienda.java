@@ -128,7 +128,11 @@ public class Tienda {
 	private Set<ImagenTienda> imagenes;	
 	
 	@JsonIgnore
-	@ManyToMany(fetch = FetchType.LAZY, mappedBy="tiendas")
+	@ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(
+            name = "tienda_usuario",
+            joinColumns = {@JoinColumn(name = "ID_TIENDA", referencedColumnName = "ID")},
+            inverseJoinColumns = {@JoinColumn(name = "ID_USUARIO", referencedColumnName = "ID")})
 	private Set<Usuario> usuarios;
 	
 	@ManyToMany(fetch = FetchType.EAGER)

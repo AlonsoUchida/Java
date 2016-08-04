@@ -1,18 +1,18 @@
 'use strict';
-App.controller('UsuarioController', ['$scope', 'UsuarioService', 'usuarioId', function($scope, UsuarioService, usuarioId) {
+App.controller('UsuarioController', ['$scope', '$filter', 'UsuarioService', 'usuarioId', 'tipoUsuario', 
+                                     function($scope, $filter, UsuarioService, usuarioId, tipoUsuario) {
           var self = this;
           self.usuario = {id:null, nombre:'',apellido:'',correo:'', password:'', genero:'', 
         		  id_tipoDocumento:'', valorDocumento:'', direccionFiscal: '', fechaNacimiento: '', id_vendedor: ''  };
         
-          $scope.fechaNacimiento = "";
+          $scope.fechaNacimiento = new Date();
           $scope.generos = [{"id" : "M", "descripcion" : "Hombre"},{"id" : "F", "descripcion" : "Mujer"}];
           self.genero = "";
           self.tipoDocumento = "";
-          
+
           $scope.actualizarGenero = function (genero) {
              self.usuario.genero = genero.id;
-             console.log("actualizarGenero:" + self.usuario.genero);
-             
+             console.log("actualizarGenero:" + self.usuario.genero);             
           };
 
           $scope.actualizarTipoDocumento = function (tipoDocumento) {
@@ -39,7 +39,7 @@ App.controller('UsuarioController', ['$scope', 'UsuarioService', 'usuarioId', fu
         	  UsuarioService.listar()
                   .then(
                                function(d) {  
-                            	   $scope.usuarios = d;
+                            	   $scope.usuarios = d;                           	  
                             	   $scope.$apply();       
                                },
                                 function(errResponse){
@@ -65,7 +65,7 @@ App.controller('UsuarioController', ['$scope', 'UsuarioService', 'usuarioId', fu
         	  UsuarioService.agregar(usuario)
                       .then(
                     		  function(){
-                    			  self.listarPorVendedor(usuarioId)
+                    			  self.listarUsuarios(usuarioId, tipoUsuario);
                     		  }, 
                               function(errResponse){
                                    console.error('Error while creating Usuario.');
@@ -77,7 +77,7 @@ App.controller('UsuarioController', ['$scope', 'UsuarioService', 'usuarioId', fu
         	 UsuarioService.actualizar(usuario)
                       .then(
                     		  function(){
-                    			  self.listarPorVendedor(usuarioId)
+                    			  self.listarUsuarios(usuarioId, tipoUsuario);
                     		  }, 
                               function(errResponse){
                                    console.error('Error while updating User.');
@@ -89,15 +89,37 @@ App.controller('UsuarioController', ['$scope', 'UsuarioService', 'usuarioId', fu
         	 UsuarioService.eliminar(id)
                       .then(
                     		  function(){
-                    			  self.listarPorVendedor(usuarioId)
+                    			  self.listarUsuarios(usuarioId, tipoUsuario);
                     		  },  
                               function(errResponse){
                                    console.error('Error while deleting User.');
                               } 
                   );
           };
- 
-          self.listarPorVendedor(usuarioId);
+          
+          self.desencriptar = function(contrasena){
+         	 UsuarioService.desencriptar(contrasena)
+                       .then(
+                     		  function(password){
+                     			  self.usuario.password = password;
+                     			  console.log('desencriptar password', self.usuario.password);
+                     		  }, 
+                               function(errResponse){
+                                    console.error('Error while updating User.');
+                               } 
+                   );
+           };
+           	
+          self.listarUsuarios = function(id, tipo){
+        	  console.log('listarUsuario', id, tipo);
+	        if(tipo==0){
+	        		  self.listar();	        	  
+	          }else{
+	        	  self.listarPorVendedor(id);
+	          }
+          }
+          
+          self.listarUsuarios(usuarioId, tipoUsuario);
           self.listarTipoDocumentos();
           
           self.submit = function() {
@@ -120,6 +142,8 @@ App.controller('UsuarioController', ['$scope', 'UsuarioService', 'usuarioId', fu
                   if($scope.usuarios[i].id === id) {
                 	  console.log($scope.usuarios[i]);
                 	  self.usuario = angular.copy($scope.usuarios[i]);
+                	  console.log('self.usuario.password', self.usuario.password);
+                	  self.desencriptar(self.usuario.password);
                 	  
                 	  for(var j = 0; j < $scope.generos.length; j++){
                 		  console.log("$scope.generos[j].id " + $scope.generos[j].id);
@@ -140,9 +164,8 @@ App.controller('UsuarioController', ['$scope', 'UsuarioService', 'usuarioId', fu
                 		  }
                 	  }          
                 	 var date = new Date($scope.usuarios[i].fechaNacimiento);
-                	 var date =  date.format("dd/MM/yyyy");
                 	 console.log("date: " +date);
-                	 $scope.datepickerFechaNacimiento =  date.toString();    
+                	 $scope.fechaNacimiento =  date;
                      break;
                   }
               }
@@ -162,13 +185,36 @@ App.controller('UsuarioController', ['$scope', 'UsuarioService', 'usuarioId', fu
             		  id_tipoDocumento:'', valorDocumento:'', direccionFiscal: '', fechaNacimiento: ''};
               self.genero = "";
               self.tipoDocumento = "";
-              $scope.fechaNacimiento = "";
+              $scope.fechaNacimiento = new Date();
               $scope.datepickerFechaNacimiento =  ""; 
-              $scope.myForm.$setPristine(); //reset Form
+              $scope.myForm.$setPristine(); 
           };
+      
+          /********Paging*******/
+          $scope.currentPage = 0;
+          $scope.pageSize = 10;
+          $scope.q = '';
+          
+          $scope.getData = function () {
+            // https://docs.angularjs.org/api/ng/filter/filter        	  
+        	if($scope.usuarios!=null){
+        		return $filter('filter')($scope.usuarios, $scope.q);
+        	}else{
+        		return null;
+        	}
+          }
+          
+          $scope.numberOfPages=function(){
+        	  if($scope.getData()!=null){
+        		  return Math.ceil($scope.getData().length/$scope.pageSize);  
+        	  }else{
+        		  return 0;
+        	  }
+          }
  
       }]);
 
+/*
 App.directive("datepicker", function () {
 	  return {
 	    restrict: "A",
@@ -190,4 +236,4 @@ App.directive("datepicker", function () {
 	      elem.datepicker(options);
 	    }
 	  }
-	});
+	});*/

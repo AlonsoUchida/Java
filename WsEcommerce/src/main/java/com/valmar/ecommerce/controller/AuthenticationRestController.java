@@ -59,6 +59,15 @@ public class AuthenticationRestController {
 		
     }
     
+    @RequestMapping(value = "/authenticate_cliente", method = RequestMethod.POST)
+    public ResponseEntity<?> authenticateCliente(@RequestHeader("Authorization") String authorization) throws AuthenticationException {
+
+    	AuthenticationRequest authenticationRequest = jwtTokenUtil.getAuthenticationRequest(authorization);
+		Usuario usuario = usuarioService.obtenerPorCorreoCliente(authenticationRequest.getUsername());		
+    	return authenticationToken(authenticationRequest, usuario);
+		
+    }
+    
     /**
     * Esta función realiza la autenticación de las credenciales
     * mediante basic authentication.

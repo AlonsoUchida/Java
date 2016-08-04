@@ -17,7 +17,7 @@
                           <div class="form-group col-md-12">
                               <label class="col-md-2 control-lable" for="tienda">Tienda</label>
                               <div class="col-md-7">
-                                 <select ng-model="ctrl.tienda" ng-options="tienda as tienda.nombre for tienda in tiendas"
+                                 <select id="soflow" ng-model="ctrl.tienda" ng-options="tienda as tienda.nombre for tienda in tiendas"
                                  ng-change="actualizarTienda(ctrl.tienda)" required></select>
                                  <span ng-show="myForm.uname.$error.required">Este campo es requerido</span>
                                  <span ng-show="myForm.uname.$invalid">Este campo es invalido</span>
@@ -83,10 +83,16 @@
                 <!-- Default panel contents -->
               <div class="panel-heading"><span class="lead">Lista de Imagenes</span></div>
               <div class="tablecontainer">
+              	<input ng-model="q" id="search" class="form-control" placeholder="Filter text" style='margin-top: 12px'>
+			    <select ng-model="pageSize" id="pageSize" class="form-control" style='margin-top: 12px'>
+			        <option value="5">5</option>
+			        <option value="10">10</option>
+			        <option value="15">15</option>
+			        <option value="20">20</option>
+			     </select>
                   <table class="table table-hover">
                       <thead>
                           <tr>
-                              <th>ID.</th>
                               <th>Nombre</th>
                               <th>Imagen</th>
                               <th>Defecto</th>
@@ -94,8 +100,7 @@
                           </tr>
                       </thead>
                       <tbody>
-                          <tr ng-repeat="i in imagenes" height="300">
-                              <td><span ng-bind="i.id"></span></td>
+                          <tr ng-repeat="i in imagenes | filter:q | startFrom:currentPage*pageSize | limitTo:pageSize" height="300">
                               <td><span ng-bind="i.nombre"></span></td>
                               <td><img ng-src="data:image/JPEG;base64,{{i.imagen}}"  height="300" width="300"></td>
                               <td><span ng-bind="i.defecto"></span></td>
@@ -106,6 +111,16 @@
                           </tr>
                       </tbody>
                   </table>
+                  <div style="padding: 0.3cm">
+                         <button ng-disabled="currentPage == 0" ng-click="currentPage=currentPage-1" class="btn btn-default">
+					        Anterior
+					    </button>
+					    {{currentPage+1}}/{{numberOfPages()}}
+					    <button ng-disabled="getData()!=null ? currentPage >= getData().length/pageSize - 1 : true" ng-click="currentPage=currentPage+1" class="btn btn-default">
+					        Siguiente
+					    </button>
+					   </div>
+              	</div>
               </div>
           </div>
       </div>

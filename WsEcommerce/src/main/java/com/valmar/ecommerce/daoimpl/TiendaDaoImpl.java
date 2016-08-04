@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import com.valmar.ecommerce.dao.AbstractDao;
 import com.valmar.ecommerce.dao.TiendaDao;
+import com.valmar.ecommerce.enums.TipoEstado;
 import com.valmar.ecommerce.enums.TipoUsuario;
 import com.valmar.ecommerce.model.Direccion;
 import com.valmar.ecommerce.model.Tienda;
@@ -22,6 +23,7 @@ public class TiendaDaoImpl extends AbstractDao<Integer, Tienda> implements Tiend
 	public Tienda obtenerPorId(int id) {
 		Criteria criteria = createEntityCriteria();
 		criteria.add(Restrictions.eq("id", id));
+		criteria.add(Restrictions.eq("estado", TipoEstado.HABILITADO.getValue()));
 		return (Tienda) criteria.uniqueResult();
 	}
 
@@ -39,32 +41,7 @@ public class TiendaDaoImpl extends AbstractDao<Integer, Tienda> implements Tiend
 	@Override
 	public void eliminar(int id) {
 		try {
-
-			Query query1 = getSession().createSQLQuery("delete from tienda_metodo_pago where id_tienda = :id");
-			query1.setInteger("id", id);
-			query1.executeUpdate();
-
-			Query query2 = getSession().createSQLQuery("delete from tienda_envio where id_tienda = :id");
-			query2.setInteger("id", id);
-			query2.executeUpdate();
-
-			Query query3 = getSession().createSQLQuery("delete from estado_cuenta where id_tienda = :id");
-			query3.setInteger("id", id);
-			query3.executeUpdate();
-
-			Query query4 = getSession().createSQLQuery("update producto set estado = 2 where id_tienda = :id");
-			query4.setInteger("id", id);
-			query4.executeUpdate();
-			
-			Query query5 = getSession().createSQLQuery("delete from tienda_banco where id_tienda = :id");
-			query5.setInteger("id", id);
-			query5.executeUpdate();
-			
-			Query query6 = getSession().createSQLQuery("delete from tienda_direccion where id_tienda = :id");
-			query6.setInteger("id", id);
-			query6.executeUpdate();
-
-			Query query = getSession().createSQLQuery("delete from tienda where id = :id");
+			Query query = getSession().createSQLQuery("update tienda set estado = 2 where id = :id");
 			query.setInteger("id", id);
 			query.executeUpdate();
 		} catch (Exception e) {
@@ -98,8 +75,9 @@ public class TiendaDaoImpl extends AbstractDao<Integer, Tienda> implements Tiend
 	public Tienda obtenerTiendaPorDireccion(int id) {
 		Criteria criteria = createEntityCriteria();
 		criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
-		criteria.createAlias("direcciones", "d");
+		criteria.createAlias("direccionesTienda", "d");
 		criteria.add(Restrictions.eq("d.id", id));
+		criteria.add(Restrictions.eq("estado", TipoEstado.HABILITADO.getValue()));
 		return (Tienda) criteria.uniqueResult();
 	}
 
@@ -109,7 +87,8 @@ public class TiendaDaoImpl extends AbstractDao<Integer, Tienda> implements Tiend
 			Criteria criteria = createEntityCriteria();
 			criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
 			criteria.add(Restrictions.ilike("nombre", "%"+nombre+"%"));
-			criteria.setMaxResults(20);//Los primeros 20 elementos por defecto
+			//criteria.setMaxResults(20);//Los primeros 20 elementos por defecto
+			criteria.add(Restrictions.eq("estado", TipoEstado.HABILITADO.getValue()));
 			List<Tienda> tiendas = (List<Tienda>) criteria.list();
 			return tiendas;
 		} catch (Exception e) {
@@ -123,10 +102,11 @@ public class TiendaDaoImpl extends AbstractDao<Integer, Tienda> implements Tiend
 		try {
 			Criteria criteria = createEntityCriteria();
 			criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
-			criteria.createAlias("direcciones", "d");
+			criteria.createAlias("direccionesTienda", "d");
 			//criteria.createAlias("envios", "e");
 			criteria.add(Restrictions.eq("d.distrito.id", id));
-			criteria.setMaxResults(20);//Los primeros 20 elementos por defecto
+			//criteria.setMaxResults(20);//Los primeros 20 elementos por defecto
+			criteria.add(Restrictions.eq("estado", TipoEstado.HABILITADO.getValue()));
 			List<Tienda> tiendas = (List<Tienda>) criteria.list();
 			return tiendas;
 		} catch (Exception e) {
@@ -141,10 +121,11 @@ public class TiendaDaoImpl extends AbstractDao<Integer, Tienda> implements Tiend
 			Criteria criteria = createEntityCriteria();
 			criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
 			criteria.add(Restrictions.ilike("nombre", "%"+nombre+"%"));
-			criteria.createAlias("direcciones", "d");
+			criteria.createAlias("direccionesTienda", "d");
 			//criteria.createAlias("envios", "e");
 			criteria.add(Restrictions.eq("d.distrito.id", id));
-			criteria.setMaxResults(20);//Los primeros 20 elementos por defecto
+			//criteria.setMaxResults(20);//Los primeros 20 elementos por defecto
+			criteria.add(Restrictions.eq("estado", TipoEstado.HABILITADO.getValue()));
 			List<Tienda> tiendas = (List<Tienda>) criteria.list();
 			return tiendas;
 		} catch (Exception e) {
@@ -162,7 +143,8 @@ public class TiendaDaoImpl extends AbstractDao<Integer, Tienda> implements Tiend
 			//criteria.createAlias("envios", "e");
 			criteria.add(Restrictions.eq("u.tipo", TipoUsuario.VENDEDOR.getValue()));
 			criteria.add(Restrictions.eq("u.id", id));
-			criteria.setMaxResults(20);//Los primeros 20 elementos por defecto
+			//criteria.setMaxResults(20);//Los primeros 20 elementos por defecto
+			criteria.add(Restrictions.eq("estado", TipoEstado.HABILITADO.getValue()));
 			List<Tienda> tiendas = (List<Tienda>) criteria.list();
 			return tiendas;
 		} catch (Exception e) {
@@ -177,14 +159,15 @@ public class TiendaDaoImpl extends AbstractDao<Integer, Tienda> implements Tiend
 			Criteria criteria = createEntityCriteria();
 			criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
 			criteria.add(Restrictions.ilike("nombre", "%"+nombre+"%"));
-			criteria.createAlias("direcciones", "d");
+			criteria.createAlias("direccionesTienda", "d");
 			//criteria.createAlias("envios", "e");
 			if(id_urbanizacion==0)
 				criteria.add(Restrictions.eq("d.distrito.id", id));
 			else
 				criteria.add(Restrictions.eq("d.urbanizacion.id", id));
 			
-			criteria.setMaxResults(20);//Los primeros 20 elementos por defecto
+			//criteria.setMaxResults(20);//Los primeros 20 elementos por defecto
+			criteria.add(Restrictions.eq("estado", TipoEstado.HABILITADO.getValue()));
 			List<Tienda> tiendas = (List<Tienda>) criteria.list();
 			return tiendas;
 		} catch (Exception e) {
@@ -201,6 +184,7 @@ public class TiendaDaoImpl extends AbstractDao<Integer, Tienda> implements Tiend
 			criteria.createAlias("usuarios", "u");
 			criteria.add(Restrictions.eq("u.tipo", TipoUsuario.BODEGUERO.getValue()));
 			criteria.add(Restrictions.eq("u.id", id));
+			criteria.add(Restrictions.eq("estado", TipoEstado.HABILITADO.getValue()));
 			List<Tienda> tiendas = (List<Tienda>) criteria.list();
 			return tiendas;
 		} catch (Exception e) {

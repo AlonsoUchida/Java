@@ -18,7 +18,7 @@
                           <div class="form-group col-md-12">
                               <label class="col-md-2 control-lable" for="tienda">Tienda</label>
                               <div class="col-md-7">
-                                 <select ng-model="ctrl.tienda" ng-options="tienda as tienda.nombre for tienda in tiendas"
+                                 <select id="soflow" ng-model="ctrl.tienda" ng-options="tienda as tienda.nombre for tienda in tiendas"
                                  ng-change="actualizarTienda(ctrl.tienda)" required></select>
                                  <span ng-show="myForm.uname.$error.required">Este campo es requerido</span>
                                  <span ng-show="myForm.uname.$invalid">Este campo es invalido</span>
@@ -59,7 +59,7 @@
                           <div class="form-group col-md-12">
                               <label class="col-md-2 control-lable" for="departamento">Depertamento</label>
                               <div class="col-md-7">
-                                 <select ng-model="ctrl.departamento" ng-options="departamento as departamento.nombre for departamento in departamentos"
+                                 <select id="soflow" ng-model="ctrl.departamento" ng-options="departamento as departamento.nombre for departamento in departamentos"
                                  ng-change="actualizarDepartamento(ctrl.departamento)" required></select>
                                  <span ng-show="myForm.uname.$error.required">Este campo es requerido</span>
                                  <span ng-show="myForm.uname.$invalid">Este campo es invalido</span>
@@ -72,7 +72,7 @@
                           <div class="form-group col-md-12">
                               <label class="col-md-2 control-lable" for="provincia">Provincia</label>
                               <div class="col-md-7">
-                                 <select ng-model="ctrl.provincia" ng-options="provincia as provincia.nombre for provincia in provincias"
+                                 <select id="soflow" ng-model="ctrl.provincia" ng-options="provincia as provincia.nombre for provincia in provincias"
                                  ng-change="actualizarProvincia(ctrl.provincia)" required></select>
                                  <span ng-show="myForm.uname.$error.required">Este campo es requerido</span>
                                  <span ng-show="myForm.uname.$invalid">Este campo es invalido</span>
@@ -85,7 +85,7 @@
                           <div class="form-group col-md-12">
                               <label class="col-md-2 control-lable" for="distrito">Distrito</label>
                               <div class="col-md-7">
-                                 <select ng-model="ctrl.distrito" ng-options="distrito as distrito.nombre for distrito in distritos"
+                                 <select id="soflow" ng-model="ctrl.distrito" ng-options="distrito as distrito.nombre for distrito in distritos"
                                  ng-change="actualizarDistrito(ctrl.distrito)" required></select>
                                  <span ng-show="myForm.uname.$error.required">Este campo es requerido</span>
                                  <span ng-show="myForm.uname.$invalid">Este campo es invalido</span>
@@ -146,10 +146,16 @@
                 <!-- Default panel contents -->
               <div class="panel-heading"><span class="lead">Lista de Direcciones</span></div>
               <div class="tablecontainer">
+               <input ng-model="q" id="search" class="form-control" placeholder="Filter text" style='margin-top: 12px'>
+			    <select ng-model="pageSize" id="pageSize" class="form-control" style='margin-top: 12px'>
+			        <option value="5">5</option>
+			        <option value="10">10</option>
+			        <option value="15">15</option>
+			        <option value="20">20</option>
+			     </select>
                   <table class="table table-hover">
                       <thead>
                           <tr>
-                              <th>ID.</th>
                               <th>Direccion</th>
                               <th>Numero</th>
                               <th>Referencia</th>
@@ -159,8 +165,7 @@
                           </tr>
                       </thead>
                       <tbody>
-                          <tr ng-repeat="d in direcciones">
-                              <td><span ng-bind="d.id"></span></td>
+                          <tr ng-repeat="d in direcciones | filter:q | startFrom:currentPage*pageSize | limitTo:pageSize">
                               <td><span ng-bind="d.domicilio"></span></td>
                               <td><span ng-bind="d.numero"></span></td>
                               <td><span ng-bind="d.referencia"></span></td>
@@ -173,6 +178,16 @@
                           </tr>
                       </tbody>
                   </table>
+                   <div style="padding: 0.3cm">
+                         <button ng-disabled="currentPage == 0" ng-click="currentPage=currentPage-1" class="btn btn-default">
+					        Anterior
+					    </button>
+					    {{currentPage+1}}/{{numberOfPages()}}
+					    <button ng-disabled="getData()!=null ? currentPage >= getData().length/pageSize - 1 : true" ng-click="currentPage=currentPage+1" class="btn btn-default">
+					        Siguiente
+					    </button>
+					   </div>
+              	</div>
               </div>
           </div>
       </div>

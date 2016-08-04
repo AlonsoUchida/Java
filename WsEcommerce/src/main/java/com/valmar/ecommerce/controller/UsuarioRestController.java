@@ -35,6 +35,8 @@ import com.valmar.ecommerce.viewmodel.ClienteVM;
 @RequestMapping("/usuario")
 public class UsuarioRestController {
 	
+	private final static String NONE_PASSWORD = "nonepassword";
+	
 	@Autowired
 	UsuarioService service;
 	
@@ -113,7 +115,7 @@ public class UsuarioRestController {
         clienteBean.setNombre(bodeguero.getNombre());
         clienteBean.setApellido(bodeguero.getApellido());
         clienteBean.setCorreo(bodeguero.getCorreo());
-        clienteBean.setPassword(EncryptUtil.encriptar(bodeguero.getPassword()));
+       	clienteBean.setPassword(EncryptUtil.encriptar(bodeguero.getPassword()));
         clienteBean.setGenero(bodeguero.getGenero());
         TipoDocumento tipoDocumento = tipoDocumentoService.obtenerPorId(bodeguero.getId_tipoDocumento());
         if(tipoDocumento!=null)
@@ -145,6 +147,12 @@ public class UsuarioRestController {
         } 
         service.eliminar(id);
         return new ResponseEntity<Usuario>(HttpStatus.NO_CONTENT);
+    }
+    
+    @RequestMapping(value = "/desencriptar", params = {"cadena"}, method = RequestMethod.GET)
+    public ResponseEntity<String> desencriptar(@RequestParam("cadena") String cadena) {
+    	String cadenaDesencriptada = EncryptUtil.desencriptar(cadena);
+        return new ResponseEntity<String>(cadenaDesencriptada, HttpStatus.OK);
     }
 
 }

@@ -6,6 +6,7 @@ public class TiendaVM {
 
 	private int id;
 	private String nombre;
+	private String razon_social;
 	private String ruc;
 	private String telefono_local;
 	private String telefono_movil;
@@ -130,6 +131,12 @@ public class TiendaVM {
 	}
 	public void setId_tipo_tienda(int[] id_tipo_tienda) {
 		this.id_tipo_tienda = id_tipo_tienda;
+	}
+	public String getRazon_social() {
+		return razon_social;
+	}
+	public void setRazon_social(String razon_social) {
+		this.razon_social = razon_social;
 	}
 	
 }

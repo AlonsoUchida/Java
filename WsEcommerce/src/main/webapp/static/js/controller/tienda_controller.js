@@ -1,9 +1,10 @@
 'use strict';
  
-App.controller('TiendaController', ['$scope', 'TiendaService', 'usuarioId', function($scope, TiendaService, usuarioId) {
+App.controller('TiendaController', ['$scope', '$filter', 'TiendaService', 'UsuarioService', 'usuarioId', 'tipoUsuario', 
+                                    function($scope, $filter, TiendaService, UsuarioService, usuarioId, tipoUsuario) {
           var self = this;
           
-          self.tienda = {id:null, nombre:'',ruc:'',telefono_local:'', telefono_movil:'', horarioAtencion:'', 
+          self.tienda = {id:null, nombre:'',ruc:'', razon_social: '', telefono_local:'', telefono_movil:'', horarioAtencion:'', 
         		  paginaweb:'', tarjeta: 2, id_banco: [], id_usuarios: []};
          
           $scope.tarjetas = [{"id" : 1, "nombre": "Si Utilizo"},{"id" : 2, "nombre": "No Utilizo"}];
@@ -84,6 +85,20 @@ App.controller('TiendaController', ['$scope', 'TiendaService', 'usuarioId', func
                                 }
                        );
           };
+          
+          self.listar = function(){
+        	  UsuarioService.listar()
+                  .then(
+                               function(d) {  
+                            	   $scope.bodegueros = d;
+                            	   $scope.$apply();
+                                   console.log("usuario bodegueros:" + $scope.bodegueros);        
+                               },
+                                function(errResponse){
+                                    console.error('Error while fetching Currencies');
+                                }
+                       );
+          };
          
           
           self.listarPorBodeguero = function(id){
@@ -92,7 +107,7 @@ App.controller('TiendaController', ['$scope', 'TiendaService', 'usuarioId', func
                                function(d) {  
                             	   $scope.tiendas = d;
                             	   $scope.$apply();
-                                   console.log("tienda controller:" + $scope.tiendas);        
+                                   console.log("tienda controller:" , $scope.tiendas);        
                                },
                                 function(errResponse){
                                     console.error('Error while fetching Currencies');
@@ -104,7 +119,9 @@ App.controller('TiendaController', ['$scope', 'TiendaService', 'usuarioId', func
         	  console.log(tienda);
         	  TiendaService.agregar(tienda)
                       .then(
-                    		  self.listarPorBodeguero(self.bodegueroid), 
+                    		  function(){
+                    			  self.listarPorBodeguero(self.bodegueroid)
+                    		  }, 
                               function(errResponse){
                                    console.error('Error while creating Tienda.');
                               } 
@@ -115,7 +132,9 @@ App.controller('TiendaController', ['$scope', 'TiendaService', 'usuarioId', func
         	 console.log(tienda);
         	 TiendaService.actualizar(tienda)
                       .then(
-                    		  self.listarPorBodeguero(self.bodegueroid), 
+                    		  function(){
+                    			  self.listarPorBodeguero(self.bodegueroid)
+                    		  }, 
                               function(errResponse){
                                    console.error('Error while updating Tienda.');
                               } 
@@ -125,17 +144,25 @@ App.controller('TiendaController', ['$scope', 'TiendaService', 'usuarioId', func
          self.eliminar = function(id){
         	 TiendaService.eliminar(id)
                       .then(
-                    		  self.listarPorBodeguero(self.bodegueroid), 
+                    		  function(){
+                    			  self.listarPorBodeguero(self.bodegueroid)
+                    		  }, 
                               function(errResponse){
                                    console.error('Error while deleting Tienda.');
                               } 
                   );
           };
            
-          self.listarBodegueros(usuarioId);
+          if(tipoUsuario==0){
+        	  self.listar();
+          }else{
+        	  self.listarBodegueros(usuarioId);
+          }
           self.listarBancos();
         
           self.submit = function() {
+        	  //Se asigna el usuario vendedor
+        	  self.tienda.id_usuarios.push(usuarioId);
               if(self.tienda.id===null){
                   console.log('Saving New tienda', self.tienda);    
                   self.agregar(self.tienda);
@@ -155,6 +182,7 @@ App.controller('TiendaController', ['$scope', 'TiendaService', 'usuarioId', func
                 	 self.tienda.id = $scope.tiendas[i].id;
                 	 self.tienda.nombre = $scope.tiendas[i].nombre;
                 	 self.tienda.ruc = $scope.tiendas[i].ruc;
+                	 self.tienda.razon_social = $scope.tiendas[i].razonSocial;
                 	 self.tienda.telefono_local = parseInt($scope.tiendas[i].telefono_local);
                 	 self.tienda.telefono_movil = parseInt($scope.tiendas[i].telefono_movil);
                 	 self.tienda.horarioAtencion = $scope.tiendas[i].horarioAtencion;
@@ -193,9 +221,9 @@ App.controller('TiendaController', ['$scope', 'TiendaService', 'usuarioId', func
  
            
           self.reset = function(){
-        	  self.tienda = {id:null, nombre:'',ruc:'',telefono_local:'', telefono_movil:'', horarioAtencion:'', 
+        	  self.tienda = {id:null, nombre:'',ruc:'', razon_social: '', telefono_local:'', telefono_movil:'', horarioAtencion:'', 
             		  paginaweb:'', tarjeta:1, id_banco: [], id_usuarios: [] };
-        	  self.tarjeta = "";
+        	  self.tarjeta = $scope.tarjetas[1];
               self.banco = "";
               self.tienda.id_usuarios = [];
               self.tienda.id_usuarios.push(self.bodegueroid);
@@ -205,5 +233,28 @@ App.controller('TiendaController', ['$scope', 'TiendaService', 'usuarioId', func
               self.horarioArray = ["", ""];*/
               $scope.myForm.$setPristine(); //reset Form
           };
+          
+          
+          /********Paging*******/
+          $scope.currentPage = 0;
+          $scope.pageSize = 10;
+          $scope.q = '';
+          
+          $scope.getData = function () {
+            // https://docs.angularjs.org/api/ng/filter/filter        	  
+        	if($scope.tiendas!=null){
+        		return $filter('filter')($scope.tiendas, $scope.q);
+        	}else{
+        		return null;
+        	}
+          }
+          
+          $scope.numberOfPages=function(){
+        	  if($scope.getData()!=null){
+        		  return Math.ceil($scope.getData().length/$scope.pageSize);  
+        	  }else{
+        		  return 0;
+        	  }
+          }
  
       }]);

@@ -65,32 +65,36 @@ public class TiendaRestController {
 
 	private List<TiendaVMLite> clonarTiendasVMLite(List<Tienda> tiendas) {
 		List<TiendaVMLite> tiendasLite = new ArrayList<>();
-		for (Tienda item : tiendas) {
-			TiendaVMLite _tienda = new TiendaVMLite();
-			_tienda.setId(item.getId());
-			_tienda.setNombre(item.getNombre());
-			_tienda.setHorarioAtencion(item.getHorarioAtencion());
-			_tienda.setEstado(item.getEstado());
-			_tienda.setTelefonoFijo(item.getTelefono_local());
-			_tienda.setTelefonoMovil(item.getTelefono_movil());
-			ImagenTienda imagen = imagenTiendaService.obtenerImagenPorDefectoTienda(item.getId());
-			if (imagen != null)
-				_tienda.setImagen(imagen.getImagen());
-			if (item.getDistancia() != null)
-				_tienda.setDistancia(Double.parseDouble(item.getDistancia()));
-			for (Direccion direccion : item.getDireccionesTienda()) {
-				_tienda.setDomicilio(direccion.getDomicilio());
-				_tienda.setNumero(direccion.getNumero());
-				Distrito distrito = direccion.getDistrito();
-				_tienda.setDistrito(distrito.getNombre());
-				_tienda.setLatitud(direccion.getLatitud());
-				_tienda.setLongitud(direccion.getLongitud());
-				break;
-			}
-			tiendasLite.add(_tienda);
+		for (Tienda item : tiendas) {	
+			tiendasLite.add(copyTiendaToTiendaVMLite(item));
 		}
 		return tiendasLite;
 	}
+	
+	private TiendaVMLite copyTiendaToTiendaVMLite(Tienda item) {
+		TiendaVMLite _tienda = new TiendaVMLite();
+		_tienda.setId(item.getId());
+		_tienda.setNombre(item.getNombre());
+		_tienda.setHorarioAtencion(item.getHorarioAtencion());
+		_tienda.setEstado(item.getEstado());
+		_tienda.setTelefonoFijo(item.getTelefono_local());
+		_tienda.setTelefonoMovil(item.getTelefono_movil());
+		ImagenTienda imagen = imagenTiendaService.obtenerImagenPorDefectoTienda(item.getId());
+		if (imagen != null)
+			_tienda.setImagen(imagen.getImagen());
+		if (item.getDistancia() != null)
+			_tienda.setDistancia(Double.parseDouble(item.getDistancia()));
+		for (Direccion direccion : item.getDireccionesTienda()) {
+			_tienda.setDomicilio(direccion.getDomicilio());
+			_tienda.setNumero(direccion.getNumero());
+			Distrito distrito = direccion.getDistrito();
+			_tienda.setDistrito(distrito.getNombre());
+			_tienda.setLatitud(direccion.getLatitud());
+			_tienda.setLongitud(direccion.getLongitud());
+			break;
+		}
+		return _tienda;
+	}	
 
 	@RequestMapping(value = { "/listar" }, method = RequestMethod.GET)
 	public ResponseEntity<List<Tienda>> listarTiendas() {
@@ -164,12 +168,13 @@ public class TiendaRestController {
 
 	@RequestMapping(value = "/obtenerPorId", params = {
 			"id" }, method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<Tienda> obtenerPorId(@RequestParam("id") int id) {
+	public ResponseEntity<TiendaVMLite> obtenerPorId(@RequestParam("id") int id) {
 		Tienda tienda = service.obtenerPorId(id);
 		if (tienda == null) {
-			return new ResponseEntity<Tienda>(HttpStatus.NO_CONTENT);
+			return new ResponseEntity<TiendaVMLite>(HttpStatus.NO_CONTENT);
 		}
-		return new ResponseEntity<Tienda>(tienda, HttpStatus.OK);
+		TiendaVMLite _tienda = copyTiendaToTiendaVMLite(tienda);
+		return new ResponseEntity<TiendaVMLite>(_tienda, HttpStatus.OK);
 	}
 
 	@RequestMapping(value = "/obtenerTiendasPorNombre", params = {
@@ -228,6 +233,7 @@ public class TiendaRestController {
 		Tienda tiendaBean = new Tienda();
 		tiendaBean.setNombre(tienda.getNombre());
 		tiendaBean.setRuc(tienda.getRuc());
+		tiendaBean.setRazonSocial(tienda.getRazon_social());
 		tiendaBean.setTelefono_local(tienda.getTelefono_local());
 		tiendaBean.setTelefono_movil(tienda.getTelefono_movil());
 		tiendaBean.setAfiliacion(tienda.getAfiliacion());
@@ -295,6 +301,7 @@ public class TiendaRestController {
 		tiendaBean.setId(tienda.getId());
 		tiendaBean.setNombre(tienda.getNombre());
 		tiendaBean.setRuc(tienda.getRuc());
+		tiendaBean.setRazonSocial(tienda.getRazon_social());
 		tiendaBean.setTelefono_local(tienda.getTelefono_local());
 		tiendaBean.setTelefono_movil(tienda.getTelefono_movil());
 		tiendaBean.setAfiliacion(tienda.getAfiliacion());
