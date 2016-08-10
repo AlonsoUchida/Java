@@ -211,3 +211,7 @@ select#soflow, select#soflow-color {
    white-space: nowrap;
    width: 300px;
 }
+
+ul li:first-child {
+  margin-top: 3px;
+}

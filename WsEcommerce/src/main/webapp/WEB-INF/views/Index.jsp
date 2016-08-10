@@ -58,17 +58,18 @@
 		<nav class="navbar navbar-default">
 			<div class="container">
 				<div class="navbar-header">
-					<a class="navbar-brand" href="/">Administración</a>
+					<a class="navbar-brand" href="#/">Administración</a>
 				</div>
-
 				<ul class="nav navbar-nav navbar-right">
 					<li><a href="#/"><i class="fa fa-home"></i> Inicio </a></li>
 					<li><a href="#/usuario"><i class="fa fa-comment"></i>Bodegueros</a></li>
 					<li><a href="#/tienda"><i class="fa fa-comment"></i>Tiendas</a></li>
 					<li><a href="#/direccion"><i class="fa fa-comment"></i>Direcciones</a></li>
 					<li><a href="#/imagen"><i class="fa fa-comment"></i>Imagenes</a></li>
-					<li><a href="/ecommerce-desarrollo/"><i class="fa fa-comment"></i>Cerrar Sesión</a></li>
+					<!--  <li><a href="/ecommerce/"><i class="fa fa-comment"></i>Cerrar Sesión</a></li> -->
+					<li><a href="/ecommerce/"><i class="fa fa-comment"></i>Cerrar Sesión</a></li> 
 				</ul>
+				
 			</div>
 		</nav>
 	</header>

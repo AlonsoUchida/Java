@@ -19,12 +19,35 @@ import com.valmar.ecommerce.model.Usuario;
 @EnableTransactionManagement
 public class UsuarioDaoImpl extends AbstractDao<Integer, Usuario> implements UsuarioDao {
 
+	private Usuario mapearUsuario(Object[] results){
+		Usuario usuario = new Usuario();
+		if(results!=null){
+			usuario.setId(Integer.parseInt(results[0].toString()));
+			usuario.setNombre(results[1].toString());
+			usuario.setApellido(results[2].toString());
+			usuario.setCorreo(results[3].toString());
+			usuario.setPassword(results[4].toString());
+			usuario.setTipo(Integer.parseInt(results[6].toString()));
+		}
+		return usuario;
+		
+	}
+	
 	@Override
 	public Usuario obtenerPorId(int id) {
-		//Como el obtener usuario consulta po rid no es necesario crear filtro por tipo
-		Criteria criteria = createEntityCriteria();
-		criteria.add(Restrictions.eq("id", id));
-		return (Usuario) criteria.uniqueResult();
+		Usuario usuario;
+		try {
+			Query query = getSession().createSQLQuery("SELECT * FROM usuario WHERE id = :id and "
+					+ " estado = :estado ");
+			query.setInteger("id", id);
+			query.setInteger("estado", TipoEstado.HABILITADO.getValue());
+			@SuppressWarnings("unchecked")
+			Object[] results = (Object[]) query.uniqueResult();
+			usuario = mapearUsuario(results);
+		} catch (Exception ex) {
+			return null;
+		}
+		return usuario;
 	}
 
 	@Override
@@ -51,7 +74,7 @@ public class UsuarioDaoImpl extends AbstractDao<Integer, Usuario> implements Usu
 	@Override
 	public void eliminar(int id) {
 		try {
-			Query query = getSession().createSQLQuery("delete from usuario where id = :id");
+			Query query = getSession().createSQLQuery("update usuario set estado = 2 where id = :id");
 			query.setInteger("id", id);
 			query.executeUpdate();
 		} catch (Exception e) {
@@ -64,6 +87,7 @@ public class UsuarioDaoImpl extends AbstractDao<Integer, Usuario> implements Usu
 		try {
 			Criteria criteria = createEntityCriteria();
 			criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
+			criteria.add(Restrictions.eq("estado", TipoEstado.HABILITADO.getValue()));
 			List<Usuario> usuarios = (List<Usuario>) criteria.list();			
 			return usuarios;
 		} catch (Exception e) {
@@ -73,19 +97,40 @@ public class UsuarioDaoImpl extends AbstractDao<Integer, Usuario> implements Usu
 	}
 
 	public int validarUsuario(String username, String password){
-		Criteria criteria = createEntityCriteria();
-		criteria.add(Restrictions.eq("correo", username));
-		criteria.add(Restrictions.eq("password", password));
-		Usuario usuario = (Usuario) criteria.uniqueResult();
-		if(usuario!=null)
-			return usuario.getId();
-		else return 0;
+		Usuario usuario = new Usuario();
+		int userID = 0;
+		try {
+			Query query = getSession().createSQLQuery("SELECT * FROM usuario WHERE correo = :correo and password = :password and"
+					+ "(tipo = :tipoVendedor or tipo = :tipoAdministrador) and estado = :estado ");
+			query.setString("correo", username);
+			query.setString("password", password);
+			query.setInteger("tipoVendedor", TipoUsuario.VENDEDOR.getValue());
+			query.setInteger("tipoAdministrador", TipoUsuario.ADMINISTRADOR.getValue());
+			query.setInteger("estado", TipoEstado.HABILITADO.getValue());
+			@SuppressWarnings("unchecked")
+			Object[] results = (Object[]) query.uniqueResult();
+			if(results!=null){
+				userID = Integer.parseInt(results[0].toString());
+			}
+		} catch (Exception ex) {
+			return userID;
+		}
+		return userID;
 	}
 	
 	public Usuario obtenerPorCorreo(String username) {
-		Criteria criteria = createEntityCriteria();
-		criteria.add(Restrictions.like("correo", username)); 
-		Usuario usuario = (Usuario)criteria.uniqueResult();
+		Usuario usuario;
+		try {
+			Query query = getSession().createSQLQuery("SELECT * FROM usuario WHERE correo = :correo and "
+					+ " estado = :estado ");
+			query.setString("correo", username);
+			query.setInteger("estado", TipoEstado.HABILITADO.getValue());
+			@SuppressWarnings("unchecked")
+			Object[] results = (Object[]) query.uniqueResult();
+			usuario = mapearUsuario(results);
+		} catch (Exception ex) {
+			return null;
+		}
 		return usuario;
 	}
 
@@ -121,13 +166,20 @@ public class UsuarioDaoImpl extends AbstractDao<Integer, Usuario> implements Usu
 
 	@Override
 	public Usuario obtenerPorCorreoVendedor(String username) {
-		Criteria criteria = createEntityCriteria();
-		criteria.add(Restrictions.like("correo", username)); 
-		Disjunction distOr = Restrictions.disjunction();
-		distOr.add(Restrictions.like("tipo", TipoUsuario.VENDEDOR.getValue()));
-		distOr.add(Restrictions.like("tipo", TipoUsuario.ADMINISTRADOR.getValue()));
-		criteria.add(distOr); 
-		Usuario usuario = (Usuario)criteria.uniqueResult();
+		Usuario usuario;
+		try {
+			Query query = getSession().createSQLQuery("SELECT * FROM usuario WHERE correo = :correo and "
+					+ "(tipo = :tipoVendedor or tipo = :tipoAdministrador) and estado = :estado ");
+			query.setString("correo", username);
+			query.setInteger("tipoVendedor", TipoUsuario.VENDEDOR.getValue());
+			query.setInteger("tipoAdministrador", TipoUsuario.ADMINISTRADOR.getValue());
+			query.setInteger("estado", TipoEstado.HABILITADO.getValue());
+			@SuppressWarnings("unchecked")
+			Object[] results = (Object[]) query.uniqueResult();
+			usuario = mapearUsuario(results);
+		} catch (Exception ex) {
+			return null;
+		}
 		return usuario;
 	}
 
@@ -149,13 +201,20 @@ public class UsuarioDaoImpl extends AbstractDao<Integer, Usuario> implements Usu
 
 	@Override
 	public Usuario obtenerPorCorreoCliente(String username) {
-		Criteria criteria = createEntityCriteria();
-		criteria.add(Restrictions.like("correo", username)); 
-		Disjunction distOr = Restrictions.disjunction();
-		distOr.add(Restrictions.like("tipo", TipoUsuario.CLIENTE.getValue()));
-		distOr.add(Restrictions.like("tipo", TipoUsuario.ADMINISTRADOR.getValue()));
-		criteria.add(distOr); 
-		Usuario usuario = (Usuario)criteria.uniqueResult();
+		Usuario usuario;
+		try {
+			Query query = getSession().createSQLQuery("SELECT * FROM usuario WHERE correo = :correo and "
+					+ "(tipo = :tipoVendedor or tipo = :tipoAdministrador) and estado = :estado ");
+			query.setString("correo", username);
+			query.setInteger("tipoVendedor", TipoUsuario.VENDEDOR.getValue());
+			query.setInteger("tipoAdministrador", TipoUsuario.ADMINISTRADOR.getValue());
+			query.setInteger("estado", TipoEstado.HABILITADO.getValue());
+			@SuppressWarnings("unchecked")
+			Object[] results = (Object[]) query.uniqueResult();
+			usuario = mapearUsuario(results);
+		} catch (Exception ex) {
+			return null;
+		}
 		return usuario;
 	}
 

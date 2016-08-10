@@ -46,7 +46,8 @@ App.controller('DireccionController', ['$scope', '$filter', 'DireccionService',
                     .then(
                                  function(d) {  
                               	   $scope.tiendas = d;
-                              	   $scope.$apply();        
+                              	   $scope.$apply(); 
+                              	   return d;
                                  },
                                   function(errResponse){
                                       console.error('Error while fetching Currencies');
@@ -62,7 +63,7 @@ App.controller('DireccionController', ['$scope', '$filter', 'DireccionService',
                              	   $scope.$apply(); 
                              	   //Setear por defecto miraflores
                              	   self.departamento = $scope.departamentos[14];
-                             	   //console.log('self.departamento', self.departamento);
+                             	   console.log('self.departamento', self.departamento);
                                 },
                                  function(errResponse){
                                      console.error('Error while fetching Currencies');
@@ -78,7 +79,7 @@ App.controller('DireccionController', ['$scope', '$filter', 'DireccionService',
                               	   $scope.$apply();  
                               	   //Setear por defecto miraflores
                               	   self.provincia = $scope.provincias[126];
-                              	   //console.log('self.provincia', self.provincia);
+                              	   console.log('self.provincia', self.provincia);
                                  },
                                   function(errResponse){
                                       console.error('Error while fetching Currencies');
@@ -95,7 +96,7 @@ App.controller('DireccionController', ['$scope', '$filter', 'DireccionService',
                                	   //Setear por defecto miraflores
                                	   self.distrito = $scope.distritos[1271];
                                	   self.direccion.id_distrito = self.distrito.id;
-                               	   //console.log('self.distrito', self.distrito);
+                               	   console.log('self.distrito', self.distrito);
                                   },
                                    function(errResponse){
                                        console.error('Error while fetching Currencies');
@@ -263,11 +264,6 @@ App.controller('DireccionController', ['$scope', '$filter', 'DireccionService',
           self.reset = function(){
         	  self.direccion = {id:null, id_distrito:null, domcilio:'',numero:'', referencia:'', latitud:'', 
             		  longitud:'', id_tienda: self.direccion.id_tienda};
-        	  self.distrito = "";
-              self.departamento = "";
-              self.provincia = "";
-              $scope.provincias = "";
-              $scope.distritos = "";
               self.listarDepartamentos();
               self.listarProvincias();
               self.listarDistritos();

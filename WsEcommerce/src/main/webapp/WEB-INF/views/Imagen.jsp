@@ -18,7 +18,9 @@
                               <label class="col-md-2 control-lable" for="tienda">Tienda</label>
                               <div class="col-md-7">
                                  <select id="soflow" ng-model="ctrl.tienda" ng-options="tienda as tienda.nombre for tienda in tiendas"
-                                 ng-change="actualizarTienda(ctrl.tienda)" required></select>
+                                 ng-change="actualizarTienda(ctrl.tienda)" required>
+                                 <option value="">- Seleccione Tienda -</option>
+                                 </select>
                                  <span ng-show="myForm.uname.$error.required">Este campo es requerido</span>
                                  <span ng-show="myForm.uname.$invalid">Este campo es invalido</span>
                               </div>

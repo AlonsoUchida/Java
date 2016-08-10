@@ -99,7 +99,9 @@
                               <label class="col-md-2 control-lable" for="genero">Genero</label>
                               <div class="col-md-7">
                                  <select id="soflow" ng-model="ctrl.genero" ng-options="genero as genero.descripcion for genero in generos"
-                                 ng-change="actualizarGenero(ctrl.genero)" required></select>
+                                 ng-change="actualizarGenero(ctrl.genero)" required>
+                                 <option value="">- Seleccione Genero -</option>
+                                 </select>
                                  <span ng-show="myForm.uname.$error.required">Este campo es requerido</span>
                                  <span ng-show="myForm.uname.$invalid">Este campo es invalido</span>
                               </div>
@@ -114,7 +116,9 @@
                               
                               <div class="col-md-7">
                               	<select id="soflow" ng-model="ctrl.tipoDocumento" ng-options="tipoDocumento as tipoDocumento.descripcion for tipoDocumento in tipoDocumentos"
-                                ng-change="actualizarTipoDocumento(ctrl.tipoDocumento)" required></select>
+                                ng-change="actualizarTipoDocumento(ctrl.tipoDocumento)" required>
+                                <option value="">- Seleccione Tipo Documento -</option>
+                                </select>
                                 <span ng-show="myForm.uname.$error.required">Este campo es requerido</span>
                                 <span ng-show="myForm.uname.$invalid">Este campo es invalido</span>
                               </div>

@@ -7,10 +7,5 @@ App.controller('LoginController', ['$scope', 'LoginService', function($scope, Lo
         	  console.log("login controller");       	  
         	  LoginService.login(self.username, self.password);
           };     
-          
-          self.cerrar = function(){
-        	  console.log("cerrar controller");       	  
-        	  LoginService.cerrar();
-          };    
     
       }]);

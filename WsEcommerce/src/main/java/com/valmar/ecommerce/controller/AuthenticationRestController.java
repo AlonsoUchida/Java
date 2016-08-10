@@ -42,30 +42,24 @@ public class AuthenticationRestController {
      */
     @RequestMapping(value = "/authenticate", method = RequestMethod.POST)
     public ResponseEntity<?> createAuthenticationToken(@RequestHeader("Authorization") String authorization) throws AuthenticationException {
-
     	AuthenticationRequest authenticationRequest = jwtTokenUtil.getAuthenticationRequest(authorization);
 		Usuario usuario = usuarioService.obtenerPorCorreo(authenticationRequest.getUsername());
-		return authenticationToken(authenticationRequest, usuario);
-    	
+		return authenticationToken(authenticationRequest, usuario);    	
     }
     
     
     @RequestMapping(value = "/authenticate_vendedor", method = RequestMethod.POST)
     public ResponseEntity<?> authenticateVendedor(@RequestHeader("Authorization") String authorization) throws AuthenticationException {
-
     	AuthenticationRequest authenticationRequest = jwtTokenUtil.getAuthenticationRequest(authorization);
 		Usuario usuario = usuarioService.obtenerPorCorreoVendedor(authenticationRequest.getUsername());		
-    	return authenticationToken(authenticationRequest, usuario);
-		
+    	return authenticationToken(authenticationRequest, usuario);		
     }
     
     @RequestMapping(value = "/authenticate_cliente", method = RequestMethod.POST)
     public ResponseEntity<?> authenticateCliente(@RequestHeader("Authorization") String authorization) throws AuthenticationException {
-
     	AuthenticationRequest authenticationRequest = jwtTokenUtil.getAuthenticationRequest(authorization);
 		Usuario usuario = usuarioService.obtenerPorCorreoCliente(authenticationRequest.getUsername());		
-    	return authenticationToken(authenticationRequest, usuario);
-		
+    	return authenticationToken(authenticationRequest, usuario);		
     }
     
     /**

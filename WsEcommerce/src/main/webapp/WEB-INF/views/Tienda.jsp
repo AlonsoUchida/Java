@@ -17,7 +17,9 @@
                               <label class="col-md-2 control-lable" for="tarjeta">Bodeguero</label>
                               <div class="col-md-7">
                                  <select id="soflow" ng-model="ctrl.bodeguero" ng-options='bodeguero as (bodeguero.nombre + " " + bodeguero.apellido) for bodeguero in bodegueros'
-                                 ng-change="actualizarBodeguero(ctrl.bodeguero)" required></select>
+                                 ng-change="actualizarBodeguero(ctrl.bodeguero)" required>
+                                 <option value="">- Seleccione Bodeguero -</option>
+                                 </select>
                                  <span ng-show="myForm.uname.$error.required">Este campo es requerido</span>    
                                  <span ng-show="myForm.uname.$invalid">Este campo es invalido</span>
                               </div>

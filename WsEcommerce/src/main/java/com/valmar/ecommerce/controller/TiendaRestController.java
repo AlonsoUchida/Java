@@ -122,16 +122,19 @@ public class TiendaRestController {
 		double latitudCliente = Double.parseDouble(latitud);
 		double longitudCliente = Double.parseDouble(longitud);
 		for (Direccion item : direcciones) {
-			double latitudTienda = Double.parseDouble(item.getLatitud());
-			double longitudTienda = Double.parseDouble(item.getLongitud());
-			double distancia = DistanceCalculatorUtil.distance(latitudCliente, longitudCliente, latitudTienda,
-					longitudTienda, "K");
-			if (distancia < DistanceCalculatorUtil.RADIO_USUARIO) {
-				Tienda tienda = service.obtenerTiendaPorDireccion(item.getId());
-				if (tienda != null) {
-					distancia = distancia * 1000;
-					tienda.setDistancia(Double.toString(distancia));
-					tiendas.add(tienda);
+			if((item.getLatitud()!=null && !item.getLatitud().isEmpty()) ||
+					(item.getLongitud()!=null && !item.getLongitud().isEmpty())){
+				double latitudTienda = Double.parseDouble(item.getLatitud());
+				double longitudTienda = Double.parseDouble(item.getLongitud());
+				double distancia = DistanceCalculatorUtil.distance(latitudCliente, longitudCliente, latitudTienda,
+						longitudTienda, "K");
+				if (distancia < DistanceCalculatorUtil.RADIO_USUARIO) {
+					Tienda tienda = service.obtenerTiendaPorDireccion(item.getId());
+					if (tienda != null) {
+						distancia = distancia * 1000;
+						tienda.setDistancia(Double.toString(distancia));
+						tiendas.add(tienda);
+					}
 				}
 			}
 		}

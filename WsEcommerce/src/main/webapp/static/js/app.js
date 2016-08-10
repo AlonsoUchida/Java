@@ -1,12 +1,13 @@
 'use strict';
-//NOTA: Cambiar dependiendo del servidor el value, tambien en cerrar sesion en el Index 
 
 var App = angular.module('myApp', [ 'ngRoute', 'ngFileUpload', 'ngMaterial', 'ngMessages', 'material.svgAssetsCache']);
 App.value('token',  document.getElementById("token") != null ? document.getElementById("token").innerHTML : null);
 App.value('usuarioId', document.getElementById("usuario") != null ? document.getElementById("usuario").innerHTML : null);
 App.value('tipoUsuario', document.getElementById("tipoUsuario") != null ? document.getElementById("tipoUsuario").innerHTML : null);
-//App.value('servidor', 'http://localhost:8080/ecommerce');
-App.value('servidor', 'http://192.168.1.201:8080/ecommerce-desarrollo');
+
+//NOTA: Cambiar dependiendo del servidor el value, tambien en cerrar sesion en el Index 
+App.value('servidor', 'http://localhost:8080/ecommerce');
+//App.value('servidor', 'http://54.187.108.240:8080/ecommerce');
 
 App.config(function($routeProvider, $mdDateLocaleProvider) {
 	$routeProvider
