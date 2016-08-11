@@ -95,5 +95,4 @@ public class DireccionServiceImpl implements DireccionService{
 		return direccionDao.listarPorTienda(id);
 	}
 
-
 }

@@ -23,7 +23,7 @@
                                  <option value="">- Seleccione Tienda -</option>
                                  </select>
                                  <span ng-show="myForm.uname.$error.required">Este campo es requerido</span>
-                                 <span ng-show="myForm.uname.$invalid">Este campo es invalido</span>
+                                 <span ng-show="myForm.uname.$invalid">Este campo es inválido</span>
                               </div>
 
                           </div>
@@ -36,8 +36,8 @@
                                   <input type="text" ng-model="ctrl.direccion.domicilio" id="domicilio" class="username form-control input-sm" placeholder="Ingresa tu dirección" required ng-minlength="3"/>
                                   <div class="has-error" ng-show="myForm.$dirty">
                      	              <span ng-show="myForm.uname.$error.required">Este campo es requerido</span>
-                                      <span ng-show="myForm.uname.$error.minlength">El minimo tamaño es de 3 caracteres</span>
-                                      <span ng-show="myForm.uname.$invalid">Este campo es invalido</span>
+                                      <span ng-show="myForm.uname.$error.minlength">El mínimo tamaño es de 3 caracteres</span>
+                                      <span ng-show="myForm.uname.$invalid">Este campo es inválido</span>
                                   </div>
                               </div>
                           </div>
@@ -45,13 +45,13 @@
                       
                       <div class="row">
                           <div class="form-group col-md-12">
-                              <label class="col-md-2 control-lable" for="numero">Numero</label>
+                              <label class="col-md-2 control-lable" for="numero">Número</label>
                               <div class="col-md-7">
-                                  <input type="number" ng-model="ctrl.direccion.numero" id="numero" class="username form-control input-sm" placeholder="Ingresa tu numero" required ng-minlength="3"/>
+                                  <input type="number" ng-model="ctrl.direccion.numero" id="numero" class="username form-control input-sm" placeholder="Ingresa tu número" required ng-minlength="3"/>
                                   <div class="has-error" ng-show="myForm.$dirty">
                                       <span ng-show="myForm.uname.$error.required">Este campo es requerido</span>
-                                      <span ng-show="myForm.uname.$error.minlength">El minimo tamaño es de 3 caracteres</span>
-                                      <span ng-show="myForm.uname.$invalid">Este campo es invalido</span>
+                                      <span ng-show="myForm.uname.$error.minlength">El mínimo tamaño es de 3 caracteres</span>
+                                      <span ng-show="myForm.uname.$invalid">Este campo es inválido</span>
                                   </div>
                               </div>
                           </div>
@@ -59,13 +59,13 @@
                       
                       <div class="row">
                           <div class="form-group col-md-12">
-                              <label class="col-md-2 control-lable" for="departamento">Depertamento</label>
+                              <label class="col-md-2 control-lable" for="departamento">Departamento</label>
                               <div class="col-md-7">
                                  <select id="soflow" ng-model="ctrl.departamento" ng-options="departamento as departamento.nombre for departamento in departamentos"
                                  ng-change="actualizarDepartamento(ctrl.departamento)" required>
                                  </select>
                                  <span ng-show="myForm.uname.$error.required">Este campo es requerido</span>
-                                 <span ng-show="myForm.uname.$invalid">Este campo es invalido</span>
+                                 <span ng-show="myForm.uname.$invalid">Este campo es inválido</span>
                               </div>
 
                           </div>
@@ -78,7 +78,7 @@
                                  <select id="soflow" ng-model="ctrl.provincia" ng-options="provincia as provincia.nombre for provincia in provincias"
                                  ng-change="actualizarProvincia(ctrl.provincia)" required></select>
                                  <span ng-show="myForm.uname.$error.required">Este campo es requerido</span>
-                                 <span ng-show="myForm.uname.$invalid">Este campo es invalido</span>
+                                 <span ng-show="myForm.uname.$invalid">Este campo es inválido</span>
                               </div>
 
                           </div>
@@ -91,7 +91,7 @@
                                  <select id="soflow" ng-model="ctrl.distrito" ng-options="distrito as distrito.nombre for distrito in distritos"
                                  ng-change="actualizarDistrito(ctrl.distrito)" required></select>
                                  <span ng-show="myForm.uname.$error.required">Este campo es requerido</span>
-                                 <span ng-show="myForm.uname.$invalid">Este campo es invalido</span>
+                                 <span ng-show="myForm.uname.$invalid">Este campo es inválido</span>
                               </div>
 
                           </div>
@@ -104,8 +104,8 @@
                                   <input type="text" ng-model="ctrl.direccion.referencia" id="referencia" class="username form-control input-sm" placeholder="Ingresa Referencia" required ng-minlength="3"/>
                                   <div class="has-error" ng-show="myForm.$dirty">
                      	              <span ng-show="myForm.uname.$error.required">Este campo es requerido</span>
-                                      <span ng-show="myForm.uname.$error.minlength">El minimo tamaño es de 3 caracteres</span>
-                                      <span ng-show="myForm.uname.$invalid">Este campo es invalido</span>
+                                      <span ng-show="myForm.uname.$error.minlength">El mínimo tamaño es de 3 caracteres</span>
+                                      <span ng-show="myForm.uname.$invalid">Este campo es inválido</span>
                                   </div>
                               </div>
                           </div>
@@ -117,7 +117,7 @@
                               <div class="col-md-7">
                                   <input type="text" ng-model="ctrl.direccion.latitud" id="latitud" class="username form-control input-sm" placeholder="Ingresa Latitud"/>
                                   <div class="has-error" ng-show="myForm.$dirty">
-                                      <span ng-show="myForm.uname.$invalid">Este campo es invalido</span>
+                                      <span ng-show="myForm.uname.$invalid">Este campo es inválido</span>
                                   </div>
                               </div>
                           </div>
@@ -129,7 +129,7 @@
                               <div class="col-md-7">
                                   <input type="text" ng-model="ctrl.direccion.longitud" id="longitud" class="username form-control input-sm" placeholder="Ingresa Longitud"/>
                                   <div class="has-error" ng-show="myForm.$dirty">
-                                      <span ng-show="myForm.uname.$invalid">Este campo es invalido</span>
+                                      <span ng-show="myForm.uname.$invalid">Este campo es inválido</span>
                                   </div>
                               </div>
                           </div>
@@ -159,8 +159,8 @@
                   <table class="table table-hover">
                       <thead>
                           <tr>
-                              <th>Direccion</th>
-                              <th>Numero</th>
+                              <th>Dirección</th>
+                              <th>Número</th>
                               <th>Referencia</th>
                               <th>Latitud</th>
                               <th>Longitud</th>

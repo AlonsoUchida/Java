@@ -74,11 +74,12 @@ public class Tienda {
 	@Column(name = "TARJETA")
 	private Integer tarjeta;
 	
-	@ManyToMany(fetch = FetchType.EAGER)
+	@ManyToMany(fetch = FetchType.LAZY)
 	  @JoinTable(
 	      name="tienda_banco",
 	      joinColumns=@JoinColumn(name="ID_TIENDA", referencedColumnName="ID"),
 	      inverseJoinColumns=@JoinColumn(name="ID_BANCO", referencedColumnName="ID"))
+	@JsonIgnore
 	private Set<Banco> bancos;
 	
 	@Column(name = "ESTADO")
@@ -112,34 +113,36 @@ public class Tienda {
 	@JsonIgnore
 	private Set<Envio> envios;
 	
-	@ManyToMany(fetch = FetchType.EAGER)
+	@ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
             name = "tienda_direccion",
             joinColumns = {@JoinColumn(name = "ID_TIENDA", referencedColumnName = "ID")},
             inverseJoinColumns = {@JoinColumn(name = "ID_DIRECCION", referencedColumnName = "ID")})
+	@JsonIgnore
     private Set<Direccion> direccionesTienda;
 	
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "tienda", cascade = CascadeType.ALL)
-	@JsonBackReference
+	@JsonIgnore
 	private Set<EstadoCuenta> estadoCuentas;
 	
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "tienda", cascade = CascadeType.ALL)
-	@JsonBackReference
+	@JsonIgnore
 	private Set<ImagenTienda> imagenes;	
 	
-	@JsonIgnore
-	@ManyToMany(fetch = FetchType.EAGER)
+	@ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
             name = "tienda_usuario",
             joinColumns = {@JoinColumn(name = "ID_TIENDA", referencedColumnName = "ID")},
             inverseJoinColumns = {@JoinColumn(name = "ID_USUARIO", referencedColumnName = "ID")})
+	@JsonIgnore
 	private Set<Usuario> usuarios;
 	
-	@ManyToMany(fetch = FetchType.EAGER)
+	@ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
             name = "tienda_tipo_tienda",
             joinColumns = {@JoinColumn(name = "ID_TIENDA", referencedColumnName = "ID")},
             inverseJoinColumns = {@JoinColumn(name = "ID_TIPO_TIENDA", referencedColumnName = "ID")})
+	@JsonIgnore
     private Set<TipoTienda> tipoTiendas;
 	
 	@Transient

@@ -20,5 +20,5 @@ public interface DireccionService {
     void actualizar(Direccion direccion);  
     void eliminar(int id);    
     List<Direccion> listarDirecciones();
-	List<Direccion> listarPorTienda(Integer id); 
+	List<Direccion> listarPorTienda(Integer id);
 }

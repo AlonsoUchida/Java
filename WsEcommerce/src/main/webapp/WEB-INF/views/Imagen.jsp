@@ -48,12 +48,12 @@
 							 <label class="col-md-2 control-lable" for="imagen">Imagen</label>
 							 <div class="col-md-7">
 						      <input type="file" ngf-select ng-model="picFile" id="imagen" name="file"    
-						             accept="image/*" ngf-max-size="2MB" required
+						             accept="image/*"  required
 						             ngf-model-invalid="errorFile" ng-change="convertToBase64()">
 						      <div class="has-error" ng-show="myForm.$dirty">
 	                     	       <span ng-show="myForm.uname.$error.required">Este campo es requerido</span>
 	                          </div>	                          
-	                            <img ng-show="myForm.file.$valid" ngf-thumbnail="picFile" class="thumb" height="300" width="300"> 
+	                            <img ng-show="myForm.file.$valid" ngf-thumbnail="picFile" class="thumb" height="400" width="400"> 
 						      <button ng-click="picFile = null" ng-show="picFile" class="btn btn-primary btn-sm" >Quitar</button>						     
 						      </div>
 						 </div>

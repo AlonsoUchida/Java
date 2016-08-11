@@ -4,15 +4,17 @@
 <!DOCTYPE html>
 <html ng-app="myApp">
 <head>
-<meta charset="utf-8" />
-<title>AngularJS User Registration and Login Example</title>
-<link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" />
+<meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Bodegas Perú - Panel de Administración</title>
+
 <link href="https://cdn.rawgit.com/cornflourblue/angular-registration-login-example/master/app-content/app.css" rel="stylesheet" />
-		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+		
 	<link rel="stylesheet" href="https://cdn.gitcdn.link/cdn/angular/bower-material/v1.1.0-rc.5/angular-material.css"/>
 	<link rel="stylesheet" href="https://material.angularjs.org/1.1.0-rc.5/docs.css"/>
 	<!--  <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/font-awesome/4.0.0/css/font-awesome.css" />-->
-	<link href="<c:url value='/static/css/app.css' />" rel="stylesheet"></link>
+	
 	<!-- Jquery -->
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 	<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/jquery-ui.min.js"></script>
@@ -34,9 +36,21 @@
   <script src="https://ajax.aspnetcdn.com/ajax/4.0/1/MicrosoftAjax.js"></script>
   <script src="<c:url value='/static/js/libs/ng-file-upload-bower/ng-file-upload-shim.js' />"></script>
   <script src="<c:url value='/static/js/libs/ng-file-upload-bower/ng-file-upload.js' />"></script>
+  
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+<!-- Optional theme -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+  
+  <link href="<c:url value='/static/css/app.css' />" rel="stylesheet"></link>
+  
 </head>
 <body ng-controller="LoginController as self">
-
+	
+	<div class="container">
 	<div class="alert alert-info">Ingrese</div>
 
 	<form name="form" ng-submit="self.login()" role="form">
@@ -56,10 +70,10 @@
 		</div>
 		<div class="form-actions">
 			<button type="submit" ng-disabled="form.$invalid || dataLoading"
-				class="btn btn-danger">Login</button>		
+				class="btn btn-success">Login</button>		
 		</div>
 	</form>
-
+</div>
 	<script src="<c:url value='/static/js/app.js' />"></script>
 	<script src="<c:url value='/static/js/service/login_service.js' />"></script>
 	<script src="<c:url value='/static/js/controller/login_controller.js' />"></script>

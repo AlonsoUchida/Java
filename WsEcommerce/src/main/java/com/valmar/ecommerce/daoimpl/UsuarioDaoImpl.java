@@ -20,17 +20,17 @@ import com.valmar.ecommerce.model.Usuario;
 public class UsuarioDaoImpl extends AbstractDao<Integer, Usuario> implements UsuarioDao {
 
 	private Usuario mapearUsuario(Object[] results){
-		Usuario usuario = new Usuario();
 		if(results!=null){
+			Usuario usuario = new Usuario();		
 			usuario.setId(Integer.parseInt(results[0].toString()));
 			usuario.setNombre(results[1].toString());
 			usuario.setApellido(results[2].toString());
 			usuario.setCorreo(results[3].toString());
 			usuario.setPassword(results[4].toString());
 			usuario.setTipo(Integer.parseInt(results[6].toString()));
+			return usuario;
 		}
-		return usuario;
-		
+		return null;
 	}
 	
 	@Override

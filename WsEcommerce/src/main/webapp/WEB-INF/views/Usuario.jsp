@@ -19,8 +19,8 @@
                                   <input type="text" ng-model="ctrl.usuario.nombre" id="nombre" class="username form-control input-sm" placeholder="Ingresa tu nombre" required ng-minlength="3"/>
                                   <div class="has-error" ng-show="myForm.$dirty">
                      	              <span ng-show="myForm.uname.$error.required">Este campo es requerido</span>
-                                      <span ng-show="myForm.uname.$error.minlength">El minimo tamaño es de 3 caracteres</span>
-                                      <span ng-show="myForm.uname.$invalid">Este campo es invalido</span>
+                                      <span ng-show="myForm.uname.$error.minlength">El mínimo tamaño es de 3 caracteres</span>
+                                      <span ng-show="myForm.uname.$invalid">Este campo es inválido</span>
                                   </div>
                               </div>
                           </div>
@@ -32,8 +32,8 @@
                                   <input type="text" ng-model="ctrl.usuario.apellido" id="apellido" class="username form-control input-sm" placeholder="Ingresa tu apellido" required ng-minlength="3"/>
                                   <div class="has-error" ng-show="myForm.$dirty">
                                       <span ng-show="myForm.uname.$error.required">Este campo es requerido</span>
-                                      <span ng-show="myForm.uname.$error.minlength">El minimo tamaño es de 3 caracteres</span>
-                                      <span ng-show="myForm.uname.$invalid">Este campo es invalido</span>
+                                      <span ng-show="myForm.uname.$error.minlength">El mínimo tamaño es de 3 caracteres</span>
+                                      <span ng-show="myForm.uname.$invalid">Este campo es inválido</span>
                                   </div>
                               </div>
                           </div>
@@ -45,7 +45,7 @@
                                   <input type="email" ng-model="ctrl.usuario.correo" id="correo" class="email form-control input-sm" placeholder="Ingresa tu correo" required/>
                                   <div class="has-error" ng-show="myForm.$dirty">
                                       <span ng-show="myForm.email.$error.required">Este campo es requerido</span>
-                                      <span ng-show="myForm.email.$invalid">Este campo es invalido</span>
+                                      <span ng-show="myForm.email.$invalid">Este campo es inválido</span>
                                   </div>
                               </div>
                           </div>
@@ -57,8 +57,8 @@
                                   <input type="password" ng-model="ctrl.usuario.password" id="password" class="username form-control input-sm" placeholder="Ingresa tu password" required ng-minlength="3"/>
                                   <div class="has-error" ng-show="myForm.$dirty">
                                      <span ng-show="myForm.uname.$error.required">Este campo es requerido</span>
-                                      <span ng-show="myForm.uname.$error.minlength">El minimo tamaño es de 3 caracteres</span>
-                                      <span ng-show="myForm.uname.$invalid">Este campo es invalido</span>
+                                      <span ng-show="myForm.uname.$error.minlength">El mínimo tamaño es de 3 caracteres</span>
+                                      <span ng-show="myForm.uname.$invalid">Este campo es inválido</span>
                                   </div>
                               </div>
                           </div>
@@ -71,7 +71,7 @@
                               <input type="text" ng-model="datepickerFechaNacimiento" datepicker required />
                                   <div class="has-error" ng-show="myForm.$dirty">
                                       <span ng-show="myForm.uname.$error.required">Este campo es requerido</span>
-                                      <span ng-show="myForm.uname.$invalid">Este campo es invalido</span>
+                                      <span ng-show="myForm.uname.$invalid">Este campo es inválido</span>
                                   </div>
                               </div>
                           </div>                          
@@ -85,7 +85,7 @@
 									  <md-content>
 									      <md-datepicker name="dateField" ng-model="fechaNacimiento" md-placeholder="Ingrese la fecha" required=""></md-datepicker>									
 									      <div class="validation-messages" ng-messages="myForm.dateField.$error">
-									        <div ng-message="valid">Este campo es invalido</div>
+									        <div ng-message="valid">Este campo es inválido</div>
 									        <div ng-message="required">Este campo es requerido</div>
 									      </div>									
 									  </md-content>
@@ -103,7 +103,7 @@
                                  <option value="">- Seleccione Genero -</option>
                                  </select>
                                  <span ng-show="myForm.uname.$error.required">Este campo es requerido</span>
-                                 <span ng-show="myForm.uname.$invalid">Este campo es invalido</span>
+                                 <span ng-show="myForm.uname.$invalid">Este campo es inválido</span>
                               </div>
 
                           </div>
@@ -120,7 +120,7 @@
                                 <option value="">- Seleccione Tipo Documento -</option>
                                 </select>
                                 <span ng-show="myForm.uname.$error.required">Este campo es requerido</span>
-                                <span ng-show="myForm.uname.$invalid">Este campo es invalido</span>
+                                <span ng-show="myForm.uname.$invalid">Este campo es inválido</span>
                               </div>
                           </div>
                       </div>   
@@ -132,8 +132,8 @@
                                   <input type="text" ng-model="ctrl.usuario.valorDocumento" id="valorDocumento" class="username form-control input-sm" placeholder="Ingresa el Nro. de Documento" required ng-minlength="3"/>
                                   <div class="has-error" ng-show="myForm.$dirty">
                                       <span ng-show="myForm.uname.$error.required">Este campo es requerido</span>
-                                      <span ng-show="myForm.uname.$error.minlength">El minimo tamaño es de 3 caracteres</span>
-                                      <span ng-show="myForm.uname.$invalid">Este campo es invalido</span>
+                                      <span ng-show="myForm.uname.$error.minlength">El mínimo tamaño es de 3 caracteres</span>
+                                      <span ng-show="myForm.uname.$invalid">Este campo es inválido</span>
                                   </div>
                               </div>
                           </div>
@@ -146,8 +146,8 @@
                                   <input type="text" ng-model="ctrl.usuario.direccionFiscal" id="direccionFiscal" class="username form-control input-sm" placeholder="Ingresa Dirección Fiscal" required ng-minlength="3"/>
                                   <div class="has-error" ng-show="myForm.$dirty">
                                      <span ng-show="myForm.uname.$error.required">Este campo es requerido</span>
-                                      <span ng-show="myForm.uname.$error.minlength">El minimo tamaño es de 3 caracteres</span>
-                                      <span ng-show="myForm.uname.$invalid">Este campo es invalido</span>
+                                      <span ng-show="myForm.uname.$error.minlength">El mínimo tamaño es de 3 caracteres</span>
+                                      <span ng-show="myForm.uname.$invalid">Este campo es inválido</span>
                                   </div>
                               </div>
                           </div>
@@ -178,7 +178,7 @@
                           <tr>
                               <th>Nombre</th>
                               <th>Apellido</th>
-                              <th>Correo</th>
+                              <th class="ocultar">Correo</th>
                               <th width="20%"></th>
                           </tr>
                       </thead>
@@ -186,7 +186,7 @@
                           <tr ng-repeat="u in usuarios | filter:q | startFrom:currentPage*pageSize | limitTo:pageSize">
                               <td><span ng-bind="u.nombre"></span></td>
                               <td><span ng-bind="u.apellido"></span></td>
-                              <td><span ng-bind="u.correo"></span></td>
+                              <td class="ocultar"><span ng-bind="u.correo"></span></td>
                               <td>
                               <button type="button" ng-click="ctrl.edit(u.id)" class="btn btn-success custom-width">Editar</button>  
                               <button type="button" ng-click="ctrl.remove(u.id)" class="btn btn-danger custom-width">Eliminar</button>
