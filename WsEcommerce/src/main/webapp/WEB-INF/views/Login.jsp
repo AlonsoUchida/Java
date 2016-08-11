@@ -51,7 +51,10 @@
 <body ng-controller="LoginController as self">
 	
 	<div class="container">
-	<div class="alert alert-info">Ingrese</div>
+	<div id="logo-login" class="text-center">
+		<img src="<c:url value='/static/image/logo-BP.png' />" />
+	</div>
+<div class="jumbotron">
 
 	<form name="form" ng-submit="self.login()" role="form">
 		<div class="form-group">
@@ -66,13 +69,14 @@
 				type="password" name="password" id="password" class="form-control"
 				ng-model="self.password" required /> <span
 				ng-show="form.password.$dirty && form.password.$error.required"
-				class="help-block">Contraseña es requerido</span>
+				class="help-block">Contraseña es requerida</span>
 		</div>
 		<div class="form-actions">
 			<button type="submit" ng-disabled="form.$invalid || dataLoading"
-				class="btn btn-success">Login</button>		
+				class="btn btn-success">Ingresar</button>		
 		</div>
 	</form>
+	</div>
 </div>
 	<script src="<c:url value='/static/js/app.js' />"></script>
 	<script src="<c:url value='/static/js/service/login_service.js' />"></script>
