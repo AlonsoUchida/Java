@@ -161,9 +161,9 @@
                           <tr>
                               <th>Dirección</th>
                               <th>Número</th>
-                              <th>Referencia</th>
-                              <th>Latitud</th>
-                              <th>Longitud</th>
+                              <th class="ocultar">Referencia</th>
+                              <th class="ocultar">Latitud</th>
+                              <th class="ocultar">Longitud</th>
                               <th width="20%"></th>
                           </tr>
                       </thead>
@@ -171,9 +171,9 @@
                           <tr ng-repeat="d in direcciones | filter:q | startFrom:currentPage*pageSize | limitTo:pageSize">
                               <td><span ng-bind="d.domicilio"></span></td>
                               <td><span ng-bind="d.numero"></span></td>
-                              <td><span ng-bind="d.referencia"></span></td>
-                              <td><span ng-bind="d.latitud"></span></td>
-                              <td><span ng-bind="d.longitud"></span></td>
+                              <td class="ocultar"><span ng-bind="d.referencia"></span></td>
+                              <td class="ocultar"><span ng-bind="d.latitud"></span></td>
+                              <td class="ocultar"><span ng-bind="d.longitud"></span></td>
                               <td>
                               <button type="button" ng-click="ctrl.edit(d.id)" class="btn btn-success custom-width">Editar</button>  
                               <button type="button" ng-click="ctrl.remove(d.id)" class="btn btn-danger custom-width">Eliminar</button>
