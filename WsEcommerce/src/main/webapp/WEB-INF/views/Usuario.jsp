@@ -2,12 +2,10 @@
 	   <div class="generic-container" ng-controller="UsuarioController as ctrl">
           <div class="panel panel-default">
               <div class="panel-heading">
-              <div class="row">
               	 	<span class="lead">Registro de Bodeguero</span> 
 	              	 <div class="form-actions floatRight">
 	              	 <button type="button" ng-click="ctrl.reset()" class="btn btn-default" style="float: right;">Refrescar</button>
 	              	 </div>
-              	 </div>
               </div>
               <div class="formcontainer">
                   <form ng-submit="ctrl.submit()" name="myForm" class="form-horizontal">

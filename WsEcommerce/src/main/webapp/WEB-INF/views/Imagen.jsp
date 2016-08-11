@@ -2,19 +2,17 @@
 	   <div class="generic-container" ng-controller="ImagenController as ctrl">
           <div class="panel panel-default">
               <div class="panel-heading">
-              <div class="row">
+              
               	 	<span class="lead">Registro de Imagen Por Tienda</span> 
 	              	 <div class="form-actions floatRight">
 	              	 <button type="button" ng-click="ctrl.reset()" class="btn btn-default" style="float: right;">Refrescar</button>
 	              	 </div>
-              	 </div>
+              	 
               </div>
               <div class="formcontainer">
                   <form ng-submit="ctrl.submit()" name="myForm" class="form-horizontal">
                       <input type="hidden" ng-model="ctrl.imagen.id" />
-                      
-                       <div class="row">
-                          <div class="form-group col-md-12">
+                      	<div class="row">
                               <label class="col-md-2 control-lable" for="tienda">Tienda</label>
                               <div class="col-md-7">
                                  <select id="soflow" ng-model="ctrl.tienda" ng-options="tienda as tienda.nombre for tienda in tiendas"
@@ -24,10 +22,7 @@
                                  <span ng-show="myForm.uname.$error.required">Este campo es requerido</span>
                                  <span ng-show="myForm.uname.$invalid">Este campo es invalido</span>
                               </div>
-
-                          </div>
-                      </div> 
-                      
+                      	</div>
                       <div class="row">
                           <div class="form-group col-md-12">
                               <label class="col-md-2 control-lable" for="nombre">Nombre</label>
