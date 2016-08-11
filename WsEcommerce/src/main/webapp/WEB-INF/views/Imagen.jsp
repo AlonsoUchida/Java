@@ -102,9 +102,9 @@
                           </tr>
                       </thead>
                       <tbody>
-                          <tr ng-repeat="i in imagenes | filter:q | startFrom:currentPage*pageSize | limitTo:pageSize" height="300">
+                          <tr ng-repeat="i in imagenes | filter:q | startFrom:currentPage*pageSize | limitTo:pageSize">
                               <td><span ng-bind="i.nombre"></span></td>
-                              <td><img ng-src="data:image/JPEG;base64,{{i.imagen}}"  height="300" width="300"></td>
+                              <td><img ng-src="data:image/JPEG;base64,{{i.imagen}}"></td>
                               <td><span ng-bind="i.defecto"></span></td>
                               <td>
                               <button type="button" ng-click="ctrl.edit(i.id)" class="btn btn-success custom-width">Editar</button>  

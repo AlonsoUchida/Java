@@ -1,8 +1,14 @@
+#logo-login{
+	margin:20px auto;
+}
+#logo-login img{
+	width:200px;
+}
 .navbar-default{
 	background:#ef9d2f;
 }
 .navbar-default .navbar-brand, .navbar-default .navbar-nav>li>a {
-    color: #fff;
+	color: #fff;
 }
 .navbar-default .navbar-toggle .icon-bar{
 	background:#fff;
@@ -13,6 +19,16 @@
 .jumbotron h1{
 	color:#faa727;
 }
+.thumb{
+	/*height: 100%;*/
+	width:100%;
+}
+table img{
+	width:100px;
+	height:auto;
+}
+
+
 .username.ng-valid {
 	background-color: lightgreen;
 }
@@ -56,7 +72,6 @@ body, .form-control {
 }
 
 .formcontainer {
-	background-color: #DAE8E8;
 	padding: 20px;
 }
 
@@ -66,11 +81,7 @@ body, .form-control {
 
 .generic-container {
 	margin-bottom: 20px;
-	padding: 20px;
-	background-color: #EAE7E7;
-	border: 1px solid #ddd;
-	border-radius: 4px;
-	box-shadow: 0 0 30px black;
+	border-radius: 0px;
 }
 
 .custom-width {
@@ -149,7 +160,7 @@ body, .form-control {
 }
 
 .ui-datepicker .ui-datepicker-calendar th, .ui-datepicker .ui-datepicker-calendar td
-	{
+{
 	text-align: center;
 	padding: 4px 0;
 }
@@ -157,9 +168,9 @@ body, .form-control {
 .ui-datepicker .ui-datepicker-calendar td {
 	border-radius: 4px;
 	-webkit-transition: background-color 0.1s ease-in-out, color 0.1s
-		ease-in-out;
+	ease-in-out;
 	-moz-transition: background-color 0.1s ease-in-out, color 0.1s
-		ease-in-out;
+	ease-in-out;
 	-o-transition: background-color 0.1s ease-in-out, color 0.1s ease-in-out;
 	transition: background-color 0.1s ease-in-out, color 0.1s ease-in-out;
 }
@@ -182,7 +193,7 @@ body, .form-control {
 }
 
 .ui-datepicker .ui-datepicker-calendar .ui-datepicker-unselectable:hover
-	{
+{
 	background-color: #fff;
 	cursor: default;
 }
@@ -204,35 +215,38 @@ body, .form-control {
 }
 /**Style for Select**/
 select#soflow, select#soflow-color {
-   -webkit-appearance: button;
-   -webkit-border-radius: 2px;
-   -webkit-box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.1);
-   -webkit-padding-end: 20px;
-   -webkit-padding-start: 2px;
-   -webkit-user-select: none;
-   background-image: url(http://i62.tinypic.com/15xvbd5.png), -webkit-linear-gradient(#FAFAFA, #F4F4F4 40%, #E5E5E5);
-   background-position: 97% center;
-   background-repeat: no-repeat;
-   border: 1px solid #AAA;
-   color: #555;
-   font-size: inherit;
-   margin: 0px;
-   overflow: hidden;
-   padding: 5px 10px;
-   text-overflow: ellipsis;
-   white-space: nowrap;
-   width: 300px;
+	-webkit-appearance: button;
+	-webkit-border-radius: 2px;
+	-webkit-box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.1);
+	-webkit-padding-end: 20px;
+	-webkit-padding-start: 2px;
+	-webkit-user-select: none;
+	background-image: url(http://i62.tinypic.com/15xvbd5.png), -webkit-linear-gradient(#FAFAFA, #F4F4F4 40%, #E5E5E5);
+	background-position: 97% center;
+	background-repeat: no-repeat;
+	border: 1px solid #AAA;
+	color: #555;
+	font-size: inherit;
+	margin: 0px;
+	overflow: hidden;
+	padding: 5px 10px;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	width: 300px;
 }
 
 ul li:first-child {
-  margin-top: 3px;
+	margin-top: 3px;
 }
 @media only screen and (max-width: 767px) {
+	#logo-login img{
+		width:150px;
+	}
 	.container .ocultar{
 		display:none;
 	}
 	select#soflow, select#soflow-color {
-	    width: 100%;
+		width: 100%;
 	}
 	.container table .btn-success, .container .btn-danger{
 		margin:5px;
@@ -247,5 +261,8 @@ ul li:first-child {
 	.container table .btn-danger:before{
 		content: "X";
 		font-size:12px;
+	}
+	table img{
+		width:100%;
 	}
 }
