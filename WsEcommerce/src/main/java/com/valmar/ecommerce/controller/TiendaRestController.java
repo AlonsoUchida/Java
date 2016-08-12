@@ -98,12 +98,13 @@ public class TiendaRestController {
 	}	
 
 	@RequestMapping(value = { "/listar" }, method = RequestMethod.GET)
-	public ResponseEntity<List<Tienda>> listarTiendas() {
+	public ResponseEntity<List<TiendaVMLite>> listarTiendas() {
 		List<Tienda> tiendas = service.listarTiendas();
 		if (tiendas.isEmpty()) {
-			return new ResponseEntity<List<Tienda>>(HttpStatus.NO_CONTENT);
+			return new ResponseEntity<List<TiendaVMLite>>(HttpStatus.NO_CONTENT);
 		}
-		return new ResponseEntity<List<Tienda>>(tiendas, HttpStatus.OK);
+		List<TiendaVMLite> tiendasLite = clonarTiendasVMLite(tiendas);
+		return new ResponseEntity<List<TiendaVMLite>>(tiendasLite, HttpStatus.OK);
 	}
 	
 	@RequestMapping(value = { "/listarPorBodeguero" }, params = {"id"}, method = RequestMethod.GET)
@@ -111,7 +112,7 @@ public class TiendaRestController {
 		List<Tienda> tiendas = service.listarPorBodeguero(id);
 		if (tiendas.isEmpty()) {
 			return new ResponseEntity<List<Tienda>>(HttpStatus.NO_CONTENT);
-		}
+		}		
 		return new ResponseEntity<List<Tienda>>(tiendas, HttpStatus.OK);
 	}
 

@@ -22,6 +22,7 @@
     <security:http pattern="/cliente/agregar" security="none" />    
 	<security:http pattern="/authenticate" security="none" />
 	<security:http pattern="/authenticate_vendedor" security="none" />
+	<security:http pattern="/authenticate_cliente" security="none" />
 	<security:http pattern="/GCMNotification" security="none" />
 	<security:http pattern="/notification" security="none" />
 	<security:http pattern="/" security="none" />

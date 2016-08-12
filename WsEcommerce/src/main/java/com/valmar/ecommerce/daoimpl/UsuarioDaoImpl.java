@@ -101,11 +101,9 @@ public class UsuarioDaoImpl extends AbstractDao<Integer, Usuario> implements Usu
 		int userID = 0;
 		try {
 			Query query = getSession().createSQLQuery("SELECT * FROM usuario WHERE correo = :correo and password = :password and"
-					+ "(tipo = :tipoVendedor or tipo = :tipoAdministrador) and estado = :estado ");
+					+ " estado = :estado ");
 			query.setString("correo", username);
 			query.setString("password", password);
-			query.setInteger("tipoVendedor", TipoUsuario.VENDEDOR.getValue());
-			query.setInteger("tipoAdministrador", TipoUsuario.ADMINISTRADOR.getValue());
 			query.setInteger("estado", TipoEstado.HABILITADO.getValue());
 			@SuppressWarnings("unchecked")
 			Object[] results = (Object[]) query.uniqueResult();
@@ -204,8 +202,9 @@ public class UsuarioDaoImpl extends AbstractDao<Integer, Usuario> implements Usu
 		Usuario usuario;
 		try {
 			Query query = getSession().createSQLQuery("SELECT * FROM usuario WHERE correo = :correo and "
-					+ "(tipo = :tipoVendedor or tipo = :tipoAdministrador) and estado = :estado ");
+					+ "(tipo = :tipoVendedor or tipo = :tipoCliente or tipo = :tipoAdministrador) and estado = :estado ");
 			query.setString("correo", username);
+			query.setInteger("tipoCliente", TipoUsuario.CLIENTE.getValue());
 			query.setInteger("tipoVendedor", TipoUsuario.VENDEDOR.getValue());
 			query.setInteger("tipoAdministrador", TipoUsuario.ADMINISTRADOR.getValue());
 			query.setInteger("estado", TipoEstado.HABILITADO.getValue());
