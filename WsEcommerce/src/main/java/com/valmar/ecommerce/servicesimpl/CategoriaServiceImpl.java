@@ -26,5 +26,10 @@ public class CategoriaServiceImpl implements CategoriaService{
 	public List<Categoria> listarCategorias() {
 		return categoriaDao.listarCategorias();
 	}
+
+	@Override
+	public List<Categoria> listarPorTienda(int id) {
+		return categoriaDao.listarPorTienda(id);
+	}
 	
 }

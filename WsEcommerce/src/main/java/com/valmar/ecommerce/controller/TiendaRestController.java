@@ -26,6 +26,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 import com.valmar.ecommerce.enums.TipoEstado;
 import com.valmar.ecommerce.enums.TipoImagen;
 import com.valmar.ecommerce.model.Banco;
+import com.valmar.ecommerce.model.Categoria;
 import com.valmar.ecommerce.model.Direccion;
 import com.valmar.ecommerce.model.Distrito;
 import com.valmar.ecommerce.model.Envio;
@@ -37,6 +38,7 @@ import com.valmar.ecommerce.model.Tienda;
 import com.valmar.ecommerce.model.TipoTienda;
 import com.valmar.ecommerce.model.Usuario;
 import com.valmar.ecommerce.services.BancoService;
+import com.valmar.ecommerce.services.CategoriaService;
 import com.valmar.ecommerce.services.DireccionService;
 import com.valmar.ecommerce.services.ImagenTiendaService;
 import com.valmar.ecommerce.services.TiendaService;
@@ -46,6 +48,7 @@ import com.valmar.ecommerce.viewmodel.ImagenProductoVM;
 import com.valmar.ecommerce.viewmodel.ProductoPorTiendaVM;
 import com.valmar.ecommerce.viewmodel.TiendaVM;
 import com.valmar.ecommerce.viewmodel.TiendaVMLite;
+import com.valmar.ecommerce.viewmodel.TiendaVMLite2;
 
 @CrossOrigin
 @RestController
@@ -61,7 +64,7 @@ public class TiendaRestController {
 	@Autowired
 	TipoTiendaService tipoTiendaService;
 	@Autowired
-	BancoService bancoService;
+	BancoService bancoService;	
 
 	private List<TiendaVMLite> clonarTiendasVMLite(List<Tienda> tiendas) {
 		List<TiendaVMLite> tiendasLite = new ArrayList<>();
@@ -76,9 +79,19 @@ public class TiendaRestController {
 		_tienda.setId(item.getId());
 		_tienda.setNombre(item.getNombre());
 		_tienda.setHorarioAtencion(item.getHorarioAtencion());
-		_tienda.setEstado(item.getEstado());
+		//TODO constants
+		if(item.getEstado()==1)	
+			_tienda.setEstado("Abierto");
+		else
+			_tienda.setEstado("Cerrado");
+		if(item.getTarjeta()!=null && item.getTarjeta()==1)
+			_tienda.setTarjeta("Si");
+		else
+			_tienda.setTarjeta("No");
+		
 		_tienda.setTelefonoFijo(item.getTelefono_local());
 		_tienda.setTelefonoMovil(item.getTelefono_movil());
+		_tienda.setWeb(item.getPaginaweb());
 		ImagenTienda imagen = imagenTiendaService.obtenerImagenPorDefectoTienda(item.getId());
 		if (imagen != null)
 			_tienda.setImagen(imagen.getImagen());
@@ -86,25 +99,85 @@ public class TiendaRestController {
 			_tienda.setDistancia(Double.parseDouble(item.getDistancia()));
 		List<Direccion> direcciones = direccionService.listarPorTienda(item.getId());
 		for (Direccion direccion : direcciones) {
-			_tienda.setDomicilio(direccion.getDomicilio());
-			_tienda.setNumero(direccion.getNumero());
 			Distrito distrito = direccion.getDistrito();
-			_tienda.setDistrito(distrito.getNombre());
+			String direccionFormatted = String.format("%s %s, %s ", direccion.getDomicilio(), direccion.getNumero(), distrito.getNombre());
+			_tienda.setDireccion(direccionFormatted);	
 			_tienda.setLatitud(direccion.getLatitud());
 			_tienda.setLongitud(direccion.getLongitud());
 			break;
 		}
+		
+		List<TipoTienda> tipoTiendas = tipoTiendaService.listarPorTienda(item.getId());
+		StringBuilder strCategoria = new StringBuilder();
+		for(int i = 0; i < tipoTiendas.size(); i++){
+			if(i == (tipoTiendas.size() - 1))
+				strCategoria.append(tipoTiendas.get(i).getDescripcion());
+			else
+				strCategoria.append(tipoTiendas.get(i).getDescripcion() + ", ");
+		}
+		_tienda.setCategoria(strCategoria.toString());
+		
+		List<Banco> bancos = bancoService.listarPorTienda(item.getId());
+		StringBuilder strBanco = new StringBuilder();
+		for(int i = 0; i < bancos.size(); i++){
+			if(i == (bancos.size() - 1))
+				strBanco.append(bancos.get(i).getNombre());
+			else
+				strBanco.append(bancos.get(i).getNombre() + ", ");
+		}
+		_tienda.setAgente(strBanco.toString());
+				
 		return _tienda;
 	}	
+	
 
 	@RequestMapping(value = { "/listar" }, method = RequestMethod.GET)
-	public ResponseEntity<List<TiendaVMLite>> listarTiendas() {
+	public ResponseEntity<List<Tienda>> listarTiendas() {
 		List<Tienda> tiendas = service.listarTiendas();
 		if (tiendas.isEmpty()) {
-			return new ResponseEntity<List<TiendaVMLite>>(HttpStatus.NO_CONTENT);
+			return new ResponseEntity<List<Tienda>>(HttpStatus.NO_CONTENT);
 		}
-		List<TiendaVMLite> tiendasLite = clonarTiendasVMLite(tiendas);
-		return new ResponseEntity<List<TiendaVMLite>>(tiendasLite, HttpStatus.OK);
+		return new ResponseEntity<List<Tienda>>(tiendas, HttpStatus.OK);
+	}
+	
+	@RequestMapping(value = { "/listarTiendasLite" }, method = RequestMethod.GET)
+	public ResponseEntity<List<TiendaVMLite2>> listarTiendasLite() {
+		List<TiendaVMLite2> tiendasLite = service.listarTodosTiendasPorCobertura();
+		if (tiendasLite.isEmpty()) {
+			return new ResponseEntity<List<TiendaVMLite2>>(HttpStatus.NO_CONTENT);
+		}
+		
+		return new ResponseEntity<List<TiendaVMLite2>>(tiendasLite, HttpStatus.OK);
+	}
+	
+	@RequestMapping(value = { "/listarTiendasPorCobertura2" }, method = RequestMethod.GET)
+	public ResponseEntity<List<TiendaVMLite2>> listarTiendasPorCobertura2(@RequestParam String latitud,
+			@RequestParam String longitud) {
+		List<TiendaVMLite2> tiendasLite = service.listarTodosTiendasPorCobertura();
+		if (tiendasLite.isEmpty()) {
+			return new ResponseEntity<List<TiendaVMLite2>>(HttpStatus.NO_CONTENT);
+		}
+		double latitudCliente = Double.parseDouble(latitud);
+		double longitudCliente = Double.parseDouble(longitud);
+		List<TiendaVMLite2> tiendasLiteFinal = new ArrayList<>();
+		for (TiendaVMLite2 item : tiendasLite) {
+			if((item.getLatitud()!=null && !item.getLatitud().isEmpty()) ||
+					(item.getLongitud()!=null && !item.getLongitud().isEmpty())){
+				double latitudTienda = Double.parseDouble(item.getLatitud());
+				double longitudTienda = Double.parseDouble(item.getLongitud());
+				double distancia = DistanceCalculatorUtil.distance(latitudCliente, longitudCliente, latitudTienda,
+						longitudTienda, "K");
+				if (distancia < DistanceCalculatorUtil.RADIO_USUARIO) {
+					distancia = distancia * 1000;
+					item.setDistancia(distancia);
+					tiendasLiteFinal.add(item);
+				}
+			}
+		}
+		
+		tiendasLiteFinal.sort(Comparator.comparing(TiendaVMLite2::getDistancia));
+		
+		return new ResponseEntity<List<TiendaVMLite2>>(tiendasLiteFinal, HttpStatus.OK);
 	}
 	
 	@RequestMapping(value = { "/listarPorBodeguero" }, params = {"id"}, method = RequestMethod.GET)

@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.valmar.ecommerce.dao.BancoDao;
 import com.valmar.ecommerce.model.Banco;
+import com.valmar.ecommerce.model.Categoria;
 import com.valmar.ecommerce.services.BancoService;
 
 @Service("bancoService")
@@ -25,6 +26,11 @@ public class BancoServiceImpl implements BancoService{
 	@Override
 	public List<Banco> listarBancos() {
 		return bancoDao.listarBancos();
+	}
+
+	@Override
+	public List<Banco> listarPorTienda(int id) {
+		return bancoDao.listarPorTienda(id);
 	}
 
 }

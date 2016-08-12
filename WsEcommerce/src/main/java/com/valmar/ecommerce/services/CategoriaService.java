@@ -7,4 +7,5 @@ import com.valmar.ecommerce.model.Categoria;
 public interface CategoriaService {
 	Categoria obtenerCategoriaPorId(int id);
 	List<Categoria> listarCategorias();
+	List<Categoria> listarPorTienda(int id);
 }

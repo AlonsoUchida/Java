@@ -11,6 +11,8 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name = "tipo_tienda")
 public class TipoTienda {
@@ -22,12 +24,13 @@ public class TipoTienda {
 	@Column(name = "DESCRIPCION")
 	private String descripcion;
 	
-	@ManyToMany(fetch = FetchType.EAGER)
+	@ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
             name = "tienda_tipo_tienda",
             joinColumns = {@JoinColumn(name = "ID_TIPO_TIENDA", referencedColumnName = "ID")},
             inverseJoinColumns = {@JoinColumn(name = "ID_TIENDA", referencedColumnName = "ID")})
-    private Set<Tienda> tipoTiendas;
+	@JsonIgnore
+    private Set<Tienda> tiendas;
 
 	public int getId() {
 		return id;
@@ -45,12 +48,12 @@ public class TipoTienda {
 		this.descripcion = descripcion;
 	}
 
-	public Set<Tienda> getTipoTiendas() {
-		return tipoTiendas;
+	public Set<Tienda> getTienda() {
+		return tiendas;
 	}
 
-	public void setTipoTiendas(Set<Tienda> tipoTiendas) {
-		this.tipoTiendas = tipoTiendas;
+	public void setTienda(Set<Tienda> tipoTiendas) {
+		this.tiendas = tiendas;
 	}
 	
 	
