@@ -201,30 +201,34 @@ public class TiendaDaoImpl extends AbstractDao<Integer, Tienda> implements Tiend
 	public List<TiendaVMLite2> listarTodosTiendasPorCobertura() {
 		List<TiendaVMLite2> tiendas = new ArrayList<>();
 		try {
-			Query query = getSession().createSQLQuery("select t.id, t.nombre, t.estado_abierto, d.domicilio, d.numero,  di.nombre as distrito, d.latitud, d.longitud from tienda t "
+			Query query = getSession().createSQLQuery("select t.id, t.nombre, t.estado_abierto, d.domicilio, d.numero,  di.nombre as distrito, d.latitud, d.longitud, d.id as id_distrito from tienda t "
 						+ " inner join  tienda_direccion td on t.id = td.id_tienda "
 						+ " left join direccion d on td.id_direccion = d.id "
 						+ " left join distrito di on d.id_distrito = di.id "
 						+ " left join imagen_tienda it on t.id = it.id_tienda "
 						+ " where t.estado = :estado "
-						+ " group by t.id");
+						+ " group by  t.id, d.id");
 			query.setInteger("estado", TipoEstado.HABILITADO.getValue());
 			@SuppressWarnings("unchecked")
 			List<Object[]> results = query.list();
 			if(results!=null){				
 				for(Object[] item : results){
-					TiendaVMLite2 tienda = new TiendaVMLite2();	
-					tienda.setId(Integer.parseInt(item[0].toString()));
-					tienda.setNombre(item[1].toString());
-					int estado = Integer.parseInt(item[2].toString());
-					if(estado==1)
-						tienda.setEstado("Abierto");
-					else if(estado==2)
-						tienda.setEstado("Cerrado");
-					tienda.setDireccion(item[3].toString() + " " + item[4].toString() + ", "+ item[5].toString());
-					tienda.setLatitud(item[6].toString());
-					tienda.setLongitud(item[7].toString());
-					tiendas.add(tienda);					
+					if(item!=null){
+						TiendaVMLite2 tienda = new TiendaVMLite2();	
+						tienda.setId(Integer.parseInt(item[0].toString()));
+						tienda.setNombre(item[1].toString());
+						if(item[2]!=null){
+							int estado = Integer.parseInt(item[2].toString());
+							if(estado==1)
+								tienda.setEstado("Abierto");
+							else if(estado==2)
+								tienda.setEstado("Cerrado");
+						}
+						tienda.setDireccion(item[3].toString() + " " + item[4].toString() + ", "+ item[5].toString());
+						tienda.setLatitud(item[6].toString());
+						tienda.setLongitud(item[7].toString());
+						tiendas.add(tienda);	
+					}
 				}
 				
 			}

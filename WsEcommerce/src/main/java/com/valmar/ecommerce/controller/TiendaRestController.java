@@ -167,7 +167,7 @@ public class TiendaRestController {
 				double longitudTienda = Double.parseDouble(item.getLongitud());
 				double distancia = DistanceCalculatorUtil.distance(latitudCliente, longitudCliente, latitudTienda,
 						longitudTienda, "K");
-				if (distancia < DistanceCalculatorUtil.RADIO_USUARIO) {
+				if (distancia < DistanceCalculatorUtil.RADIO_USUARIO && (item!=null)) {
 					distancia = distancia * 1000;
 					item.setDistancia(distancia);
 					tiendasLiteFinal.add(item);
