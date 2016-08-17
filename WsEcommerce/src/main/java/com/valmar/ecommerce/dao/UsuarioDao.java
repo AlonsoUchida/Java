@@ -3,6 +3,7 @@ package com.valmar.ecommerce.dao;
 import java.util.List;
 
 import com.valmar.ecommerce.model.Usuario;
+import com.valmar.ecommerce.viewmodel.ReporteVM;
 
 public interface UsuarioDao {
 	
@@ -19,4 +20,5 @@ public interface UsuarioDao {
 	Usuario obtenerPorCorreoVendedor(String username);
 	List<Usuario> listarUsuariosPorVendedor(int id);
 	Usuario obtenerPorCorreoCliente(String username);
+	List<ReporteVM> obtenerReporteRegistrosPorVendedor(int id);
 }

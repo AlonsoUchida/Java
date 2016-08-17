@@ -35,8 +35,6 @@ import com.valmar.ecommerce.viewmodel.ClienteVM;
 @RequestMapping("/usuario")
 public class UsuarioRestController {
 	
-	private final static String NONE_PASSWORD = "nonepassword";
-	
 	@Autowired
 	UsuarioService service;
 	

@@ -4,7 +4,7 @@ import java.util.List;
 
 import com.valmar.ecommerce.model.Direccion;
 import com.valmar.ecommerce.model.Tienda;
-import com.valmar.ecommerce.viewmodel.TiendaVMLite2;
+import com.valmar.ecommerce.viewmodel.TiendaVMLite;
 
 public interface TiendaDao {
 	Tienda obtenerPorId(int id);	 
@@ -19,5 +19,5 @@ public interface TiendaDao {
 	List<Tienda> listarPorVendedor(int id);
 	List<Tienda> obtenerTiendasPorNombreDistritoUrbanizacion(String nombre, int id, int id_urbanizacion);
 	List<Tienda> listarPorBodeguero(int id);
-	List<TiendaVMLite2> listarTodosTiendasPorCobertura();	
+	List<TiendaVMLite> listarTodosTiendasPorCobertura();	
 }

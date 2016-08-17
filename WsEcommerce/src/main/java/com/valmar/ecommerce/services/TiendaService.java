@@ -6,7 +6,7 @@ import com.valmar.ecommerce.model.Envio;
 import com.valmar.ecommerce.model.MetodoPago;
 import com.valmar.ecommerce.model.Tienda;
 import com.valmar.ecommerce.model.Usuario;
-import com.valmar.ecommerce.viewmodel.TiendaVMLite2;
+import com.valmar.ecommerce.viewmodel.TiendaVMLite;
 
 public interface TiendaService {
 	Tienda obtenerPorId(int id);	 
@@ -24,5 +24,5 @@ public interface TiendaService {
 	Tienda obtenerTiendaPorDireccion(int id);
 	List<Tienda> obtenerTiendasPorNombreDistritoUrbanizacion(String nombre, int id, int id_urbanizacion);
 	List<Tienda> listarPorBodeguero(int id);
-	List<TiendaVMLite2> listarTodosTiendasPorCobertura();	
+	List<TiendaVMLite> listarTodosTiendasPorCobertura();	
 }

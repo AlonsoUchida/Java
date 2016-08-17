@@ -740,6 +740,34 @@ ENGINE = InnoDB
 DEFAULT CHARACTER SET = latin1;
 
 
+-- -----------------------------------------------------
+-- Table `CMS_VALMAR_DB`.`reporte_diario`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `CMS_VALMAR_DB`.`reporte_diario` (
+  `id` INT(5) NOT NULL AUTO_INCREMENT,
+  `id_usuario` INT(5) NOT NULL,
+  `id_tienda` INT(5) NULL,
+  `nombre` VARCHAR(100) NULL,
+  `observacion` TEXT NOT NULL,
+  `latitud` VARCHAR(100) NOT NULL,
+  `longitud` VARCHAR(100) NOT NULL,
+  `fecha` DATETIME NOT NULL,
+  PRIMARY KEY (`id`),
+  INDEX `fgkey_usuario_idx` (`id_usuario` ASC),
+  INDEX `fgkey_tienda_idx` (`id_tienda` ASC),
+  CONSTRAINT `fgkey_usuario`
+    FOREIGN KEY (`id_usuario`)
+    REFERENCES `CMS_VALMAR_DB`.`usuario` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fgkey_tienda`
+    FOREIGN KEY (`id_tienda`)
+    REFERENCES `CMS_VALMAR_DB`.`tienda` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;

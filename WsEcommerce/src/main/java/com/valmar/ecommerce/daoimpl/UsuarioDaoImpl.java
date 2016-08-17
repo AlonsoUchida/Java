@@ -1,5 +1,6 @@
 package com.valmar.ecommerce.daoimpl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.hibernate.Criteria;
@@ -14,6 +15,7 @@ import com.valmar.ecommerce.dao.UsuarioDao;
 import com.valmar.ecommerce.enums.TipoEstado;
 import com.valmar.ecommerce.enums.TipoUsuario;
 import com.valmar.ecommerce.model.Usuario;
+import com.valmar.ecommerce.viewmodel.ReporteVM;
 
 @Repository("usuarioDao")
 @EnableTransactionManagement
@@ -215,6 +217,53 @@ public class UsuarioDaoImpl extends AbstractDao<Integer, Usuario> implements Usu
 			return null;
 		}
 		return usuario;
+	}
+
+	@Override
+	public List<ReporteVM> obtenerReporteRegistrosPorVendedor(int id) {
+		List<ReporteVM> reportes = new ArrayList<>();
+		try {
+			Query query = getSession().createSQLQuery("select u.id, u.nombre, u.apellido, t.nombre as tienda, t.horario_atencion, d.domicilio, d.numero, di.nombre as distrito, u.fecha_registro " 
+														+ " from usuario u "
+														+ " left join  tienda_usuario tu on u.id = tu.id_usuario "
+														+ " left join tienda t on tu.id_tienda = t.id "
+														+ " left join tienda_direccion td on t.id = td.id_tienda "
+														+ " left join direccion d on td.id_direccion = d.id "
+														+ " left join distrito di on d.id_distrito = di.id "
+														+ " left join imagen_tienda i on t.id = i.id_tienda "
+														+ " where u.id_usuario = :id");
+			query.setInteger("id", id);
+			@SuppressWarnings("unchecked")
+			List<Object[]> results = query.list();
+			if(results!=null){				
+				for(Object[] item : results){
+					if(item!=null){ 
+						ReporteVM reporte = new ReporteVM();
+						String tienda = item[3]!=null ? item[3].toString() : "";
+						String horario = item[4]!=null ? item[4].toString() : "";
+						String domicilio = item[5]!=null ? item[5].toString() : "";
+						String numero = item[6]!=null ? item[6].toString() : "";
+						String distrito = item[7]!=null ? item[7].toString() : "";
+						String fechaRegistro = item[8]!=null ? item[8].toString() : "";
+						
+						reporte.setId(Integer.parseInt(item[0].toString()));
+						reporte.setNombre(item[1].toString());
+						reporte.setApellido(item[2].toString());
+						reporte.setTienda(tienda);
+						reporte.setHorario(horario);
+						String stringForamatted = String.format("%s %s", domicilio, numero);
+						reporte.setDireccion(stringForamatted);
+						reporte.setDistrito(distrito);
+						reporte.setFechaRegistro(fechaRegistro);
+						reportes.add(reporte);
+					}
+				}
+			}
+			
+		} catch (Exception ex) {
+			return null;
+		}
+		return reportes;
 	}
 
 

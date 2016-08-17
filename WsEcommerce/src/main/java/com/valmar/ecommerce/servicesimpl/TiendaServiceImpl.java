@@ -15,7 +15,7 @@ import com.valmar.ecommerce.model.MetodoPago;
 import com.valmar.ecommerce.model.Tienda;
 import com.valmar.ecommerce.model.Usuario;
 import com.valmar.ecommerce.services.TiendaService;
-import com.valmar.ecommerce.viewmodel.TiendaVMLite2;
+import com.valmar.ecommerce.viewmodel.TiendaVMLite;
 
 
 @Service("tiendaService")
@@ -107,7 +107,7 @@ public class TiendaServiceImpl implements TiendaService{
 	}
 
 	@Override
-	public List<TiendaVMLite2> listarTodosTiendasPorCobertura() {
+	public List<TiendaVMLite> listarTodosTiendasPorCobertura() {
 		return tiendaDao.listarTodosTiendasPorCobertura();
 	}
 

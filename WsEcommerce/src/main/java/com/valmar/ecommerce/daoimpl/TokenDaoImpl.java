@@ -103,8 +103,9 @@ public class TokenDaoImpl extends AbstractDao<Integer, Token> implements TokenDa
 		String userName = "";
 		try {
 			Query query = getSession().createSQLQuery("SELECT " + USERNAME + " FROM usuario u "
-					+ "INNER JOIN token t ON u.id = t.userId " + "WHERE t.authToken = :authToken");
+					+ "INNER JOIN token t ON u.id = t.userId " + "WHERE t.authToken = :authToken and t.ExpiresOn > :currentDate");
 			query.setString("authToken", token);
+			query.setTimestamp("currentDate", new Timestamp(new Date().getTime()));
 			@SuppressWarnings("unchecked")
 			List<Object[]> results = query.list();
 			if(!results.isEmpty()){

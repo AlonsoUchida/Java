@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
 import com.valmar.ecommerce.model.Usuario;
+import com.valmar.ecommerce.viewmodel.ReporteVM;
 
 public interface UsuarioService {
 	Usuario obtenerPorId(int id);	 
@@ -23,4 +24,5 @@ public interface UsuarioService {
 	Usuario obtenerPorCorreoVendedor(String username);
 	List<Usuario> listarUsuariosPorVendedor(int id);
 	Usuario obtenerPorCorreoCliente(String username);
+	List<ReporteVM> obtenerReporteRegistrosPorVendedor(int id);
 }

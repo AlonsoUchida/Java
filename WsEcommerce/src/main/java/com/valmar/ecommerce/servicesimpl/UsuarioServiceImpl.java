@@ -11,6 +11,7 @@ import com.valmar.ecommerce.dao.TokenDao;
 import com.valmar.ecommerce.dao.UsuarioDao;
 import com.valmar.ecommerce.model.Usuario;
 import com.valmar.ecommerce.services.UsuarioService;
+import com.valmar.ecommerce.viewmodel.ReporteVM;
 
 
 @Service("usuarioService")
@@ -96,6 +97,11 @@ public class UsuarioServiceImpl implements UsuarioService{
 	@Override
 	public Usuario obtenerPorCorreoCliente(String username) {
 		return usuarioDao.obtenerPorCorreoCliente(username);
+	}
+
+	@Override
+	public List<ReporteVM> obtenerReporteRegistrosPorVendedor(int id) {
+		return usuarioDao.obtenerReporteRegistrosPorVendedor(id);
 	}
 
 }

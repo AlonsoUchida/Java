@@ -55,6 +55,7 @@
         <property name="dataSource" ref="dataSourceProd" />
         <property name="annotatedClasses">
             <list>
+            	<value>com.valmar.ecommerce.model.ReporteDiario</value>
            	    <value>com.valmar.ecommerce.model.Urbanizacion</value>
             	<value>com.valmar.ecommerce.model.TipoTienda</value>
             	<value>com.valmar.ecommerce.model.Banco</value>

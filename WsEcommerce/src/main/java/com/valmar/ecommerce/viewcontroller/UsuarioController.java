@@ -13,12 +13,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @RequestMapping("/static")
 public class UsuarioController {
  
-      @RequestMapping(value="/usuario", method = RequestMethod.GET)
-        public String getUsuarioManagement() {
-            return "Usuario";
-        }
+    @RequestMapping(value="/usuario", method = RequestMethod.GET)
+    public String getUsuarioManagement() {
+       return "Usuario";
+    }
       
-      @RequestMapping(value = "/home", method = RequestMethod.GET)
+    @RequestMapping(value = "/home", method = RequestMethod.GET)
   	public String home(Locale locale, Model model) {
 
   		Date date = new Date();

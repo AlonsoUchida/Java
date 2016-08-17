@@ -69,6 +69,9 @@
 	<script src="<c:url value='/static/js/service/imagen_service.js' />"></script>
 	<script
 		src="<c:url value='/static/js/controller/imagen_controller.js' />"></script>
+		<script src="<c:url value='/static/js/service/reporte_service.js' />"></script>
+	<script
+		src="<c:url value='/static/js/controller/reporte_controller.js' />"></script>
 	<!-- HEADER AND NAVBAR -->
 	<header>
 		<nav class="navbar navbar-default">
@@ -89,6 +92,7 @@
 					<li><a href="#/tienda"><i class="fa fa-comment"></i>Tiendas</a></li>
 					<li><a href="#/direccion"><i class="fa fa-comment"></i>Direcciones</a></li>
 					<li><a href="#/imagen"><i class="fa fa-comment"></i>Imágenes</a></li>
+					<li><a href="#/reporte"><i class="fa fa-comment"></i>Historial de Registros</a></li>
 					<li><a href="/ecommerce/"><i class="fa fa-comment"></i>Cerrar Sesión</a></li>
 				</ul>
 				</div>
