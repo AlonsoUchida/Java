@@ -231,7 +231,8 @@ public class UsuarioDaoImpl extends AbstractDao<Integer, Usuario> implements Usu
 														+ " left join direccion d on td.id_direccion = d.id "
 														+ " left join distrito di on d.id_distrito = di.id "
 														+ " left join imagen_tienda i on t.id = i.id_tienda "
-														+ " where u.id_usuario = :id");
+														+ " where u.id_usuario = :id "
+														+ " order by u.fecha_registro desc");
 			query.setInteger("id", id);
 			@SuppressWarnings("unchecked")
 			List<Object[]> results = query.list();

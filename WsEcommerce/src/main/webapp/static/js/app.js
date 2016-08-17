@@ -7,8 +7,8 @@ App.value('tipoUsuario', document.getElementById("tipoUsuario") != null ? docume
 
 //NOTA: Cambiar dependiendo del servidor el value, tambien en cerrar sesion en el Index 
 //App.value('servidor', 'http://localhost:8080/ecommerce');
-App.value('servidor', 'http://192.168.1.201:8080/ecommerce');
-//App.value('servidor', 'http://54.187.108.240:8080/ecommerce');
+//App.value('servidor', 'http://192.168.1.201:8080/ecommerce');
+App.value('servidor', 'http://54.187.108.240:8080/ecommerce');
 //App.value('servidor', 'http://54.187.108.240:8080/ecommerce-desarrollo');
 
 App.config(function($routeProvider, $mdDateLocaleProvider) {

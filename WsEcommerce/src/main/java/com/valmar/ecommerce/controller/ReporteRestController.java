@@ -1,5 +1,6 @@
 package com.valmar.ecommerce.controller;
 
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 
@@ -22,6 +23,7 @@ import com.valmar.ecommerce.services.TiendaService;
 import com.valmar.ecommerce.services.UsuarioService;
 import com.valmar.ecommerce.viewmodel.ReporteDiarioVM;
 import com.valmar.ecommerce.viewmodel.ReporteVM;
+import com.valmar.ecommerce.viewmodel.TiendaVMLite;
 
 @CrossOrigin
 @RestController
@@ -41,6 +43,7 @@ public class ReporteRestController {
 		if (items.isEmpty()) {
 			return new ResponseEntity<List<ReporteVM>>(HttpStatus.NO_CONTENT);
 		}
+		
 		return new ResponseEntity<List<ReporteVM>>(items, HttpStatus.OK);
 	}
 

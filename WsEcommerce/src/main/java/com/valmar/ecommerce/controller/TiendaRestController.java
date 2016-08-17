@@ -74,6 +74,7 @@ public class TiendaRestController {
 		String telfMovil = item.getTelefono_movil()!=null ? item.getTelefono_movil() : "" ;
 		String estado = (item.getEstado()!= 1 || item.getEstado()!= 2) ? "" : ((item.getEstado()==1) ? "Abierto" : "Cerrado");
 		String tarjeta = (item.getTarjeta() != null) ? ((item.getTarjeta() == 1) ? "Si" : "No" ) : ""; 
+		String web = (item.getPaginaweb() != null) ? item.getPaginaweb() : "";
 				
 		_tienda.setNombre(nombre);
 		_tienda.setHorarioAtencion(horarioAtencion);
@@ -81,6 +82,7 @@ public class TiendaRestController {
 		_tienda.setTelefonoMovil(telfMovil);
 		_tienda.setEstado(estado);
 		_tienda.setTarjeta(tarjeta);
+		_tienda.setWeb(web);
 	
 		ImagenTienda imagen = imagenTiendaService.obtenerImagenPorDefectoTienda(item.getId());
 		if (imagen != null)
