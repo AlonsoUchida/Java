@@ -201,13 +201,13 @@ public class TiendaDaoImpl extends AbstractDao<Integer, Tienda> implements Tiend
 	public List<TiendaVMLite> listarTodosTiendasPorCobertura() {
 		List<TiendaVMLite> tiendas = new ArrayList<>();
 		try {
-			Query query = getSession().createSQLQuery("select t.id, t.nombre, t.estado_abierto, d.domicilio, d.numero,  di.nombre as distrito, d.latitud, d.longitud, d.id as id_distrito from tienda t "
+			Query query = getSession().createSQLQuery("select t.id, t.nombre, t.estado_abierto, d.domicilio, d.numero,  di.nombre as distrito, d.latitud, d.longitud, d.id as id_distrito, it.imagen from tienda t "
 						+ " inner join  tienda_direccion td on t.id = td.id_tienda "
 						+ " left join direccion d on td.id_direccion = d.id "
 						+ " left join distrito di on d.id_distrito = di.id "
 						+ " left join imagen_tienda it on t.id = it.id_tienda "
 						+ " where t.estado = :estado "
-						+ " group by  t.id, d.id");
+						+ " group by  t.id, d.id, it.id");
 			query.setInteger("estado", TipoEstado.HABILITADO.getValue());
 			@SuppressWarnings("unchecked")
 			List<Object[]> results = query.list();
@@ -222,6 +222,7 @@ public class TiendaDaoImpl extends AbstractDao<Integer, Tienda> implements Tiend
 						String distrito = item[5]!=null ? item[5].toString() : "";
 						String latitud = item[6]!=null ? item[6].toString() : "";
 						String longitud = item[7]!=null ? item[7].toString() : "";
+						String imagen = item[9]!=null ? item[9].toString() : "";
 						
 						tienda.setId(Integer.parseInt(item[0].toString()));
 						tienda.setNombre(nombre);
@@ -229,6 +230,94 @@ public class TiendaDaoImpl extends AbstractDao<Integer, Tienda> implements Tiend
 						tienda.setDireccion(domicilio + " " + numero + ", "+ distrito);
 						tienda.setLatitud(latitud);
 						tienda.setLongitud(longitud);
+						tienda.setImagen(imagen);
+						tiendas.add(tienda);	
+					}
+				}
+				
+			}
+		} catch (Exception ex) {
+			return null;
+		}
+		return tiendas;
+	}
+
+	@Override
+	public List<TiendaVMLite> obtenerTiendasPorNombreDistrito2(String nombre, int id) {
+		List<TiendaVMLite> tiendas = new ArrayList<>();
+		try {
+			Query query = getSession().createSQLQuery("select t.id, t.nombre, t.estado_abierto, d.domicilio, d.numero,  di.nombre as distrito, d.latitud, d.longitud, d.id as id_distrito, it.imagen from tienda t "
+						+ " inner join  tienda_direccion td on t.id = td.id_tienda "
+						+ " left join direccion d on td.id_direccion = d.id "
+						+ " left join distrito di on d.id_distrito = di.id "
+						+ " left join imagen_tienda it on t.id = it.id_tienda "
+						+ " where t.estado = :estado and t.nombre like :nombre and di.id = :distrito_id"
+						+ " group by  t.id, d.id, it.id");
+			query.setInteger("estado", TipoEstado.HABILITADO.getValue());
+			String containsNombre = "%" + nombre + "%";
+			query.setString("nombre", containsNombre);
+			query.setInteger("distrito_id", id);
+			@SuppressWarnings("unchecked")
+			List<Object[]> results = query.list();
+			if(results!=null){				
+				for(Object[] item : results){
+					if(item!=null){
+						TiendaVMLite tienda = new TiendaVMLite();
+						String _nombre = item[1]!=null ? item[1].toString() : "";
+						String estado = item[2]!=null ? ((Integer.parseInt(item[2].toString()) == 1) ? "Abierto" : "Cerrado") : "";
+						String domicilio = item[3]!=null ? item[3].toString() : "";
+						String numero = item[4]!=null ? item[4].toString() : "";
+						String distrito = item[5]!=null ? item[5].toString() : "";
+						String latitud = item[6]!=null ? item[6].toString() : "";
+						String longitud = item[7]!=null ? item[7].toString() : "";
+						String imagen = item[9]!=null ? item[9].toString() : "";
+						
+						tienda.setId(Integer.parseInt(item[0].toString()));
+						tienda.setNombre(_nombre);
+						tienda.setEstado(estado);						
+						tienda.setDireccion(domicilio + " " + numero + ", "+ distrito);
+						tienda.setLatitud(latitud);
+						tienda.setLongitud(longitud);
+						tienda.setImagen(imagen);
+						tiendas.add(tienda);	
+					}
+				}
+				
+			}
+		} catch (Exception ex) {
+			return null;
+		}
+		return tiendas;
+	}
+
+	@Override
+	public List<TiendaVMLite> obtenerTiendasPorNombre2(String nombre) {
+		List<TiendaVMLite> tiendas = new ArrayList<>();
+		try {
+			Query query = getSession().createSQLQuery("select t.id, t.nombre, t.estado_abierto, d.domicilio, d.numero,  di.nombre as distrito from tienda t "
+						+ " inner join  tienda_direccion td on t.id = td.id_tienda "
+						+ " left join direccion d on td.id_direccion = d.id "
+						+ " left join distrito di on d.id_distrito = di.id "
+						+ " left join imagen_tienda it on t.id = it.id_tienda "
+						+ " where t.estado = :estado and t.nombre like :nombre "
+						+ " group by  t.id, d.id, it.id");
+			query.setInteger("estado", TipoEstado.HABILITADO.getValue());
+			String containsNombre = "%" + nombre + "%";
+			query.setString("nombre", containsNombre);
+			@SuppressWarnings("unchecked")
+			List<Object[]> results = query.list();
+			if(results!=null){				
+				for(Object[] item : results){
+					if(item!=null){
+						TiendaVMLite tienda = new TiendaVMLite();
+						String _nombre = item[1]!=null ? item[1].toString() : "";				
+						String domicilio = item[3]!=null ? item[3].toString() : "";
+						String numero = item[4]!=null ? item[4].toString() : "";
+						String distrito = item[5]!=null ? item[5].toString() : "";
+					
+						tienda.setId(Integer.parseInt(item[0].toString()));
+						tienda.setNombre(_nombre);					
+						tienda.setDireccion(domicilio + " " + numero + ", "+ distrito);
 						tiendas.add(tienda);	
 					}
 				}

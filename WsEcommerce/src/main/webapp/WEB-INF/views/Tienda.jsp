@@ -16,7 +16,7 @@
                               <div class="col-md-7">
                                  <select id="soflow" ng-model="ctrl.bodeguero" ng-options='bodeguero as (bodeguero.nombre + " " + bodeguero.apellido) for bodeguero in bodegueros'
                                  ng-change="actualizarBodeguero(ctrl.bodeguero)" required>
-                                 <option value="">- Seleccione Bodeguero -</option>
+                                 	<option value="">- Seleccione Bodeguero -</option>
                                  </select>
                                  <span ng-show="myForm.uname.$error.required">Este campo es requerido</span>    
                                  <span ng-show="myForm.uname.$invalid">Este campo es inválido</span>
@@ -93,32 +93,60 @@
                           </div>
                       </div>                   
                       
-                      <!--  <div class="row">
-                          <div class="form-group col-md-12">
-                              <label class="col-md-2 control-lable" for="horarioApertura">Horario de Apertura</label>
-                              <div class="col-md-7">
-                                 <select ng-model="ctrl.horarioApertura" ng-options="horario as horario.nombre for horario in horarios"
-                                 ng-change="actualizarHorario(ctrl.horarioApertura, 1)" required></select>
-                                 	  <span ng-show="myForm.uname.$error.required">Este campo es requerido</span>
-                                      <span ng-show="myForm.uname.$invalid">Este campo es inválido</span>
-                              </div>
-
-                          </div>
-                      </div> 
-                      
                       <div class="row">
                           <div class="form-group col-md-12">
-                              <label class="col-md-2 control-lable" for="horarioCierre">Horario de Cierre</label>
-                              <div class="col-md-7">
-                                 <select ng-model="ctrl.horarioCierre" ng-options="horario as horario.nombre for horario in horarios"
-                                 ng-change="actualizarHorario(ctrl.horarioCierre, 2)" required></select>
-                                 <span ng-show="myForm.uname.$error.required">Este campo es requerido</span>                               
-                                 <span ng-show="myForm.uname.$invalid">Este campo es inválido</span>
+                              <label class="col-md-2 control-lable" for="horarioApertura">Horarios</label>
+                              
+                              <div class="form-group col-md-9">
+                              		 <div class="form-group col-md-5">
+		                                 <label class="col-md-2 control-lable" for="horarioInicial">Hora</label> 
+		                                 <select ng-model="ctrl.horaInicial" ng-options="hora as hora.nombre for hora in horas"
+		                                 ng-change="actualizarHorario(ctrl.horaInicial, 1)" required> <option value="">- Hora Inicio -</option> </select> -
+		                                 <select ng-model="ctrl.horaFinal" ng-options="hora as hora.nombre for hora in horas"
+		                                 ng-change="actualizarHorario(ctrl.horaFinal, 2)" required> <option value="">- Hora Final -</option> </select> 
+	                                 </div>
+	                                 <div class="form-group col-md-4">
+		                                 <label class="col-md-2 control-lable" for="diaInicial">Dia</label>
+		                                 <select ng-model="ctrl.diaInicial" ng-options="dia as dia.nombre for dia in dias"
+		                                 ng-change="actualizarHorario(ctrl.diaInicial, 3)" required> <option value="">- Dia Inicial -</option> </select> -
+		                                 <select  ng-model="ctrl.diaFinal" ng-options="dia as dia.nombre for dia in dias"
+		                                 ng-change="actualizarHorario(ctrl.diaFinal, 4)" required> <option value="">- Dia Final -</option> </select>
+	                                 </div>
+	                                 <div class="form-group col-md-2">
+	                                   <td>
+			                              <button type="button" ng-click="agregarHorario()" class="btn btn-success btn-sm">Añadir</button>  
+                              		 	</td>
+                              		 </div>
+						              <div class="tablecontainer">
+						                  <table class="table table-hover">
+						                  	 <thead>
+						                          <tr>
+						                              <th class="ocultar">Dia Inicial</th>  
+						                              <th class="ocultar">Dia Final</th>                              
+						                              <th class="ocultar">Hora Inicial</th>
+						                              <th class="ocultar">Hora Final</th>
+						                              <th width="20%"></th>
+						                          </tr>
+						                      </thead>
+						                      <tbody>
+						                          <tr ng-repeat="h in ctrl.horarios_descripcion ">
+						                              <td class="ocultar"><span ng-bind="h.dia_inicial"></span></td>
+						                              <td class="ocultar"><span ng-bind="h.dia_final"></span></td>
+						                              <td class="ocultar"><span ng-bind="h.hora_inicial"></span></td>
+						                              <td class="ocultar"><span ng-bind="h.hora_final"></span></td>
+						                              <td>
+						                              <button type="button" ng-click="eliminarHorario(h.id)" class="btn btn-danger btn-sm">Eliminar</button>
+						                              </td>
+						                          </tr>
+						                      </tbody>
+						                  </table>
+	                                 <span ng-show="myForm.uname.$error.required">Este campo es requerido</span>
+	                                 <span ng-show="myForm.uname.$invalid">Este campo es inválido</span>
                               </div>
 
-                          </div>
-                      </div> -->
-                      
+                         	 </div>
+                      	</div> 
+
                       <div class="row">
                           <div class="form-group col-md-12">
                               <label class="col-md-2 control-lable" for="horarioAtencion">Horario de Atención</label>

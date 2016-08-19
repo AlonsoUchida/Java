@@ -62,7 +62,7 @@ public class TiendaServiceImpl implements TiendaService{
 	}
 
 	@Override
-	public void actulizar(Tienda tiendaBean) {
+	public void actualizar(Tienda tiendaBean) {
 		tiendaDao.actualizar(tiendaBean);		
 	}
 
@@ -109,6 +109,16 @@ public class TiendaServiceImpl implements TiendaService{
 	@Override
 	public List<TiendaVMLite> listarTodosTiendasPorCobertura() {
 		return tiendaDao.listarTodosTiendasPorCobertura();
+	}
+
+	@Override
+	public List<TiendaVMLite> obtenerTiendasPorNombreDistrito2(String nombre, int id) {
+		return tiendaDao.obtenerTiendasPorNombreDistrito2(nombre, id);
+	}
+
+	@Override
+	public List<TiendaVMLite> obtenerTiendasPorNombre2(String nombre) {
+		return tiendaDao.obtenerTiendasPorNombre2(nombre);
 	}
 
 }

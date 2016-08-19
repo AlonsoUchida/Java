@@ -145,6 +145,10 @@ public class Tienda {
 	@JsonIgnore
     private Set<TipoTienda> tipoTiendas;
 	
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "tienda", cascade = CascadeType.ALL)
+	@JsonIgnore
+	private Set<Horarios> horarios;
+	
 	@Transient
 	private String distancia;
 		
@@ -354,6 +358,15 @@ public class Tienda {
 
 	public void setRazonSocial(String razonSocial) {
 		this.razonSocial = razonSocial;
+	}
+
+	public Set<Horarios> getHorarios() {
+		return horarios;
+	}
+
+	public void setHorarios(Set<Horarios> horarios) {
+		this.horarios = horarios;
 	}	
+	
 	
 }

@@ -52,9 +52,12 @@
     <!-- Hibernate 4 SessionFactory Bean definition -->
     <bean id="sessionFactory"
         class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
-        <property name="dataSource" ref="dataSourceProduccionBodegas" />
+        <property name="dataSource" ref="dataSourceProd" />
         <property name="annotatedClasses">
             <list>
+            	<value>com.valmar.ecommerce.model.Horas</value>
+            	<value>com.valmar.ecommerce.model.Dias</value>
+            	<value>com.valmar.ecommerce.model.Horarios</value>
             	<value>com.valmar.ecommerce.model.ReporteDiario</value>
            	    <value>com.valmar.ecommerce.model.Urbanizacion</value>
             	<value>com.valmar.ecommerce.model.TipoTienda</value>

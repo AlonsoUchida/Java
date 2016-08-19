@@ -11,7 +11,7 @@ import com.valmar.ecommerce.viewmodel.TiendaVMLite;
 public interface TiendaService {
 	Tienda obtenerPorId(int id);	 
     int agregar(Tienda tienda); 
-    void actulizar(Tienda tiendaBean);
+    void actualizar(Tienda tiendaBean);
     void eliminar(int id);    
     List<Tienda> listarTiendas();
 	Usuario obtenerUsuario(int id_usuario);
@@ -24,5 +24,7 @@ public interface TiendaService {
 	Tienda obtenerTiendaPorDireccion(int id);
 	List<Tienda> obtenerTiendasPorNombreDistritoUrbanizacion(String nombre, int id, int id_urbanizacion);
 	List<Tienda> listarPorBodeguero(int id);
-	List<TiendaVMLite> listarTodosTiendasPorCobertura();	
+	List<TiendaVMLite> listarTodosTiendasPorCobertura();
+	List<TiendaVMLite> obtenerTiendasPorNombreDistrito2(String nombre, int id);
+	List<TiendaVMLite> obtenerTiendasPorNombre2(String nombre);	
 }

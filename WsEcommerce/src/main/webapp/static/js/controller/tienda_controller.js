@@ -5,36 +5,64 @@ App.controller('TiendaController', ['$scope', '$filter', 'TiendaService', 'Usuar
           var self = this;
           
           self.tienda = {id:null, nombre:'',ruc:'', razon_social: '', telefono_local:'', telefono_movil:'', horarioAtencion:'', 
-        		  paginaweb:'', tarjeta: 2, id_banco: [], id_usuarios: []};
+        		  paginaweb:'', tarjeta: 2, id_banco: [], id_usuarios: [], horarios: []};
+          self.horario = {dia_inicial : null, dia_final : null, hora_inicial: null, hora_final:null};
+          self.horario_descripcion = {id:null, dia_inicial : null, dia_final : null, hora_inicial: null, hora_final:null};
          
           $scope.tarjetas = [{"id" : 1, "nombre": "Si Utilizo"},{"id" : 2, "nombre": "No Utilizo"}];
-          $scope.bancos = {};
-          
-          /*$scope.horarios = [{"nombre": "1:00 AM"},{"nombre": "2:00 AM"},{"nombre": "3:00 AM"},{"nombre": "4:00 AM"},{"nombre": "5:00 AM"},{"nombre": "6:00 AM"},
-                             {"nombre": "7:00 AM"},{"nombre": "8:00 AM"},{"nombre": "9:00 AM"},{"nombre": "10:00 AM"},{"nombre": "11:00 AM"},{"nombre": "12:00 PM"},
-                             {"nombre": "1:00 PM"},{"nombre": "2:00 PM"},{"nombre": "3:00 PM"},{"nombre": "4:00 PM"},{"nombre": "5:00 PM"},{"nombre": "6:00 PM"},
-                             {"nombre": "7:00 PM"},{"nombre": "8:00 PM"},{"nombre": "9:00 PM"},{"nombre": "10:00 PM"},{"nombre": "11:00 PM"},{"nombre": "12:00 AM"}];*/
-         
+          $scope.bancos = {};         
+          $scope.horas = {};
+          $scope.dias = {};
+          self.horarios_descripcion = [];
+
           self.tarjeta = $scope.tarjetas[1];
           self.banco = "";
           self.bodegueroid = "";
-          /*self.horarioApertura = "";
-          self.horarioCierre = "";
-          self.horarioString= "";        
-          self.horarioArray = ["", ""];       
+          self.horaInicial = "";
+          self.horaFinal = "";
+          self.diaInicial = "";
+          self.diaFinal = "";
           
           $scope.actualizarHorario = function (horario, tipoHorario) {
         	  if(tipoHorario==1){
-        		  self.horarioArray[0] = horario.nombre;
+        		  self.horario.hora_inicial = horario.id;
+        		  self.horario_descripcion.hora_inicial = horario.nombre;
         	  }else if(tipoHorario==2){
-        		  self.horarioArray[1] = horario.nombre;
+        		  self.horario.hora_final = horario.id;
+        		  self.horario_descripcion.hora_final = horario.nombre;
+        	  }else if (tipoHorario==3){
+        		  self.horario.dia_inicial = horario.id;
+        		  self.horario_descripcion.dia_inicial = horario.nombre;
+        	  }else if(tipoHorario==4){
+        		  self.horario.dia_final = horario.id;
+        		  self.horario_descripcion.dia_final = horario.nombre;
         	  }
-        	 self.horarioString = self.horarioArray[0] + " - " + self.horarioArray[1];
 
-             self.tienda.horarioAtencion = self.horarioString;
-             console.log(self.tienda.horarioAtencion);
+             console.log("self.horario", self.horario);
+             console.log("self.horario_descripcion", self.horario_descripcion);
              
-          };*/
+          };
+          
+          $scope.agregarHorario = function (){
+
+        	  self.horario_descripcion.id = self.tienda.horario_descripcion.length + 1;
+        	  
+        	  self.tienda.horarios.push(self.horario);
+        	  self.horarios_descripcion.push(self.horario_descripcion);
+        	  self.horario = [];
+        	  self.horario_descripcion = [];
+        	  console.log("self.tienda.horarios", self.tienda.horarios);
+        	  console.log("self.horarios_descripcion", self.horarios_descripcion);
+          }
+          
+          $scope.eliminarHorario = function (id){
+        	  self.horario.splice(id, 1);  
+        	  self.horario_descripcion.splice(id, 1);
+        	  self.tienda.horarios.splice(id, 1);
+        	  console.log("self.tienda.horarios", self.tienda.horarios);
+        	  console.log("self.tienda.horarios", self.tienda.horarios);
+        	  console.log("self.horarios_descripcion", self.horarios_descripcion);
+          }
           
           $scope.actualizarBodeguero = function (bodeguero) {
         	  self.tienda.id_usuarios = [];
@@ -57,6 +85,34 @@ App.controller('TiendaController', ['$scope', '$filter', 'TiendaService', 'Usuar
               self.tienda.tarjeta = tarjeta.id;
               console.log(self.tienda.tarjeta);
            };
+           
+           self.listarHoras = function(){
+         	  TiendaService.listarHoras()
+                   .then(
+                                function(d) {  
+                             	   $scope.horas = d;
+                             	   $scope.$apply();
+                                    console.log("horas:" + $scope.horas);        
+                                },
+                                 function(errResponse){
+                                     console.error('Error while fetching Currencies');
+                                 }
+                        );
+           };
+           
+           self.listarDias = function(){
+          	  TiendaService.listarDias()
+                    .then(
+                                 function(d) {  
+                              	   $scope.dias = d;
+                              	   $scope.$apply();
+                                     console.log("dias:" + $scope.dias);        
+                                 },
+                                  function(errResponse){
+                                      console.error('Error while fetching Currencies');
+                                  }
+                         );
+            };
 
           self.listarBancos = function(){
         	  TiendaService.listarBancos()
@@ -64,7 +120,7 @@ App.controller('TiendaController', ['$scope', '$filter', 'TiendaService', 'Usuar
                                function(d) {  
                             	   $scope.bancos = d;
                             	   $scope.$apply();
-                                   console.log("usuario bancos:" + $scope.bancos);        
+                                   console.log("bancos:" + $scope.bancos);        
                                },
                                 function(errResponse){
                                     console.error('Error while fetching Currencies');
@@ -158,7 +214,10 @@ App.controller('TiendaController', ['$scope', '$filter', 'TiendaService', 'Usuar
           }else{
         	  self.listarBodegueros(usuarioId);
           }
+          
           self.listarBancos();
+          self.listarHoras();
+          self.listarDias();
         
           self.submit = function() {
         	  //Se asigna el usuario vendedor

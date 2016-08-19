@@ -768,6 +768,70 @@ CREATE TABLE IF NOT EXISTS `CMS_VALMAR_DB`.`reporte_diario` (
 ENGINE = InnoDB;
 
 
+-- -----------------------------------------------------
+-- Table `CMS_VALMAR_DB`.`dias`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `CMS_VALMAR_DB`.`dias` (
+  `id` INT NOT NULL,
+  `nombre` VARCHAR(45) NOT NULL,
+  PRIMARY KEY (`id`))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `CMS_VALMAR_DB`.`horas`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `CMS_VALMAR_DB`.`horas` (
+  `id` INT NOT NULL,
+  `nombre` VARCHAR(45) NOT NULL,
+  PRIMARY KEY (`id`))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `CMS_VALMAR_DB`.`horarios`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `CMS_VALMAR_DB`.`horarios` (
+  `id` INT(11) NOT NULL AUTO_INCREMENT,
+  `dia_inicial` INT(2) NOT NULL,
+  `dia_final` INT(2) NOT NULL,
+  `hora_inicial` INT(2) NOT NULL,
+  `hora_final` INT(2) NOT NULL,
+  `id_tienda` INT(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  INDEX `fkid_tienda_idx` (`id_tienda` ASC),
+  INDEX `fkhorarios_id_dia_inicial_idx` (`dia_inicial` ASC),
+  INDEX `fkhorarios_id_dia_final_idx` (`dia_final` ASC),
+  INDEX `fkhorarios_id_hora_inicial_idx` (`hora_inicial` ASC),
+  INDEX `fkhorarios_id_hora_final_idx` (`hora_final` ASC),
+  CONSTRAINT `fkhorarios_id_tienda`
+    FOREIGN KEY (`id_tienda`)
+    REFERENCES `CMS_VALMAR_DB`.`tienda` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fkhorarios_id_dia_inicial`
+    FOREIGN KEY (`dia_inicial`)
+    REFERENCES `CMS_VALMAR_DB`.`dias` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fkhorarios_id_dia_final`
+    FOREIGN KEY (`dia_final`)
+    REFERENCES `CMS_VALMAR_DB`.`dias` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fkhorarios_id_hora_inicial`
+    FOREIGN KEY (`hora_inicial`)
+    REFERENCES `CMS_VALMAR_DB`.`horas` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fkhorarios_id_hora_final`
+    FOREIGN KEY (`hora_final`)
+    REFERENCES `CMS_VALMAR_DB`.`horas` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;

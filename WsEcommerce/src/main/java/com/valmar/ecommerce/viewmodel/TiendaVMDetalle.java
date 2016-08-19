@@ -1,5 +1,7 @@
 package com.valmar.ecommerce.viewmodel;
 
+import java.util.List;
+
 public class TiendaVMDetalle {
 
 	private int id;
@@ -19,6 +21,7 @@ public class TiendaVMDetalle {
 	private String tarjeta;
 	private String agente;
 	private String web;
+	private List<HorarioVM> horarios;
 	private double distancia;
 	
 	public int getId() {
@@ -129,4 +132,11 @@ public class TiendaVMDetalle {
 	public void setDistrito(String distrito) {
 		this.distrito = distrito;
 	}
+	public List<HorarioVM> getHorarios() {
+		return horarios;
+	}
+	public void setHorarios(List<HorarioVM> horarios) {
+		this.horarios = horarios;
+	}
+	
 }

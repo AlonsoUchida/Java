@@ -1,6 +1,9 @@
 package com.valmar.ecommerce.viewmodel;
 
 import java.math.BigDecimal;
+import java.util.List;
+
+import com.valmar.ecommerce.model.Horarios;
 
 public class TiendaVM {
 
@@ -23,6 +26,8 @@ public class TiendaVM {
 	private int tarjeta;
 	private int[] id_banco;
 	private int[] id_tipo_tienda;
+	
+	private List<Horarios> horarios;
 	
 	public int getId() {
 		return id;
@@ -137,6 +142,12 @@ public class TiendaVM {
 	}
 	public void setRazon_social(String razon_social) {
 		this.razon_social = razon_social;
+	}
+	public List<Horarios> getHorarios() {
+		return horarios;
+	}
+	public void setHorarios(List<Horarios> horarios) {
+		this.horarios = horarios;
 	}
 	
 }
